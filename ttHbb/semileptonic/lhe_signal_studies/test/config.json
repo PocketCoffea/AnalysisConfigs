@@ -1,0 +1,4213 @@
+{
+  "dataset": {
+    "jsons": [
+      "datasets/signal_ttHTobb_2018_local.json",
+      "datasets/backgrounds_MC_2018_local.json"
+    ],
+    "filter": {
+      "samples": [
+        "ttHTobb"
+      ],
+      "samples_exclude": [],
+      "year": [
+        "2018"
+      ]
+    }
+  },
+  "workflow": {
+    "name": "LHESignalStudies",
+    "srcfile": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/workflows/lhe_categories_signal_studies.py"
+  },
+  "output": "output/lhe_categories_signal_studied",
+  "workflow_extra_options": {
+    "lep_lhe_min_dR": 0.4
+  },
+  "run_options": {
+    "executor": "dask/slurm",
+    "workers": 1,
+    "scaleout": 40,
+    "partition": "short",
+    "walltime": "01:00:00",
+    "mem_per_worker": "8GB",
+    "exclusive": false,
+    "chunk": 500000,
+    "retries": 30,
+    "max": null,
+    "skipbadfiles": null,
+    "voms": null,
+    "limit": null
+  },
+  "finalstate": "semileptonic",
+  "skim": [],
+  "preselections": [
+    {
+      "name": "passthrough",
+      "params": {},
+      "function": {
+        "name": "passthrough",
+        "module": "PocketCoffea.lib.cut_functions",
+        "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+        "f_hash": 8793006731538
+      },
+      "id": "passthrough__5423108476994363457"
+    }
+  ],
+  "categories": {
+    "incl": [
+      {
+        "name": "passthrough",
+        "params": {},
+        "function": {
+          "name": "passthrough",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731538
+        },
+        "id": "passthrough__5423108476994363457"
+      }
+    ],
+    "presel": [
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "presel_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "presel_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "presel_dilep_notau": [
+      {
+        "name": "dilep_notau_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_dilepton_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789185
+        },
+        "id": "dilep_notau_lhe__-1134690333092538492"
+      },
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "presel_dilep_onetau": [
+      {
+        "name": "dilep_onetau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_dilepton_onetau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789194
+        },
+        "id": "dilep_onetau_lhe__1164265538815908659"
+      },
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "presel_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "semileptonic",
+        "params": {
+          "METbranch": {
+            "2016": "MET",
+            "2017": "METFixEE2017",
+            "2018": "MET"
+          },
+          "njet": 4,
+          "nbjet": 3,
+          "pt_leading_electron": {
+            "2016": 29,
+            "2017": 30,
+            "2018": 30
+          },
+          "pt_leading_muon": {
+            "2016": 26,
+            "2017": 29,
+            "2018": 26
+          },
+          "met": 20
+        },
+        "function": {
+          "name": "semileptonic",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731664
+        },
+        "id": "semileptonic__7459626690270025288"
+      }
+    ],
+    "1lep": [
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1ele": [
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1mu": [
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "0lep_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "nLeptonGood_eq0",
+        "params": {
+          "N": 0,
+          "coll": "LeptonGood"
+        },
+        "function": {
+          "name": "eq_nObj",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731601
+        },
+        "id": "nLeptonGood_eq0__-2513945535782176358"
+      }
+    ],
+    "0lep_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "nLeptonGood_eq0",
+        "params": {
+          "N": 0,
+          "coll": "LeptonGood"
+        },
+        "function": {
+          "name": "eq_nObj",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731601
+        },
+        "id": "nLeptonGood_eq0__-2513945535782176358"
+      }
+    ],
+    "0lep_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "nLeptonGood_eq0",
+        "params": {
+          "N": 0,
+          "coll": "LeptonGood"
+        },
+        "function": {
+          "name": "eq_nObj",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731601
+        },
+        "id": "nLeptonGood_eq0__-2513945535782176358"
+      }
+    ],
+    "1ele_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1ele_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1ele_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1mu_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1mu_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1mu_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1lep_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1lep_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1lep_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1ele_semilep_notau": [
+      {
+        "name": "semilep_notau_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_semileptons_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789176
+        },
+        "id": "semilep_notau_lhe__-3853401823049360285"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1muon_semilep_notau": [
+      {
+        "name": "semilep_notau_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_semileptons_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789176
+        },
+        "id": "semilep_notau_lhe__-3853401823049360285"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1lep_semilep_notau": [
+      {
+        "name": "semilep_notau_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_semileptons_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789176
+        },
+        "id": "semilep_notau_lhe__-3853401823049360285"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1ele_dilep_notau": [
+      {
+        "name": "dilep_notau_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_dilepton_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789185
+        },
+        "id": "dilep_notau_lhe__-1134690333092538492"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1mu_dilep_notau": [
+      {
+        "name": "dilep_notau_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_dilepton_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789185
+        },
+        "id": "dilep_notau_lhe__-1134690333092538492"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1lep_dilep_notau": [
+      {
+        "name": "dilep_notau_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_dilepton_notau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789185
+        },
+        "id": "dilep_notau_lhe__-1134690333092538492"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1ele_dilep_onetau": [
+      {
+        "name": "dilep_onetau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_dilepton_onetau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789194
+        },
+        "id": "dilep_onetau_lhe__1164265538815908659"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1mu_dilep_onetau": [
+      {
+        "name": "dilep_onetau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_dilepton_onetau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789194
+        },
+        "id": "dilep_onetau_lhe__1164265538815908659"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1lep_dilep_onetau": [
+      {
+        "name": "dilep_onetau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_dilepton_onetau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789194
+        },
+        "id": "dilep_onetau_lhe__1164265538815908659"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "1ele_dilep_twotau": [
+      {
+        "name": "dilep_twotau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_leptons_twotau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789203
+        },
+        "id": "dilep_twotau_lhe__7510700025803127355"
+      },
+      {
+        "name": "nElectronGood_eq1_pt30",
+        "params": {
+          "N": 1,
+          "coll": "ElectronGood",
+          "minpt": 30
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nElectronGood_eq1_pt30__-3884468361481901986"
+      }
+    ],
+    "1mu_dilep_twotau": [
+      {
+        "name": "dilep_twotau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_leptons_twotau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789203
+        },
+        "id": "dilep_twotau_lhe__7510700025803127355"
+      },
+      {
+        "name": "nMuonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "MuonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nMuonGood_eq1_pt26__-2740895497054458387"
+      }
+    ],
+    "1lep_dilep_twotau": [
+      {
+        "name": "dilep_twotau_lhe",
+        "params": {},
+        "function": {
+          "name": "n_lhe_leptons_twotau",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789203
+        },
+        "id": "dilep_twotau_lhe__7510700025803127355"
+      },
+      {
+        "name": "nLeptonGood_eq1_pt26",
+        "params": {
+          "N": 1,
+          "coll": "LeptonGood",
+          "minpt": 26
+        },
+        "function": {
+          "name": "eq_nObj_minPt",
+          "module": "PocketCoffea.lib.cut_functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/PocketCoffea/lib/cut_functions.py",
+          "f_hash": 8793006731610
+        },
+        "id": "nLeptonGood_eq1_pt26__-2695647339800406274"
+      }
+    ],
+    "2lep": [
+      {
+        "name": "dilep_30_15",
+        "params": {
+          "pt1": 30.0,
+          "pt2": 15.0
+        },
+        "function": {
+          "name": "get_dilep",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789212
+        },
+        "id": "dilep_30_15__8541504331075368429"
+      }
+    ],
+    "2lep_semilep": [
+      {
+        "name": "semilep_lhe",
+        "params": {
+          "N": 2
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "semilep_lhe__-4296718027689627727"
+      },
+      {
+        "name": "dilep_30_15",
+        "params": {
+          "pt1": 30.0,
+          "pt2": 15.0
+        },
+        "function": {
+          "name": "get_dilep",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789212
+        },
+        "id": "dilep_30_15__8541504331075368429"
+      }
+    ],
+    "2lep_dilep": [
+      {
+        "name": "dilep_lhe",
+        "params": {
+          "N": 4
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "dilep_lhe__6561998394159730757"
+      },
+      {
+        "name": "dilep_30_15",
+        "params": {
+          "pt1": 30.0,
+          "pt2": 15.0
+        },
+        "function": {
+          "name": "get_dilep",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789212
+        },
+        "id": "dilep_30_15__8541504331075368429"
+      }
+    ],
+    "2lep_had": [
+      {
+        "name": "had_lhe",
+        "params": {
+          "N": 0
+        },
+        "function": {
+          "name": "n_lhe_leptons",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789167
+        },
+        "id": "had_lhe__-7939972305149792544"
+      },
+      {
+        "name": "dilep_30_15",
+        "params": {
+          "pt1": 30.0,
+          "pt2": 15.0
+        },
+        "function": {
+          "name": "get_dilep",
+          "module": "config.lhe_signal_studies.functions",
+          "src_file": "/work/dvalsecc/ttHbb/PocketCoffea/config/lhe_signal_studies/functions.py",
+          "f_hash": 8792825789212
+        },
+        "id": "dilep_30_15__8541504331075368429"
+      }
+    ]
+  },
+  "variables": {
+    "allEle_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allEle_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allEle_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allEle_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allEle_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allEle_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "allMuon_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ElectronGood_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "ElectronGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "MuonGood_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "MuonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LeptonGood_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LeptonGood",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Electron_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Electron",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Muon_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Tau_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_Lepton_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_Lepton",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{e}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{e}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_ele_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{e}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{\\mu}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{\\mu}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_muon_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{\\mu}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_eta_1": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_pt_1": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_phi_1": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 0,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_eta_2": {
+      "axes": [
+        {
+          "field": "eta",
+          "label": "$\\eta_{lep}$",
+          "bins": 80,
+          "start": -4,
+          "stop": 4,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -4,
+            4
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_pt_2": {
+      "axes": [
+        {
+          "field": "pt",
+          "label": "$p_{T}^{lep}$ [GeV]",
+          "bins": 200,
+          "start": 0,
+          "stop": 600,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            500
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_matched_tau_phi_2": {
+      "axes": [
+        {
+          "field": "phi",
+          "label": "$\\phi_{lep}$",
+          "bins": 128,
+          "start": -3.141592653589793,
+          "stop": 3.141592653589793,
+          "coll": "LHE_matched_tau",
+          "name": null,
+          "pos": 1,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            -3.141592653589793,
+            3.141592653589793
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lhe_matched_ele_1_mvaId": {
+      "axes": [
+        {
+          "field": "mvaFall17V2Iso_WP80",
+          "label": "mvaid",
+          "bins": null,
+          "start": 0,
+          "stop": 2,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 0,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lhe_matched_ele_2_mvaId": {
+      "axes": [
+        {
+          "field": "mvaFall17V2Iso_WP80",
+          "label": "mvaid",
+          "bins": null,
+          "start": 0,
+          "stop": 2,
+          "coll": "LHE_matched_ele",
+          "name": null,
+          "pos": 1,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lhe_matched_muon_1_mvaId": {
+      "axes": [
+        {
+          "field": "tightId",
+          "label": "mvaid",
+          "bins": null,
+          "start": 0,
+          "stop": 2,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 0,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lhe_matched_muon_2_mvaId": {
+      "axes": [
+        {
+          "field": "tightId",
+          "label": "mvaid",
+          "bins": null,
+          "start": 0,
+          "stop": 2,
+          "coll": "LHE_matched_muon",
+          "name": null,
+          "pos": 1,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nele_lhe": {
+      "axes": [
+        {
+          "field": "nLHE_Electron",
+          "label": "$N_{LHE_Electron}$",
+          "bins": 4,
+          "start": 0,
+          "stop": 4,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nmuon_lhe": {
+      "axes": [
+        {
+          "field": "nLHE_Muon",
+          "label": "$N_{LHE_Muon}$",
+          "bins": 4,
+          "start": 0,
+          "stop": 4,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "ntau_lhe": {
+      "axes": [
+        {
+          "field": "nLHE_Muon",
+          "label": "$N_{LHE_Muon}$",
+          "bins": 4,
+          "start": 0,
+          "stop": 4,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nlepton_lhe": {
+      "axes": [
+        {
+          "field": "nLHE_Lepton",
+          "label": "$N_{LHE_Lepton}$",
+          "bins": 4,
+          "start": 0,
+          "stop": 4,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nele_incl": {
+      "axes": [
+        {
+          "field": "nElectronGood",
+          "label": "$N_{ElectronGood}$",
+          "bins": 8,
+          "start": 0,
+          "stop": 8,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nmuon_incl": {
+      "axes": [
+        {
+          "field": "nMuonGood",
+          "label": "$N_{MuonGood}$",
+          "bins": 8,
+          "start": 0,
+          "stop": 8,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nlepton_incl": {
+      "axes": [
+        {
+          "field": "nLeptonGood",
+          "label": "$N_{LeptonGood}$",
+          "bins": 8,
+          "start": 0,
+          "stop": 8,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nJets": {
+      "axes": [
+        {
+          "field": "nJetGood",
+          "label": "$N_{JetGood}$",
+          "bins": 14,
+          "start": 0,
+          "stop": 14,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "regular",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "nlepLHE_nlepReco": {
+      "axes": [
+        {
+          "field": "nLHE_Lepton",
+          "label": "Number of LHE Leptons",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nLHE_Electron",
+          "label": "Number of LHE Electron",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nLHE_Muon",
+          "label": "Number of LHE Muon",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nLHE_Tau",
+          "label": "Number of LHE Tau",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nLeptonGood",
+          "label": "Number of Lepton Good",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nElectronGood",
+          "label": "Number of Lepton Good",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        },
+        {
+          "field": "nMuonGood",
+          "label": "Number of Lepton Good",
+          "bins": null,
+          "start": 0,
+          "stop": 6,
+          "coll": "events",
+          "name": null,
+          "pos": null,
+          "type": "int",
+          "transform": null,
+          "lim": [
+            0,
+            0
+          ],
+          "underflow": true,
+          "overflow": true,
+          "growth": false
+        }
+      ],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "1lep",
+        "1lep_semilep_notau",
+        "1lep_dilep_notau",
+        "1lep_dilep_onetau",
+        "presel_semilep",
+        "presel_semilep_notau",
+        "presel_semilep_onetau"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    }
+  },
+  "weights": {
+    "ttHTobb": {
+      "inclusive": [
+        "genWeight",
+        "lumi",
+        "XS",
+        "pileup",
+        "sf_ele_reco",
+        "sf_ele_id",
+        "sf_mu_id",
+        "sf_mu_iso",
+        "sf_jet_puId"
+      ],
+      "bycategory": {
+        "incl": [],
+        "presel": [],
+        "presel_semilep": [],
+        "presel_dilep": [],
+        "presel_dilep_notau": [],
+        "presel_dilep_onetau": [],
+        "presel_had": [],
+        "1lep": [],
+        "1ele": [],
+        "1mu": [],
+        "0lep_semilep": [],
+        "0lep_dilep": [],
+        "0lep_had": [],
+        "1ele_semilep": [],
+        "1ele_dilep": [],
+        "1ele_had": [],
+        "1mu_semilep": [],
+        "1mu_dilep": [],
+        "1mu_had": [],
+        "1lep_semilep": [],
+        "1lep_dilep": [],
+        "1lep_had": [],
+        "1ele_semilep_notau": [],
+        "1muon_semilep_notau": [],
+        "1lep_semilep_notau": [],
+        "1ele_dilep_notau": [],
+        "1mu_dilep_notau": [],
+        "1lep_dilep_notau": [],
+        "1ele_dilep_onetau": [],
+        "1mu_dilep_onetau": [],
+        "1lep_dilep_onetau": [],
+        "1ele_dilep_twotau": [],
+        "1mu_dilep_twotau": [],
+        "1lep_dilep_twotau": [],
+        "2lep": [],
+        "2lep_semilep": [],
+        "2lep_dilep": [],
+        "2lep_had": []
+      },
+      "is_split_bycat": false
+    }
+  },
+  "variations": {
+    "ttHTobb": {
+      "weights": {
+        "incl": [],
+        "presel": [],
+        "presel_semilep": [],
+        "presel_dilep": [],
+        "presel_dilep_notau": [],
+        "presel_dilep_onetau": [],
+        "presel_had": [],
+        "1lep": [],
+        "1ele": [],
+        "1mu": [],
+        "0lep_semilep": [],
+        "0lep_dilep": [],
+        "0lep_had": [],
+        "1ele_semilep": [],
+        "1ele_dilep": [],
+        "1ele_had": [],
+        "1mu_semilep": [],
+        "1mu_dilep": [],
+        "1mu_had": [],
+        "1lep_semilep": [],
+        "1lep_dilep": [],
+        "1lep_had": [],
+        "1ele_semilep_notau": [],
+        "1muon_semilep_notau": [],
+        "1lep_semilep_notau": [],
+        "1ele_dilep_notau": [],
+        "1mu_dilep_notau": [],
+        "1lep_dilep_notau": [],
+        "1ele_dilep_onetau": [],
+        "1mu_dilep_onetau": [],
+        "1lep_dilep_onetau": [],
+        "1ele_dilep_twotau": [],
+        "1mu_dilep_twotau": [],
+        "1lep_dilep_twotau": [],
+        "2lep": [],
+        "2lep_semilep": [],
+        "2lep_dilep": [],
+        "2lep_had": []
+      }
+    }
+  }
+}

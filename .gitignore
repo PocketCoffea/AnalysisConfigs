@@ -2,9 +2,16 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.py~
 
 # C extensions
 *.so
+
+#Output
+*.coffea
+*.html
+dask-worker-space/
+
 
 # Distribution / packaging
 .Python
