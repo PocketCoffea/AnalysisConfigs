@@ -78,7 +78,6 @@ cfg =  {
         "voms"           : None,
         "limit"          : None,
         "adapt"          : False,
-        "configs_path"   : "/afs/cern.ch/work/m/mmarcheg/AnalysisConfigs"
     },
 
     # Cuts and plots settings
