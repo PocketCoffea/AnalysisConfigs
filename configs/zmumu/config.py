@@ -47,9 +47,12 @@ dimuon_presel = Cut(
 
 cfg =  {
     "dataset" : {
-        "jsons": [f"{datasets_abspath}/DYJetsToLL_M-50.json",],
+        "jsons": [f"{datasets_abspath}/DATA_SingleMuonC_redirector.json",
+                  f"{datasets_abspath}/DYJetsToLL_M-50.json"
+                 ],
         "filter" : {
-            "samples": ["DYJetsToLL"],
+            "samples": ["DATA_SingleMuonC",
+                        "DYJetsToLL"],
             "samples_exclude" : [],
             "year": ['2018']
         },
@@ -64,7 +67,7 @@ cfg =  {
     "run_options" : {
         "executor"       : "dask/lxplus",
         "workers"        : 1,
-        "scaleout"       : 20,
+        "scaleout"       : 100,
         "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB

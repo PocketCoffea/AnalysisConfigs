@@ -47,12 +47,12 @@ dimuon_presel = Cut(
 
 cfg =  {
     "dataset" : {
-        "jsons": [
-            f"{datasets_abspath}/DATA_SingleMuonC_redirector.json",
-            f"{datasets_abspath}/DYJetsToLL_M-50.json"
-            ],
+        "jsons": [f"{datasets_abspath}/DATA_SingleMuonC_redirector.json",
+                  f"{datasets_abspath}/DYJetsToLL_M-50.json"
+                 ],
         "filter" : {
-            "samples": ["DATA_SingleMuonC","DYJetsToLL"],
+            "samples": ["DATA_SingleMuonC",
+                        "DYJetsToLL"],
             "samples_exclude" : [],
             "year": ['2018']
         },
