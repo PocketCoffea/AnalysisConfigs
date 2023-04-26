@@ -1,0 +1,22 @@
+{
+    "TTbbSemiLeptonic_Powheg_2016_PostVFP": {
+        "metadata": {
+            "das_names": "['/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+            "sample": "TTbbSemiLeptonic",
+            "year": "2016_PostVFP",
+            "isMC": "True",
+            "nevents": "3223118",
+            "size": "8026016459"
+        },
+        "files": [
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/356504C3-EC9E-2645-9361-2FC8734E5061.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/F1A8A447-8FFA-F64D-A6DB-1445B954A4E3.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/DBC40201-BF07-B04F-912A-0492E9D5C59C.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/36939F07-5B76-7F4D-AD8A-43C0FCE71E1B.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/D85609B6-8CEC-8D46-9144-B1C0C416D992.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/8621F9BC-AFF4-BE48-A98E-5EF7E15028AA.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/3F997ADC-8F96-584C-B949-DFD7DC41F935.root",
+            "/pnfs/psi.ch/cms/trivcat//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/BC5E37F6-E63F-4E48-B53D-273F406D76E4.root"
+        ]
+    }
+}
