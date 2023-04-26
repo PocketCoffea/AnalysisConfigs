@@ -7,9 +7,8 @@ from pocket_coffea.parameters.cuts import passthrough
 
 # Local imports of functions
 from preselection_cuts import *
-from custom_cut_functions import *
 import os
-localdir = os.path.dirname(__file__)
+localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -20,14 +19,27 @@ defaults.register_configuration_dir("config_dir", localdir+"/params")
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/btagsf_calibration.yaml",
+                                                  f"{localdir}/params/triggers.yaml",
                                                   # f"{localdir}/params/overrides.yaml",
                                                   update=True)
-parameters 
+
+# jet_overwrite = defaults.OmegaConf.create(
+# """
+# jets_calibration:
+#   factory_file: "${config_dir:}/jets_calibrator_JES_JER_withSyst.pkl.gz"
+#   jet_types:
+#     AK4PFchs: "${default_jets_calibration.factory_configuration.AK4PFchs.JES_JER_Syst}"
+#     AK8PFPuppi: "${default_jets_calibration.factory_configuration.AK8PFPuppi.JES_JER_Syst}"
+#   jec_name_map: "${default_jets_calibration.jec_name_map}"
+# """
+# )
+
+# parameters.update(jet_overwrite, merge=False)
 
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local_2018.json",
                     ],
         "filter" : {
             "samples": ["TTToSemiLeptonic"],
@@ -70,7 +82,7 @@ cfg = Configurator(
                 "inclusive": [  "pileup",
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso", "sf_jet_puId",
-                                *[ f"sf_btag_{b}" for b in btag_variations["2018"]]                               
+                                "sf_btag"                               
                               ],
                 "bycategory" : {
                 }
@@ -98,10 +110,11 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/lxplus",
+        "executor"       : "dask/slurm",
+        "env"            : "conda",
         "workers"        : 1,
         "scaleout"       : 20,
-        "queue"          : "microcentury",
+        "queue"          : "standard",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
