@@ -1,15 +1,14 @@
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_HLTsel
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_nBtagMin, get_HLTsel
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.btag import btag_variations
 from pocket_coffea.parameters.cuts import passthrough
 
 # Local imports of functions
 from preselection_cuts import *
-from custom_cut_functions import *
 import os
-localdir = os.path.dirname(__file__)
+localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -20,20 +19,39 @@ defaults.register_configuration_dir("config_dir", localdir+"/params")
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/btagsf_calibration.yaml",
+                                                  f"{localdir}/params/triggers.yaml",
                                                   # f"{localdir}/params/overrides.yaml",
                                                   update=True)
-parameters 
+
+# jet_overwrite = defaults.OmegaConf.create(
+# """
+# jets_calibration:
+#   factory_file: "${config_dir:}/jets_calibrator_JES_JER_withSyst.pkl.gz"
+#   jet_types:
+#     AK4PFchs: "${default_jets_calibration.factory_configuration.AK4PFchs.JES_JER_Syst}"
+#     AK8PFPuppi: "${default_jets_calibration.factory_configuration.AK8PFPuppi.JES_JER_Syst}"
+#   jec_name_map: "${default_jets_calibration.jec_name_map}"
+# """
+# )
+
+# parameters.update(jet_overwrite, merge=False)
 
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local_2018.json",
                     ],
         "filter" : {
             "samples": ["TTToSemiLeptonic"],
             "samples_exclude" : [],
             "year": ['2018']
         },
+        "subsamples":{
+            "TTToSemiLeptonic": {
+                "tt+1b": [get_nBtagEq(1, coll="Jet")],
+                "tt+2b" : [get_nBtagMin(2, coll="Jet")]
+            }
+        }
     },
 
     workflow = ttHbbBaseProcessor,
@@ -70,7 +88,7 @@ cfg = Configurator(
                 "inclusive": [  "pileup",
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso", "sf_jet_puId",
-                                *[ f"sf_btag_{b}" for b in btag_variations["2018"]]                               
+                                "sf_btag"                               
                               ],
                 "bycategory" : {
                 }
@@ -98,10 +116,11 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/lxplus",
+        "executor"       : "dask/slurm",
+        "env"            : "conda",
         "workers"        : 1,
         "scaleout"       : 20,
-        "queue"          : "microcentury",
+        "queue"          : "standard",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
@@ -109,10 +128,6 @@ run_options = {
         "chunk"          : 200000,
         "retries"        : 50,
         "treereduction"  : 20,
-        "max"            : None,
-        "skipbadfiles"   : None,
-        "voms"           : None,
-        "limit"          : None,
         "adapt"          : False,
         
     }
