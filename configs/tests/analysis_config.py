@@ -1,6 +1,6 @@
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_HLTsel
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_nBtagMin, get_HLTsel
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.btag import btag_variations
 from pocket_coffea.parameters.cuts import passthrough
@@ -46,6 +46,12 @@ cfg = Configurator(
             "samples_exclude" : [],
             "year": ['2018']
         },
+        "subsamples":{
+            "TTToSemiLeptonic": {
+                "tt+1b": [get_nBtagEq(1, coll="Jet")],
+                "tt+2b" : [get_nBtagMin(2, coll="Jet")]
+            }
+        }
     },
 
     workflow = ttHbbBaseProcessor,
@@ -122,10 +128,6 @@ run_options = {
         "chunk"          : 200000,
         "retries"        : 50,
         "treereduction"  : 20,
-        "max"            : None,
-        "skipbadfiles"   : None,
-        "voms"           : None,
-        "limit"          : None,
         "adapt"          : False,
         
     }
