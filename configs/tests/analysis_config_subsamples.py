@@ -4,6 +4,7 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtag
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.btag import btag_variations
 from pocket_coffea.parameters.cuts import passthrough
+from pocket_coffea.lib.columns_manager import ColOut
 
 # Local imports of functions
 from preselection_cuts import *
@@ -28,16 +29,20 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local_2018.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar_local_2017.json",
+                  f"{localdir}/datasets/DATA_SingleEle_2017.json",
+                  f"{localdir}/datasets/DATA_SingleEle_2018.json",
                     ],
         "filter" : {
-            "samples": ["TTToSemiLeptonic"],
+            "samples": ["TTToSemiLeptonic","DATA_SingleEle","DATA_SingleEle"],
             "samples_exclude" : [],
-            "year": ['2018']
+            "year": ['2018','2017']
         },
         "subsamples":{
             "TTToSemiLeptonic": {
-                "tt+1b": [get_nBtagEq(1, coll="Jet")],
-                "tt+2b" : [get_nBtagMin(2, coll="Jet")]
+                "=1b": [get_nBtagEq(1, coll="Jet")],
+                "=2b" : [get_nBtagEq(2, coll="Jet")],
+                ">2b" : [get_nBtagMin(3, coll="Jet")]
             }
         }
     },
@@ -97,7 +102,18 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=0),
         **jet_hists(coll="JetGood", pos=1),
         **jet_hists(coll="JetGood", pos=2),
+    },
+
+    columns = {
+        "common": {},
+        "bysample": {
+            "TTToSemiLeptonic" : { "inclusive":  [ColOut("LeptonGood",["pt","eta","phi"])]},
+            "TTToSemiLeptonic__=1b" :{ "inclusive":  [ColOut("JetGood",["pt","eta","phi"])]},
+            "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
+                
+        }
     }
+    
 )
 
 
