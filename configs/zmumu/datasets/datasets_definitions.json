@@ -7,8 +7,8 @@
               "metadata": {
                   "year":"2018",
                   "isMC": true,
-		              "xsec": 6077.22,
-                  "sum_genweights" :3220110800000.0}
+		  "xsec": 6077.22
+              }
             }
         ]
   },

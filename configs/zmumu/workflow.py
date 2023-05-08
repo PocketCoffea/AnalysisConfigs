@@ -12,7 +12,7 @@ from pocket_coffea.lib.objects import (
 )
 
 
-class zmumuBaseProcessor(BaseProcessorABC):
+class ZmumuBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
         super().__init__(cfg)
         # Additional axis for the year
@@ -44,10 +44,10 @@ class zmumuBaseProcessor(BaseProcessorABC):
         )
         # Build masks for selection of muons, electrons, jets, fatjets
         self.events["MuonGood"] = lepton_selection(
-            self.events, "Muon", self.cfg.finalstate
+            self.events, "Muon", self.params
         )
         self.events["ElectronGood"] = lepton_selection(
-            self.events, "Electron", self.cfg.finalstate
+            self.events, "Electron", self.params
         )
         leptons = ak.with_name(
             ak.concatenate((self.events.MuonGood, self.events.ElectronGood), axis=1),
@@ -56,9 +56,10 @@ class zmumuBaseProcessor(BaseProcessorABC):
         self.events["LeptonGood"] = leptons[ak.argsort(leptons.pt, ascending=False)]
 
         self.events["JetGood"], self.jetGoodMask = jet_selection(
-            self.events, "Jet", self.cfg.finalstate
+            self.events, "Jet", self.params, "LeptonGood"
         )
-        self.events["BJetGood"] = btagging(self.events["JetGood"], self._btag)
+        self.events["BJetGood"] = btagging(
+            self.events["JetGood"], self.params.btagging.working_point[self._year])
 
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
