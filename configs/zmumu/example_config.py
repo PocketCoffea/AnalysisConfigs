@@ -22,11 +22,11 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/DATA_SingleMuonC_redirector.json",
-                  f"{localdir}/datasets/DYJetsToLL_M-50_redirector.json"
+        "jsons": [f"{localdir}/datasets/DATA_SingleMuon.json",
+                  f"{localdir}/datasets/DYJetsToLL_M-50.json"
                     ],
         "filter" : {
-            "samples": ["DATA_SingleMuonC",
+            "samples": ["DATA_SingleMuon",
                         "DYJetsToLL"],
             "samples_exclude" : [],
             "year": ['2018']
@@ -35,7 +35,7 @@ cfg = Configurator(
 
     workflow = ZmumuBaseProcessor,
     
-    skim = [get_nObj_min(1, 15., "Muon"),
+    skim = [get_nObj_min(1, 18., "Muon"),
             # Asking only SingleMuon triggers since we are only using SingleMuon PD data
             get_HLTsel(primaryDatasets=["SingleMuon"])], 
     

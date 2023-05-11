@@ -416,12 +416,14 @@ Run the coffea processor to get ``.coffea`` output files. The ``coffea`` process
 
 ```bash
 # read all information from the config file
-runner.py --cfg example_config.py --full
+runner.py --cfg example_config.py --full  -o output_v1
+
 # iterative run is also possible
 ## run --test for iterative processor with ``--limit-chunks/-lc``(default:2) and ``--limit-files/-lf``(default:1)
-runner.py --cfg example_config.py  --full --test --lf 1 --lc  2
+runner.py --cfg example_config.py  --full --test --lf 1 --lc  2 -o output_v1
+
 ## change the --executor and numbers of jobs with -s/--scaleout
-runner.py --cfg example_config.py  --full --executor futures -s 10
+runner.py --cfg example_config.py  --full --executor futures -s 10 -o output_v1
 ```
 
 The scaleout configurations really depends on cluster and schedulers with different sites(lxplus, LPC, naf-desy).
@@ -447,7 +449,41 @@ run_options = {
     }
 ```
 
+The output of the script will be similar to 
+
+```bash
+$ runner.py --cfg example_config.py -o output_all
+
+    ____             __        __  ______      ________          
+   / __ \____  _____/ /_____  / /_/ ____/___  / __/ __/__  ____ _
+  / /_/ / __ \/ ___/ //_/ _ \/ __/ /   / __ \/ /_/ /_/ _ \/ __ `/
+ / ____/ /_/ / /__/ ,< /  __/ /_/ /___/ /_/ / __/ __/  __/ /_/ / 
+/_/    \____/\___/_/|_|\___/\__/\____/\____/_/ /_/  \___/\__,_/  
+                                                                 
+
+Loading the configuration file...
+[INFO    ] Configurator instance:
+  - Workflow: <class 'workflow.ZmumuBaseProcessor'>
+  - N. datasets: 5 
+   -- Dataset: DATA_SingleMuon_2018_EraA,  Sample: DATA_SingleMuon, N. files: 92, N. events: 241608232
+   -- Dataset: DATA_SingleMuon_2018_EraB,  Sample: DATA_SingleMuon, N. files: 51, N. events: 119918017
+   -- Dataset: DATA_SingleMuon_2018_EraC,  Sample: DATA_SingleMuon, N. files: 56, N. events: 109986009
+   -- Dataset: DATA_SingleMuon_2018_EraD,  Sample: DATA_SingleMuon, N. files: 194, N. events: 513909894
+   -- Dataset: DYJetsToLL_M-50_2018,  Sample: DYJetsToLL, N. files: 204, N. events: 195510810
+  - Subsamples:
+   -- Sample DATA_SingleMuon: StandardSelection ['DATA_SingleMuon'], (1 categories)
+   -- Sample DYJetsToLL: StandardSelection ['DYJetsToLL'], (1 categories)
+  - Skim: ['nMuon_min1_pt18.0', 'HLT_trigger_SingleMuon']
+  - Preselection: ['dilepton']
+  - Categories: StandardSelection ['baseline'], (1 categories)
+  - Variables:  ['MuonGood_eta_1', 'MuonGood_pt_1', 'MuonGood_phi_1', 'nElectronGood', 'nMuonGood', 'nJets', 'nBJets', 'JetGood_eta_1', 'JetGood_pt_1', 'JetGood_phi_1', 'JetGood_btagDeepFlavB_1', 'JetGood_eta_2', 'JetGood_pt_2', 'JetGood_phi_2', 'JetGood_btagDeepFlavB_2', 'mll']
+  - available weights variations: {'DATA_SingleMuon': ['nominal', 'sf_mu_iso', 'pileup', 'sf_mu_id'], 'DYJetsToLL': ['nominal', 'sf_mu_iso', 'pileup', 'sf_mu_id']} 
+  - available shape variations: {'DATA_SingleMuon': [], 'DYJetsToLL': []}
+Saving config file to output_all/config.json
+....
+```
+
+
 ## Produce plots
 
 To be completed
-
