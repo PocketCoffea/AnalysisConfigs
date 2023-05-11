@@ -151,7 +151,7 @@ while another has a global redirector prefix (e.g. ``xrootd-cms.infn.it``), and 
 `_redirector.json` If one has to rebuild the dataset to include more datasets, the extra argument ``--overwrite`` can be
 provided to the script.
 
-```
+```bash
 ls zmumu/datasets
   datasets_definitions.json DATA_SingleMuonC.json DATA_SingleMuonC_redirector.json DYJetsToLL_M-50.json
   DYJetsToLL_M-50_redirector.json
@@ -172,45 +172,37 @@ The selections are performed at two levels:
 
 ## Object preselection
 
-To select the objects entering the final analysis, we need to specify a series of cut parameters for the leptons and jets in the file ``PocketCoffea/pocket_coffea/parameters/object_preselection.py``. These selections include the pT, eta acceptance cuts, the object identification working points, the muon isolation, the b-tagging working point, etc.
+To select the objects entering the final analysis, we need to specify a series of cut parameters for the leptons and
+jets in the file ``params/object_preselection.yaml``. These selections include the pT, eta
+acceptance cuts, the object identification working points, the muon isolation, the b-tagging working point, etc.
 
-For the Z->mumu analysis, we just use the standard definitions for the muon, electron and jet objects, that we include as a dictionary under the key ``dimuon``:
+For the Z->mumu analysis, we just use the standard definitions for the muon, electron and jet objects:
 
-.. code-block:: python
+```yaml
+object_preselection:
+  Muon:
+    pt: 15
+    eta: 2.4
+    iso: 0.25  #PFIsoLoose
+    id: tightId
 
-   object_preselection = {
-      "dimuon": {
-         "Muon": {
-               "pt": 15,
-               "eta": 2.4,
-               "iso": 0.25, #PFIsoLoose
-               "id": "tightId",
-         },
-         "Electron": {
-               "pt": 15,
-               "eta": 2.4,
-               "iso": 0.06,
-               "id": "mvaFall17V2Iso_WP80",
-         },
-         "Jet": {
-               "dr": 0.4,
-               "pt": 30,
-               "eta": 2.4,
-               "jetId": 2,
-               "puId": {"wp": "L", "value": 4, "maxpt": 50.0},
-         },
-   ...
+  Electron:
+    pt: 15
+    eta: 2.4
+    iso: 0.06
+    id: mvaFall17V2Iso_WP80
 
-The ``finalstate`` label has to be changed to ``dimuon`` such that the processor can query the corresponding parameters for the object preselection defined above:
+  Jet:
+    dr_lepton: 0.4
+    pt: 30
+    eta: 2.4
+    jetId: 2
+    puId:
+      wp: L
+      value: 4
+      maxpt: 50.0
 
-.. code-block:: python
-
-   cfg = {
-    ...
-    "finalstate" : "dimuon",
-    ...
-   }
-
+```
 
 ## Event selection
 
@@ -218,17 +210,17 @@ In PocketCoffea, the event selections are implemented with a dedicated `Cut` obj
 Several factory ``Cut`` objects are available in ``pocket_coffea.lib.cut_functions``, otherwise the user can define their own custom ``Cut`` objects.
 
 
-Skim
-~~~~~~~~~~~~~~~~~~~~~
+### Skim
 
-The skim selection of the events is performed "on the fly" to reduce the number of processed events. At this stage we also apply the HLT trigger requirements required by the analysis.
-The following steps of the analysis are performed only on the events passing the skim selection, while the others are discarded from the branch ``events``, therefore reducing the computational load on the processor.
-In the config file, we specify two skim cuts: one is selecting events with at least one 15 GeV muon and the second is requiring the HLT ``SingleMuon`` path.
+The skim selection of the events is performed "on the fly" to reduce the number of processed events. At this stage we
+also apply the HLT trigger requirements required by the analysis.  The following steps of the analysis are performed
+only on the events passing the skim selection, while the others are discarded from the branch ``events``, therefore
+reducing the computational load on the processor.  In the config file, we specify two skim cuts: one is selecting events
+with at least one 15 GeV muon and the second is requiring the HLT ``SingleMuon`` path.
 
 In the preamble of ``config.py``, we define our custom trigger dictionary, which we pass as an argument to the factory function ``get_HLTsel()``:
 
-.. code-block:: python
-
+```python
    trigger_dict = {
       "2018": {
          "SingleEle": [
@@ -244,19 +236,19 @@ In the preamble of ``config.py``, we define our custom trigger dictionary, which
    cfg = {
     ...
     "skim": [get_nObj_min(1, 15., "Muon"),
-             get_HLTsel("dimuon", trigger_dict, primaryDatasets=["SingleMuon"])],
+             get_HLTsel(primaryDatasets=["SingleMuon"])],
     ...
-   }
+```
 
 
-Event preselection
-~~~~~~~~~~~~~~~~~~~~~
+### Event preselection
 
-In the Z->mumu analysis, we want to select events with exactly two muons with opposite charge. In addition, we require a cut on the leading muon pT and on the dilepton invariant mass, to select the Z boson mass window.
-The parameters are directly passed to the constructor of the ``Cut`` object as the dictionary ``params``. We can define the function ``dimuon`` and the ``Cut`` object ``dimuon_presel`` in the preamble of config:
+In the Z->mumu analysis, we want to select events with exactly two muons with opposite charge. In addition, we require a
+cut on the leading muon pT and on the dilepton invariant mass, to select the Z boson mass window.  The parameters are
+directly passed to the constructor of the ``Cut`` object as the dictionary ``params``. We can define the function
+``dimuon`` and the ``Cut`` object ``dimuon_presel`` in the preamble of the config script:
 
-.. code-block:: python
-
+```python
    def dimuon(events, params, year, sample, **kwargs):
 
       # Masks for same-flavor (SF) and opposite-sign (OS)
@@ -282,28 +274,27 @@ The parameters are directly passed to the constructor of the ``Cut`` object as t
       },
       function=dimuon,
    )
+```
 
 In a scenario of an analysis requiring several different cuts, a dedicated library of cuts and functions can be defined in a separate file and imported in the config file.
 
 The ``preselections`` field in the config file is updated accordingly:
 
-.. code-block:: python
-
+```python
 
    cfg = {
       ...
       "preselections" : [dimuon_presel],
       ...
    }
+```
 
+### Categorization
 
-Categorization
-~~~~~~~~~~~~~~~~~~~~~
+In the toy Z->mumu analysis, no further categorization of the events is performed. Only a ``baseline`` category is
+defined with the ``passthrough`` factory cut that is just passing the events through without any further selection:
 
-In the toy Z->mumu analysis, no further categorization of the events is performed. Only a ``baseline`` category is defined with the ``passthrough`` factory cut that is just passing the events through without any further selection:
-
-.. code-block:: python
-
+```python
    cfg = {
       ...
       # Cuts and plots settings
@@ -316,15 +307,17 @@ In the toy Z->mumu analysis, no further categorization of the events is performe
       },
       ...
    }
+   ```
 
-If for example Z->ee events were also included in the analysis, one could have defined a more general "dilepton" preselection and categorized the events as ``2e`` or ``2mu`` depending if they contain two electrons or two muons, respectively.
+If for example Z->ee events were also included in the analysis, one could have defined a more general "dilepton"
+preselection and categorized the events as ``2e`` or ``2mu`` depending if they contain two electrons or two muons,
+respectively.
 
-Define weights and variations
-================
+## Define weights and variations
 
 The application of the nominal value of scale factors and weights is switched on and off just by adding the corresponding key in the ``weights`` dictionary:
 
-.. code-block:: python
+```
 
    cfg = {
       ...
@@ -342,13 +335,14 @@ The application of the nominal value of scale factors and weights is switched on
       },
       ...
    }
+```
 
 In our case, we are applying the nominal scaling of Monte Carlo by ``lumi * XS / genWeight`` together with the pileup reweighting and the muon ID and isolation scale factors.
 The reweighting of the events is managed internally by the module ``WeightsManager``.
 
 To store also the up and down systematic variations corresponding to a given weight, one can specify it in the ``variations`` dictionary:
 
-.. code-block:: python
+```python
 
    cfg = {
       ...
@@ -362,40 +356,48 @@ To store also the up and down systematic variations corresponding to a given wei
                }
             },
          "bysample": {
-         }    
+         }  
          },  
       },
       ...
    }
+```
 
 In this case we will store the variations corresponding to the systematic variation of pileup and the muon ID and isolation scale factors.
 These systematic uncertainties will be included in the final plots.
 
-Define histograms
-================
+## Define histograms
 
-Wrapped in the ``variable`` dictionary under ``config.py``.
+In PocketCoffea histograms can be defined directly from the configuration:  look at the ``variable`` dictionary under
+``config.py``.
+Histograms are defined with the options specified in
+[`hist_manager.py`](https://github.com/PocketCoffea/PocketCoffea/blob/main/pocket_coffea/lib/hist_manager.py#L30). An
+histogram is a collection of `Axis` objects with additional options for excluding/including variables, samples, and
+systematic variations. 
 
-- Create custom histogram with ``key:$HistConf_obj`` , create `Axis` in a list (1 element for 1D-hist, 2 elements for 2D-hist)
+In order to create a user defined histogram add `Axis` as a list (1 element for 1D-hist, 2 elements for 2D-hist)
 
-
-.. code-block:: python
-   
+```python
    "variables":
        {
            # 1D plots
-           "mll" : HistConf( [Axis(coll="ll", field="mass", bins=100, start=50, stop=150, label=r"$M_{\ell\ell}$ [GeV]")] 
+           "ll" : HistConf( [Axis(coll="ll", field="mass", bins=100, start=50, stop=150, label=r"$M_{\ell\ell}$ [GeV]")] 
     	}
 	
 	# coll : collection/objects under events
 	# field: fields under collections
 	# bins, start, stop: # bins, axis-min, axis-max
 	# label: axis label name
-.. _hist: http://cnn.com/ https://github.com/PocketCoffea/PocketCoffea/blob/main/pocket_coffea/parameters/histograms.py	
+```
+
+The `collection` is the name used to access the fields of the `events` main dataset (the NanoAOD Events tree). The `field` specifies the specific
+array to use. If a field is global in the `events`, e.g. a user defined arrays in events, just use `coll=events`. Please
+refer to [the `Axis` code](https://github.com/PocketCoffea/PocketCoffea/blob/main/pocket_coffea/lib/hist_manager.py#L12) for a complete description of the options. 
+
 
 - There are some predefined `hist`_. 
 
-.. code-block:: python
+```python
 
 	"variables":
        {
@@ -405,49 +407,47 @@ Wrapped in the ``variable`` dictionary under ``config.py``.
 	# Jet kinematics
         **jet_hists(coll="JetGood", pos=0),
     	}
+```
 
 	
-Run the processor
-================
+# Run the processor
+
 Run the coffea processor to get ``.coffea`` output files. The ``coffea`` processor can be run locally with ``iterative`` or ``futures`` executors or scaleout to clusters. We now test the setup on ``lxplus``, ``naf-desy`` but more sites can also be included later.
 
-.. code-block:: python
+```bash
+# read all information from the config file
+runner.py --cfg example_config.py --full
+# iterative run is also possible
+## run --test for iterative processor with ``--limit-chunks/-lc``(default:2) and ``--limit-files/-lf``(default:1)
+runner.py --cfg example_config.py  --full --test --lf 1 --lc  2
+## change the --executor and numbers of jobs with -s/--scaleout
+runner.py --cfg example_config.py  --full --executor futures -s 10
+```
 
-	# read all information from the config file
-	runner.py --cfg configs/zmumu/config.py --full
-	# iterative run is also possible
-	## run --test for iterative processor with ``--limit-chunks/-lc``(default:2) and ``--limit-files/-lf``(default:1)
-	runner.py --cfg configs/zmumu/config.py  --full --test --lf 1 --lc  2
-	## change the --executor and numbers of jobs with -s/--scaleout
-	runner.py --cfg configs/zmumu/config.py  --full --executor futures -s 10
-	
 The scaleout configurations really depends on cluster and schedulers with different sites(lxplus, LPC, naf-desy).
 
-.. code-block:: python
+```python
 
-	## Example for naf-desy
-	"run_options" : {
-		"executor"       : "parsl/condor/naf-desy", # scheduler/cluster-type/site
-		"workers"        : 1, # cpus for each job
-		"scaleout"       : 300, # numbers of job
-		"queue"          : "microcentury",# job queue time for condor
-		"walltime"       : "00:40:00", # walltime for condor jobs
-		"disk_per_worker": "4GB", # disk size for each job(stored files)
-		"mem_per_worker" : "2GB", # RAM size for each job
-		"exclusive"      : False, # not used for condor
-		"chunk"          : 200000, #chunk size 
-		"retries"        : 20, # numbers of retries when job failes
-		"max"            : None, # numbers of chunks 
-		"skipbadfiles"   : None, # skip badfiles
-		"voms"           : None, # point to the voms certificate directory
-		"limit"          : None, # limited files
-	    },
-	
+## Example for naf-desy
+run_options = {
+    "executor"       : "parsl/condor/naf-desy", # scheduler/cluster-type/site
+    "workers"        : 1, # cpus for each job
+    "scaleout"       : 300, # numbers of job
+    "queue"          : "microcentury",# job queue time for condor
+    "walltime"       : "00:40:00", # walltime for condor jobs
+    "disk_per_worker": "4GB", # disk size for each job(stored files)
+    "mem_per_worker" : "2GB", # RAM size for each job
+    "exclusive"      : False, # not used for condor
+    "chunk"          : 200000, #chunk size 
+    "retries"        : 20, # numbers of retries when job failes
+    "max"            : None, # numbers of chunks 
+    "skipbadfiles"   : None, # skip badfiles
+    "voms"           : None, # point to the voms certificate directory
+    "limit"          : None, # limited files
+    }
+```
 
-Produce plots
-================
+## Produce plots
 
-.. code-block:: bash
-
-   python ../PocketCoffea/scripts/plot/make_plots.py --cfg configs/zmumu/config.py -i output/test_zmumu/output_all.coffea
+To be completed
 
