@@ -20,5 +20,9 @@ pip install -e .
 
 This will install the `configs` package in editable mode. 
 
+## Analysis examples
+
+- Simple **Z-> mumu** invariant mass analysis [here](./configs/zmumu)
+
 
 
