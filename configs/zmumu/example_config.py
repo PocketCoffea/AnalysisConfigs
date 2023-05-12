@@ -91,13 +91,13 @@ run_options = {
         "executor"       : "dask/slurm",
         "env"            : "conda",
         "workers"        : 1,
-        "scaleout"       : 100,
+        "scaleout"       : 300,
         "queue"          : "standard",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 300000,
+        "chunk"          : 400000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
