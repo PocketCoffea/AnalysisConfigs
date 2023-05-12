@@ -88,7 +88,7 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/condor",
+        "executor"       : "dask/lxplus",
         "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 200,
