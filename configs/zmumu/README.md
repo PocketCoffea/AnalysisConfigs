@@ -67,7 +67,7 @@ We have to look for the corresponding `DAS <https://cmsweb.cern.ch/das/>`_ keys:
 - `/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD`
 
 The list of datasets has to be written in a structured dictionary together with the corresponding metadata in a json
-file.  This json file is then read by the ``build_dataset.py`` script to produce the actual json datasets that are
+file.  This json file is then read by the ``build_datasets.py`` script to produce the actual json datasets that are
 passed as input to the Coffea processor. The steps are the following:
 
 1) Create a json file that contains the required datasets, ``dataset_definitions.json``. Each entry of the dictionary
@@ -197,7 +197,7 @@ There are more options to specify a regex to filter CMS Tiers or options to whit
 output jsons can be split automatically by year or kept together. 
 
 ```bash
-(pocket-coffea) ➜  zmumu git:(main) ✗ build_dataset.py -h
+(pocket-coffea) ➜  zmumu git:(main) ✗ build_datasets.py -h
 
    ___       _ __   _____       __               __ 
   / _ )__ __(_) /__/ / _ \___ _/ /____ ____ ___ / /_
@@ -205,7 +205,7 @@ output jsons can be split automatically by year or kept together.
 /____/\_,_/_/_/\_,_/____/\_,_/\__/\_,_/___/\__/\__/ 
                                                    
 
-usage: build_dataset.py [-h] [--cfg CFG] [-k KEYS [KEYS ...]] [-d] [-o] [-c] [-s] [-l LOCAL_PREFIX] [-ws WHITELIST_SITES [WHITELIST_SITES ...]] [-bs BLACKLIST_SITES [BLACKLIST_SITES ...]] [-rs REGEX_SITES]
+usage: build_datasets.py [-h] [--cfg CFG] [-k KEYS [KEYS ...]] [-d] [-o] [-c] [-s] [-l LOCAL_PREFIX] [-ws WHITELIST_SITES [WHITELIST_SITES ...]] [-bs BLACKLIST_SITES [BLACKLIST_SITES ...]] [-rs REGEX_SITES]
 
 Build dataset fileset in json format
 
