@@ -88,10 +88,10 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "conda",
+        "executor"       : "dask/condor",
+        "env"            : "singularity",
         "workers"        : 1,
-        "scaleout"       : 300,
+        "scaleout"       : 200,
         "queue"          : "standard",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
