@@ -114,10 +114,37 @@ our Drell-Yan and SingleMuon datasets should be the following:
         ]
   },
     "DATA_SingleMuon": {
-        "sample": "DATA_SingleMuonC",
-        "json_output": "datasets/DATA_SingleMuonC.json",
+        "sample": "DATA_SingleMuon",
+        "json_output": "datasets/DATA_SingleMuon.json",
         "files": [
-
+             {
+                "das_names": [
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "A"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2-v3/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "B"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2018B-UL2018_MiniAODv2-v2/MINIAOD"
+                ]
+            },
             {
                 "das_names": [
                     "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
@@ -131,7 +158,8 @@ our Drell-Yan and SingleMuon datasets should be the following:
                 "das_parents_names": [
                     "/SingleMuon/Run2018C-UL2018_MiniAODv2-v2/MINIAOD"
                 ]
-            }
+            },
+            {....}
         ]
     }
 }
@@ -142,7 +170,7 @@ our Drell-Yan and SingleMuon datasets should be the following:
 ```bash
 voms-proxy-init -voms cms -rfc --valid 168:0
 
-build_dataset.py --cfg datasets/dataset_definitions.json
+build_datasets.py --cfg datasets/dataset_definitions.json
 ```
 
 Four ``json`` files are produced as output, two for each dataset: a version includes file paths with a specific prefix
@@ -152,13 +180,134 @@ while another has a global redirector prefix (e.g. ``xrootd-cms.infn.it``), and 
 provided to the script.
 
 ```bash
-ls zmumu/datasets
-  datasets_definitions.json DATA_SingleMuonC.json DATA_SingleMuonC_redirector.json DYJetsToLL_M-50.json
-  DYJetsToLL_M-50_redirector.json
+ls -lrt datasets/
+total 129K
+-rw-r--r-- 1   49K May  8 13:38 DYJetsToLL_M-50_2018.json
+-rw-r--r-- 1   47K May  8 13:38 DYJetsToLL_M-50_redirector_2018.json
+-rw-r--r-- 1   46K May  8 13:38 DYJetsToLL_M-50_local_2018.json
+-rw-r--r-- 1  5.6K May 11 19:19 datasets_definitions.json~
+-rw-r--r-- 1   49K May 11 19:20 DYJetsToLL_M-50.json
+-rw-r--r-- 1   47K May 11 19:20 DYJetsToLL_M-50_redirector.json
+-rw-r--r-- 1  144K May 11 19:21 DATA_SingleMuon.json
+-rw-r--r-- 1  135K May 11 19:21 DATA_SingleMuon_redirector.json
+-rw-r--r-- 1  3.0K May 11 19:22 datasets_definitions.json
+```
+
+There are more options to specify a regex to filter CMS Tiers or options to whitelist or blacklist sites. Moreover the
+output jsons can be split automatically by year or kept together. 
+
+```bash
+(pocket-coffea) ➜  zmumu git:(main) ✗ build_dataset.py -h
+
+   ___       _ __   _____       __               __ 
+  / _ )__ __(_) /__/ / _ \___ _/ /____ ____ ___ / /_
+ / _  / // / / / _  / // / _ `/ __/ _ `(_-</ -_) __/
+/____/\_,_/_/_/\_,_/____/\_,_/\__/\_,_/___/\__/\__/ 
+                                                   
+
+usage: build_dataset.py [-h] [--cfg CFG] [-k KEYS [KEYS ...]] [-d] [-o] [-c] [-s] [-l LOCAL_PREFIX] [-ws WHITELIST_SITES [WHITELIST_SITES ...]] [-bs BLACKLIST_SITES [BLACKLIST_SITES ...]] [-rs REGEX_SITES]
+
+Build dataset fileset in json format
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --cfg CFG             Config file with parameters specific to the current run
+  -k KEYS [KEYS ...], --keys KEYS [KEYS ...]
+                        Dataset keys to select
+  -d, --download        Download dataset files on local machine
+  -o, --overwrite       Overwrite existing file definition json
+  -c, --check           Check file existance in the local prefix
+  -s, --split-by-year   Split output files by year
+  -l LOCAL_PREFIX, --local-prefix LOCAL_PREFIX
+                        Local prefix
+  -ws WHITELIST_SITES [WHITELIST_SITES ...], --whitelist-sites WHITELIST_SITES [WHITELIST_SITES ...]
+                        List of sites in the whitelist
+  -bs BLACKLIST_SITES [BLACKLIST_SITES ...], --blacklist-sites BLACKLIST_SITES [BLACKLIST_SITES ...]
+                        List of sites in the blacklist
+  -rs REGEX_SITES, --regex-sites REGEX_SITES
+                        Regex to filter sites
 ```
 
 
 # Analysis configuration
+
+## Parameters
+
+PocketCoffea distinguishes between parameters for the analysis and specific runs configuration. 
+  - A *parameter* is considered something defining more in general a specific analysis and it is usually common between
+different runs: e.g. HLT triggers, scale factors working points, JES/JER configuration. 
+  - A configuration is considered specific for a run of the analysis where the users applied selections, cleans objects
+    and output histograms or arrays. 
+    
+Parameters are handled as *yaml* files with the [OmegaConf](https://omegaconf.readthedocs.io/en/latest/index.html)
+utility library. A set of common and defaults are defined centrally by PocketCoffea and then the user can overwrite,
+replace and add analysis specific configurations. 
+
+This is done usually in the preamble of the analysis config file: 
+
+```python
+import os
+localdir = os.path.dirname(os.path.abspath(__file__))
+
+# Loading default parameters
+from pocket_coffea.parameters import defaults
+default_parameters = defaults.get_default_parameters()
+defaults.register_configuration_dir("config_dir", localdir+"/params")
+
+parameters = defaults.merge_parameters_from_files(default_parameters,
+                                                  f"{localdir}/params/object_preselection.yaml",
+                                                  f"{localdir}/params/triggers.yaml",
+                                                  update=True)
+
+```
+
+The `parameters` object can be manipualted freely by the user and then passed to the `Configurator` class to be used in
+the analysis. The parameters are then **dumped** along with the analysis output to preserve them. 
+
+## Configuration
+
+A specific analysis *run* is defined in PocketCoffea using an instance of a `Configurator`
+[code](https://github.com/PocketCoffea/PocketCoffea/blob/main/pocket_coffea/utils/configurator.py#L20) class. 
+This class groups all the information about skimming, categorization, datasets, and outputs. 
+The next sections of the tutorial briefly describes how to configure it for the Zmumu analysis.
+
+The configurator instance is created inside the main configuration file `example_config.py` and assied to a variable
+called `cfg`. This special name is used by the framework when the file is passed to the `runner.py` script to be
+executed. 
+
+
+```python
+from pocket_coffea.utils.configurator import Configurator
+from pocket_coffea.lib.cut_definition import Cut
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel
+from pocket_coffea.parameters.cuts import passthrough
+from pocket_coffea.parameters.histograms import *
+from workflow import ZmumuBaseProcessor
+from custom_cut_functions import *
+
+
+cfg = Configurator(
+    parameters = parameters,
+    datasets = {
+        "jsons": [f"{localdir}/datasets/DATA_SingleMuon.json",
+                  f"{localdir}/datasets/DYJetsToLL_M-50.json"
+                    ],
+        "filter" : {
+            "samples": ["DATA_SingleMuon",
+                        "DYJetsToLL"],
+            "samples_exclude" : [],
+            "year": ['2018']
+        }
+    },
+    #.....continues
+    workflow = ZmumuBaseProcessor,
+```
+
+Datasets are specified by passing the list of json to be used and they can be filtered by year of sample type. 
+
+Parameters are also passed to the Configurator as well as the **workflow** class to be used in the processing.
+This class is user defined in the `workflow.py` file locally in the folder.
+
 ## Define selections
 
 The selections are performed at two levels:
@@ -204,6 +353,9 @@ object_preselection:
 
 ```
 
+This parameters are used by the functions which filters the object collections in the `workflow.py` file. 
+
+
 ## Event selection
 
 In PocketCoffea, the event selections are implemented with a dedicated `Cut` object, that stores both the information of the cutting function and its input parameters.
@@ -218,27 +370,23 @@ only on the events passing the skim selection, while the others are discarded fr
 reducing the computational load on the processor.  In the config file, we specify two skim cuts: one is selecting events
 with at least one 15 GeV muon and the second is requiring the HLT ``SingleMuon`` path.
 
-In the preamble of ``config.py``, we define our custom trigger dictionary, which we pass as an argument to the factory function ``get_HLTsel()``:
+Triggers are specified in a parameter yaml files under the `params` dir (but the localtion is up to the user). 
+The parameters are then loadedand added to the default parameters in the preamble of the config file. 
+
+
+In the preamble of `example_config.py`,  which we pass as an argument to the factory function ``get_HLTsel()``:
 
 ```python
-   trigger_dict = {
-      "2018": {
-         "SingleEle": [
-               "Ele32_WPTight_Gsf",
-               "Ele28_eta2p1_WPTight_Gsf_HT150",
-         ],
-         "SingleMuon": [
-               "IsoMu24",
-         ],
-      },
-   }
-
-   cfg = {
-    ...
-    "skim": [get_nObj_min(1, 15., "Muon"),
-             get_HLTsel(primaryDatasets=["SingleMuon"])],
-    ...
+cfg = Configurator(
+    # .....   
+    
+    skim = [get_nObj_min(1, 18., "Muon"),
+            # Asking only SingleMuon triggers since we are only using SingleMuon PD data
+            get_HLTsel(primaryDatasets=["SingleMuon"])], 
+    
 ```
+
+
 
 
 ### Event preselection
@@ -276,17 +424,17 @@ directly passed to the constructor of the ``Cut`` object as the dictionary ``par
    )
 ```
 
-In a scenario of an analysis requiring several different cuts, a dedicated library of cuts and functions can be defined in a separate file and imported in the config file.
+In a scenario of an analysis requiring several different cuts, a dedicated library of cuts and functions can be defined
+in a separate file and imported in the config file. This is the strategy implemented in the example (and recommended to
+keep the config file minimal). Have a loot at the `custom_cut_functions.py` file.
 
 The ``preselections`` field in the config file is updated accordingly:
 
 ```python
-
-   cfg = {
-      ...
-      "preselections" : [dimuon_presel],
-      ...
-   }
+cfg = Configurator(
+    # .....   
+    
+    preselections = [dimuon_presel],
 ```
 
 ### Categorization
@@ -295,19 +443,13 @@ In the toy Z->mumu analysis, no further categorization of the events is performe
 defined with the ``passthrough`` factory cut that is just passing the events through without any further selection:
 
 ```python
-   cfg = {
-      ...
-      # Cuts and plots settings
-      "finalstate" : "dimuon",
-      "skim": [get_nObj_min(1, 15., "Muon"),
-               get_HLTsel("dimuon", trigger_dict, primaryDatasets=["SingleMuon"])],
-      "preselections" : [dimuon_presel],
-      "categories": {
-         "baseline": [passthrough],
-      },
-      ...
-   }
-   ```
+cfg = Configurator(
+    # .....   
+    
+    categories = {
+        "baseline": [passthrough],
+    }, 
+```
 
 If for example Z->ee events were also included in the analysis, one could have defined a more general "dilepton"
 preselection and categorized the events as ``2e`` or ``2mu`` depending if they contain two electrons or two muons,
@@ -317,24 +459,37 @@ respectively.
 
 The application of the nominal value of scale factors and weights is switched on and off just by adding the corresponding key in the ``weights`` dictionary:
 
-```
+```python
+cfg = Configurator(
+    # .....
 
-   cfg = {
-      ...
-      "weights": {
+    weights = {
          "common": {
-            "inclusive": ["genWeight","lumi","XS",
-                          "pileup",
-                          "sf_mu_id","sf_mu_iso",
-                          ],
-            "bycategory" : {
-            }
-        },
-        "bysample": {
-        }
-      },
-      ...
-   }
+             "inclusive": ["genWeight","lumi","XS",
+                           "pileup",
+                           "sf_mu_id","sf_mu_iso",
+                           ],
+             "bycategory" : {
+             }
+         },
+         "bysample": {
+         }
+     },cfg = {
+       ...
+       "weights": {
+          "common": {
+             "inclusive": ["genWeight","lumi","XS",
+                           "pileup",
+                           "sf_mu_id","sf_mu_iso",
+                           ],
+             "bycategory" : {
+             }
+         },
+         "bysample": {
+         }
+       },
+       ...
+    }
 ```
 
 In our case, we are applying the nominal scaling of Monte Carlo by ``lumi * XS / genWeight`` together with the pileup reweighting and the muon ID and isolation scale factors.
@@ -343,24 +498,22 @@ The reweighting of the events is managed internally by the module ``WeightsManag
 To store also the up and down systematic variations corresponding to a given weight, one can specify it in the ``variations`` dictionary:
 
 ```python
-
-   cfg = {
-      ...
-      "variations": {
-         "weights": {
+cfg = Configurator(
+    # .....
+    variations = {
+        "weights": {
             "common": {
-               "inclusive": [ "pileup",
-                              "sf_mu_id", "sf_mu_iso"
-                           ],
-               "bycategory" : {
-               }
+                "inclusive": [  "pileup",
+                                "sf_mu_id", "sf_mu_iso"
+                              ],
+                "bycategory" : {
+                }
             },
-         "bysample": {
-         }  
-         },  
-      },
-      ...
-   }
+        "bysample": {
+        }    
+        },
+    },
+
 ```
 
 In this case we will store the variations corresponding to the systematic variation of pileup and the muon ID and isolation scale factors.
@@ -369,7 +522,7 @@ These systematic uncertainties will be included in the final plots.
 ## Define histograms
 
 In PocketCoffea histograms can be defined directly from the configuration:  look at the ``variable`` dictionary under
-``config.py``.
+`example_config.py`.
 Histograms are defined with the options specified in
 [`hist_manager.py`](https://github.com/PocketCoffea/PocketCoffea/blob/main/pocket_coffea/lib/hist_manager.py#L30). An
 histogram is a collection of `Axis` objects with additional options for excluding/including variables, samples, and
@@ -378,11 +531,15 @@ systematic variations.
 In order to create a user defined histogram add `Axis` as a list (1 element for 1D-hist, 2 elements for 2D-hist)
 
 ```python
-   "variables":
-       {
+
+cfg = Configurator(
+    # .....
+    
+   variables : {
+       
            # 1D plots
-           "ll" : HistConf( [Axis(coll="ll", field="mass", bins=100, start=50, stop=150, label=r"$M_{\ell\ell}$ [GeV]")] 
-    	}
+           "mll" : HistConf( [Axis(coll="ll", field="mass", bins=100, start=50, stop=150, label=r"$M_{\ell\ell}$ [GeV]")] 
+    },
 	
 	# coll : collection/objects under events
 	# field: fields under collections
@@ -399,18 +556,21 @@ refer to [the `Axis` code](https://github.com/PocketCoffea/PocketCoffea/blob/mai
 
 ```python
 
-	"variables":
-       {
+cfg = Configurator(
+    # .....
+    
+   variables : {
         **count_hist(name="nJets", coll="JetGood",bins=8, start=0, stop=8),
-	# Muon kinematics
-	**muon_hists(coll="MuonGood", pos=0),
-	# Jet kinematics
+	    # Muon kinematics
+	    **muon_hists(coll="MuonGood", pos=0),
+	    # Jet kinematics
         **jet_hists(coll="JetGood", pos=0),
-    	}
+    },
+       
 ```
 
 	
-# Run the processor
+# run the processor
 
 Run the coffea processor to get ``.coffea`` output files. The ``coffea`` processor can be run locally with ``iterative`` or ``futures`` executors or scaleout to clusters. We now test the setup on ``lxplus``, ``naf-desy`` but more sites can also be included later.
 
