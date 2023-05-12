@@ -607,6 +607,24 @@ run_options = {
     "voms"           : None, # point to the voms certificate directory
     "limit"          : None, # limited files
     }
+    
+## Example for CERN
+run_options = {
+        "executor"       : "dask/condor",
+        "env"            : "singularity",
+        "workers"        : 1,
+        "scaleout"       : 300,
+        "queue"          : "standard",
+        "walltime"       : "00:40:00",
+        "mem_per_worker" : "4GB", # GB
+        "disk_per_worker" : "1GB", # GB
+        "exclusive"      : False,
+        "chunk"          : 400000,
+        "retries"        : 50,
+        "treereduction"  : 20,
+        "adapt"          : False,
+        
+    }
 ```
 
 The output of the script will be similar to 
