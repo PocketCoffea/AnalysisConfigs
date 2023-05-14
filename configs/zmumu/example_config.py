@@ -3,7 +3,14 @@ from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
+import workflow
 from workflow import ZmumuBaseProcessor
+
+import cloudpickle
+import custom_cut_functions 
+cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(custom_cut_functions)
+
 from custom_cut_functions import *
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -91,8 +98,8 @@ run_options = {
         "executor"       : "dask/lxplus",
         "env"            : "singularity",
         "workers"        : 1,
-        "scaleout"       : 200,
-        "queue"          : "standard",
+        "scaleout"       : 50,
+        "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
