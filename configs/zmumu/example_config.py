@@ -99,6 +99,7 @@ run_options = {
         "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 50,
+        "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
         "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
