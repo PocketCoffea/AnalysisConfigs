@@ -28,10 +28,10 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local_2018.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle_2018.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar_2017.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json",
                     ],
         "filter" : {
             "samples": ["TTToSemiLeptonic","DATA_SingleEle","DATA_SingleEle"],
@@ -111,6 +111,9 @@ cfg = Configurator(
             "TTToSemiLeptonic__=1b" :{ "inclusive":  [ColOut("JetGood",["pt","eta","phi"])]},
             "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
                 
+        },
+        "bycategory": {
+            "inclusive": 
         }
     }
     
@@ -121,7 +124,7 @@ cfg = Configurator(
 
 run_options = {
         "executor"       : "dask/slurm",
-        "env"            : "conda",
+        "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 20,
         "queue"          : "standard",
