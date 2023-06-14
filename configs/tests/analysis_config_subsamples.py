@@ -2,7 +2,6 @@ from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_nBtagMin, get_HLTsel
 from pocket_coffea.parameters.histograms import *
-from pocket_coffea.parameters.btag import btag_variations
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 
@@ -112,9 +111,6 @@ cfg = Configurator(
             "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
                 
         },
-        "bycategory": {
-            "inclusive": 
-        }
     }
     
 )
