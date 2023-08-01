@@ -97,12 +97,12 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "conda",
+        "executor"       : "dask/lxplus",
+        "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 50,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "standard",
+        "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
@@ -110,7 +110,6 @@ run_options = {
         "chunk"          : 400000,
         "retries"        : 50,
         "treereduction"  : 20,
-        "adapt"          : False,
-        
+        "adapt"          : False
     }
    
