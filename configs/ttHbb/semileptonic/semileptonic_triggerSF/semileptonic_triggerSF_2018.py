@@ -104,7 +104,7 @@ cfg = Configurator(
         "ElectronGood_pt" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500))
             ]
@@ -127,7 +127,7 @@ cfg = Configurator(
         "ElectronGood_pt_1" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500))
             ]
@@ -148,11 +148,11 @@ cfg = Configurator(
             ]
         ),
         **jet_hists(coll="JetGood"),
-        **count_hist(name="nMuons", coll="MuonGood",bins=10, start=0, stop=2),
-        **count_hist(name="nElectrons", coll="ElectronGood",bins=10, start=0, stop=2),
-        **count_hist(name="nLeptons", coll="LeptonGood",bins=10, start=0, stop=2),
-        **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=10),
-        **count_hist(name="nBJets", coll="BJetGood",bins=10, start=4, stop=10),
+        **count_hist(name="nMuons", coll="MuonGood",bins=3, start=0, stop=3),
+        **count_hist(name="nElectrons", coll="ElectronGood",bins=3, start=0, stop=3),
+        **count_hist(name="nLeptons", coll="LeptonGood",bins=3, start=0, stop=3),
+        **count_hist(name="nJets", coll="JetGood",bins=6, start=4, stop=10),
+        **count_hist(name="nBJets", coll="BJetGood",bins=6, start=4, stop=10),
         "ht" : HistConf(
             [
                 Axis(coll="events", field="JetGood_Ht", bins=400, start=0, stop=4000, label="$H_T$", lim=(0,1000))
@@ -161,7 +161,7 @@ cfg = Configurator(
         "electron_etaSC_pt_leading" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
@@ -173,7 +173,7 @@ cfg = Configurator(
         "electron_phi_pt_leading" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="phi", pos=0,
@@ -195,7 +195,7 @@ cfg = Configurator(
         "electron_etaSC_pt_all" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="etaSC", type="variable",
@@ -207,7 +207,7 @@ cfg = Configurator(
         "electron_phi_pt_all" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 200, 500],
+                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="phi",
