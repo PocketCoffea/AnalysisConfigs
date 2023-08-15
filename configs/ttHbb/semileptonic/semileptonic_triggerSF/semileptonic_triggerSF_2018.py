@@ -23,8 +23,8 @@ defaults.register_configuration_dir("config_dir", localdir+"/params")
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
+                                                  f"{localdir}/params/plotting_style.yaml",
                                                   update=True)
-
 
 cfg = Configurator(
     parameters = parameters,
@@ -93,9 +93,14 @@ cfg = Configurator(
                 "bycategory" : {
                 }
             },
-        "bysample": {
-        }    
+            "bysample": {
+            }
         },
+        "shape": {
+            "common":{
+                "inclusive": [ "JES_Total", "JER" ]
+            }
+        }
     },
     
    variables = {
