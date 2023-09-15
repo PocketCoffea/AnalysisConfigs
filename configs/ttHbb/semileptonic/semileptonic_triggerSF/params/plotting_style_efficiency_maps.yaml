@@ -19,7 +19,7 @@ plotting_style:
           vmax: 1.0
           vmin: 0.4
       ratio_sf:
-          label: ratio SF var./nom.
+          label: Ratio SF var./nom.
           vmax: 1.05
           vmin: 0.95
       sf:
@@ -67,8 +67,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
@@ -92,8 +92,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
@@ -117,8 +117,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
@@ -143,8 +143,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
@@ -168,8 +168,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
@@ -193,8 +193,8 @@ plotting_style:
           - 1
         ElectronGood_pt:
           ylim:
-          - 0.85
-          - 1
+          - 0.8
+          - 1.2
         ht:
           ylim:
           - 0.4
