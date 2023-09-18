@@ -26,18 +26,19 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   update=True)
 
+
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar.json",
-                  f"{localdir}/datasets/DATA_SingleMuon.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
+                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
                     ],
         "filter" : {
             "samples": ["TTToSemiLeptonic",
                         "TTTo2L2Nu",
                         "DATA_SingleMuon"],
             "samples_exclude" : [],
-            "year": ['2018']
+            "year": ['2017']
         },
     },
 
@@ -235,13 +236,13 @@ cfg = Configurator(
 )
 
 run_options = {
-        "executor"       : "dask/lxplus",
+        "executor"       : "dask/slurm",
         "env"            : "conda",
         "workers"        : 1,
-        "scaleout"       : 100,
+        "scaleout"       : 125,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
-        "walltime"       : "02:00:00",
+        "queue"          : "standard",
+        "walltime"       : "06:00:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,

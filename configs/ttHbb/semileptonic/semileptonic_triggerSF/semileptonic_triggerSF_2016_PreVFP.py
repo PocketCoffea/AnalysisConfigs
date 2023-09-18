@@ -37,7 +37,7 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "DATA_SingleMuon"],
             "samples_exclude" : [],
-            "year": ['2018']
+            "year": ['2016_PreVFP']
         },
     },
 

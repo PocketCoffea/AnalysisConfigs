@@ -33,34 +33,29 @@ def ht_below(events, params, **kwargs):
     mask = (events["JetGood_Ht"] >= 0) & (events["JetGood_Ht"] < params["maxht"])
     return mask
 
-def get_trigger_passfail(triggers, category):
-    return Cut(
-        name=f"{'_'.join(triggers)}_{category}",
-        params={"triggers": triggers, "category": category},
-        function=trigger_mask
-    )
+def semileptonic_triggerSF(events, params, year, sample, **kwargs):
 
-def get_trigger_passfail_2017(triggers, category):
-    return Cut(
-        name=f"{'_'.join(triggers)}_{category}",
-        params={"triggers": triggers, "category": category},
-        function=trigger_mask_2017
-    )
+    has_one_electron = events.nElectronGood == 1
+    has_one_muon = events.nMuonGood == 1
 
-def get_ht_above(minht, name=None):
-    if name == None:
-        name = f"minht{minht}"
-    return Cut(
-        name=name,
-        params={"minht": minht},
-        function=ht_above
+    mask = (
+        (events.nLeptonGood == 2)
+        &
+        # Here we properly distinguish between leading muon and leading electron
+        (
+            (
+                has_one_electron
+                & (
+                    ak.firsts(events.ElectronGood.pt)
+                    > params["pt_leading_electron"][year]
+                )
+            )
+            & (
+                has_one_muon
+                & (ak.firsts(events.MuonGood.pt) > params["pt_leading_muon"][year])
+            )
+        )
+        & (events.nJetGood >= params["njet"])
     )
-
-def get_ht_below(maxht, name=None):
-    if name == None:
-        name = f"maxht{maxht}"
-    return Cut(
-        name=name,
-        params={"maxht": maxht},
-        function=ht_below
-    )
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)

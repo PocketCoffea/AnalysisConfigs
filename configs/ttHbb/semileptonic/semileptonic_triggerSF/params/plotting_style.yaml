@@ -1,0 +1,9 @@
+plotting_style:
+
+    labels_mc:
+      TTToSemiLeptonic: "$t\\bar{t}$ semilep."
+      TTTo2L2Nu : "$t\\bar{t}$ dilepton"
+
+    colors_mc:
+      TTTo2L2Nu: [0.51, 0.79, 1.0]
+      TTToSemiLeptonic: [1.0, 0.71, 0.24]
