@@ -11,6 +11,7 @@ import custom_cut_functions
 import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
+from params.binning import bins
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,6 +21,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir+"/params")
 
 # adding object preselection
+year = "2017"
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
@@ -37,7 +39,7 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "DATA_SingleMuon"],
             "samples_exclude" : [],
-            "year": ['2017']
+            "year": [year]
         },
     },
 
@@ -103,13 +105,13 @@ cfg = Configurator(
         }
     },
     
-   variables = {
+    variables = {
         **muon_hists(coll="MuonGood"),
         **muon_hists(coll="MuonGood", pos=0),
         "ElectronGood_pt" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500))
             ]
@@ -117,7 +119,7 @@ cfg = Configurator(
         "ElectronGood_etaSC" : HistConf(
             [
                 Axis(coll="ElectronGood", field="etaSC", type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5))
             ]
@@ -132,7 +134,7 @@ cfg = Configurator(
         "ElectronGood_pt_1" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500))
             ]
@@ -140,7 +142,7 @@ cfg = Configurator(
         "ElectronGood_etaSC_1" : HistConf(
             [
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5))
             ]
@@ -166,11 +168,11 @@ cfg = Configurator(
         "electron_etaSC_pt_leading" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
             ]
@@ -178,7 +180,7 @@ cfg = Configurator(
         "electron_phi_pt_leading" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="phi", pos=0,
@@ -192,7 +194,7 @@ cfg = Configurator(
                      bins=12, start=-pi, stop=pi,
                      label="Electron $\phi$"),
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
             ]
@@ -200,11 +202,11 @@ cfg = Configurator(
         "electron_etaSC_pt_all" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="etaSC", type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
             ]
@@ -212,7 +214,7 @@ cfg = Configurator(
         "electron_phi_pt_all" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=[30, 35, 40, 50, 60, 70, 80, 90, 100, 130, 200, 500],
+                     bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="phi",
@@ -226,7 +228,7 @@ cfg = Configurator(
                      bins=12, start=-pi, stop=pi,
                      label="Electron $\phi$"),
                 Axis(coll="ElectronGood", field="etaSC", type="variable",
-                     bins=[-2.5, -2.0, -1.5660, -1.4442, -1.2, -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4442, 1.5660, 2.0, 2.5],
+                     bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
             ]
