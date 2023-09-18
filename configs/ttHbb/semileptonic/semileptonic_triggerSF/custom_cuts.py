@@ -1,7 +1,6 @@
-import numpy as np
-import awkward as ak
 from pocket_coffea.lib.cut_definition import Cut
 import custom_cut_functions as cuts_f
+from params.preselection import cuts
 
 def get_trigger_passfail(triggers, category):
     return Cut(
@@ -37,20 +36,6 @@ def get_ht_below(maxht, name=None):
 
 semileptonic_presel_triggerSF = Cut(
     name="semileptonic_triggerSF",
-    params={
-        "njet": 4,
-        "pt_leading_electron": {
-             '2016_PreVFP': 29,
-            '2016_PostVFP': 29,
-            '2017': 30,
-            '2018': 30,
-        },
-        "pt_leading_muon": {
-            '2016_PreVFP': 26,
-            '2016_PostVFP': 26,
-            '2017': 29,
-            '2018': 26,
-        },
-    },
+    params=cuts,
     function=cuts_f.semileptonic_triggerSF,
 )
