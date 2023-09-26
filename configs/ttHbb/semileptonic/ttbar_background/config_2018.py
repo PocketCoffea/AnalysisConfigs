@@ -1,11 +1,10 @@
 from pocket_coffea.utils.configurator import Configurator
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nElectron, get_nMuon
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
-from math import pi
 
 import workflow
-from workflow import semileptonicTriggerProcessor
+from workflow import ttbarBackgroundProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -33,54 +32,52 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
                   f"{localdir}/datasets/DATA_SingleMuon.json",
                     ],
         "filter" : {
-            "samples": ["TTToSemiLeptonic",
+            "samples": ["ttHTobb",
+                        "TTToSemiLeptonic",
                         "TTTo2L2Nu",
+                        "SingleTop",
+                        "WJetsToLNu_HT",
+                        "DATA_SingleEle",
                         "DATA_SingleMuon"],
             "samples_exclude" : [],
             "year": [year]
         },
+        "subsamples": {
+            'DATA_SingleEle'  : {'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]},
+            'DATA_SingleMuon' : {'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
+                                                      get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]}
+        }
     },
 
-    workflow = semileptonicTriggerProcessor,
+    workflow = ttbarBackgroundProcessor,
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
-    preselections = [semileptonic_presel_nobtag],
+    preselections = [semileptonic_presel],
     categories = {
-        "Ele32_EleHT_pass" : [
-            get_HLTsel(primaryDatasets=["SingleEle"])
-        ],
-        "Ele32_EleHT_fail" : [
-            get_HLTsel(primaryDatasets=["SingleEle"], invert=True)
-        ],
-        "Ele32_EleHT_pass_lowHT" : [
-            get_HLTsel(primaryDatasets=["SingleEle"]),
-            get_ht_below(400)
-        ],
-        "Ele32_EleHT_fail_lowHT" : [
-            get_HLTsel(primaryDatasets=["SingleEle"], invert=True),
-            get_ht_below(400)
-        ],
-        "Ele32_EleHT_pass_highHT" : [
-            get_HLTsel(primaryDatasets=["SingleEle"]),
-            get_ht_above(400)
-        ],
-        "Ele32_EleHT_fail_highHT" : [
-            get_HLTsel(primaryDatasets=["SingleEle"], invert=True),
-            get_ht_above(400)
-        ],
-        "inclusive" : [passthrough],
+        "baseline": [passthrough],
+        "SingleEle_1b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(1, coll="BJetGood") ],
+        "SingleEle_2b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(2, coll="BJetGood") ],
+        "SingleEle_3b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(3, coll="BJetGood") ],
+        "SingleEle_4b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(4, coll="BJetGood") ],
+        "SingleMuon_1b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(1, coll="BJetGood") ],
+        "SingleMuon_2b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(2, coll="BJetGood") ],
+        "SingleMuon_3b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(3, coll="BJetGood") ],
+        "SingleMuon_4b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(4, coll="BJetGood") ]
     },
 
     weights = {
         "common": {
             "inclusive": ["genWeight","lumi","XS",
                           "pileup",
-                          "sf_ele_reco", "sf_ele_id",
-                          "sf_mu_id","sf_mu_iso",
+                          "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
+                          "sf_mu_id","sf_mu_iso", "sf_mu_trigger",
+                          "sf_btag", #"sf_btag_calib",
+                          "sf_jet_puId"
                           ],
             "bycategory" : {
             }
@@ -92,7 +89,12 @@ cfg = Configurator(
     variations = {
         "weights": {
             "common": {
-                "inclusive": [ "pileup" ],
+                "inclusive": [  "pileup",
+                                "sf_ele_reco", "sf_ele_id",
+                                "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
+                                "sf_jet_puId"
+                              ],# + [ f"sf_btag_{b}" for b in parameters["systematic_variations"]["weight_variations"]["sf_btag"][year]]
+                              #+ [f"sf_ele_trigger_{v}" for v in parameters["systematic_variations"]["weight_variations"]["sf_ele_trigger"][year]],
                 "bycategory" : {
                 }
             },
@@ -107,32 +109,9 @@ cfg = Configurator(
     },
     
     variables = {
-        **muon_hists(coll="MuonGood"),
-        **muon_hists(coll="MuonGood", pos=0),
-        "ElectronGood_pt" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=bins["ElectronGood_pt"][year],
-                     label="Electron $p_{T}$ [GeV]",
-                     lim=(0,500))
-            ]
-        ),
-        "ElectronGood_etaSC" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="etaSC", type="variable",
-                     bins=bins["ElectronGood_etaSC"][year],
-                     label="Electron Supercluster $\eta$",
-                     lim=(-2.5,2.5))
-            ]
-        ),
-        "ElectronGood_phi" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="phi",
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-            ]
-        ),
-        "ElectronGood_pt_1" : HistConf(
+        **ele_hists(coll="ElectronGood", pos=0, exclude_categories=["SingleMuon_1b", "SingleMuon_2b", "SingleMuon_3b", "SingleMuon_4b"]),
+        **muon_hists(coll="MuonGood", pos=0, exclude_categories=["SingleEle_1b", "SingleEle_2b", "SingleEle_3b", "SingleEle_4b"]),
+        "ElectronGood_pt_1_rebin" : HistConf(
             [
                 Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
                      bins=bins["ElectronGood_pt"][year],
@@ -140,7 +119,7 @@ cfg = Configurator(
                      lim=(0,500))
             ]
         ),
-        "ElectronGood_etaSC_1" : HistConf(
+        "ElectronGood_etaSC_1_rebin" : HistConf(
             [
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
                      bins=bins["ElectronGood_etaSC"][year],
@@ -148,23 +127,23 @@ cfg = Configurator(
                      lim=(-2.5,2.5))
             ]
         ),
-        "ElectronGood_phi_1" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="phi", pos=0,
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-            ]
-        ),
-        **jet_hists(coll="JetGood"),
-        **count_hist(name="nMuons", coll="MuonGood",bins=3, start=0, stop=3),
-        **count_hist(name="nElectrons", coll="ElectronGood",bins=3, start=0, stop=3),
         **count_hist(name="nLeptons", coll="LeptonGood",bins=3, start=0, stop=3),
-        **count_hist(name="nJets", coll="JetGood",bins=6, start=4, stop=10),
-        **count_hist(name="nBJets", coll="BJetGood",bins=6, start=4, stop=10),
-        "ht" : HistConf(
-            [
-                Axis(coll="events", field="JetGood_Ht", bins=400, start=0, stop=4000, label="$H_T$", lim=(0,1000))
-            ]
+        **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
+        **count_hist(name="nBJets", coll="BJetGood",bins=14, start=0, stop=14),
+        **jet_hists(coll="JetGood", pos=0),
+        **jet_hists(coll="JetGood", pos=1),
+        **jet_hists(coll="JetGood", pos=2),
+        **jet_hists(coll="JetGood", pos=3),
+        **jet_hists(coll="JetGood", pos=4),
+        **jet_hists(name="bjet",coll="BJetGood", pos=0),
+        **jet_hists(name="bjet",coll="BJetGood", pos=1),
+        **jet_hists(name="bjet",coll="BJetGood", pos=2),
+        **jet_hists(name="bjet",coll="BJetGood", pos=3),
+        **jet_hists(name="bjet",coll="BJetGood", pos=4),
+        **met_hists(coll="MET"),
+        "jets_Ht" : HistConf(
+          [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
+                label="Jets $H_T$ [GeV]")]
         ),
         "electron_etaSC_pt_leading" : HistConf(
             [
@@ -173,62 +152,6 @@ cfg = Configurator(
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500)),
                 Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
-                     bins=bins["ElectronGood_etaSC"][year],
-                     label="Electron Supercluster $\eta$",
-                     lim=(-2.5,2.5)),
-            ]
-        ),
-        "electron_phi_pt_leading" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
-                     bins=bins["ElectronGood_pt"][year],
-                     label="Electron $p_{T}$ [GeV]",
-                     lim=(0,500)),
-                Axis(coll="ElectronGood", field="phi", pos=0,
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-            ]
-        ),
-        "electron_etaSC_phi_leading" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="phi", pos=0,
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-                Axis(coll="ElectronGood", field="etaSC", pos=0, type="variable",
-                     bins=bins["ElectronGood_etaSC"][year],
-                     label="Electron Supercluster $\eta$",
-                     lim=(-2.5,2.5)),
-            ]
-        ),
-        "electron_etaSC_pt_all" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=bins["ElectronGood_pt"][year],
-                     label="Electron $p_{T}$ [GeV]",
-                     lim=(0,500)),
-                Axis(coll="ElectronGood", field="etaSC", type="variable",
-                     bins=bins["ElectronGood_etaSC"][year],
-                     label="Electron Supercluster $\eta$",
-                     lim=(-2.5,2.5)),
-            ]
-        ),
-        "electron_phi_pt_all" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="pt", type="variable",
-                     bins=bins["ElectronGood_pt"][year],
-                     label="Electron $p_{T}$ [GeV]",
-                     lim=(0,500)),
-                Axis(coll="ElectronGood", field="phi",
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-            ]
-        ),
-        "electron_etaSC_phi_all" : HistConf(
-            [
-                Axis(coll="ElectronGood", field="phi",
-                     bins=12, start=-pi, stop=pi,
-                     label="Electron $\phi$"),
-                Axis(coll="ElectronGood", field="etaSC", type="variable",
                      bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
