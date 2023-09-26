@@ -1,0 +1,8 @@
+plotting_style:
+  labels_mc:
+    ttHTobb : "$t\\bar{t}H\\rightarrow b\\bar{b}$"
+    TTToSemiLeptonic : "$t\\bar{t}$ semilep. (5FS)"
+    TTTo2L2Nu : "$t\\bar{t}$ dilepton"
+    TTbbSemiLeptonic : "$t\\bar{t}$ semilep. (4FS)"
+    SingleTop : "Single t"
+    WJetsToLNu_HT : "W+jets"
