@@ -1,15 +1,16 @@
 lepton_scale_factors:
+  electron_sf:
     trigger_sf:
       2016_PreVFP:
         name: sf_Ele32_EleHT
-        file: "${config_dir:}/params/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2016_PreVFP_2016_PreVFP_Ele32_EleHT_pass.json"
+        file: "${config_dir:}/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2016_PreVFP_2016_PreVFP_Ele32_EleHT_pass.json"
       2016_PostVFP:
         name: sf_Ele32_EleHT
-        file: "${config_dir:}/params/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2016_PostVFP_2016_PostVFP_Ele32_EleHT_pass.json"
+        file: "${config_dir:}/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2016_PostVFP_2016_PostVFP_Ele32_EleHT_pass.json"
       '2017':
         name: sf_Ele32_EleHT
-        file: "${config_dir:}/params/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2017_2017_Ele32_EleHT_pass.json"
+        file: "${config_dir:}/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2017_2017_Ele32_EleHT_pass.json"
       '2018':
         name: sf_Ele32_EleHT
-        file: "${config_dir:}/params/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2018_2018_Ele32_EleHT_pass.json"
+        file: "${config_dir:}/trigger_sf/sf_trigger_electron_etaSC_pt_leading_2018_2018_Ele32_EleHT_pass.json"
 
