@@ -31,12 +31,16 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
-                  f"{localdir}/datasets/DATA_SingleMuon.json",
+        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_local.json",
+                  f"{localdir}/datasets/DATA_SingleEle_local.json",
+                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
                     ],
         "filter" : {
             "samples": ["ttHTobb",
+                        "TTbbSemiLeptonic",
                         "TTToSemiLeptonic",
                         "TTTo2L2Nu",
                         "SingleTop",
@@ -57,7 +61,7 @@ cfg = Configurator(
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
-    preselections = [semileptonic_presel],
+    preselections = [semileptonic_presel_nobtag],
     categories = {
         "baseline": [passthrough],
         "SingleEle_1b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(1, coll="BJetGood") ],
@@ -117,7 +121,8 @@ cfg = Configurator(
                      bins=bins["ElectronGood_pt"][year],
                      label="Electron $p_{T}$ [GeV]",
                      lim=(0,500))
-            ]
+            ],
+            exclude_categories=["SingleMuon_1b", "SingleMuon_2b", "SingleMuon_3b", "SingleMuon_4b"]
         ),
         "ElectronGood_etaSC_1_rebin" : HistConf(
             [
@@ -125,7 +130,8 @@ cfg = Configurator(
                      bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5))
-            ]
+            ],
+            exclude_categories=["SingleMuon_1b", "SingleMuon_2b", "SingleMuon_3b", "SingleMuon_4b"]
         ),
         **count_hist(name="nLeptons", coll="LeptonGood",bins=3, start=0, stop=3),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
@@ -141,6 +147,22 @@ cfg = Configurator(
         **jet_hists(name="bjet",coll="BJetGood", pos=3),
         **jet_hists(name="bjet",coll="BJetGood", pos=4),
         **met_hists(coll="MET"),
+        "deltaRbb_min" : HistConf(
+            [Axis(coll="events", field="deltaRbb_min", bins=50, start=0, stop=5,
+                  label="$\Delta R_{bb}$")]
+        ),
+        "deltaEtabb_min" : HistConf(
+            [Axis(coll="events", field="deltaEtabb_min", bins=50, start=0, stop=5,
+                  label="$\Delta \eta_{bb}$")]
+        ),
+        "deltaPhibb_min" : HistConf(
+            [Axis(coll="events", field="deltaPhibb_min", bins=50, start=0, stop=5,
+                  label="$\Delta \phi_{bb}$")]
+        ),
+        "mbb" : HistConf(
+            [Axis(coll="events", field="mbb", bins=50, start=0, stop=500,
+                    label="$m_{bb}$ [GeV]")]
+        ),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -155,20 +177,21 @@ cfg = Configurator(
                      bins=bins["ElectronGood_etaSC"][year],
                      label="Electron Supercluster $\eta$",
                      lim=(-2.5,2.5)),
-            ]
+            ],
+            exclude_categories=["SingleMuon_1b", "SingleMuon_2b", "SingleMuon_3b", "SingleMuon_4b"]
         ),
     },
 )
 
 run_options = {
-        "executor"       : "dask/lxplus",
+        "executor"       : "dask/slurm",
         "env"            : "conda",
         "workers"        : 1,
-        "scaleout"       : 100,
+        "scaleout"       : 150,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
-        "walltime"       : "02:00:00",
-        "mem_per_worker" : "4GB", # GB
+        "queue"          : "standard",
+        "walltime"       : "12:00:00",
+        "mem_per_worker" : "6GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
         "chunk"          : 200000,
