@@ -137,27 +137,7 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=3),
         **jet_hists(coll="JetGood", pos=4),
         **jet_hists(name="bjet",coll="BJetGood", pos=0),
-        **jet_hists(name="bjet",coll="BJetGood", pos=1),
-        **jet_hists(name="bjet",coll="BJetGood", pos=2),
-        **jet_hists(name="bjet",coll="BJetGood", pos=3),
-        **jet_hists(name="bjet",coll="BJetGood", pos=4),
         **met_hists(coll="MET"),
-        "deltaRbb_min" : HistConf(
-            [Axis(coll="events", field="deltaRbb_min", bins=50, start=0, stop=5,
-                  label="$\Delta R_{bb}$")]
-        ),
-        "deltaEtabb_min" : HistConf(
-            [Axis(coll="events", field="deltaEtabb_min", bins=50, start=0, stop=5,
-                  label="$\Delta \eta_{bb}$")]
-        ),
-        "deltaPhibb_min" : HistConf(
-            [Axis(coll="events", field="deltaPhibb_min", bins=50, start=0, stop=5,
-                  label="$\Delta \phi_{bb}$")]
-        ),
-        "mbb" : HistConf(
-            [Axis(coll="events", field="mbb", bins=50, start=0, stop=500,
-                    label="$m_{bb}$ [GeV]")]
-        ),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
