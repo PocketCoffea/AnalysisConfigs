@@ -3,6 +3,23 @@ from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
 from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 
 class ttbarBackgroundProcessor(ttHbbBaseProcessor):
+    def apply_object_preselection(self, variation):
+        super().apply_object_preselection(variation=variation)
+        if self._isMC:
+            # Apply the GenJet acceptance cuts
+            mask_pt = self.events["GenJet"].pt > 20.
+            mask_eta = abs(self.events["GenJet"].eta) < 2.4
+            mask_acceptance = mask_pt & mask_eta
+            # Ghost-hadron matching
+            mask_b = self.events["GenJet"].hadronFlavour == 5
+            mask_c = self.events["GenJet"].hadronFlavour == 4
+            mask_l = self.events["GenJet"].hadronFlavour == 0
+
+            # Build new GenJet collections split by flavour
+            self.events["GenJetGood"] = self.events.GenJet[mask_acceptance]
+            self.events["BGenJetGood"] = self.events.GenJet[mask_acceptance & mask_b]
+            self.events["CGenJetGood"] = self.events.GenJet[mask_acceptance & mask_c]
+            self.events["LGenJetGood"] = self.events.GenJet[mask_acceptance & mask_l]
 
     def define_common_variables_after_presel(self, variation):
         super().define_common_variables_before_presel(variation=variation)
@@ -34,3 +51,10 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         self.events["deltaPhibb_min"] = ak.min(deltaPhi, axis=1)
         self.events["mbb"] = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
 
+    def count_objects(self, variation):
+        super().count_objects(variation=variation)
+        if self._isMC:
+            self.events["nGenJetGood"] = ak.num(self.events.GenJetGood)
+            self.events["nBGenJetGood"] = ak.num(self.events.BGenJetGood)
+            self.events["nCGenJetGood"] = ak.num(self.events.CGenJetGood)
+            self.events["nLGenJetGood"] = ak.num(self.events.LGenJetGood)
