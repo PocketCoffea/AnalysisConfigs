@@ -1,5 +1,5 @@
 from pocket_coffea.utils.configurator import Configurator
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_less, get_HLTsel, get_nBtagMin, get_nElectron, get_nMuon
+from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_nObj_less, get_HLTsel, get_nBtagMin, get_nElectron, get_nMuon
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 
@@ -39,14 +39,15 @@ cfg = Configurator(
                   f"{localdir}/datasets/DATA_SingleMuon_local.json",
                     ],
         "filter" : {
-            "samples": ["ttHTobb",
+            "samples": [#"ttHTobb",
                         "TTbbSemiLeptonic",
                         "TTToSemiLeptonic",
-                        "TTTo2L2Nu",
-                        "SingleTop",
-                        "WJetsToLNu_HT",
+                        #"TTTo2L2Nu",
+                        #"SingleTop",
+                        #"WJetsToLNu_HT",
                         "DATA_SingleEle",
-                        "DATA_SingleMuon"],
+                        "DATA_SingleMuon"
+                        ],
             "samples_exclude" : [],
             "year": [year]
         },
@@ -59,32 +60,29 @@ cfg = Configurator(
                                      get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
             },
             'TTbbSemiLeptonic' : {
-                'TTbbSemiLeptonic_TT+B' : [get_nObj_min(1, coll="BGenJetGood")],
-                'TTbbSemiLeptonic_TT+C' : [get_nObj_min(1, coll="CGenJetGood"), get_nObj_less(1, coll="BGenJetGood")],
-                'TTbbSemiLeptonic_TT+LF' : [get_nObj_less(1, coll="CGenJetGood"), get_nObj_less(1, coll="BGenJetGood")],
+                'TTbbSemiLeptonic_TT+B' : [get_nObj_min(1, coll="BGenJetGoodExtra")],
+                'TTbbSemiLeptonic_TT+C' : [get_nObj_min(1, coll="CGenJetGoodExtra"), get_nObj_eq(0, coll="BGenJetGoodExtra")],
+                'TTbbSemiLeptonic_TT+LF' : [get_nObj_eq(0, coll="CGenJetGoodExtra"), get_nObj_eq(0, coll="BGenJetGoodExtra")],
             },
             'TTToSemiLeptonic' : {
-                'TTToSemiLeptonic_TT+B' : [get_nObj_min(1, coll="BGenJetGood")],
-                'TTToSemiLeptonic_TT+C' : [get_nObj_min(1, coll="CGenJetGood"), get_nObj_less(1, coll="BGenJetGood")],
-                'TTToSemiLeptonic_TT+LF' : [get_nObj_min(1, coll="GenJetGood"), get_nObj_less(1, coll="CGenJetGood"), get_nObj_less(1, coll="BGenJetGood")],
+                'TTToSemiLeptonic_TT+B' : [get_nObj_min(1, coll="BGenJetGoodExtra")],
+                'TTToSemiLeptonic_TT+C' : [get_nObj_min(1, coll="CGenJetGoodExtra"), get_nObj_eq(0, coll="BGenJetGoodExtra")],
+                'TTToSemiLeptonic_TT+LF' : [get_nObj_eq(0, coll="CGenJetGoodExtra"), get_nObj_eq(0, coll="BGenJetGoodExtra")],
             },
         }
     },
 
     workflow = ttbarBackgroundProcessor,
+    workflow_options = {"parton_jet_min_dR": 0.3},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     preselections = [semileptonic_presel_nobtag],
     categories = {
         "baseline": [passthrough],
-        "SingleEle_1b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(1, coll="BJetGood") ],
-        "SingleEle_2b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(2, coll="BJetGood") ],
-        "SingleEle_3b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(3, coll="BJetGood") ],
+        "SingleEle_3b" : [ get_nElectron(1, coll="ElectronGood"), get_nObj_eq(3, coll="BJetGood") ],
         "SingleEle_4b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(4, coll="BJetGood") ],
-        "SingleMuon_1b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(1, coll="BJetGood") ],
-        "SingleMuon_2b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(2, coll="BJetGood") ],
-        "SingleMuon_3b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(3, coll="BJetGood") ],
+        "SingleMuon_3b" : [ get_nMuon(1, coll="MuonGood"), get_nObj_eq(3, coll="BJetGood") ],
         "SingleMuon_4b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(4, coll="BJetGood") ]
     },
 
@@ -154,6 +152,8 @@ cfg = Configurator(
         **count_hist(name="nBGenJets", coll="BGenJetGood", bins=10, start=0, stop=10, exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **count_hist(name="nCGenJets", coll="CGenJetGood", bins=10, start=0, stop=10, exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **count_hist(name="nLGenJets", coll="LGenJetGood", bins=10, start=0, stop=10, exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **count_hist(name="nBGenJetsExtra", coll="BGenJetGoodExtra", bins=10, start=0, stop=10, exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **count_hist(name="nCGenJetsExtra", coll="CGenJetGoodExtra", bins=10, start=0, stop=10, exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **jet_hists(coll="JetGood", pos=0),
         **jet_hists(coll="JetGood", pos=1),
         **jet_hists(coll="JetGood", pos=2),
@@ -174,6 +174,21 @@ cfg = Configurator(
         **jet_hists(name="bgenjet",coll="BGenJetGood", pos=2, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **jet_hists(name="bgenjet",coll="BGenJetGood", pos=3, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **jet_hists(name="bgenjet",coll="BGenJetGood", pos=4, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet",coll="CGenJetGood", pos=0, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet",coll="CGenJetGood", pos=1, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet",coll="CGenJetGood", pos=2, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet",coll="CGenJetGood", pos=3, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet",coll="CGenJetGood", pos=4, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="bgenjet_extra",coll="BGenJetGoodExtra", pos=0, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="bgenjet_extra",coll="BGenJetGoodExtra", pos=1, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="bgenjet_extra",coll="BGenJetGoodExtra", pos=2, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="bgenjet_extra",coll="BGenJetGoodExtra", pos=3, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="bgenjet_extra",coll="BGenJetGoodExtra", pos=4, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet_extra",coll="CGenJetGoodExtra", pos=0, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet_extra",coll="CGenJetGoodExtra", pos=1, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet_extra",coll="CGenJetGoodExtra", pos=2, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet_extra",coll="CGenJetGoodExtra", pos=3, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
+        **jet_hists(name="cgenjet_extra",coll="CGenJetGoodExtra", pos=4, fields=["pt", "eta", "phi"], exclude_samples=["DATA_SingleEle", "DATA_SingleMuon"]),
         **met_hists(coll="MET"),
         "deltaRbb_min" : HistConf(
             [Axis(coll="events", field="deltaRbb_min", bins=50, start=0, stop=5,
@@ -215,14 +230,14 @@ run_options = {
         "executor"       : "dask/slurm",
         "env"            : "conda",
         "workers"        : 1,
-        "scaleout"       : 150,
+        "scaleout"       : 200,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
         "queue"          : "standard",
         "walltime"       : "12:00:00",
-        "mem_per_worker" : "8GB", # GB
+        "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 400000,
+        "chunk"          : 200000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
