@@ -5,15 +5,15 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2016_PreVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "2991789",
             "size": "7466615664"
         },
         "files": [
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/130000/C587F367-DC83-F94B-BAAF-E7BCB11AC3FC.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/46E65244-A88F-A740-9E41-44CD20EC01A3.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/86B30564-C330-5C4B-8BE5-B74927167812.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/915549F0-F38A-F04E-90A8-092A84792816.root"
+            "root://eoscms.cern.ch//eos/cms//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/130000/C587F367-DC83-F94B-BAAF-E7BCB11AC3FC.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/46E65244-A88F-A740-9E41-44CD20EC01A3.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/86B30564-C330-5C4B-8BE5-B74927167812.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/RunIISummer20UL16NanoAODAPVv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/280000/915549F0-F38A-F04E-90A8-092A84792816.root"
         ]
     },
     "TTbbSemiLeptonic_4f_2016_PostVFP": {
@@ -22,7 +22,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2016_PostVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "3223118",
             "size": "8026016459"
         },
@@ -43,7 +43,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2017",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "7318891",
             "size": "18864123928"
         },
@@ -68,7 +68,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2018",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "10378681",
             "size": "26242957854"
         },

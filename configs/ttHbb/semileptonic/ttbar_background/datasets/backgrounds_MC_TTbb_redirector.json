@@ -5,7 +5,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2016_PreVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "2991789",
             "size": "7466615664"
         },
@@ -22,7 +22,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2016_PostVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "3223118",
             "size": "8026016459"
         },
@@ -43,7 +43,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2017",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "7318891",
             "size": "18864123928"
         },
@@ -68,7 +68,7 @@
             "sample": "TTbbSemiLeptonic",
             "year": "2018",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "19.2",
             "nevents": "10378681",
             "size": "26242957854"
         },
@@ -79,14 +79,14 @@
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/087DA133-EFC8-6849-93C9-39DF8743ABC3.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/CC08332B-3756-2447-89CF-5597AE408884.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/17E11204-5712-B64D-96B1-389D70FB4D46.root",
-            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/8C7DCBF2-EE97-E84E-A8FE-B87F9BA4128B.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/146313BF-559F-1F47-ADEE-D042C318D826.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/ACCBBC0E-EF4B-9A40-83E2-5308CD473D38.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/FA002E2C-811B-5143-998E-B56BD13B8441.root",
-            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/5410CE92-A1DB-8643-A5F9-DE7B7CDD9EE0.root",
-            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/A17FEFED-56BC-2449-9CCC-BA3652E3189D.root",
+            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/8C7DCBF2-EE97-E84E-A8FE-B87F9BA4128B.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/D1CEF147-1DC4-6443-AEB4-7AAE15E75F92.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/5761B455-8170-2740-93E2-0E3907A4A0BF.root",
+            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/A17FEFED-56BC-2449-9CCC-BA3652E3189D.root",
+            "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/5410CE92-A1DB-8643-A5F9-DE7B7CDD9EE0.root",
             "root://xrootd-cms.infn.it///store/mc/RunIISummer20UL18NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/0DA621E3-6F53-A845-96E3-32FC55746776.root"
         ]
     }

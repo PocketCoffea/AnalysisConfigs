@@ -5,7 +5,7 @@
             "sample": "TTToSemiLeptonic",
             "year": "2016_PreVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "366.2852",
             "nevents": "132178000",
             "size": "282872504161"
         },
@@ -135,7 +135,7 @@
             "sample": "TTToSemiLeptonic",
             "year": "2016_PostVFP",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "366.2852",
             "nevents": "144722000",
             "size": "308305217244"
         },
@@ -286,7 +286,7 @@
             "sample": "TTToSemiLeptonic",
             "year": "2017",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "366.2852",
             "nevents": "346052000",
             "size": "766341543050"
         },
@@ -596,7 +596,7 @@
             "sample": "TTToSemiLeptonic",
             "year": "2018",
             "isMC": "True",
-            "xsec": "365.4574",
+            "xsec": "366.2852",
             "nevents": "476408000",
             "size": "1030792999916"
         },
