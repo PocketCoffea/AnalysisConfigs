@@ -1,4 +1,4 @@
-# Per-event cuts applied to each event
+from collections.abc import Iterable
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
 
@@ -48,3 +48,12 @@ semileptonic_presel_nobtag = Cut(
     },
     function=cuts_f.semileptonic,
 )
+
+# Selection for ttbar background categorization
+def get_genTtbarId_100_eq(genTtbarId, name=None):
+    if name == None:
+        if type(genTtbarId) == int:
+            name = f"genTtbarId_100_eq_{genTtbarId}"
+        if isinstance(genTtbarId, Iterable):
+            name = f"genTtbarId_100_eq_" + "_".join([str(s) for s in genTtbarId])
+    return Cut(name=name, params={"genTtbarId" : genTtbarId}, function=cuts_f.eq_genTtbarId_100)
