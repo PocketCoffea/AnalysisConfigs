@@ -108,14 +108,18 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         )  # use count since we have None
 
     def count_additional_jets(self):
+        # Mask to tag additional b-jets: we require gen-level b-jets that are matched to a quark not originated from a top decay
         is_additional_bjet = ak.fill_none(
             (self.events.GenJetGoodMatched.hadronFlavour == 5) &
-            ( (self.events.PartonMatched.provenance == 1) | (self.events.PartonMatched.provenance == 4) ),
+            (self.events.PartonMatched.provenance != 2) &
+            (self.events.PartonMatched.provenance != 3),
             False
         )
+        # Mask to tag additional c-jets: we require gen-level c-jets that are matched to a quark not originated from a top decay
         is_additional_cjet = ak.fill_none(
             (self.events.GenJetGoodMatched.hadronFlavour == 4) &
-            ( (self.events.PartonMatched.provenance == 1) | (self.events.PartonMatched.provenance == 4) ),
+            (self.events.PartonMatched.provenance != 2) &
+            (self.events.PartonMatched.provenance != 3),
             False
         )
         self.events["BGenJetGoodExtra"] = self.events.GenJetGoodMatched[is_additional_bjet]
