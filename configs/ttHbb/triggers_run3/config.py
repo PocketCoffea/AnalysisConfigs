@@ -44,10 +44,19 @@ cfg = Configurator(
         "inclusive": [passthrough],
         "semilep": [semilep_lhe, notau, get_nObj_min(1, 20., coll="Lepton")],
         "semilep_singlelepHLT" : [semilep_lhe, notau, get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["SingleLepton"])],
+        "semilep_tripleB+singleLep": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["TripleBTag","SingleLepton"])] ,
+        "semilep_doubleB_tighter+singleLep": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_tighter","SingleLepton"])] ,
+        "semilep_doubleB_looser+singleLep": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_looser","SingleLepton"])],
         "semilep_tripleB": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["TripleBTag"])] ,
         "semilep_doubleB_tighter": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_tighter"])] ,
-        "semilep_doubleB_looser": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_looser"])]
+        "semilep_doubleB_looser": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_looser"])],
+        
+        "had": [had_lhe  ],
+        "had_tripleB": [had_lhe, get_HLTsel(["TripleBTag"])] ,
+        "had_doubleB_tighter": [had_lhe, get_HLTsel(["Jet4_btag2_tighter"])] ,
+        "had_doubleB_looser": [had_lhe, get_HLTsel(["Jet4_btag2_looser"])]
     },
+    
 
     weights= {
         "common": {
@@ -66,15 +75,15 @@ cfg = Configurator(
     variables = {
         "higgs_pt": HistConf([
             Axis(coll="higgs", field="pt",
-                 bins=50, start=0, stop=300, label="Higgs $p_T$")
+                 bins=30, start=0, stop=400, label="Higgs $p_T$")
         ]),
         "HT": HistConf([
             Axis(coll="LHE", field="HT",
-                 bins=50, start=0, stop=2000, label="$H_T$")
+                 bins=40, start=0, stop=1500, label="$H_T$")
         ]),
         "Lepton_pt":  HistConf([
             Axis(coll="Lepton", field="pt", pos=0,
-                 bins=50, start=0, stop=300, label="Lepton $p_T$")
+                 bins=40, start=0, stop=300, label="Lepton $p_T$")
         ]),
     }
 
@@ -87,7 +96,7 @@ run_options = {
         "workers"        : 1,
         "scaleout"       : 10,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "standard",
+        "queue"          : "espresso",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "2GB", # GB
         "disk_per_worker" : "1GB", # GB

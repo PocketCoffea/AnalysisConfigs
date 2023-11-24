@@ -127,9 +127,9 @@
                 "name": "passthrough_f",
                 "module": "pocket_coffea.lib.cut_functions",
                 "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-                "f_hash": 8781951227715
+                "f_hash": 8747849302083
               },
-              "id": "passthrough__-3488783718031701039"
+              "id": "passthrough__932760435244405488"
             }
           ]
         },
@@ -151,9 +151,9 @@
         "name": "min_nObj_minPt",
         "module": "pocket_coffea.lib.cut_functions",
         "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-        "f_hash": 8781951227814
+        "f_hash": 8747849302182
       },
-      "id": "nJet_min4_pt20.0__627903253699565559"
+      "id": "nJet_min4_pt20.0__-5185406609346686933"
     }
   ],
   "preselections": [
@@ -165,9 +165,9 @@
         "name": "passthrough_f",
         "module": "pocket_coffea.lib.cut_functions",
         "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-        "f_hash": 8781951227715
+        "f_hash": 8747849302083
       },
-      "id": "passthrough__-3488783718031701039"
+      "id": "passthrough__932760435244405488"
     }
   ],
   "categories": {
@@ -182,12 +182,24 @@
             "name": "passthrough_f",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227715
+            "f_hash": 8747849302083
           },
-          "id": "passthrough__-3488783718031701039"
+          "id": "passthrough__932760435244405488"
         }
       ],
       "semilep": [
+        {
+          "name": "semilep_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383324
+          },
+          "id": "semilep_lhe__-1007432015594986388"
+        },
         {
           "name": "notau",
           "params": {},
@@ -196,9 +208,9 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309998
+            "f_hash": 8747846383351
           },
-          "id": "notau__-157823121319372791"
+          "id": "notau__-1100966157303221973"
         },
         {
           "name": "nLepton_min1_pt20.0",
@@ -212,10 +224,12 @@
             "name": "min_nObj_minPt",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227814
+            "f_hash": 8747849302182
           },
-          "id": "nLepton_min1_pt20.0__-4744785925492959405"
-        },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        }
+      ],
+      "semilep_singlelepHLT": [
         {
           "name": "semilep_lhe",
           "params": {},
@@ -224,12 +238,38 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309971
+            "f_hash": 8747846383324
           },
-          "id": "semilep_lhe__2040588539818383632"
-        }
-      ],
-      "semilep_singlelepHLT": [
+          "id": "semilep_lhe__-1007432015594986388"
+        },
+        {
+          "name": "notau",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383351
+          },
+          "id": "notau__-1100966157303221973"
+        },
+        {
+          "name": "nLepton_min1_pt20.0",
+          "params": {
+            "N": 1,
+            "coll": "Lepton",
+            "minpt": 20.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "min_nObj_minPt",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302182
+          },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        },
         {
           "name": "HLT_trigger_SingleLepton",
           "params": {
@@ -243,38 +283,12 @@
             "name": "_get_trigger_mask_proxy",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227760
+            "f_hash": 8747849302128
           },
-          "id": "HLT_trigger_SingleLepton__3150738999857328927"
-        },
-        {
-          "name": "notau",
-          "params": {},
-          "collection": "events",
-          "function": {
-            "name": "<lambda>",
-            "module": "cuts",
-            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309998
-          },
-          "id": "notau__-157823121319372791"
-        },
-        {
-          "name": "nLepton_min1_pt20.0",
-          "params": {
-            "N": 1,
-            "coll": "Lepton",
-            "minpt": 20.0
-          },
-          "collection": "events",
-          "function": {
-            "name": "min_nObj_minPt",
-            "module": "pocket_coffea.lib.cut_functions",
-            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227814
-          },
-          "id": "nLepton_min1_pt20.0__-4744785925492959405"
-        },
+          "id": "HLT_trigger_SingleLepton__2220465615138343122"
+        }
+      ],
+      "semilep_tripleB+singleLep": [
         {
           "name": "semilep_lhe",
           "params": {},
@@ -283,12 +297,10 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309971
+            "f_hash": 8747846383324
           },
-          "id": "semilep_lhe__2040588539818383632"
-        }
-      ],
-      "semilep_tripleB": [
+          "id": "semilep_lhe__-1007432015594986388"
+        },
         {
           "name": "notau",
           "params": {},
@@ -297,9 +309,9 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309998
+            "f_hash": 8747846383351
           },
-          "id": "notau__-157823121319372791"
+          "id": "notau__-1100966157303221973"
         },
         {
           "name": "nLepton_min1_pt20.0",
@@ -313,9 +325,189 @@
             "name": "min_nObj_minPt",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227814
+            "f_hash": 8747849302182
           },
-          "id": "nLepton_min1_pt20.0__-4744785925492959405"
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        },
+        {
+          "name": "HLT_trigger_TripleBTag_SingleLepton",
+          "params": {
+            "primaryDatasets": [
+              "TripleBTag",
+              "SingleLepton"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_TripleBTag_SingleLepton__-8027082352080138114"
+        }
+      ],
+      "semilep_doubleB_tighter+singleLep": [
+        {
+          "name": "semilep_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383324
+          },
+          "id": "semilep_lhe__-1007432015594986388"
+        },
+        {
+          "name": "notau",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383351
+          },
+          "id": "notau__-1100966157303221973"
+        },
+        {
+          "name": "nLepton_min1_pt20.0",
+          "params": {
+            "N": 1,
+            "coll": "Lepton",
+            "minpt": 20.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "min_nObj_minPt",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302182
+          },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        },
+        {
+          "name": "HLT_trigger_Jet4_btag2_tighter_SingleLepton",
+          "params": {
+            "primaryDatasets": [
+              "Jet4_btag2_tighter",
+              "SingleLepton"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_Jet4_btag2_tighter_SingleLepton__-1084731648818680087"
+        }
+      ],
+      "semilep_doubleB_looser+singleLep": [
+        {
+          "name": "semilep_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383324
+          },
+          "id": "semilep_lhe__-1007432015594986388"
+        },
+        {
+          "name": "notau",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383351
+          },
+          "id": "notau__-1100966157303221973"
+        },
+        {
+          "name": "nLepton_min1_pt20.0",
+          "params": {
+            "N": 1,
+            "coll": "Lepton",
+            "minpt": 20.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "min_nObj_minPt",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302182
+          },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        },
+        {
+          "name": "HLT_trigger_Jet4_btag2_looser_SingleLepton",
+          "params": {
+            "primaryDatasets": [
+              "Jet4_btag2_looser",
+              "SingleLepton"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_Jet4_btag2_looser_SingleLepton__-4424467209209042863"
+        }
+      ],
+      "semilep_tripleB": [
+        {
+          "name": "semilep_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383324
+          },
+          "id": "semilep_lhe__-1007432015594986388"
+        },
+        {
+          "name": "notau",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383351
+          },
+          "id": "notau__-1100966157303221973"
+        },
+        {
+          "name": "nLepton_min1_pt20.0",
+          "params": {
+            "N": 1,
+            "coll": "Lepton",
+            "minpt": 20.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "min_nObj_minPt",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302182
+          },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
         },
         {
           "name": "HLT_trigger_TripleBTag",
@@ -330,10 +522,12 @@
             "name": "_get_trigger_mask_proxy",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227760
+            "f_hash": 8747849302128
           },
-          "id": "HLT_trigger_TripleBTag__-3617604813773299876"
-        },
+          "id": "HLT_trigger_TripleBTag__2249294482352416"
+        }
+      ],
+      "semilep_doubleB_tighter": [
         {
           "name": "semilep_lhe",
           "params": {},
@@ -342,12 +536,10 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309971
+            "f_hash": 8747846383324
           },
-          "id": "semilep_lhe__2040588539818383632"
-        }
-      ],
-      "semilep_doubleB_tighter": [
+          "id": "semilep_lhe__-1007432015594986388"
+        },
         {
           "name": "HLT_trigger_Jet4_btag2_tighter",
           "params": {
@@ -361,9 +553,9 @@
             "name": "_get_trigger_mask_proxy",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227760
+            "f_hash": 8747849302128
           },
-          "id": "HLT_trigger_Jet4_btag2_tighter__-7520503346240028712"
+          "id": "HLT_trigger_Jet4_btag2_tighter__2952499946915473525"
         },
         {
           "name": "notau",
@@ -373,9 +565,9 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309998
+            "f_hash": 8747846383351
           },
-          "id": "notau__-157823121319372791"
+          "id": "notau__-1100966157303221973"
         },
         {
           "name": "nLepton_min1_pt20.0",
@@ -389,10 +581,12 @@
             "name": "min_nObj_minPt",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227814
+            "f_hash": 8747849302182
           },
-          "id": "nLepton_min1_pt20.0__-4744785925492959405"
-        },
+          "id": "nLepton_min1_pt20.0__648047345670834887"
+        }
+      ],
+      "semilep_doubleB_looser": [
         {
           "name": "semilep_lhe",
           "params": {},
@@ -401,12 +595,10 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309971
+            "f_hash": 8747846383324
           },
-          "id": "semilep_lhe__2040588539818383632"
-        }
-      ],
-      "semilep_doubleB_looser": [
+          "id": "semilep_lhe__-1007432015594986388"
+        },
         {
           "name": "notau",
           "params": {},
@@ -415,9 +607,9 @@
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309998
+            "f_hash": 8747846383351
           },
-          "id": "notau__-157823121319372791"
+          "id": "notau__-1100966157303221973"
         },
         {
           "name": "nLepton_min1_pt20.0",
@@ -431,9 +623,9 @@
             "name": "min_nObj_minPt",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227814
+            "f_hash": 8747849302182
           },
-          "id": "nLepton_min1_pt20.0__-4744785925492959405"
+          "id": "nLepton_min1_pt20.0__648047345670834887"
         },
         {
           "name": "HLT_trigger_Jet4_btag2_looser",
@@ -448,21 +640,116 @@
             "name": "_get_trigger_mask_proxy",
             "module": "pocket_coffea.lib.cut_functions",
             "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
-            "f_hash": 8781951227760
+            "f_hash": 8747849302128
           },
-          "id": "HLT_trigger_Jet4_btag2_looser__7999663817857404397"
-        },
+          "id": "HLT_trigger_Jet4_btag2_looser__-6335204194732562123"
+        }
+      ],
+      "had": [
         {
-          "name": "semilep_lhe",
+          "name": "had_lhe",
           "params": {},
           "collection": "events",
           "function": {
             "name": "<lambda>",
             "module": "cuts",
             "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
-            "f_hash": 8781948309971
+            "f_hash": 8747846383342
           },
-          "id": "semilep_lhe__2040588539818383632"
+          "id": "had_lhe__6464513303991013239"
+        }
+      ],
+      "had_tripleB": [
+        {
+          "name": "HLT_trigger_TripleBTag",
+          "params": {
+            "primaryDatasets": [
+              "TripleBTag"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_TripleBTag__2249294482352416"
+        },
+        {
+          "name": "had_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383342
+          },
+          "id": "had_lhe__6464513303991013239"
+        }
+      ],
+      "had_doubleB_tighter": [
+        {
+          "name": "HLT_trigger_Jet4_btag2_tighter",
+          "params": {
+            "primaryDatasets": [
+              "Jet4_btag2_tighter"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_Jet4_btag2_tighter__2952499946915473525"
+        },
+        {
+          "name": "had_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383342
+          },
+          "id": "had_lhe__6464513303991013239"
+        }
+      ],
+      "had_doubleB_looser": [
+        {
+          "name": "HLT_trigger_Jet4_btag2_looser",
+          "params": {
+            "primaryDatasets": [
+              "Jet4_btag2_looser"
+            ],
+            "invert": false
+          },
+          "collection": "events",
+          "function": {
+            "name": "_get_trigger_mask_proxy",
+            "module": "pocket_coffea.lib.cut_functions",
+            "src_file": "/usr/local/lib/python3.8/site-packages/pocket_coffea/lib/cut_functions.py",
+            "f_hash": 8747849302128
+          },
+          "id": "HLT_trigger_Jet4_btag2_looser__-6335204194732562123"
+        },
+        {
+          "name": "had_lhe",
+          "params": {},
+          "collection": "events",
+          "function": {
+            "name": "<lambda>",
+            "module": "cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/triggers_run3/cuts.py",
+            "f_hash": 8747846383342
+          },
+          "id": "had_lhe__6464513303991013239"
         }
       ]
     },
@@ -480,9 +767,16 @@
         "inclusive": [],
         "semilep": [],
         "semilep_singlelepHLT": [],
+        "semilep_tripleB+singleLep": [],
+        "semilep_doubleB_tighter+singleLep": [],
+        "semilep_doubleB_looser+singleLep": [],
         "semilep_tripleB": [],
         "semilep_doubleB_tighter": [],
-        "semilep_doubleB_looser": []
+        "semilep_doubleB_looser": [],
+        "had": [],
+        "had_tripleB": [],
+        "had_doubleB_tighter": [],
+        "had_doubleB_looser": []
       },
       "inclusive": [
         "genWeight",
@@ -497,17 +791,31 @@
         "inclusive": [],
         "semilep": [],
         "semilep_singlelepHLT": [],
+        "semilep_tripleB+singleLep": [],
+        "semilep_doubleB_tighter+singleLep": [],
+        "semilep_doubleB_looser+singleLep": [],
         "semilep_tripleB": [],
         "semilep_doubleB_tighter": [],
-        "semilep_doubleB_looser": []
+        "semilep_doubleB_looser": [],
+        "had": [],
+        "had_tripleB": [],
+        "had_doubleB_tighter": [],
+        "had_doubleB_looser": []
       },
       "shape": {
         "inclusive": [],
         "semilep": [],
         "semilep_singlelepHLT": [],
+        "semilep_tripleB+singleLep": [],
+        "semilep_doubleB_tighter+singleLep": [],
+        "semilep_doubleB_looser+singleLep": [],
         "semilep_tripleB": [],
         "semilep_doubleB_tighter": [],
-        "semilep_doubleB_looser": []
+        "semilep_doubleB_looser": [],
+        "had": [],
+        "had_tripleB": [],
+        "had_doubleB_tighter": [],
+        "had_doubleB_looser": []
       }
     }
   },
@@ -557,9 +865,16 @@
       "inclusive": [],
       "semilep": [],
       "semilep_singlelepHLT": [],
+      "semilep_tripleB+singleLep": [],
+      "semilep_doubleB_tighter+singleLep": [],
+      "semilep_doubleB_looser+singleLep": [],
       "semilep_tripleB": [],
       "semilep_doubleB_tighter": [],
-      "semilep_doubleB_looser": []
+      "semilep_doubleB_looser": [],
+      "had": [],
+      "had_tripleB": [],
+      "had_doubleB_tighter": [],
+      "had_doubleB_looser": []
     }
   }
 }
