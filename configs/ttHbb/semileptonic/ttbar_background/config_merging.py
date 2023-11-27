@@ -39,12 +39,12 @@ cfg = Configurator(
                   f"{localdir}/datasets/DATA_SingleMuon_local.json",
                     ],
         "filter" : {
-            "samples": [#"ttHTobb",
+            "samples": ["ttHTobb",
                         "TTbbSemiLeptonic",
                         "TTToSemiLeptonic",
-                        #"TTTo2L2Nu",
-                        #"SingleTop",
-                        #"WJetsToLNu_HT",
+                        "TTTo2L2Nu",
+                        "SingleTop",
+                        "WJetsToLNu_HT",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
