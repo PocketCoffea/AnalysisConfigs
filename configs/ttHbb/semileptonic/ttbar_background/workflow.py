@@ -136,7 +136,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
             self.events["nLGenJetGood"] = ak.num(self.events.LGenJetGood)
 
     def process_extra_after_presel(self, variation) -> ak.Array:
-        if self._isMC:
+        if self._isMC & (self._sample in ["TTbbSemiLeptonic", "TTToSemiLeptonic"]):
             self.do_parton_matching()
             self.count_partons()
             self.count_additional_jets()
