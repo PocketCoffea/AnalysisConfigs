@@ -1,0 +1,4 @@
+HLT_triggers:
+  "2022":
+    JetMET:
+       - QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65
