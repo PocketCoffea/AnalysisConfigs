@@ -1,0 +1,10 @@
+object_preselection:
+  Jet:
+    dr_lepton: 0.4
+    pt: 0 #30
+    eta: 100 #2.4
+    jetId: 0 #2
+    # puId:
+    #   wp: M
+    #   value: 6
+    #   maxpt: 50.0

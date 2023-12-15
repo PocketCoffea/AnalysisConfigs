@@ -1,0 +1,43 @@
+{
+    "QCD_PT-15to7000": {
+        "sample": "QCD",
+        "json_output": "datasets/QCD.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&ordDirection=1&ordFieldName=cross_section&pageSize=10&searchQuery=process_name%3DQCD_PT-15to7000_TuneCP5_13p6TeV_pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer22NanoAODv11-castor_126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": true,
+                    "xsec": 1438000000.0,
+                    "part": "PT-15to7000"
+                },
+                "das_parents_names": [
+                    "/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer22MiniAODv3-castor_124X_mcRun3_2022_realistic_v12-v2/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "DATA_SingleMuon": {
+        "sample": "DATA_SingleMuon",
+        "json_output": "datasets/DATA_SingleMuon.json",
+        "files": [
+            {
+                "das_names": [
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "A"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2-v3/MINIAOD"
+                ]
+            }
+        ]
+    }
+}

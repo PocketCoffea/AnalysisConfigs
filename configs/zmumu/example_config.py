@@ -7,7 +7,7 @@ import workflow
 from workflow import ZmumuBaseProcessor
 
 import cloudpickle
-import custom_cut_functions 
+import custom_cut_functions
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 
@@ -31,11 +31,11 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/DATA_SingleMuon.json",
+        "jsons": [#f"{localdir}/datasets/DATA_SingleMuon.json",
                   f"{localdir}/datasets/DYJetsToLL_M-50.json"
                     ],
         "filter" : {
-            "samples": ["DATA_SingleMuon",
+            "samples": [#"DATA_SingleMuon",
                         "DYJetsToLL"],
             "samples_exclude" : [],
             "year": ['2018']
@@ -43,11 +43,11 @@ cfg = Configurator(
     },
 
     workflow = ZmumuBaseProcessor,
-    
+
     skim = [get_nObj_min(1, 18., "Muon"),
             # Asking only SingleMuon triggers since we are only using SingleMuon PD data
-            get_HLTsel(primaryDatasets=["SingleMuon"])], 
-    
+            get_HLTsel(primaryDatasets=["SingleMuon"])],
+
     preselections = [dimuon_presel],
     categories = {
         "baseline": [passthrough],
@@ -76,11 +76,11 @@ cfg = Configurator(
                 }
             },
         "bysample": {
-        }    
+        }
         },
     },
 
-    
+
    variables = {
         **muon_hists(coll="MuonGood", pos=0),
         **count_hist(name="nElectronGood", coll="ElectronGood",bins=3, start=0, stop=3),
@@ -97,12 +97,12 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/lxplus",
-        "env"            : "singularity",
+        "executor"       : "dask/slurm",
+        "env"            : "conda",
         "workers"        : 1,
         "scaleout"       : 50,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
+        "queue"          : "standard",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
@@ -112,4 +112,3 @@ run_options = {
         "treereduction"  : 20,
         "adapt"          : False
     }
-   
