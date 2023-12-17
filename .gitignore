@@ -118,9 +118,6 @@ ENV/
 env.bak/
 venv.bak/
 
-*.out
-output*
-*.png
 
 # Spyder project settings
 .spyderproject
@@ -142,3 +139,10 @@ dmypy.json
 
 # Processor output
 output
+
+
+# My stuff
+*.out
+*out*/
+*.png
+*slurm*
