@@ -11,11 +11,13 @@ from pocket_coffea.lib.cut_functions import (
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
+from pocket_coffea.lib.categorization import CartesianSelection, MultiCut
 
 import workflow
 from workflow import QCDBaseProcessor
 
 import custom_cut_functions
+from cuts import *
 
 # import custom_cuts
 from custom_cut_functions import *
@@ -49,6 +51,32 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 
+# cuts_pt = []
+# cuts_names_pt = []
+# for j in range(len(pt_bins) - 1):
+#     pt_low, pt_high = pt_bins[j], pt_bins[j + 1]
+#     cuts_pt.append(get_ptbin(pt_low, pt_high))
+#     cuts_names_pt.append(f'pt{pt_low}-{pt_high}')
+
+cuts_eta = []
+cuts_names_eta = []
+for i in range(len(eta_bins) - 1):
+    eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
+    cuts_eta.append(get_etabin(eta_low, eta_high))
+    cuts_names_eta.append(f"eta{eta_low}-{eta_high}")
+
+
+multicuts = [
+    MultiCut(name="eta", cuts=cuts_eta, cuts_names=cuts_names_eta),
+    # MultiCut(name="pt",
+    #          cuts=cuts_pt,
+    #          cuts_names=cuts_names_pt),
+]
+
+common_cats = {
+    "inclusive": [passthrough],
+}
+
 cfg = Configurator(
     parameters=parameters,
     datasets={
@@ -73,12 +101,11 @@ cfg = Configurator(
         # get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"]),
     ],
     preselections=[],
-    categories={
-        **{
-            "baseline": [passthrough],
-        },
-        # **eta_cuts,
-    },
+    categories=CartesianSelection(multicuts=multicuts, common_cats=common_cats),
+    # categories={
+    #             **common_cats,
+    #     # **eta_cuts,
+    # },
     weights={
         "common": {
             "inclusive": [
@@ -101,46 +128,18 @@ cfg = Configurator(
     },
     variables={
         **{
-            # **jet_hists(coll="JetGood", pos=0),
-            # **jet_hists(coll="JetMatched", pos=0),
-            # "GenJet_pt": HistConf(
-            #     [
-            #         Axis(
-            #             coll="GenJetGood",
-            #             field="pt",
-            #             bins=100,
-            #             start=0,
-            #             stop=1000,
-            #             label="genjet_pt",
-            #             pos=0,
-            #         )
-            #     ]
-            # ),
-            # "GenJet_eta": HistConf(
-            #     [
-            #         Axis(
-            #             coll="GenJetGood",
-            #             field="eta",
-            #             bins=100,
-            #             start=-5,
-            #             stop=5,
-            #             label="genjet_eta",
-            #             pos=0,
-            #         )
-            #     ]
-            # ),
-            # "JetMatched_pt": HistConf(
-            #     [
-            #         Axis(
-            #             coll="JetMatched",
-            #             field="pt",
-            #             bins=100,
-            #             start=0,
-            #             stop=100,
-            #             label="jet_matched_pt",
-            #         )
-            #     ]
-            # ),
+            "MatchedJets": HistConf(
+                [
+                    Axis(
+                        coll="MatchedJets",
+                        field="pt",
+                        bins=100,
+                        start=0,
+                        stop=100,
+                        label="MatchedJets_pt",
+                    )
+                ]
+            ),
             "MatchedJets_Response": HistConf(
                 [
                     Axis(
@@ -150,23 +149,10 @@ cfg = Configurator(
                         start=0,
                         stop=4,
                         pos=None,
-                        label="Response",
+                        label="MatchedJets_Response",
                     )
                 ]
             ),
-            # "JetMatched_Response_old": HistConf(
-            #     [
-            #         Axis(
-            #             coll="JetMatched",
-            #             field="Response_old",
-            #             bins=100,
-            #             start=0,
-            #             stop=4,
-            #             pos=None,
-            #             label="Response_old",
-            #         )
-            #     ]
-            # ),
             "MatchedJets_DeltaR": HistConf(
                 [
                     Axis(
@@ -176,68 +162,76 @@ cfg = Configurator(
                         start=0,
                         stop=0.5,
                         pos=None,
-                        label="DeltaR",
+                        label="MatchedJets_DeltaR",
                     )
                 ]
             ),
-            # "JetMatched_DeltaR_old": HistConf(
-            #     [
-            #         Axis(
-            #             coll="JetMatched",
-            #             field="DeltaR_old",
-            #             bins=100,
-            #             start=0,
-            #             stop=0.5,
-            #             pos=None,
-            #             label="DeltaR_old",
-            #         )
-            #     ]
-            # ),
-        },
-        # plot variables in eta bins and pt bins
-        **{
-            f"MatchedJets_{var}_eta{eta_bins[i]}-{eta_bins[i+1]}_pt{pt_bins[j]}-{pt_bins[j+1]}": HistConf(
+            "MatchedJets_eta": HistConf(
                 [
                     Axis(
-                        coll=f"MatchedJets_eta{eta_bins[i]}-{eta_bins[i+1]}_pt{pt_bins[j]}-{pt_bins[j+1]}",
-                        field=var,
+                        coll="MatchedJets",
+                        field="eta",
                         bins=100,
-                        start=start,
-                        stop=stop,
-                        label=f"MatchedJets_{var}_eta{eta_bins[i]}-{eta_bins[i+1]}_pt{pt_bins[j]}-{pt_bins[j+1]}",
+                        start=0,
+                        stop=5.5,
+                        pos=None,
+                        label="MatchedJets_eta",
                     )
                 ]
-            )
-            for i in range(len(eta_bins) - 1)  # for each eta bin
-            for j in range(len(pt_bins) - 1)  # for each pt bin
-            for var, start, stop in zip(
-                # ["Response"],
-                # [4]
-                ["pt", "eta", "Response"],
-                [0, -5.5, 0],
-                [100, 5.5, 4],
-            )
+            ),
         },
+        # # plot variables in eta bins and pt bins
+        # **{
+        #     f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}_{var}": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+        #                 field=var,
+        #                 bins=100,
+        #                 start=start,
+        #                 stop=stop,
+        #                 label=f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}_{var}",
+        #             )
+        #         ]
+        #     )
+        #     for j in range(len(pt_bins) - 1)  # for each pt bin
+        #     for var, start, stop in zip(
+        #         # ["Response"],
+        #         # [4]
+        #         ["pt", "eta", "Response"],
+        #         [0, -5.5, 0],
+        #         [100, 5.5, 4],
+        #     )
+        # },
     },
     columns={
         "common": {
-            "inclusive": [],
+            # "inclusive": [
+            #     ColOut("MatchedJets", ["Response", "pt", "eta"]),
+            # ]
+            # + [
+            #     ColOut(
+            #         f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+            #         ["Response", "pt", "eta"],
+            #         # fill_none=False,
+            #     )
+            #     for j in range(len(pt_bins) - 1)  # for each pt bin
+            # ],
         },
         "bysample": {
             "QCD": {
                 "bycategory": {
-                    "baseline": [
-                        ColOut("JetGood", ["pt"]),
-                        ColOut("MatchedJets", ["Response", "pt", "eta"]),
-                    ]
-                    + [
-                        ColOut(
-                            f"MatchedJets_eta{eta_bins[i]}-{eta_bins[i+1]}_pt{pt_bins[j]}-{pt_bins[j+1]}",
-                            ["Response", "pt", "AbsEta"],
-                        )
-                        for i in range(len(eta_bins) - 1)  # for each eta bin
-                        for j in range(len(pt_bins) - 1)  # for each pt bin
-                    ],
+                    # "inclusive": [
+                    #     ColOut("MatchedJets", ["Response", "pt", "eta"]),
+                    # ]
+                    # + [
+                    #     ColOut(
+                    #         f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+                    #         ["Response", "pt", "eta"],
+                    #         # fill_none=False,
+                    #     )
+                    #     for j in range(len(pt_bins) - 1)  # for each pt bin
+                    # ],
                 }
             },
         },

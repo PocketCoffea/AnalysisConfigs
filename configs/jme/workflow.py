@@ -46,52 +46,70 @@ class QCDBaseProcessor(BaseProcessorABC):
             # self.events["JetMatched"] = ak.mask(self.events.Jet, not_none)
 
             (
-                self.events["GenJetMatched1"],
+                self.events["GenJetMatched"],
                 self.events["JetMatched"],
                 deltaR_matched,
             ) = object_matching(self.events["GenJet"], self.events["Jet"], 0.2)
 
-            mask=self.events.GenJetMatched1.pt<50
-            self.events["GenJetMatched"] = self.events.GenJetMatched1[mask]
-            deltaR_matched = deltaR_matched[mask]
-            self.events["JetMatched"]=self.events.JetMatched[mask]
+            # mask=self.events.GenJetMatched.pt<50
+            # self.events["GenJetMatched"] = self.events.GenJetMatched[mask]
+            # deltaR_matched = deltaR_matched[mask]
+            # self.events["JetMatched"]=self.events.JetMatched[mask]
+
 
             self.events["MatchedJets"] = ak.with_field(
-                self.events.GenJetMatched, deltaR_matched, "DeltaR"
-            )
-
-            self.events["MatchedJets"] = ak.with_field(
-                self.events.MatchedJets,
-                self.events.JetMatched.pt / self.events.MatchedJets.pt,
+                self.events.GenJetMatched,
+                self.events.JetMatched.pt / self.events.GenJetMatched.pt,
                 "Response",
             )
-
             self.events["MatchedJets"] = ak.with_field(
-                self.events["MatchedJets"],
-                abs(self.events["MatchedJets"].eta),
-                "AbsEta",
+                self.events.MatchedJets, deltaR_matched, "DeltaR"
             )
 
-            for i in range(len(eta_bins) - 1):
-                for j in range(len(pt_bins) - 1):
-                    eta_min = eta_bins[i]
-                    eta_max = eta_bins[i + 1]
-                    pt_min = pt_bins[j]
-                    pt_max = pt_bins[j + 1]
-                    name = f"MatchedJets_eta{eta_min}-{eta_max}_pt{pt_min}-{pt_max}"
-                    mask_eta = (abs(self.events.MatchedJets.eta) > eta_min) & (
-                        abs(self.events.MatchedJets.eta) < eta_max
-                    )  # mask for jets in eta bin
-                    mask_pt = (self.events.MatchedJets.pt > pt_min) & (
-                        self.events.MatchedJets.pt < pt_max
-                    )
-                    mask = mask_eta & mask_pt
-                    self.events[name] = self.events.MatchedJets[mask]
+            self.events["MatchedJets"] = self.events.MatchedJets[~ak.is_none(
+                self.events.MatchedJets, axis=1
+            )]
+
+
+            # self.events["MatchedJets"] = ak.with_field(
+            #     self.events["MatchedJets"],
+            #     abs(self.events["MatchedJets"].eta),
+            #     "AbsEta",
+            # )
+
+            # for i in range(len(eta_bins) - 1):
+            #     for j in range(len(pt_bins) - 1):
+            #         eta_min = eta_bins[i]
+            #         eta_max = eta_bins[i + 1]
+            #         pt_min = pt_bins[j]
+            #         pt_max = pt_bins[j + 1]
+            #         name = f"MatchedJets_eta{eta_min}-{eta_max}_pt{pt_min}-{pt_max}"
+            #         mask_eta = ((self.events.MatchedJets.eta) > eta_min) & (
+            #             (self.events.MatchedJets.eta) < eta_max
+            #         )  # mask for jets in eta bin
+            #         mask_pt = (self.events.MatchedJets.pt > pt_min) & (
+            #             self.events.MatchedJets.pt < pt_max
+            #         )
+            #         mask = mask_eta & mask_pt
+            #         self.events[name] = self.events.MatchedJets[mask]
+
+            for j in range(len(pt_bins) - 1):
+                pt_min = pt_bins[j]
+                pt_max = pt_bins[j + 1]
+                name = f"MatchedJets_pt{pt_min}-{pt_max}"
+                mask = (self.events.MatchedJets.pt > pt_min) & (
+                    self.events.MatchedJets.pt < pt_max
+                )
+                mask=mask[~ak.is_none(mask, axis=1)]
+                self.events[name] = self.events.MatchedJets[mask]
 
     def count_objects(self, variation):
         self.events["nJetGood"] = ak.num(self.events.JetGood)
         if self._isMC:
             self.events["nGenJetGood"] = ak.num(self.events.GenJetGood)
+
+
+
 
     # # Function that defines common variables employed in analyses and save them as attributes of `events`
     # def define_common_variables_after_presel(self, variation):

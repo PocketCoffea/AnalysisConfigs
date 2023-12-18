@@ -1,7 +1,7 @@
 object_preselection:
   Jet:
-    dr_lepton: 0.4
-    pt: 0 #30
+    dr_lepton: 0 #0.4
+    pt: 6 #30
     eta: 100 #2.4
     jetId: 0 #2
     # puId:
