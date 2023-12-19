@@ -146,3 +146,4 @@ output
 *out*/
 *.png
 *slurm*
+*.pkl.gz

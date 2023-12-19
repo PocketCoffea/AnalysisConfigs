@@ -91,37 +91,40 @@ class QCDBaseProcessor(BaseProcessorABC):
             #         mask = mask_eta & mask_pt
             #         self.events[name] = self.events.MatchedJets[mask]
 
-            for j in range(len(pt_bins) - 1):
-                # read eta_min for the environment variable ETA_MIN
-                eta_min = float(os.environ.get("ETA_MIN", -999.))
-                eta_max = float(os.environ.get("ETA_MAX", -999.))
-                pt_min = pt_bins[j]
-                pt_max = pt_bins[j + 1]
-                mask_pt = (self.events.MatchedJets.pt > pt_min) & (
-                    self.events.MatchedJets.pt < pt_max
-                )
-                if eta_min != -999. and eta_max != -999.:
-                    name = f"MatchedJets_eta{eta_min}to{eta_max}_pt{pt_min}to{pt_max}"
-                    mask_eta = ((self.events.MatchedJets.eta) > eta_min) & (
-                        (self.events.MatchedJets.eta) < eta_max
-                    )
-                    mask = mask_eta & mask_pt
-
-                else:
-                    name = f"MatchedJets_pt{pt_min}to{pt_max}"
-                    mask = mask_pt
-                self.events[name] = self.events.MatchedJets[mask]
-
             # for j in range(len(pt_bins) - 1):
+            #     # read eta_min for the environment variable ETA_MIN
+            #     eta_min = float(os.environ.get("ETA_MIN", -999.))
+            #     eta_max = float(os.environ.get("ETA_MAX", -999.))
             #     pt_min = pt_bins[j]
             #     pt_max = pt_bins[j + 1]
-            #     name = f"MatchedJets_pt{pt_min}to{pt_max}"
-            #     mask = (self.events.MatchedJets.pt > pt_min) & (
+            #     mask_pt = (self.events.MatchedJets.pt > pt_min) & (
             #         self.events.MatchedJets.pt < pt_max
             #     )
-            #     mask = ak.where(ak.is_none(mask, axis=1), False, mask)
-            #     # mask=mask[~ak.is_none(mask, axis=1)]
+            #     if eta_min != -999. and eta_max != -999.:
+            #         name = f"MatchedJets_eta{eta_min}to{eta_max}_pt{pt_min}to{pt_max}"
+            #         mask_eta = ((self.events.MatchedJets.eta) > eta_min) & (
+            #             (self.events.MatchedJets.eta) < eta_max
+            #         )
+            #         mask = mask_eta & mask_pt
+
+            #     else:
+            #         name = f"MatchedJets_pt{pt_min}to{pt_max}"
+            #         mask = mask_pt
             #     self.events[name] = self.events.MatchedJets[mask]
+
+            for j in range(len(pt_bins) - 1):
+                pt_min = pt_bins[j]
+                pt_max = pt_bins[j + 1]
+                name = f"MatchedJets_pt{pt_min}to{pt_max}"
+                mask = (self.events.MatchedJets.pt > pt_min) & (
+                    self.events.MatchedJets.pt < pt_max
+                )
+                # put None where mask is False
+                mask = ak.mask(mask, mask)
+                
+                # mask = ak.where(ak.is_none(mask, axis=1), False, mask)
+                # mask=mask[~ak.is_none(mask, axis=1)]
+                self.events[name] = self.events.MatchedJets[mask]
 
     def count_objects(self, variation):
         self.events["nJetGood"] = ak.num(self.events.JetGood)
