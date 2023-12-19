@@ -56,14 +56,14 @@ parameters = defaults.merge_parameters_from_files(
 # for j in range(len(pt_bins) - 1):
 #     pt_low, pt_high = pt_bins[j], pt_bins[j + 1]
 #     cuts_pt.append(get_ptbin(pt_low, pt_high))
-#     cuts_names_pt.append(f'pt{pt_low}-{pt_high}')
+#     cuts_names_pt.append(f'pt{pt_low}to{pt_high}')
 
 cuts_eta = []
 cuts_names_eta = []
 for i in range(len(eta_bins) - 1):
     eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
     cuts_eta.append(get_etabin(eta_low, eta_high))
-    cuts_names_eta.append(f"eta{eta_low}-{eta_high}")
+    cuts_names_eta.append(f"GenJet_eta{eta_low}to{eta_high}")
 
 
 multicuts = [
@@ -74,7 +74,7 @@ multicuts = [
 ]
 
 common_cats = {
-    "inclusive": [passthrough],
+    "baseline": [passthrough],
 }
 
 cfg = Configurator(
@@ -128,69 +128,69 @@ cfg = Configurator(
     },
     variables={
         **{
-            "MatchedJets": HistConf(
+            "GenJet": HistConf(
                 [
                     Axis(
-                        coll="MatchedJets",
+                        coll="Jet",
                         field="pt",
                         bins=100,
                         start=0,
                         stop=100,
-                        label="MatchedJets_pt",
+                        label="GenJet_pt",
                     )
                 ]
             ),
-            "MatchedJets_Response": HistConf(
+            # "GenJet_Response": HistConf(
+            #     [
+            #         Axis(
+            #             coll="GenJet",
+            #             field="Response",
+            #             bins=100,
+            #             start=0,
+            #             stop=4,
+            #             pos=None,
+            #             label="GenJet_Response",
+            #         )
+            #     ]
+            # ),
+            # "GenJet_DeltaR": HistConf(
+            #     [
+            #         Axis(
+            #             coll="GenJet",
+            #             field="DeltaR",
+            #             bins=100,
+            #             start=0,
+            #             stop=0.5,
+            #             pos=None,
+            #             label="GenJet_DeltaR",
+            #         )
+            #     ]
+            # ),
+            "GenJet_eta": HistConf(
                 [
                     Axis(
-                        coll="MatchedJets",
-                        field="Response",
-                        bins=100,
-                        start=0,
-                        stop=4,
-                        pos=None,
-                        label="MatchedJets_Response",
-                    )
-                ]
-            ),
-            "MatchedJets_DeltaR": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="DeltaR",
-                        bins=100,
-                        start=0,
-                        stop=0.5,
-                        pos=None,
-                        label="MatchedJets_DeltaR",
-                    )
-                ]
-            ),
-            "MatchedJets_eta": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
+                        coll="Jet",
                         field="eta",
                         bins=100,
-                        start=0,
+                        start=-5.5,
                         stop=5.5,
                         pos=None,
-                        label="MatchedJets_eta",
+                        label="GenJet_eta",
                     )
                 ]
             ),
         },
         # # plot variables in eta bins and pt bins
         # **{
-        #     f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}_{var}": HistConf(
+        #     f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
         #         [
         #             Axis(
-        #                 coll=f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+        #                 coll=f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}",
         #                 field=var,
         #                 bins=100,
         #                 start=start,
         #                 stop=stop,
-        #                 label=f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}_{var}",
+        #                 label=f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}",
         #             )
         #         ]
         #     )
@@ -207,31 +207,53 @@ cfg = Configurator(
     columns={
         "common": {
             # "inclusive": [
-            #     ColOut("MatchedJets", ["Response", "pt", "eta"]),
+            #     ColOut("GenJet", ["Response", "pt", "eta"]),
             # ]
             # + [
             #     ColOut(
-            #         f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+            #         f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}",
             #         ["Response", "pt", "eta"],
             #         # fill_none=False,
             #     )
             #     for j in range(len(pt_bins) - 1)  # for each pt bin
             # ],
+
+            # cat: [ColOut("GenJet", ["Response", "pt", "eta"])]
+            # + [
+            #     ColOut(
+            #         f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}",
+            #         ["Response", "pt", "eta"],
+            #         # fill_none=False,
+            #     )
+            #     for j in range(len(pt_bins) - 1)  # for each pt bin
+            # ]
+            # for cat in cuts_names_eta
         },
         "bysample": {
             "QCD": {
                 "bycategory": {
-                    # "inclusive": [
-                    #     ColOut("MatchedJets", ["Response", "pt", "eta"]),
-                    # ]
+                    "baseline": [
+                        ColOut("Jet", ["pt", "eta"], fill_none=False),
+                        # ColOut("GenJet", ["Response", "pt", "eta"]),
+                    ]
                     # + [
                     #     ColOut(
-                    #         f"MatchedJets_pt{pt_bins[j]}-{pt_bins[j+1]}",
+                    #         f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}",
                     #         ["Response", "pt", "eta"],
                     #         # fill_none=False,
                     #     )
                     #     for j in range(len(pt_bins) - 1)  # for each pt bin
                     # ],
+
+                    # cat: [ColOut("GenJet", ["pt", "eta"])]
+                    # + [
+                    #     ColOut(
+                    #         f"GenJet_pt{pt_bins[j]}to{pt_bins[j+1]}",
+                    #         ["Response", "pt", "eta"],
+                    #     )
+                    #     for j in range(len(pt_bins) - 1)  # for each pt bin
+                    # ]
+                    # for cat in cuts_names_eta
                 }
             },
         },
