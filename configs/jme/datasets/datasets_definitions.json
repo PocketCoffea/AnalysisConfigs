@@ -19,25 +19,5 @@
                 ]
             }
         ]
-    },
-    "DATA_SingleMuon": {
-        "sample": "DATA_SingleMuon",
-        "json_output": "datasets/DATA_SingleMuon.json",
-        "files": [
-            {
-                "das_names": [
-                    "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
-                ],
-                "metadata": {
-                    "year": "2018",
-                    "isMC": false,
-                    "primaryDataset": "SingleMuon",
-                    "era": "A"
-                },
-                "das_parents_names": [
-                    "/SingleMuon/Run2018A-UL2018_MiniAODv2-v3/MINIAOD"
-                ]
-            }
-        ]
     }
 }

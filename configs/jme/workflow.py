@@ -24,20 +24,20 @@ class QCDBaseProcessor(BaseProcessorABC):
         super().__init__(cfg)
 
     def apply_object_preselection(self, variation):
-        # self.events["JetGood"], self.jetGoodMask = jet_selection_nopu(
-        #     self.events, "Jet", self.params#, "LeptonGood"
-        # )
-        # self.events["GenJetGood"], self.genjetGoodMask = jet_selection_nopu(
-        #     self.events, "GenJet", self.params#, "LeptonGood"
-        # )
-
-        self.events["JetGood"], self.jetGoodMask = self.events["Jet"], ak.ones_like(
-            self.events["Jet"].pt, dtype=bool
+        self.events["JetGood"], self.jetGoodMask = jet_selection_nopu(
+            self.events, "Jet", self.params#, "LeptonGood"
         )
+
+        # self.events["JetGood"], self.jetGoodMask = self.events["Jet"], ak.ones_like(
+        #     self.events["Jet"].pt, dtype=bool
+        # )
         if self._isMC:
-            self.events["GenJetGood"], self.genjetGoodMask = self.events[
-                "GenJet"
-            ], ak.ones_like(self.events["GenJet"].pt, dtype=bool)
+            self.events["GenJetGood"], self.genjetGoodMask = jet_selection_nopu(
+                self.events, "GenJet", self.params#, "LeptonGood"
+            )
+            # self.events["GenJetGood"], self.genjetGoodMask = self.events[
+            #     "GenJet"
+            # ], ak.ones_like(self.events["GenJet"].pt, dtype=bool)
 
             # Ngenjet = ak.num(self.events.GenJet)
             # matching_with_none = ak.mask(self.events.Jet.genJetIdx, (self.events.Jet.genJetIdx < Ngenjet)&(self.events.Jet.genJetIdx!=-1))
@@ -49,12 +49,8 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events["GenJetMatched"],
                 self.events["JetMatched"],
                 deltaR_matched,
-            ) = object_matching(self.events["GenJet"], self.events["Jet"], 0.2)
+            ) = object_matching(self.events["GenJetGood"], self.events["JetGood"], 0.2)
 
-            # mask=self.events.GenJetMatched.pt<50
-            # self.events["GenJetMatched"] = self.events.GenJetMatched[mask]
-            # deltaR_matched = deltaR_matched[mask]
-            # self.events["JetMatched"]=self.events.JetMatched[mask]
 
             self.events["MatchedJets"] = ak.with_field(
                 self.events.GenJetMatched,
@@ -91,40 +87,41 @@ class QCDBaseProcessor(BaseProcessorABC):
             #         mask = mask_eta & mask_pt
             #         self.events[name] = self.events.MatchedJets[mask]
 
-            # for j in range(len(pt_bins) - 1):
-            #     # read eta_min for the environment variable ETA_MIN
-            #     eta_min = float(os.environ.get("ETA_MIN", -999.))
-            #     eta_max = float(os.environ.get("ETA_MAX", -999.))
-            #     pt_min = pt_bins[j]
-            #     pt_max = pt_bins[j + 1]
-            #     mask_pt = (self.events.MatchedJets.pt > pt_min) & (
-            #         self.events.MatchedJets.pt < pt_max
-            #     )
-            #     if eta_min != -999. and eta_max != -999.:
-            #         name = f"MatchedJets_eta{eta_min}to{eta_max}_pt{pt_min}to{pt_max}"
-            #         mask_eta = ((self.events.MatchedJets.eta) > eta_min) & (
-            #             (self.events.MatchedJets.eta) < eta_max
-            #         )
-            #         mask = mask_eta & mask_pt
-
-            #     else:
-            #         name = f"MatchedJets_pt{pt_min}to{pt_max}"
-            #         mask = mask_pt
-            #     self.events[name] = self.events.MatchedJets[mask]
-
             for j in range(len(pt_bins) - 1):
+                # read eta_min for the environment variable ETA_MIN
+                eta_min = float(os.environ.get("ETA_MIN", -999.))
+                eta_max = float(os.environ.get("ETA_MAX", -999.))
                 pt_min = pt_bins[j]
                 pt_max = pt_bins[j + 1]
-                name = f"MatchedJets_pt{pt_min}to{pt_max}"
-                mask = (self.events.MatchedJets.pt > pt_min) & (
+                mask_pt = (self.events.MatchedJets.pt > pt_min) & (
                     self.events.MatchedJets.pt < pt_max
                 )
-                # put None where mask is False
-                mask = ak.mask(mask, mask)
-                
-                # mask = ak.where(ak.is_none(mask, axis=1), False, mask)
-                # mask=mask[~ak.is_none(mask, axis=1)]
+                if eta_min != -999. and eta_max != -999.:
+                    name = f"MatchedJets_eta{eta_min}to{eta_max}_pt{pt_min}to{pt_max}"
+                    mask_eta = ((self.events.MatchedJets.eta) > eta_min) & (
+                        (self.events.MatchedJets.eta) < eta_max
+                    )
+                    mask = mask_eta & mask_pt
+
+                else:
+                    name = f"MatchedJets_pt{pt_min}to{pt_max}"
+                    mask = mask_pt
+                    mask = ak.mask(mask, mask)
                 self.events[name] = self.events.MatchedJets[mask]
+
+            # for j in range(len(pt_bins) - 1):
+            #     pt_min = pt_bins[j]
+            #     pt_max = pt_bins[j + 1]
+            #     name = f"MatchedJets_pt{pt_min}to{pt_max}"
+            #     mask = (self.events.MatchedJets.pt > pt_min) & (
+            #         self.events.MatchedJets.pt < pt_max
+            #     )
+            #     # put None where mask is False
+            #     mask = ak.mask(mask, mask)
+
+            #     # mask = ak.where(ak.is_none(mask, axis=1), False, mask)
+            #     # mask=mask[~ak.is_none(mask, axis=1)]
+            #     self.events[name] = self.events.MatchedJets[mask]
 
     def count_objects(self, variation):
         self.events["nJetGood"] = ak.num(self.events.JetGood)

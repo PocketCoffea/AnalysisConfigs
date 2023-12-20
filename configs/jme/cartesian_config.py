@@ -127,59 +127,58 @@ cfg = Configurator(
         }
     },
     variables={
-        **{
-            "MatchedJets": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="pt",
-                        bins=100,
-                        start=0,
-                        stop=100,
-                        label="MatchedJets_pt",
-                    )
-                ]
-            ),
-            # "MatchedJets_Response": HistConf(
-            #     [
-            #         Axis(
-            #             coll="MatchedJets",
-            #             field="Response",
-            #             bins=100,
-            #             start=0,
-            #             stop=4,
-            #             pos=None,
-            #             label="MatchedJets_Response",
-            #         )
-            #     ]
-            # ),
-            # "MatchedJets_DeltaR": HistConf(
-            #     [
-            #         Axis(
-            #             coll="MatchedJets",
-            #             field="DeltaR",
-            #             bins=100,
-            #             start=0,
-            #             stop=0.5,
-            #             pos=None,
-            #             label="MatchedJets_DeltaR",
-            #         )
-            #     ]
-            # ),
-            "MatchedJets_eta": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="eta",
-                        bins=100,
-                        start=-5.5,
-                        stop=5.5,
-                        pos=None,
-                        label="MatchedJets_eta",
-                    )
-                ]
-            ),
-        },
+        # **{
+        #     "MatchedJets_pt": HistConf(
+        #         [
+        #             Axis(
+        #                 coll="MatchedJets",
+        #                 field="pt",
+        #                 bins=100,
+        #                 start=0,
+        #                 stop=100,
+        #                 label="MatchedJets_pt",
+        #             )
+        #         ]
+        #     ),
+        #     "MatchedJets_Response": HistConf(
+        #         [
+        #             Axis(
+        #                 coll="MatchedJets",
+        #                 field="Response",
+        #                 bins=100,
+        #                 start=0,
+        #                 stop=4,
+        #                 pos=None,
+        #                 label="MatchedJets_Response",
+        #             )
+        #         ]
+        #     ),
+        #     # "MatchedJets_DeltaR": HistConf(
+        #     #     [
+        #     #         Axis(
+        #     #             coll="MatchedJets",
+        #     #             field="DeltaR",
+        #     #             bins=100,
+        #     #             start=0,
+        #     #             stop=0.5,
+        #     #             pos=None,
+        #     #             label="MatchedJets_DeltaR",
+        #     #         )
+        #     #     ]
+        #     # ),
+        #     "MatchedJets_eta": HistConf(
+        #         [
+        #             Axis(
+        #                 coll="MatchedJets",
+        #                 field="eta",
+        #                 bins=100,
+        #                 start=-5.5,
+        #                 stop=5.5,
+        #                 pos=None,
+        #                 label="MatchedJets_eta",
+        #             )
+        #         ]
+        #     ),
         # # plot variables in eta bins and pt bins
         # **{
         #     f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
@@ -203,6 +202,29 @@ cfg = Configurator(
         #         [100, 5.5, 4],
         #     )
         # },
+        # "MatchedJets_ResponseVSpt": HistConf(
+        #     [
+        #         Axis(
+        #             coll="MatchedJets",
+        #             field="Response",
+        #             bins=1000,
+        #             start=0,
+        #             stop=4,
+        #             pos=None,
+        #             label="MatchedJets_Response",
+        #             # type="variable",
+        #         ),
+        #         Axis(
+        #             coll="MatchedJets",
+        #             field="pt",
+        #             bins=pt_bins,
+        #             label="MatchedJets_pt",
+        #             type="variable",
+        #             pos=None,
+        #             lim=(15., 5000.),
+        #         ),
+        #     ]
+        # ),
     },
     columns={
         "common": {
@@ -217,7 +239,6 @@ cfg = Configurator(
             #     )
             #     for j in range(len(pt_bins) - 1)  # for each pt bin
             # ],
-
             # cat: [ColOut("MatchedJets", ["Response", "pt", "eta"])]
             # + [
             #     ColOut(
@@ -244,12 +265,10 @@ cfg = Configurator(
                     #     )
                     #     for j in range(len(pt_bins) - 1)  # for each pt bin
                     # ],
-
-                    cat: [ColOut("MatchedJets", ["pt", "eta", "Response"])]
-                    + [
+                    cat: [
                         ColOut(
                             f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                            ["Response", "pt", "eta"],
+                            ["Response"],
                         )
                         for j in range(len(pt_bins) - 1)  # for each pt bin
                     ]
@@ -264,16 +283,16 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 50,
+    "scaleout": 10,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "12:00:00",  # 00:40:00
-    "mem_per_worker": "6GB",  # 4GB
+    "walltime": "2:00:00",  # 00:40:00
+    "mem_per_worker": "4GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
     "chunk": 400000,
     "retries": 50,
-    "treereduction": 5,  # 20,
+    "treereduction": 20,  # 5,
     "adapt": False,
 }
 

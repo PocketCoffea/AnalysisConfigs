@@ -39,10 +39,12 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 
 # read eta_min for the environment variable ETA_MIN
-eta_min = float(os.environ.get("ETA_MIN", -999.))
-eta_max = float(os.environ.get("ETA_MAX", -999.))
+eta_min = float(os.environ.get("ETA_MIN", -999.0))
+eta_max = float(os.environ.get("ETA_MAX", -999.0))
 
-eta_substr=f"_eta{eta_min}to{eta_max}" if (eta_min != -999. and eta_max != -999.) else ""
+eta_substr = (
+    f"_eta{eta_min}to{eta_max}" if (eta_min != -999.0 and eta_max != -999.0) else ""
+)
 
 # adding object preselection
 year = "2018"
@@ -148,71 +150,70 @@ cfg = Configurator(
             #         )
             #     ]
             # ),
-            "MatchedJets_Response": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="Response",
-                        bins=100,
-                        start=0,
-                        stop=4,
-                        pos=None,
-                        label="Response",
-                    )
-                ]
-            ),
-            "MatchedJets_eta": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="eta",
-                        bins=100,
-                        start=-5.2,
-                        stop=5.2,
-                        pos=None,
-                        label="eta",
-                    )
-                ]
-            ),
-            "MatchedJets_pt": HistConf(
-                [
-                    Axis(
-                        coll="MatchedJets",
-                        field="pt",
-                        bins=1000,
-                        start=0,
-                        stop=5000,
-                        pos=None,
-                        label="pt",
-                    )
-                ]
-            ),
-
+            # "MatchedJets_Response": HistConf(
+            #     [
+            #         Axis(
+            #             coll="MatchedJets",
+            #             field="Response",
+            #             bins=100,
+            #             start=0,
+            #             stop=4,
+            #             pos=None,
+            #             label="Response",
+            #         )
+            #     ]
+            # ),
+            # "MatchedJets_eta": HistConf(
+            #     [
+            #         Axis(
+            #             coll="MatchedJets",
+            #             field="eta",
+            #             bins=100,
+            #             start=-5.2,
+            #             stop=5.2,
+            #             pos=None,
+            #             label="eta",
+            #         )
+            #     ]
+            # ),
+            # "MatchedJets_pt": HistConf(
+            #     [
+            #         Axis(
+            #             coll="MatchedJets",
+            #             field="pt",
+            #             bins=1000,
+            #             start=0,
+            #             stop=5000,
+            #             pos=None,
+            #             label="pt",
+            #         )
+            #     ]
+            # ),
         },
         # plot variables in eta bins and pt bins
-        **{
-            f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
-                [
-                    Axis(
-                        coll=f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                        field=var,
-                        bins=100,
-                        start=start,
-                        stop=stop,
-                        label=f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}",
-                    )
-                ]
-            )
-            # for i in range(len(eta_bins) - 1)  # for each eta bin
-            for j in range(len(pt_bins) - 1)  # for each pt bin
-            for var, start, stop in zip(
-                # ["Response"],
-                # [4]
-                ["pt", "eta", "Response"],
-                [0, -5.5, 0],
-                [100, 5.5, 4],
-            )
-        },
+        # **{
+        #     f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
+        #                 field=var,
+        #                 bins=100,
+        #                 start=start,
+        #                 stop=stop,
+        #                 label=f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}",
+        #             )
+        #         ]
+        #     )
+        #     # for i in range(len(eta_bins) - 1)  # for each eta bin
+        #     for j in range(len(pt_bins) - 1)  # for each pt bin
+        #     for var, start, stop in zip(
+        #         # ["Response"],
+        #         # [4]
+        #         ["pt", "eta", "Response"],
+        #         [0, -5.5, 0],
+        #         [100, 5.5, 4],
+        #     )
+        # },
     },
     columns={
         "common": {
@@ -222,12 +223,9 @@ cfg = Configurator(
             "QCD": {
                 "bycategory": {
                     "baseline": [
-                        ColOut("MatchedJets", ["Response", "pt", "eta"]),
-                    ]
-                    + [
                         ColOut(
                             f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                            ["Response", "pt", "eta"],
+                            ["Response"],
                         )
                         # for i in range(len(eta_bins) - 1)  # for each eta bin
                         for j in range(len(pt_bins) - 1)  # for each pt bin
@@ -242,16 +240,16 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 10, #50
+    "scaleout": 50,  # 50
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "02:00:00",  # 00:40:00
+    "walltime": "01:00:00",  # 00:40:00
     "mem_per_worker": "4GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
     "chunk": 400000,
     "retries": 50,
-    "treereduction": 5,  # 20,
+    "treereduction": 20,  # 20,
     "adapt": False,
 }
 
