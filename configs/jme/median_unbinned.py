@@ -23,9 +23,9 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 medians=np.zeros((len(eta_bins)-1, len(pt_bins)-1))
 medians_un=np.zeros((len(eta_bins)-1, len(pt_bins)-1))
 
-main_dir="out_separate_eta_bin" if not args.cartesian else "out_cartesian_central_column"
-o_cartesian=load(f"{main_dir}/output_all.coffea")
-
+main_dir="out_separate_eta_bin" if not args.cartesian else "out_cartesian"
+o_cartesian=load(f"{main_dir}/output_all.coffea") if args.cartesian else None
+num_tot=0
 for i in range(len(eta_bins)-1):
     o=load(f"{main_dir}/eta{eta_bins[i]}to{eta_bins[i+1]}/output_all.coffea") if not args.cartesian else o_cartesian
     cat="baseline" if not args.cartesian else f"MatchedJets_eta{eta_bins[i]}to{eta_bins[i+1]}"
@@ -43,11 +43,13 @@ for i in range(len(eta_bins)-1):
                 # sort column in ascending order
                 column = np.sort(column[column != -999.])
                 median_un= np.median(column)
+                num_tot+=len(column)
                 medians_un[i,j] = median_un
 
 print("unbinned",medians_un)
 median_dir=f"{main_dir}/median_plots_unbinned"
 os.makedirs(f"{median_dir}", exist_ok=True)
+print("num_tot", num_tot)
 
 
 

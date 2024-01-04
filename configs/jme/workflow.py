@@ -102,6 +102,7 @@ class QCDBaseProcessor(BaseProcessorABC):
                         (self.events.MatchedJets.eta) < eta_max
                     )
                     mask = mask_eta & mask_pt
+                    mask=mask[~ak.is_none(mask, axis=1)]
 
                 else:
                     name = f"MatchedJets_pt{pt_min}to{pt_max}"

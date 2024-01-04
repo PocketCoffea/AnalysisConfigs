@@ -42,6 +42,9 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 eta_min = float(os.environ.get("ETA_MIN", -999.0))
 eta_max = float(os.environ.get("ETA_MAX", -999.0))
 
+print(f"\n eta_min: {eta_min}")
+print(f"\n eta_max: {eta_max}")
+
 eta_substr = (
     f"_eta{eta_min}to{eta_max}" if (eta_min != -999.0 and eta_max != -999.0) else ""
 )
@@ -62,7 +65,7 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/QCD.json",
+            f"{localdir}/datasets/QCD_local.json",
             # f"{localdir}/datasets/DATA_SingleMuon.json",
         ],
         "filter": {
@@ -229,7 +232,8 @@ cfg = Configurator(
                         )
                         # for i in range(len(eta_bins) - 1)  # for each eta bin
                         for j in range(len(pt_bins) - 1)  # for each pt bin
-                    ],
+                    ]
+                    # + [ColOut(f"MatchedJets", ["Response", "pt", "eta"])],
                 }
             },
         },
@@ -240,11 +244,11 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 50,  # 50
+    "scaleout": 200,  # 50
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "01:00:00",  # 00:40:00
-    "mem_per_worker": "4GB",  # 4GB
+    "walltime": "00:40:00",  # 00:40:00
+    "mem_per_worker": "6GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
     "chunk": 400000,

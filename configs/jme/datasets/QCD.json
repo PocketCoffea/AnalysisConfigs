@@ -1,26 +1,4 @@
 {
-    "QCD_PT-15to7000_PT-15to7000_2022": {
-        "metadata": {
-            "das_names": "['/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer22NanoAODv11-castor_126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM']",
-            "sample": "QCD",
-            "year": "2022",
-            "isMC": "True",
-            "xsec": "1438000000.0",
-            "part": "PT-15to7000",
-            "nevents": "9989948",
-            "size": "15866180599"
-        },
-        "files": [
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/049c0bfa-f14b-42e1-8de4-429b674a5f0b.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/3b0e74e5-6103-4478-99d2-afdba82a065e.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/58a0320f-004a-44a4-95df-2c5575faa29f.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/7f4ea0a3-add9-4e82-b692-2c58ef5fa2ab.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/9fdf6040-5e41-4b94-9c27-3bec6c826697.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/a06c4c1a-a750-4c81-b194-fcad679bbb26.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/a4ce8000-7885-4ae0-ac71-feb6a0a9ab80.root",
-            "root://dcache-cms-xrootd.desy.de:1094//store/mc/Run3Summer22NanoAODv11/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/castor_126X_mcRun3_2022_realistic_v2-v1/30000/fdb70a67-12d9-4616-a5d1-b8392bf93d56.root"
-        ]
-    },
     "QCD_PT-15to7000_PT-15to7000_2018": {
         "metadata": {
             "das_names": "['/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer22NanoAODv11-castor_126X_mcRun3_2022_realistic_v2-v1/NANOAODSIM']",

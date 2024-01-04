@@ -268,7 +268,7 @@ cfg = Configurator(
                     cat: [
                         ColOut(
                             f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                            ["Response"],
+                            ["Response", "pt", "eta"],
                         )
                         for j in range(len(pt_bins) - 1)  # for each pt bin
                     ]
@@ -283,11 +283,11 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 10,
+    "scaleout": 100,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
     "walltime": "2:00:00",  # 00:40:00
-    "mem_per_worker": "4GB",  # 4GB
+    "mem_per_worker": "6GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
     "chunk": 400000,

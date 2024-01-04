@@ -39,7 +39,7 @@ for sample in histos_dict.keys():
     for dataset in histos_dict[sample].keys():
         # histo = np.array(histos_dict[sample][dataset][cat][0, 0, :])["value"]
         histo = histos_dict[sample][dataset]
-        print(histo)
+        # print(histo)
         categories=list(histo.axes["cat"])
         variations=list(histo.axes["variation"])
         for i in range(len(categories) - 1):
@@ -49,7 +49,7 @@ for sample in histos_dict.keys():
                 # h is a histo2d and we want to find the median of the distribution along the axis MatchedJets.Response
                 # for each bin in the axis MatchedJets.pt
                 # so we need to loop over the bins in the axis MatchedJets.pt
-                for j in range(len(h.axes["MatchedJets.pt"]) - 1):
+                for j in range(len(h.axes["MatchedJets.pt"])):
                     # get the histo1d for the bin j in the axis MatchedJets.pt
                     h1d=h[{'MatchedJets.pt': j}]
                     # get the values of the histo1d
@@ -60,13 +60,12 @@ for sample in histos_dict.keys():
                     # print("bins", bins)
                     # find the bin which is the median of the histogram
                     cdf = np.cumsum(values)
-                    print("cdf", cdf)
+                    # print("cdf", cdf)
                     cdf_normalized = cdf / cdf[-1]
                     median_bin_index = np.argmax(cdf_normalized >= 0.5)
                     median= bins[median_bin_index]
                     medians[i].append(median)
                     # medians[i,j] = median
-                    print(median)
 
 
 
@@ -110,28 +109,29 @@ os.makedirs(f"{median_dir}", exist_ok=True)
 # fig.savefig(f"{median_dir}/median_2d_unbinned.png")
 
 
-# # do the same for unbinned
-# fig, ax = plt.subplots()
-# for i in range(len(eta_bins) - 1):
-#     ax.plot(pt_bins[1:], medians[i, :], label=f"eta{eta_bins[i]}to{eta_bins[i+1]}")
-# ax.set_xlabel("pt")
-# ax.set_ylabel("median")
-# # log x scale
-# ax.set_xscale("log")
-# ax.legend()
-# # plt.show()
-# fig.savefig(f"{median_dir}/median_1d_binned.png")
+# do the same for unbinned
+fig, ax = plt.subplots()
+for i in range(len(eta_bins) - 1):
+    ax.plot(pt_bins[1:], medians[i][:], label=f"eta{eta_bins[i]}to{eta_bins[i+1]}")
+ax.set_xlabel("pt")
+ax.set_ylabel("median")
+# log x scale
+ax.set_xscale("log")
+ax.legend()
+# plt.show()
+fig.savefig(f"{median_dir}/median_1d_binned.png")
 
-# # create a plot for each eta bin with the median as a function of pt
-# for i in range(len(eta_bins) - 1):
-#     fig, ax = plt.subplots()
-#     ax.plot(pt_bins[1:], medians[i, :], label=f"eta{eta_bins[i]}to{eta_bins[i+1]}")
-#     ax.set_xlabel("pt")
-#     ax.set_ylabel("median")
-#     # log x scale
-#     ax.set_xscale("log")
-#     ax.legend()
-#     # plt.show()
-#     fig.savefig(f"{median_dir}/median_1d_eta{eta_bins[i]}to{eta_bins[i+1]}.png")
-#     fig.clf()
+# create a plot for each eta bin with the median as a function of pt
+for i in range(len(eta_bins) - 1):
+    fig, ax = plt.subplots()
+    ax.plot(pt_bins[1:], medians[i][:], label=f"eta{eta_bins[i]}to{eta_bins[i+1]}")
+    ax.set_xlabel("pt")
+    ax.set_ylabel("median")
+    # log x scale
+    ax.set_xscale("log")
+    ax.legend()
+    # plt.show()
+    fig.savefig(f"{median_dir}/median_1d_eta{eta_bins[i]}to{eta_bins[i+1]}.png")
+    fig.clf()
 
+print(median_dir)
