@@ -87,7 +87,7 @@ else:
                 # os.environ["ETA_MAX"] = f"{eta_bin_max}"
                 # command3=f'time runner.py --cfg jme_config.py --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}'
 
-                if f'eta{eta_bin_min}to{eta_bin_max}' not in os.listdir('out_separate_eta_bin_seq'):
+                if not os.path.isfile(f'out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}/output_all.coffea'):
                     print(f'out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}')
                     subprocess.run(command2, shell=True)
                     subprocess.run(command3, shell=True)

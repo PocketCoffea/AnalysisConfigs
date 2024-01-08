@@ -147,3 +147,4 @@ output
 *.png
 *slurm*
 *.pkl.gz
+*.code-workspace
