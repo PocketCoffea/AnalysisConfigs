@@ -35,7 +35,7 @@ exclude_data = ["DATA_SingleEle", "DATA_SingleMuon"]
 exclude_nonttbar = ["ttHTobb", "TTTo2L2Nu", "SingleTop", "WJetsToLNu_HT"] + exclude_data
 
 # adding object preselection
-year = "2018"
+year = "2022"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection_semileptonic.yaml",
@@ -49,23 +49,13 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/datasets/signal_ttHTobb.json",
-            f"{localdir}/datasets/datasets/backgrounds_MC_TTbb.json",
-              f"{localdir}/datasets/datasets/backgrounds_MC_ttbar.json",
-              f"{localdir}/datasets/datasets/backgrounds_MC.json",
-              f"{localdir}/datasets/datasets/DATA_SingleEle.json",
-            f"{localdir}/datasets/datasets/DATA_SingleMuon.json",
+            f"{localdir}/datasets/DATA_JetMET.json"
+            f"{localdir}/datasets/signal_ggF_HH4b.json",
         ],
         "filter": {
             "samples": [
-                "ttHTobb",
-                "TTbbSemiLeptonic",
-                # "TTToSemiLeptonic",
-                "TTTo2L2Nu",
-                "SingleTop",
-                "WJetsToLNu_HT",
-                "DATA_SingleEle",
-                "DATA_SingleMuon",
+                "signal_ggF_HH4b",
+                "DATA_JetMET",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -120,7 +110,7 @@ cfg = Configurator(
         get_nObj_min(4, 15.0, "Jet"),
         get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"]),
     ],
-    preselections=[semileptonic_presel_nobtag],
+    preselections=[standard_presel],
     categories={
         "baseline": [passthrough],
         # "SingleEle_3b" : [ get_nElectron(1, coll="ElectronGood"), get_nObj_eq(3, coll="BJetGood") ],
@@ -176,26 +166,26 @@ cfg = Configurator(
         }
     },
     variables={
-        **ele_hists(
-            coll="ElectronGood",
-            pos=0,
-            # exclude_categories=[
-            #     "SingleMuon_1b",
-            #     "SingleMuon_2b",
-            #     "SingleMuon_3b",
-            #     "SingleMuon_4b",
-            # ],
-        ),
-        **muon_hists(
-            coll="MuonGood",
-            pos=0,
-            # exclude_categories=[
-            #     "SingleEle_1b",
-            #     "SingleEle_2b",
-            #     "SingleEle_3b",
-            #     "SingleEle_4b",
-            # ],
-        ),
+        # **ele_hists(
+        #     coll="ElectronGood",
+        #     pos=0,
+        #     exclude_categories=[
+        #         "SingleMuon_1b",
+        #         "SingleMuon_2b",
+        #         "SingleMuon_3b",
+        #         "SingleMuon_4b",
+        #     ],
+        # ),
+        # **muon_hists(
+        #     coll="MuonGood",
+        #     pos=0,
+        #     exclude_categories=[
+        #         "SingleEle_1b",
+        #         "SingleEle_2b",
+        #         "SingleEle_3b",
+        #         "SingleEle_4b",
+        #     ],
+        # ),
         # "ElectronGood_pt_1_rebin" : HistConf(
         #     [
         #         Axis(coll="ElectronGood", field="pt", pos=0, type="variable",
@@ -223,16 +213,16 @@ cfg = Configurator(
         # **count_hist(name="nLGenJets", coll="LGenJetGood", bins=10, start=0, stop=10, exclude_samples=exclude_data),
         # **count_hist(name="nBGenJetsExtra", coll="BGenJetGoodExtra", bins=10, start=0, stop=10, exclude_samples=exclude_nonttbar),
         # **count_hist(name="nCGenJetsExtra", coll="CGenJetGoodExtra", bins=10, start=0, stop=10, exclude_samples=exclude_nonttbar),
-        # **jet_hists(coll="JetGood", pos=0),
-        # **jet_hists(coll="JetGood", pos=1),
-        # **jet_hists(coll="JetGood", pos=2),
-        # **jet_hists(coll="JetGood", pos=3),
-        # **jet_hists(coll="JetGood", pos=4),
-        # **jet_hists(name="bjet",coll="BJetGood", pos=0),
-        # **jet_hists(name="bjet",coll="BJetGood", pos=1),
-        # **jet_hists(name="bjet",coll="BJetGood", pos=2),
-        # **jet_hists(name="bjet",coll="BJetGood", pos=3),
-        # **jet_hists(name="bjet",coll="BJetGood", pos=4),
+        **jet_hists(coll="JetGood", pos=0),
+        **jet_hists(coll="JetGood", pos=1),
+        **jet_hists(coll="JetGood", pos=2),
+        **jet_hists(coll="JetGood", pos=3),
+        **jet_hists(coll="JetGood", pos=4),
+        **jet_hists(name="bjet",coll="BJetGood", pos=0),
+        **jet_hists(name="bjet",coll="BJetGood", pos=1),
+        **jet_hists(name="bjet",coll="BJetGood", pos=2),
+        **jet_hists(name="bjet",coll="BJetGood", pos=3),
+        **jet_hists(name="bjet",coll="BJetGood", pos=4),
         # **jet_hists(coll="GenJetGood", pos=0, fields=["pt", "eta", "phi"], exclude_samples=exclude_data),
         # **jet_hists(coll="GenJetGood", pos=1, fields=["pt", "eta", "phi"], exclude_samples=exclude_data),
         # **jet_hists(coll="GenJetGood", pos=2, fields=["pt", "eta", "phi"], exclude_samples=exclude_data),
@@ -296,7 +286,6 @@ cfg = Configurator(
     columns={
         "common": {},
         "bysample":{
-            "ttHTobb": {"baseline": [ColOut("MuonGood", ["pt", "eta", "phi"])]},
         }
     },
 )

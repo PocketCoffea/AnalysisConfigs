@@ -1,11 +1,11 @@
 {
-    "DATA_SingleMuon": {
+    "DATA_JetMET": {
         "sample": "DATA_JetMET",
         "json_output": "datasets/DATA_JetMET.json",
         "files": [
             {
                 "das_names": [
-                    "/JetMET/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD"  
+                    "/JetMET/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2022",
