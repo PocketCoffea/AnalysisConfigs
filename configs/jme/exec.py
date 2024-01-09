@@ -76,11 +76,12 @@ else:
             # os.system(comand0)
             # os.system(command1)
             print(f"tmux attach -t eta_bins")
+            command5 = f'tmux send-keys "pocket_coffea" "C-m"'
             for i in range(len(eta_bins) - 1):
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
                 command2 = f'tmux send-keys "export ETA_MIN={eta_bin_min}" "C-m" "export ETA_MAX={eta_bin_max}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
-                command3 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg jme_config.py --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
+                command3 = f'tmux send-keys "time runner.py --cfg jme_config.py --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
                 #command4 = f'tmux send-keys "make_plots.py out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max} --overwrite -j 8" "C-m"'
 
                 # os.environ["ETA_MIN"] = f"{eta_bin_min}"

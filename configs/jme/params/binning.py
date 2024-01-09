@@ -1,3 +1,4 @@
+import numpy as np
 
 # eta_bins = [
 #     0.000,
@@ -59,10 +60,8 @@ eta_bins = [
     -3.839,
     -3.664,
     -3.489,
-
-    -3.314, # need to run this bin in the middle
+    -3.314,  # need to run this bin in the middle
     -3.139,
-
     -2.964,
     -2.853,
     -2.65,
@@ -166,3 +165,7 @@ pt_bins = [
     4500.0,
     5000.0,
 ]
+
+
+# response_bins = [0, 0.8] + list(np.arange(0.9, 1.2, 0.1)) + [1.2, 8.0]
+response_bins = [0, 0.8] + list(np.arange(0.8004, 1.2, 4e-4)) + [1.2, 8.0]

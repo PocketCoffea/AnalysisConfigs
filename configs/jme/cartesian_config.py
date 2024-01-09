@@ -202,29 +202,27 @@ cfg = Configurator(
         #         [100, 5.5, 4],
         #     )
         # },
-        # "MatchedJets_ResponseVSpt": HistConf(
-        #     [
-        #         Axis(
-        #             coll="MatchedJets",
-        #             field="Response",
-        #             bins=1000,
-        #             start=0,
-        #             stop=4,
-        #             pos=None,
-        #             label="MatchedJets_Response",
-        #             # type="variable",
-        #         ),
-        #         Axis(
-        #             coll="MatchedJets",
-        #             field="pt",
-        #             bins=pt_bins,
-        #             label="MatchedJets_pt",
-        #             type="variable",
-        #             pos=None,
-        #             lim=(15., 5000.),
-        #         ),
-        #     ]
-        # ),
+        "MatchedJets_ResponseVSpt": HistConf(
+            [
+                Axis(
+                    coll="MatchedJets",
+                    field="Response",
+                    bins=response_bins,
+                    pos=None,
+                    label="MatchedJets_Response",
+                    # type="variable",
+                ),
+                Axis(
+                    coll="MatchedJets",
+                    field="pt",
+                    bins=pt_bins,
+                    label="MatchedJets_pt",
+                    type="variable",
+                    pos=None,
+                    lim=(15., 5000.),
+                ),
+            ]
+        ),
     },
     columns={
         "common": {
@@ -251,30 +249,30 @@ cfg = Configurator(
             # for cat in cuts_names_eta
         },
         "bysample": {
-            "QCD": {
-                "bycategory": {
-                    # "baseline": [
-                    #     ColOut("MatchedJets", ["pt", "eta"]),
-                    #     # ColOut("MatchedJets", ["Response", "pt", "eta"]),
-                    # ],
-                    # + [
-                    #     ColOut(
-                    #         f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                    #         ["Response", "pt", "eta"],
-                    #         # fill_none=False,
-                    #     )
-                    #     for j in range(len(pt_bins) - 1)  # for each pt bin
-                    # ],
-                    cat: [
-                        ColOut(
-                            f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                            ["Response", "pt", "eta"],
-                        )
-                        for j in range(len(pt_bins) - 1)  # for each pt bin
-                    ]
-                    for cat in cuts_names_eta
-                }
-            },
+            # "QCD": {
+            #     "bycategory": {
+            #         # "baseline": [
+            #         #     ColOut("MatchedJets", ["pt", "eta"]),
+            #         #     # ColOut("MatchedJets", ["Response", "pt", "eta"]),
+            #         # ],
+            #         # + [
+            #         #     ColOut(
+            #         #         f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
+            #         #         ["Response", "pt", "eta"],
+            #         #         # fill_none=False,
+            #         #     )
+            #         #     for j in range(len(pt_bins) - 1)  # for each pt bin
+            #         # ],
+            #         cat: [
+            #             ColOut(
+            #                 f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
+            #                 ["Response", "pt", "eta"],
+            #             )
+            #             for j in range(len(pt_bins) - 1)  # for each pt bin
+            #         ]
+            #         for cat in cuts_names_eta
+            #     }
+            # },
         },
     },
 )
@@ -283,7 +281,7 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 100,
+    "scaleout": 200,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
     "walltime": "2:00:00",  # 00:40:00
