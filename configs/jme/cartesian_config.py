@@ -14,17 +14,14 @@ from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.categorization import CartesianSelection, MultiCut
 
 import workflow
-from workflow import QCDBaseProcessor
+from workflow import *
 
 import custom_cut_functions
 from cuts import *
 
-# import custom_cuts
 from custom_cut_functions import *
 from params.binning import *
 
-# from custom_cuts import *
-# from params.binning import bins
 import os
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -35,18 +32,12 @@ from pocket_coffea.parameters import defaults
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
-# Samples to exclude in specific histograms
-# exclude_data = ["DATA_SingleEle", "DATA_SingleMuon"]
-# exclude_nonttbar = ["ttHTobb", "TTTo2L2Nu", "SingleTop", "WJetsToLNu_HT"] + exclude_data
 
 # adding object preselection
 year = "2018"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
-    # f"{localdir}/params/triggers.yaml",
-    # f"{localdir}/params/lepton_scale_factors.yaml",
-    # f"{localdir}/params/plotting_style.yaml",
     update=True,
 )
 
@@ -63,7 +54,7 @@ cuts_names_eta = []
 for i in range(len(eta_bins) - 1):
     eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
     cuts_eta.append(get_etabin(eta_low, eta_high))
-    cuts_names_eta.append(f"MatchedJets_eta{eta_low}to{eta_high}")
+    cuts_names_eta.append(f"MatchedJets_inclusive_eta{eta_low}to{eta_high}")
 
 
 multicuts = [
@@ -82,12 +73,12 @@ cfg = Configurator(
     datasets={
         "jsons": [
             f"{localdir}/datasets/QCD.json",
-            # f"{localdir}/datasets/DATA_SingleMuon.json",
         ],
         "filter": {
             "samples": [
-                "QCD",
-                # "DATA_SingleMuon",
+                "QCD_PT-15to7000_FlatPU"
+                if int(os.environ.get("PNET", 0)) == 1
+                else "QCD_PT-15to7000",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -95,11 +86,8 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=QCDBaseProcessor,
-    # workflow_options={"parton_jet_min_dR": 0.3},
-    skim=[
-        # get_nObj_min(4, 15.0, "MatchedJets"),
-        # get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"]),
-    ],
+    workflow_options={"donotscale_sumgenweights": True},
+    skim=[],
     preselections=[],
     categories=CartesianSelection(multicuts=multicuts, common_cats=common_cats),
     # categories={
@@ -133,13 +121,28 @@ cfg = Configurator(
         #             Axis(
         #                 coll="MatchedJets",
         #                 field="pt",
-        #                 bins=100,
+        #                 bins=1,
         #                 start=0,
-        #                 stop=100,
+        #                 stop=7000,
         #                 label="MatchedJets_pt",
         #             )
         #         ]
         #     ),
+        **{
+            f"MatchedJets_{flav}_flav": HistConf(
+                [
+                    Axis(
+                        coll=f"MatchedJets_{flav}",
+                        field="partonFlavour",
+                        bins=22,
+                        start=0,
+                        stop=22,
+                        label=f"MatchedJets_{flav}_flav",
+                    )
+                ]
+            )
+            for flav in list(flav_dict.keys()) + ["inclusive"]
+        },
         #     "MatchedJets_Response": HistConf(
         #         [
         #             Axis(
@@ -202,27 +205,77 @@ cfg = Configurator(
         #         [100, 5.5, 4],
         #     )
         # },
-        "MatchedJets_ResponseVSpt": HistConf(
-            [
-                Axis(
-                    coll="MatchedJets",
-                    field="Response",
-                    bins=response_bins,
-                    pos=None,
-                    label="MatchedJets_Response",
-                    # type="variable",
-                ),
-                Axis(
-                    coll="MatchedJets",
-                    field="pt",
-                    bins=pt_bins,
-                    label="MatchedJets_pt",
-                    type="variable",
-                    pos=None,
-                    lim=(15., 5000.),
-                ),
-            ]
-        ),
+        # "MatchedJets_ResponseVSpt": HistConf(
+        #     [
+        #         Axis(
+        #             coll="MatchedJets",
+        #             field="Response",
+        #             bins=response_bins,
+        #             pos=None,
+        #             label="MatchedJets_Response",
+        #             # type="variable",
+        #         ),
+        #         Axis(
+        #             coll="MatchedJets",
+        #             field="pt",
+        #             bins=pt_bins,
+        #             label="MatchedJets_pt",
+        #             type="variable",
+        #             pos=None,
+        #             # lim=(15., 5000.),
+        #         ),
+        #     ]
+        # ),
+        **{
+            f"MatchedJets_{flav}_ResponsePNetRegVSpt": HistConf(
+                [
+                    Axis(
+                        coll=f"MatchedJets_{flav}",
+                        field="ResponsePNetReg",
+                        bins=response_bins,
+                        pos=None,
+                        label=f"MatchedJets_ResponsePNetReg",
+                        # type="variable",
+                    ),
+                    Axis(
+                        coll=f"MatchedJets_{flav}",
+                        field="pt",
+                        bins=pt_bins,
+                        label="MatchedJets_pt",
+                        type="variable",
+                        pos=None,
+                        # lim=(15., 5000.),
+                    ),
+                ]
+            )
+            if int(os.environ.get("PNET", 0)) == 1
+            else None
+            for flav in list(flav_dict.keys()) + ["inclusive"]
+        },
+        **{
+            f"MatchedJets_{flav}_ResponseVSpt": HistConf(
+                [
+                    Axis(
+                        coll=f"MatchedJets_{flav}",
+                        field="Response",
+                        bins=response_bins,
+                        pos=None,
+                        label=f"MatchedJets_Response",
+                        # type="variable",[]
+                    ),
+                    Axis(
+                        coll=f"MatchedJets_{flav}",
+                        field="pt",
+                        bins=pt_bins,
+                        label=f"MatchedJets_pt",
+                        type="variable",
+                        pos=None,
+                        # lim=(15., 5000.),
+                    ),
+                ]
+            )
+            for flav in list(flav_dict.keys()) + ["inclusive"]
+        },
     },
     columns={
         "common": {
@@ -281,10 +334,10 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 200,
+    "scaleout": 300,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "2:00:00",  # 00:40:00
+    "walltime": "18:00:00",  # 00:40:00
     "mem_per_worker": "6GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
@@ -295,9 +348,9 @@ run_options = {
 }
 
 
-if "dask" in run_options["executor"]:
-    import cloudpickle
+# if "dask" in run_options["executor"]:
+#     import cloudpickle
 
-    cloudpickle.register_pickle_by_value(workflow)
-    cloudpickle.register_pickle_by_value(custom_cut_functions)
-    # cloudpickle.register_pickle_by_value(custom_cuts)
+#     cloudpickle.register_pickle_by_value(workflow)
+#     cloudpickle.register_pickle_by_value(custom_cut_functions)
+#     # cloudpickle.register_pickle_by_value(custom_cuts)

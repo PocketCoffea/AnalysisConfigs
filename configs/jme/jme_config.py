@@ -227,13 +227,13 @@ cfg = Configurator(
                 "bycategory": {
                     "baseline": [
                         ColOut(
-                            f"MatchedJets{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
+                            f"MatchedJets_inclusive{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
                             ["Response"],
                         )
                         # for i in range(len(eta_bins) - 1)  # for each eta bin
                         for j in range(len(pt_bins) - 1)  # for each pt bin
                     ]
-                    # + [ColOut(f"MatchedJets", ["Response", "pt", "eta"])],
+                    # + [ColOut(f"MatchedJets_inclusive", ["Response", "pt", "eta"])],
                 }
             },
         },

@@ -25,25 +25,67 @@ parser.add_argument(
 parser.add_argument(
     "-p", "--parallel", action="store_true", help="Run parallel eta bins", default=False
 )
+parser.add_argument(
+    "-s",
+    "--sign",
+    help="Sign of eta bins (+, -, all)",
+    type=str,
+    default="-",
+)
+parser.add_argument(
+    "-f",
+    "--flavsplit",
+    action="store_true",
+    help="Flavour split",
+    default=False,
+)
+parser.add_argument(
+    "-pnet",
+    "--pnet",
+    action="store_true",
+    help="Use ParticleNet regression",
+    default=False,
+)
+parser.add_argument(
+    "-t",
+    "--test",
+    action="store_true",
+    help="Test run",
+    default=False,
+)
 args = parser.parse_args()
+
+args.flavsplit = int(args.flavsplit)
+args.pnet = int(args.pnet)
 
 # Define a list of eta bins
 eta_bins = eta_bins if not args.inclusive_eta else None
 
+test = "--test" if args.test else ""
+
 if args.cartesian:
     print("Running cartesian multicuts")
-    command0 = f"tmux kill-session -t cartesian"
-    command1 = f"tmux new-session -d -s cartesian"
-    command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg cartesian_config.py --full -o out_cartesian" "C-m"'
+    sign = args.sign
+
+    file_name = f"out_cartesian_{'neg' if sign=='-' else ('pos' if sign=='+' else 'all')}{'_flavsplit' if args.flavsplit else ''}{'_pnet' if args.pnet else ''}"
+    tmux_session = (
+        "cartesian_neg"
+        if sign == "-"
+        else ("cartesian_pos" if sign == "+" else "cartesian_all")
+    )
+
+    command0 = f"tmux kill-session -t {tmux_session}"
+    command1 = f'tmux new-session -d -s {tmux_session} && tmux send-keys "export CARTESIAN=1 && export SIGN={args.sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet}" "C-m"'
+    command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg cartesian_config.py {test} --full -o {file_name}" "C-m"'
     command3 = f'tmux send-keys "make_plots.py out_cartesian --overwrite -j 8" "C-m"'
 
     subprocess.run(command0, shell=True)
-    print("killed session cartesian")
+    print(f"killed session {tmux_session}")
     if not args.kill:
         subprocess.run(command1, shell=True)
         subprocess.run(command2, shell=True)
         # subprocess.run(command3, shell=True)
-        print("tmux attach -t cartesian")
+        print(f"tmux attach -t {tmux_session}")
 
 else:
     # Loop over the eta bins
@@ -56,7 +98,7 @@ else:
 
                 comand0 = f"tmux kill-session -t {eta_bin_min}to{eta_bin_max}"
                 command1 = f'tmux new-session -d -s {eta_bin_min}to{eta_bin_max} && tmux send-keys "export ETA_MIN={eta_bin_min}" "C-m" "export ETA_MAX={eta_bin_max}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
-                command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg jme_config.py --full -o out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
+                command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg jme_config.py  {test} --full -o out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
                 command3 = f'tmux send-keys "make_plots.py out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max} --overwrite -j 1" "C-m"'
                 subprocess.run(comand0, shell=True)
                 print(f"killed session {eta_bin_min}to{eta_bin_max}")
@@ -77,19 +119,22 @@ else:
             # os.system(command1)
             print(f"tmux attach -t eta_bins")
             command5 = f'tmux send-keys "pocket_coffea" "C-m"'
+            subprocess.run(command5, shell=True)
             for i in range(len(eta_bins) - 1):
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
                 command2 = f'tmux send-keys "export ETA_MIN={eta_bin_min}" "C-m" "export ETA_MAX={eta_bin_max}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
-                command3 = f'tmux send-keys "time runner.py --cfg jme_config.py --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
-                #command4 = f'tmux send-keys "make_plots.py out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max} --overwrite -j 8" "C-m"'
+                command3 = f'tmux send-keys "time runner.py --cfg jme_config.py  {test} --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
+                # command4 = f'tmux send-keys "make_plots.py out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max} --overwrite -j 8" "C-m"'
 
                 # os.environ["ETA_MIN"] = f"{eta_bin_min}"
                 # os.environ["ETA_MAX"] = f"{eta_bin_max}"
                 # command3=f'time runner.py --cfg jme_config.py --full -o out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}'
 
-                if not os.path.isfile(f'out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}/output_all.coffea'):
-                    print(f'out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}')
+                if not os.path.isfile(
+                    f"out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}/output_all.coffea"
+                ):
+                    print(f"out_separate_eta_bin_seq/eta{eta_bin_min}to{eta_bin_max}")
                     subprocess.run(command2, shell=True)
                     subprocess.run(command3, shell=True)
                     # subprocess.run(comand4, shell=True)
@@ -100,7 +145,7 @@ else:
         print("Running over inclusive eta")
         comand0 = f"tmux kill-session -t inclusive_eta"
         command1 = f"tmux new-session -d -s inclusive_eta"
-        command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg jme_config.py --full -o out_inclusive_eta" "C-m"'
+        command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg jme_config.py  {test} --full -o out_inclusive_eta" "C-m"'
         command3 = (
             f'tmux send-keys "make_plots.py out_inclusive_eta --overwrite -j 8" "C-m"'
         )

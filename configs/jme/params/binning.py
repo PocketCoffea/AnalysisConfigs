@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 # eta_bins = [
 #     0.000,
@@ -60,7 +61,7 @@ eta_bins = [
     -3.839,
     -3.664,
     -3.489,
-    -3.314,  # need to run this bin in the middle
+    -3.314,
     -3.139,
     -2.964,
     -2.853,
@@ -91,7 +92,9 @@ eta_bins = [
     -0.261,
     -0.174,
     -0.087,
-    0.0,
+
+    0.000,
+
     0.087,
     0.174,
     0.261,
@@ -135,6 +138,13 @@ eta_bins = [
     5.191,
 ]
 
+if str(os.environ.get("SIGN", None)) == "-":
+    eta_bins = [i for i in eta_bins if i <= 0.0]
+elif str(os.environ.get("SIGN", None)) == "+":
+    eta_bins = [i for i in eta_bins if i >= 0.0]
+
+
+
 pt_bins = [
     15.0,
     17.0,
@@ -168,4 +178,6 @@ pt_bins = [
 
 
 # response_bins = [0, 0.8] + list(np.arange(0.9, 1.2, 0.1)) + [1.2, 8.0]
-response_bins = [0, 0.8] + list(np.arange(0.8004, 1.2, 4e-4)) + [1.2, 8.0]
+# response_bins = [0, 0.8] + list(np.arange(0.8004, 1.2, 4e-4)) + [1.2, 8.0]
+# response_bins = [0, 0.6] + list(np.arange(0.6008, 1.4, 8e-4)) + [1.4, 8.0]
+response_bins = list(np.linspace(0, 8, 16000))

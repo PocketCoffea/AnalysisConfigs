@@ -15,6 +15,7 @@ o = load(f"{args.input}/output_all.coffea")
 
 print(o["variables"].keys())
 # h=o["variables"]["MatchedJets_ResponseVSpt"]["QCD"]["QCD_PT-15to7000_PT-15to7000_2018"]
+# h=o["variables"]['MatchedJets_pt']["QCD"]["QCD_PT-15to7000_PT-15to7000_2018"][{'cat': 'baseline'}][{'variation': 'nominal'}]
 # print(h)
 print("\n")
 print(o["columns"].keys())

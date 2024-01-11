@@ -4,10 +4,10 @@ import awkward as ak
 def ptbin(events, params, **kwargs):
     # Mask to select events in a MatchedJets pt bin
     if params["pt_high"] == "Inf":
-        mask = events.MatchedJets.pt > params["pt_low"]
+        mask = events.MatchedJets_inclusive.pt > params["pt_low"]
     elif type(params["pt_high"]) != str:
-        mask = (events.MatchedJets.pt > params["pt_low"]) & (
-            events.MatchedJets.pt < params["pt_high"]
+        mask = (events.MatchedJets_inclusive.pt > params["pt_low"]) & (
+            events.MatchedJets_inclusive.pt < params["pt_high"]
         )
     else:
         raise NotImplementedError
@@ -27,17 +27,17 @@ def get_ptbin(pt_low, pt_high, name=None):
         name=name,
         params={"pt_low": pt_low, "pt_high": pt_high},
         function=ptbin,
-        collection="MatchedJets",
+        collection="MatchedJets_inclusive",
     )
 
 
 # do th same for eta
 def etabin(events, params, **kwargs):
     # Mask to select events in a MatchedJets eta bin
-    mask = (events.MatchedJets.eta > params["eta_low"]) & (
-        events.MatchedJets.eta < params["eta_high"]
+    mask = (events.MatchedJets_inclusive.eta > params["eta_low"]) & (
+        events.MatchedJets_inclusive.eta < params["eta_high"]
     )
-    # substitute none with false in mask
+
     # mask = ak.where(ak.is_none(mask, axis=1), False, mask)
     # mask=mask[~ak.is_none(mask, axis=1)]
 
@@ -55,5 +55,5 @@ def get_etabin(eta_low, eta_high, name=None):
         name=name,
         params={"eta_low": eta_low, "eta_high": eta_high},
         function=etabin,
-        collection="MatchedJets",
+        collection="MatchedJets_inclusive",
     )
