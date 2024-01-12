@@ -1,0 +1,36 @@
+plotting_style:
+  labels_mc:
+    ttHTobb: "$t\\bar{t}H\\rightarrow b\\bar{b}$"
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (5FS)"
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+C: "$t\\bar{t}$+C (5FS)"
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+B: "$t\\bar{t}$+B (5FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (4FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: "$t\\bar{t}$+C (4FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: "$t\\bar{t}$+B (4FS)"
+    TTTo2L2Nu : "$t\\bar{t}$ dilepton"
+    SingleTop: "single t"
+    WJetsToLNu_HT: "W+jets"
+
+  colors_mc:
+    ttHTobb: pink
+    TTTo2L2Nu: 
+      - 0.51
+      - 0.79
+      - 1.0  # blue
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: '#ffcb3d' # light orange
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+C: '#ffb53d' # orange
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+B: '#ff983d' # dark orange
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF: '#39ce31' # dark green
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: '#98e838' # lime green
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: '#ccf43a' # light green
+    SingleTop:
+      - 1.0
+      - 0.4
+      - 0.4  # red
+    WJetsToLNu_HT: '#cc99ff'  # violet
+
+
+  exclude_samples:
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B

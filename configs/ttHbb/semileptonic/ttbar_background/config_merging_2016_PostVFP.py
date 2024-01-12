@@ -45,7 +45,7 @@ ele_categories = list(ele_categories_dict.keys())
 muon_categories = list(muon_categories_dict.keys())
 
 # adding object preselection
-year = "2018"
+year = "2016_PostVFP"
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",

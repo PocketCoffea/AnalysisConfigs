@@ -58,7 +58,7 @@ def eq_genTtbarId_100(events, params, year, sample, **kwargs):
         else:
             raise Exception(f"The cut on genTtbarId % 100 must be an integer between 0 and 56.\nPossible choices:{allowed_ids}")
     elif isinstance(params["genTtbarId"], Iterable):
-        mask = ak.ones_like(events.event, dtype=bool)
+        mask = ak.zeros_like(events.event, dtype=bool)
         for _id in params["genTtbarId"]:
             if _id in allowed_ids:
                 mask = mask | (events.genTtbarId % 100 == _id)
