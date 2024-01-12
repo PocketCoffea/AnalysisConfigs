@@ -9,6 +9,17 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         super().__init__(cfg=cfg)
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
 
+    @classmethod
+    def available_variations(cls):
+        vars = super().available_variations()
+        variations_sf_ele_trigger = ["stat", "pileup", "era", "ht"]
+        available_sf_ele_trigger_variations = [f"sf_ele_trigger_{v}" for v in variations_sf_ele_trigger]
+        variations_sf_btag = ["hf", "lf", "hfstats1", "hfstats2", "lfstats1", "lfstats2", "cferr1", "cferr2"]
+        available_sf_btag_variations = [f"sf_btag_{v}" for v in variations_sf_btag]
+        vars.update(available_sf_ele_trigger_variations)
+        vars.update(available_sf_btag_variations)
+        return vars
+
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation=variation)
         if self._isMC:
