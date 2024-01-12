@@ -1,0 +1,15 @@
+HLT_triggers:
+   Run3:
+     SingleLepton:
+       - Ele32_WPTight_Gsf
+       - Ele28_eta2p1_WPTight_Gsf_HT150
+       - IsoMu24
+
+     TripleBTag:
+       - PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5
+
+     Jet4_btag2_tighter:
+       - PFHT340_QuadPFJet70_50_40_40_PNet2BTagMean0p70
+
+     Jet4_btag2_looser:
+       - PFHT280_QuadPFJet30_PNet2BTagMean0p55
