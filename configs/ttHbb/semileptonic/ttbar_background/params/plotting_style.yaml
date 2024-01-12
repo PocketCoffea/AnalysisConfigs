@@ -1,0 +1,9 @@
+plotting_style:
+  labels_mc:
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (5FS)"
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+C: "$t\\bar{t}$+C (5FS)"
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+B: "$t\\bar{t}$+B (5FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (4FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: "$t\\bar{t}$+C (4FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: "$t\\bar{t}$+B (4FS)"
+    TTTo2L2Nu : "$t\\bar{t}$ dilepton"
