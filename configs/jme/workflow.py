@@ -18,19 +18,24 @@ from params.binning import *
 from time import sleep
 import os
 
+flav_dict = (
+    {
+        "b": 5,
+        # "c": 4,
+        # "uds": [1, 2, 3],
+        # "g": 21,
+    }
+    if int(os.environ.get("FLAVSPLIT", 0)) == 1
+    else {}
+)
 # flav_dict = {
 #     "b": 5,
-#     "c": 4,
-#     "uds": 1,
-#     "g": 21,
+#     # "c": 4,
+#     # "uds": 1,
+#     # "g": 21,
 # }
-flav_dict = {
-    "b": [5],
-    "c": [4],
-    "uds": [1, 2, 3],
-    "g": [21],
-} if int(os.environ.get("FLAVSPLIT", 0)) == 1 else {}
 
+print(f"\n flav_dict: {flav_dict}")
 
 class QCDBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
@@ -64,8 +69,11 @@ class QCDBaseProcessor(BaseProcessorABC):
             self.events["MatchedJets_inclusive"] = ak.with_field(
                 self.events.GenJetMatched,
                 self.events.JetMatched.pt / self.events.GenJetMatched.pt,
-                "Response",
+                "ResponseBaseline",
             )
+
+
+
             if int(os.environ.get("PNET", 0)) == 1:
                 self.events["MatchedJets_inclusive"] = ak.with_field(
                     self.events.MatchedJets_inclusive,
@@ -78,6 +86,13 @@ class QCDBaseProcessor(BaseProcessorABC):
             self.events["MatchedJets_inclusive"] = self.events.MatchedJets_inclusive[
                 ~ak.is_none(self.events.MatchedJets_inclusive, axis=1)
             ]
+
+            # TODO: remove this
+            # mask_flav=self.events["MatchedJets_inclusive"].partonFlavour == 5
+            # # mask_flav = ak.mask(mask_flav, mask_flav)
+            # self.events["MatchedJets_inclusive"] = self.events["MatchedJets_inclusive"][
+            #     mask_flav
+            # ]
 
             # gen jet flavour splitting
             for flav, parton_flavs in flav_dict.items():

@@ -68,6 +68,146 @@ common_cats = {
     "baseline": [passthrough],
 }
 
+
+variables_dict = {
+    # **{
+    #     f"MatchedJets_{flav}_flav": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets_{flav}",
+    #                 field="partonFlavour",
+    #                 bins=22,
+    #                 start=0,
+    #                 stop=22,
+    #                 label=f"MatchedJets_flav",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list(flav_dict.keys()) + ["inclusive"]
+    # },
+    # **{
+    #     f"MatchedJets_{flav}_ResponseBaseline": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets_{flav}",
+    #                 field="ResponseBaseline",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=4,
+    #                 pos=None,
+    #                 label="MatchedJets_ResponseBaseline",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list(flav_dict.keys()) + ["inclusive"]
+    # },
+
+    # # plot variables in eta bins and pt bins
+    # **{
+    #     f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
+    #                 field=var,
+    #                 bins=100,
+    #                 start=start,
+    #                 stop=stop,
+    #                 label=f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}",
+    #             )
+    #         ]
+    #     )
+    #     for j in range(len(pt_bins) - 1)  # for each pt bin
+    #     for var, start, stop in zip(
+    #         # ["Response"],
+    #         # [4]
+    #         ["pt", "eta", "Response"],
+    #         [0, -5.5, 0],
+    #         [100, 5.5, 4],
+    #     )
+    # },
+    **{
+        f"MatchedJets_{flav}_ResponseBaselineVSpt": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets_{flav}",
+                    field="ResponseBaseline",
+                    bins=response_bins,
+                    pos=None,
+                    label=f"MatchedJets_ResponseBaseline",
+                ),
+                Axis(
+                    coll=f"MatchedJets_{flav}",
+                    field="pt",
+                    bins=pt_bins,
+                    label=f"MatchedJets_pt",
+                    type="variable",
+                    pos=None,
+                ),
+            ]
+        )
+        for flav in list(flav_dict.keys()) + ["inclusive"]
+    },
+}
+if int(os.environ.get("PNET", 0)) == 1:
+    variables_dict.update(
+        {
+            # **{
+            #     f"MatchedJets_{flav}_ResponsePNetReg": HistConf(
+            #         [
+            #             Axis(
+            #                 coll=f"MatchedJets_{flav}",
+            #                 field="ResponsePNetReg",
+            #                 bins=100,
+            #                 start=0,
+            #                 stop=4,
+            #                 pos=None,
+            #                 label="MatchedJets_ResponsePNetReg",
+            #             )
+            #         ]
+            #     )
+            #     for flav in list(flav_dict.keys()) + ["inclusive"]
+            # },
+            # **{
+            #     f"JetMatched_PNetRegPtRawCorr": HistConf(
+            #         [
+            #             Axis(
+            #                 coll=f"JetMatched",
+            #                 field="PNetRegPtRawCorr",
+            #                 bins=100,
+            #                 start=0,
+            #                 stop=4,
+            #                 pos=None,
+            #                 label="JetMatched_PNetRegPtRawCorr",
+            #             )
+            #         ]
+            #     )
+            # },
+            **{
+                f"MatchedJets_{flav}_ResponsePNetRegVSpt": HistConf(
+                    [
+                        Axis(
+                            coll=f"MatchedJets_{flav}",
+                            field="ResponsePNetReg",
+                            bins=response_bins,
+                            pos=None,
+                            label=f"MatchedJets_ResponsePNetReg",
+                        ),
+                        Axis(
+                            coll=f"MatchedJets_{flav}",
+                            field="pt",
+                            bins=pt_bins,
+                            label="MatchedJets_pt",
+                            type="variable",
+                            pos=None,
+                        ),
+                    ]
+                )
+                for flav in list(flav_dict.keys()) + ["inclusive"]
+            },
+        }
+    )
+
+
 cfg = Configurator(
     parameters=parameters,
     datasets={
@@ -114,169 +254,7 @@ cfg = Configurator(
             "bysample": {},
         }
     },
-    variables={
-        # **{
-        #     "MatchedJets_pt": HistConf(
-        #         [
-        #             Axis(
-        #                 coll="MatchedJets",
-        #                 field="pt",
-        #                 bins=1,
-        #                 start=0,
-        #                 stop=7000,
-        #                 label="MatchedJets_pt",
-        #             )
-        #         ]
-        #     ),
-        **{
-            f"MatchedJets_{flav}_flav": HistConf(
-                [
-                    Axis(
-                        coll=f"MatchedJets_{flav}",
-                        field="partonFlavour",
-                        bins=22,
-                        start=0,
-                        stop=22,
-                        label=f"MatchedJets_{flav}_flav",
-                    )
-                ]
-            )
-            for flav in list(flav_dict.keys()) + ["inclusive"]
-        },
-        #     "MatchedJets_Response": HistConf(
-        #         [
-        #             Axis(
-        #                 coll="MatchedJets",
-        #                 field="Response",
-        #                 bins=100,
-        #                 start=0,
-        #                 stop=4,
-        #                 pos=None,
-        #                 label="MatchedJets_Response",
-        #             )
-        #         ]
-        #     ),
-        #     # "MatchedJets_DeltaR": HistConf(
-        #     #     [
-        #     #         Axis(
-        #     #             coll="MatchedJets",
-        #     #             field="DeltaR",
-        #     #             bins=100,
-        #     #             start=0,
-        #     #             stop=0.5,
-        #     #             pos=None,
-        #     #             label="MatchedJets_DeltaR",
-        #     #         )
-        #     #     ]
-        #     # ),
-        #     "MatchedJets_eta": HistConf(
-        #         [
-        #             Axis(
-        #                 coll="MatchedJets",
-        #                 field="eta",
-        #                 bins=100,
-        #                 start=-5.5,
-        #                 stop=5.5,
-        #                 pos=None,
-        #                 label="MatchedJets_eta",
-        #             )
-        #         ]
-        #     ),
-        # # plot variables in eta bins and pt bins
-        # **{
-        #     f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
-        #                 field=var,
-        #                 bins=100,
-        #                 start=start,
-        #                 stop=stop,
-        #                 label=f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}",
-        #             )
-        #         ]
-        #     )
-        #     for j in range(len(pt_bins) - 1)  # for each pt bin
-        #     for var, start, stop in zip(
-        #         # ["Response"],
-        #         # [4]
-        #         ["pt", "eta", "Response"],
-        #         [0, -5.5, 0],
-        #         [100, 5.5, 4],
-        #     )
-        # },
-        # "MatchedJets_ResponseVSpt": HistConf(
-        #     [
-        #         Axis(
-        #             coll="MatchedJets",
-        #             field="Response",
-        #             bins=response_bins,
-        #             pos=None,
-        #             label="MatchedJets_Response",
-        #             # type="variable",
-        #         ),
-        #         Axis(
-        #             coll="MatchedJets",
-        #             field="pt",
-        #             bins=pt_bins,
-        #             label="MatchedJets_pt",
-        #             type="variable",
-        #             pos=None,
-        #             # lim=(15., 5000.),
-        #         ),
-        #     ]
-        # ),
-        **{
-            f"MatchedJets_{flav}_ResponsePNetRegVSpt": HistConf(
-                [
-                    Axis(
-                        coll=f"MatchedJets_{flav}",
-                        field="ResponsePNetReg",
-                        bins=response_bins,
-                        pos=None,
-                        label=f"MatchedJets_ResponsePNetReg",
-                        # type="variable",
-                    ),
-                    Axis(
-                        coll=f"MatchedJets_{flav}",
-                        field="pt",
-                        bins=pt_bins,
-                        label="MatchedJets_pt",
-                        type="variable",
-                        pos=None,
-                        # lim=(15., 5000.),
-                    ),
-                ]
-            )
-            if int(os.environ.get("PNET", 0)) == 1
-            else None
-            for flav in list(flav_dict.keys()) + ["inclusive"]
-        },
-        **{
-            f"MatchedJets_{flav}_ResponseVSpt": HistConf(
-                [
-                    Axis(
-                        coll=f"MatchedJets_{flav}",
-                        field="Response",
-                        bins=response_bins,
-                        pos=None,
-                        label=f"MatchedJets_Response",
-                        # type="variable",[]
-                    ),
-                    Axis(
-                        coll=f"MatchedJets_{flav}",
-                        field="pt",
-                        bins=pt_bins,
-                        label=f"MatchedJets_pt",
-                        type="variable",
-                        pos=None,
-                        # lim=(15., 5000.),
-                    ),
-                ]
-            )
-            for flav in list(flav_dict.keys()) + ["inclusive"]
-        },
-    },
+    variables=variables_dict,
     columns={
         "common": {
             # "inclusive": [
@@ -334,14 +312,14 @@ run_options = {
     "executor": "dask/slurm",
     "env": "conda",
     "workers": 1,
-    "scaleout": 300,
+    "scaleout": 200,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "18:00:00",  # 00:40:00
+    "walltime": "00:40:00",  # 00:40:00
     "mem_per_worker": "6GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
-    "chunk": 400000,
+    "chunk": 400000,  # 400000
     "retries": 50,
     "treereduction": 20,  # 5,
     "adapt": False,

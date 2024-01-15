@@ -49,10 +49,10 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 flavs = {
     ("_inclusive_",): ["."],
     ("_b_", "_c_"): [".", "x"],
-    ("_uds_", "_g_"): ["." "x"],
+    ("_uds_", "_g_"): [".", "x"],
 }
 
-variables_colors = {"Response": "blue", "ResponsePNetReg": "red"}
+variables_colors = {"ResponseBaseline": "blue", "ResponsePNetReg": "red"}
 
 
 main_dir = args.dir
@@ -137,7 +137,7 @@ else:
                 for variable in variables:
                     if flav not in variable:
                         continue
-                    if "Response" not in variable:
+                    if "Response" not in variable or "VSpt" not in variable:
                         continue
                     histos_dict = o["variables"][variable]
                     # remove MatchedJets and VSpt from the name of the variable if present
@@ -266,108 +266,13 @@ else:
         for flav in medians_dict[flav_group].keys():
             for variable in medians_dict[flav_group][flav].keys():
                 np.save(
-                    f"{median_dir}/medians_{flav}_{variable}.npy",
+                    f"{median_dir}/medians{flav}{variable}.npy",
                     medians_dict[flav_group][flav][variable],
                 )
                 np.save(
-                    f"{median_dir}/err_medians_{flav}_{variable}.npy",
+                    f"{median_dir}/err_medians{flav}{variable}.npy",
                     err_medians_dict[flav_group][flav][variable],
                 )
-
-'''
-# create a plot for each eta bin with the median as a function of pt
-for i in range(len(correct_eta_bins) - 1):
-    for flav_group in medians_dict.keys():
-        fig, ax = plt.subplots()
-
-        j = 0
-        for flav in medians_dict[flav_group].keys():
-            for variable in medians_dict[flav_group][flav].keys():
-                medians = medians_dict[flav_group][flav][variable]
-                err_medians = err_medians_dict[flav_group][flav][variable]
-                print(
-                    "plotting",
-                    flav_group,
-                    variable,
-                    "eta",
-                    correct_eta_bins[i],
-                    correct_eta_bins[i + 1],
-                )
-
-                ax.errorbar(
-                    pt_bins[1:],
-                    medians[i, :],
-                    yerr=err_medians[i, :],
-                    label=f"{variable} ({flav})",
-                    marker=flavs[flav_group][j],
-                    color=variables_colors[variable],
-                    linestyle="None",
-                )
-            j += 1
-        # if no variable is plotted, skip
-        if ax.lines == []:
-            continue
-        # write axis name in latex
-        ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
-        ax.set_ylabel(
-            f"Median (Response) unbinned"
-            if args.unbinned
-            else f"Median (Response) binned"
-        )
-        # log x scale
-        ax.set_xscale("log")
-        # remove border of legend
-        ax.legend(frameon=False)
-
-        plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
-        # hep.style.use("CMS")
-        hep.cms.label(year="2022", com="13.6", label=f"Private Work ({correct_eta_bins[i]} <" + r"$\eta$" + f"< {correct_eta_bins[i+1]})")
-
-        # plt.show()
-        fig.savefig(
-            f"{median_dir}/median_{flav_group}_Response_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
-            bbox_inches="tight",
-            dpi=300,
-        )
-        plt.close(fig)'''
-
-        # medians = medians_dict[variable]
-        # err_medians = err_medians_dict[variable]
-        # print("plotting", variable, "eta", correct_eta_bins[i], correct_eta_bins[i + 1])
-        # fig, ax = plt.subplots()
-
-        # ax.errorbar(
-        #     pt_bins[1:],
-        #     medians[i, :],
-        #     yerr=err_medians[i, :],
-        #     label=f"{correct_eta_bins[i]} <" + r"$\eta$" + f"< {correct_eta_bins[i+1]}",
-        #     marker=".",
-        #     color="black",
-        #     linestyle="None",
-        # )
-        # # write axis name in latex
-        # ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
-        # ax.set_ylabel(
-        #     f"Median ({variable}) unbinned"
-        #     if args.unbinned
-        #     else f"Median ({variable}) binned"
-        # )
-        # # log x scale
-        # ax.set_xscale("log")
-        # # remove border of legend
-        # ax.legend(frameon=False)
-
-        # plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
-        # # hep.style.use("CMS")
-        # hep.cms.label(year="2022", com="13.6", label="Private Work")
-
-        # # plt.show()
-        # fig.savefig(
-        #     f"{median_dir}/median_{variable}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
-        #     bbox_inches="tight",
-        #     dpi=300,
-        # )
-        # plt.close(fig)
 
 
 
@@ -394,7 +299,7 @@ def plot_median(i):
                     pt_bins[1:],
                     medians[i, :],
                     yerr=err_medians[i, :],
-                    label=f"{variable} ({flav})",
+                    label=f"{variable.replace('Response','')} ({flav.replace('_','')})",
                     marker=flavs[flav_group][j],
                     color=variables_colors[variable],
                     linestyle="None",
@@ -419,27 +324,20 @@ def plot_median(i):
         # hep.style.use("CMS")
         hep.cms.label(year="2022", com="13.6", label=f"Private Work ({correct_eta_bins[i]} <" + r"$\eta$" + f"< {correct_eta_bins[i+1]})")
 
-        # plt.show()
+        # create string for flavour
+        flav_str = ""
+        for flav in flav_group:
+            flav_str += flav.replace("_", "")
+
+
         fig.savefig(
-            f"{median_dir}/median_{flav_group}_Response_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
+            f"{median_dir}/median_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
             bbox_inches="tight",
             dpi=300,
         )
         plt.close(fig)
 
 
-# create a plot for each eta bin with the median as a function of pt
-# processes = []
-# for i in range(len(correct_eta_bins) - 1):
-#     proc=mpr.Process(target=plot_median, args=(i))
-#     processes.append(proc)
-
-# for proc in processes:
-#     proc.start()
-
-# for proc in processes:
-#     proc.join()
-
-with Pool(32) as p:
+with Pool(64) as p:
     p.map(plot_median, range(len(correct_eta_bins) - 1))
 print(median_dir)

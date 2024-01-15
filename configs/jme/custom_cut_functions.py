@@ -27,6 +27,7 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
 
 def genjet_selection_flavsplit(events, jet_type, flavs):
     jets = events[jet_type]
-    mask_flav = ak.any([jets.partonFlavour == flav for flav in flavs], axis=0)
+    mask_flav = jets.partonFlavour == flavs if type(flavs) == int else ak.any([jets.partonFlavour == flav for flav in flavs], axis=0)
+    # mask_flav = ak.any([jets.partonFlavour == flav for flav in flavs], axis=0)
     mask_flav = ak.mask(mask_flav, mask_flav)
     return jets[mask_flav]

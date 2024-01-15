@@ -54,24 +54,25 @@ year = "2018"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
-    # f"{localdir}/params/triggers.yaml",
-    # f"{localdir}/params/lepton_scale_factors.yaml",
-    # f"{localdir}/params/plotting_style.yaml",
     update=True,
 )
 
+sample_name = (
+    "QCD_PT-15to7000_FlatPU"
+    if int(os.environ.get("PNET", 0)) == 1
+    else "QCD_PT-15to7000"
+)
 
 cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/QCD_local.json",
+            f"{localdir}/datasets/QCD.json",
             # f"{localdir}/datasets/DATA_SingleMuon.json",
         ],
         "filter": {
             "samples": [
-                "QCD",
-                # "DATA_SingleMuon",
+                sample_name,
             ],
             "samples_exclude": [],
             "year": [year],
@@ -223,12 +224,12 @@ cfg = Configurator(
             "inclusive": [],
         },
         "bysample": {
-            "QCD": {
+            sample_name: {
                 "bycategory": {
                     "baseline": [
                         ColOut(
                             f"MatchedJets_inclusive{eta_substr}_pt{pt_bins[j]}to{pt_bins[j+1]}",
-                            ["Response"],
+                            ["ResponseBaseline", "ResponsePNetReg", "pt", "eta", "partonFlavour"],
                         )
                         # for i in range(len(eta_bins) - 1)  # for each eta bin
                         for j in range(len(pt_bins) - 1)  # for each pt bin
