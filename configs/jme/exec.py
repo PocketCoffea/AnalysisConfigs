@@ -33,7 +33,7 @@ parser.add_argument(
     default="-",
 )
 parser.add_argument(
-    "-f",
+    "-fs",
     "--flavsplit",
     action="store_true",
     help="Flavour split",
@@ -60,6 +60,13 @@ parser.add_argument(
     type=str,
     default="",
 )
+parser.add_argument(
+    "-f",
+    "--flav",
+    help="Flavour",
+    type=str,
+    default="inclusive",
+)
 args = parser.parse_args()
 
 args.flavsplit = int(args.flavsplit)
@@ -75,7 +82,7 @@ if args.cartesian:
     sign = args.sign
 
     dir_name = (
-        f"out_cartesian_{'neg' if sign=='-' else ('pos' if sign=='+' else 'all')}{'_flavsplit' if args.flavsplit else ''}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
+        f"out_cartesian_{'neg' if sign=='-' else ('pos' if sign=='+' else 'all')}{'_flavsplit' if args.flavsplit else f'_{args.flav}'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
         if not args.dir
         else args.dir
     )
@@ -86,7 +93,7 @@ if args.cartesian:
     )
 
     command0 = f"tmux kill-session -t {tmux_session}"
-    command1 = f'tmux new-session -d -s {tmux_session} && tmux send-keys "export CARTESIAN=1 && export SIGN={args.sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet}" "C-m"'
+    command1 = f'tmux new-session -d -s {tmux_session} && tmux send-keys "export CARTESIAN=1 && export SIGN={args.sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={args.flav}" "C-m"'
     command2 = f'tmux send-keys "pocket_coffea" "C-m" "time runner.py --cfg cartesian_config.py {test} --full -o {dir_name}" "C-m"'
     command3 = f'tmux send-keys "make_plots.py out_cartesian --overwrite -j 8" "C-m"'
 
@@ -134,7 +141,11 @@ else:
             for i in range(len(eta_bins) - 1):
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
-                dir_name = f"out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}/eta{eta_bin_min}to{eta_bin_max}"
+                dir_name = (
+                    f"out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
+                    if not args.dir
+                    else args.dir
+                )
                 command2 = f'tmux send-keys "export ETA_MIN={eta_bin_min} && export ETA_MAX={eta_bin_max} && export PNET={args.pnet}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
                 command3 = f'tmux send-keys "time runner.py --cfg jme_config.py  {test} --full -o {dir_name}" "C-m"'
                 # command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 8" "C-m"'

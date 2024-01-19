@@ -92,9 +92,7 @@ eta_bins = [
     -0.261,
     -0.174,
     -0.087,
-
     0.000,
-
     0.087,
     0.174,
     0.261,
@@ -143,7 +141,7 @@ if str(os.environ.get("SIGN", None)) == "-":
 elif str(os.environ.get("SIGN", None)) == "+":
     eta_bins = [i for i in eta_bins if i >= 0.0]
 
-
+# eta_bins=[-1.3, 1.3]
 
 pt_bins = [
     15.0,

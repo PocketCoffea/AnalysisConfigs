@@ -20,7 +20,7 @@ print(o["variables"].keys())
 print("\n")
 print(o["columns"].keys())
 # print first value of dict
-c=o["columns"]["QCD"]["QCD_PT-15to7000_PT-15to7000_2018"]
+c=o["columns"]["QCD_PT-15to7000"]["QCD_PT-15to7000_PT-15to7000_2018"]
 print(c.keys())
 b=c[list(c.keys())[0]]
 a=list(c[list(c.keys())[0]].keys())

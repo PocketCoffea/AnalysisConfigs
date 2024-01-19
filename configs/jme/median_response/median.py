@@ -9,7 +9,8 @@ import mplhep as hep
 from multiprocessing import Pool
 import multiprocessing as mpr
 from functools import partial
-
+from hist import Hist
+import hist
 
 sys.path.append("../")
 from params.binning import *
@@ -42,17 +43,31 @@ parser.add_argument(
     help="Run cartesian multicuts",
     default=False,
 )
+parser.add_argument(
+    "-histo",
+    "--histograms",
+    action="store_true",
+    help="Plot the response histograms",
+    default=False,
+)
 args = parser.parse_args()
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 flavs = {
-    ("_inclusive_",): ["."],
+    ("",): ["."],
     ("_b_", "_c_"): [".", "x"],
     ("_uds_", "_g_"): [".", "x"],
 }
+flavs_not_inclusive = ["_b_", "_c_", "_uds_", "_g_"]
 
-variables_colors = {"ResponseBaseline": "blue", "ResponsePNetReg": "red"}
+variables_colors = {
+    "ResponseJEC": "blue",
+    "ResponseRaw": "green",
+    "ResponsePNetReg": "red",
+    # "ResponsePNetRegNeutrino": "orange",
+    # "ResponsePNetRegFull": "purple",
+}
 
 
 main_dir = args.dir
@@ -61,6 +76,14 @@ median_dir = (
     if args.unbinned
     else f"{main_dir}/median_plots_binned"
 )
+os.makedirs(f"{median_dir}", exist_ok=True)
+if  args.histograms:
+    response_dir = (
+        f"{main_dir}/response_plots_unbinned"
+        if args.unbinned
+        else f"{main_dir}/response_plots_binned"
+    )
+    os.makedirs(f"{response_dir}", exist_ok=True)
 
 correct_eta_bins = eta_bins
 
@@ -122,6 +145,7 @@ else:
         # median_dict -> flav_group -> variable -> eta bins -> pt bins
         medians_dict = dict()
         err_medians_dict = dict()
+        response_dict = dict()
         # medians = list(list())
         # err_medians = list(list())
 
@@ -131,23 +155,32 @@ else:
         for flav_group in flavs:
             medians_dict[flav_group] = dict()
             err_medians_dict[flav_group] = dict()
+            response_dict[flav_group] = dict()
             for flav in flav_group:
                 medians_dict[flav_group][flav] = dict()
                 err_medians_dict[flav_group][flav] = dict()
+                response_dict[flav_group][flav] = dict()
                 for variable in variables:
-                    if flav not in variable:
+                    # TODO: the check of the flavour must be done when opening the file for the new configuration
+                    if flav not in variable or (
+                        flav == "" and any([f in variable for f in flavs_not_inclusive])
+                    ):
                         continue
                     if "Response" not in variable or "VSpt" not in variable:
                         continue
                     histos_dict = o["variables"][variable]
                     # remove MatchedJets and VSpt from the name of the variable if present
                     variable = (
-                        variable.replace("MatchedJets", "")
+                        variable.replace(
+                            "MatchedJets_" if flav == "" else "MatchedJets", ""
+                        )  # TODO: I removed the _ from the MatchedJets_-> need to add it again?
                         .replace("VSpt", "")
                         .replace(flav, "")
                     )
                     medians_dict[flav_group][flav][variable] = list(list())
                     err_medians_dict[flav_group][flav][variable] = list(list())
+                    response_dict[flav_group][flav][variable] = list(list())
+
 
                     for sample in histos_dict.keys():
                         for dataset in histos_dict[sample].keys():
@@ -173,6 +206,7 @@ else:
                                 err_medians_dict[flav_group][flav][variable].append(
                                     list()
                                 )
+                                response_dict[flav_group][flav][variable].append(list())
                                 for var in variations:
                                     h = histo[{"cat": categories[i]}][
                                         {"variation": var}
@@ -180,11 +214,18 @@ else:
                                     # h is a histo2d and we want to find the median of the distribution along the axis MatchedJets.Response
                                     # for each bin in the axis MatchedJets.pt
                                     # so we need to loop over the bins in the axis MatchedJets.pt
-                                    jet_pt = f"MatchedJets_{flav.replace('_','')}.pt"
+                                    #  TODO: I removed the _ from the flavour-> need to add it again
+                                    jet_pt = (
+                                        f"MatchedJets_{flav.replace('_','')}.pt"
+                                        if flav != ""
+                                        else "MatchedJets.pt"
+                                    )
                                     for j in range(len(h.axes[jet_pt])):
                                         # print("\n\n eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
                                         # get the histo1d for the bin j in the axis MatchedJets.pt
                                         h1d = h[{jet_pt: j}]
+
+
                                         # get the values of the histo1d
                                         values = h1d.values()
                                         if all([v <= 1 for v in values]):
@@ -197,9 +238,31 @@ else:
                                             ][i].append(np.nan)
                                             continue
                                         # print("values", values)
-                                        # get the bins of the histo1d
                                         bins = h1d.axes[0].edges
-                                        # print("bins", bins)
+                                        bins_mid = (bins[1:] + bins[:-1]) / 2
+                                        # print(variable)
+                                        # print("bins_mid", bins_mid)
+                                        # print("values", values)
+                                        bins_mid = bins_mid[1:]
+                                        values = values[1:]
+
+                                        # TODO: rebinning
+                                        if args.histograms:
+                                        #     h_rebin = Hist(hist.axis.Regular(100, 0.0, 2., name=variable))
+                                        #     new_num_bins = 100
+                                        #     # rebin the histo1d
+                                        #     new_bin_width = (bins[-1] - bins[0]) / new_num_bins
+                                        #     new_bins = np.arange(bins[0], bins[-1] + new_bin_width, new_bin_width)
+                                        #     values, bins = np.histogram(bins_mid, bins=new_bins, weights=values)
+
+                                            response_dict[flav_group][flav][variable][
+                                                i
+                                            ].append(h1d)
+
+
+                                        # bins_mid = bins_mid[values != 0.]
+                                        # values = values[values != 0.]
+                                        # get the bins of the histo1d
                                         # find the bin which is the median of the histogram
                                         cdf = np.cumsum(values)
                                         # # print("cdf", cdf)
@@ -209,7 +272,6 @@ else:
                                             cdf_normalized >= 0.5
                                         )
                                         # # print("median_bin_index", median_bin_index)
-                                        bins_mid = (bins[1:] + bins[:-1]) / 2
                                         median = bins_mid[median_bin_index]
                                         # print("median:\n", median)
                                         medians_dict[flav_group][flav][variable][
@@ -260,7 +322,7 @@ else:
 
     print("medians", medians_dict)
     print("err_medians", err_medians_dict)
-    os.makedirs(f"{median_dir}", exist_ok=True)
+
 
     for flav_group in medians_dict.keys():
         for flav in medians_dict[flav_group].keys():
@@ -275,38 +337,39 @@ else:
                 )
 
 
-
 def plot_median(i):
     for flav_group in medians_dict.keys():
         fig, ax = plt.subplots()
 
         j = 0
-        plot=False
+        plot = False
         for flav in medians_dict[flav_group].keys():
             for variable in medians_dict[flav_group][flav].keys():
                 medians = medians_dict[flav_group][flav][variable]
                 err_medians = err_medians_dict[flav_group][flav][variable]
+                if variable not in variables_colors.keys():
+                    continue
                 print(
-                    "plotting",
+                    "plotting median",
                     flav_group,
                     variable,
                     "eta",
                     correct_eta_bins[i],
                     correct_eta_bins[i + 1],
                 )
-                plot=True
+                plot = True
                 ax.errorbar(
                     pt_bins[1:],
                     medians[i, :],
                     yerr=err_medians[i, :],
-                    label=f"{variable.replace('Response','')} ({flav.replace('_','')})",
+                    label=f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
                     marker=flavs[flav_group][j],
                     color=variables_colors[variable],
                     linestyle="None",
                 )
             j += 1
         # if no variable is plotted, skip
-        if  plot == False:
+        if plot == False:
             continue
         # write axis name in latex
         ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
@@ -318,17 +381,22 @@ def plot_median(i):
         # log x scale
         ax.set_xscale("log")
         # remove border of legend
-        ax.legend(frameon=False)
+        ax.legend(frameon=False, ncol=2)
 
         plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
         # hep.style.use("CMS")
-        hep.cms.label(year="2022", com="13.6", label=f"Private Work ({correct_eta_bins[i]} <" + r"$\eta$" + f"< {correct_eta_bins[i+1]})")
+        hep.cms.label(
+            year="2022",
+            com="13.6",
+            label=f"Private Work ({correct_eta_bins[i]} <"
+            + r"$\eta$"
+            + f"< {correct_eta_bins[i+1]})",
+        )
 
         # create string for flavour
         flav_str = ""
         for flav in flav_group:
             flav_str += flav.replace("_", "")
-
 
         fig.savefig(
             f"{median_dir}/median_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
@@ -337,7 +405,70 @@ def plot_median(i):
         )
         plt.close(fig)
 
+def plot_histos(i):
+    for flav_group in response_dict.keys():
+        for flav in response_dict[flav_group].keys():
+            for variable in response_dict[flav_group][flav].keys():
+                histos = response_dict[flav_group][flav][variable]
+                if variable not in variables_colors.keys():
+                    continue
+                for j in range(len(histos[i])):
+                    print(
+                        "plotting response",
+                        flav_group,
+                        variable,
+                        "eta",
+                        correct_eta_bins[i],
+                        correct_eta_bins[i + 1],
+                        "pt",
+                        pt_bins[j],
+                        pt_bins[j + 1],
+                    )
+                    fig, ax = plt.subplots()
+                    h = histos[i][j]
+                    ax.hist(
+                        h.axes[0].centers,
+                        bins=h.axes[0].edges,
+                        weights=h.values(),
+                        histtype="step",
+                        label=variable,
+                        color=variables_colors[variable],
+                    )
+                    # write axis name in latex
+                    ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
+                    ax.set_ylabel(
+                        f"Response"
+                    )
+                    # remove border of legend
+                    ax.legend(frameon=False, ncol=2)
+
+                    plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
+                    # hep.style.use("CMS")
+                    hep.cms.label(
+                        year="2022",
+                        com="13.6",
+                        label=f"Private Work ({correct_eta_bins[i]} <"
+                        + r"$\eta$"
+                        + f"< {correct_eta_bins[i+1]})",
+                    )
+
+                    # create string for flavour
+                    flav_str = ""
+                    for flav in flav_group:
+                        flav_str += flav.replace("_", "")
+
+                    fig.savefig(
+                        f"{response_dir}/histos_{variable}_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}_pt{pt_bins[j]}to{pt_bins[j+1]}.png",
+                        bbox_inches="tight",
+                        dpi=300,
+                    )
+                    plt.close(fig)
+
 
 with Pool(64) as p:
     p.map(plot_median, range(len(correct_eta_bins) - 1))
+
+if args.histograms:
+    with Pool(64) as p:
+        p.map(plot_histos, range(len(correct_eta_bins) - 1))
 print(median_dir)
