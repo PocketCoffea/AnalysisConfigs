@@ -85,6 +85,22 @@ variables_dict = {
         )
         for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
     },
+    # plot eta
+    **{
+        f"MatchedJets{flav}_eta": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="eta",
+                    bins=100,
+                    start=-5,
+                    stop=5,
+                    label=f"MatchedJets{flav}_eta",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
     **{
         f"MatchedJets{flav}_ResponseJEC": HistConf(
             [
@@ -427,7 +443,7 @@ run_options = {
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
     "walltime": "00:40:00",  # 00:40:00
-    "mem_per_worker": "8GB",  # 4GB
+    "mem_per_worker": "10GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
     "chunk": 400000,  # 400000

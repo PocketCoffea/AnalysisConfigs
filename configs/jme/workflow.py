@@ -41,6 +41,7 @@ flav_def = {
     "u": 1,
     "d": 2,
     "s": 3,
+    "uds": [1, 2, 3],
     "g": 21,
     "inclusive": [1, 2, 3, 4, 5, 21],
 }
@@ -52,7 +53,7 @@ flavour = str(os.environ.get("FLAV", "inclusive"))
 
 
 print(f"\n flav_dict: {flav_dict}")
-
+print(f"\n flavour: {flavour}")
 
 class QCDBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
@@ -85,7 +86,7 @@ class QCDBaseProcessor(BaseProcessorABC):
 
             # for the flavsplit
             if flavour != "inclusive":
-                mask_flav = self.events["GenJetGood"].partonFlavour == flav_def[flavour]
+                mask_flav = self.events["GenJetGood"].partonFlavour == flav_def[flavour] if  type(flav_def[flavour]) == int else ak.any([self.events["GenJetGood"].partonFlavour == flav for flav in flav_def[flavour]], axis=0)
                 # self.events["GenJetGood_mask"]=self.events.GenJetGood[mask_flav]
                 # self.events["GenJetGood_mask"] = self.events.GenJetGood_mask[
                 #     ~ak.is_none(self.events.GenJetGood_mask, axis=1)
