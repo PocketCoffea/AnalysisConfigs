@@ -141,7 +141,8 @@ if str(os.environ.get("SIGN", None)) == "-":
 elif str(os.environ.get("SIGN", None)) == "+":
     eta_bins = [i for i in eta_bins if i >= 0.0]
 
-# eta_bins=[-1.3, 1.3]
+if int(os.environ.get("CENTRAL", 0)) == 1:
+    eta_bins=[-1.3, 1.3]
 
 pt_bins = [
     15.0,

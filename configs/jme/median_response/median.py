@@ -11,6 +11,7 @@ import multiprocessing as mpr
 from functools import partial
 from hist import Hist
 import hist
+import functools
 
 sys.path.append("../")
 from params.binning import *
@@ -56,6 +57,18 @@ parser.add_argument(
     help="Run full cartesian analysis in all eta bins and all flavours sequentially",
     default=False,
 )
+parser.add_argument(
+    "--test",
+    action="store_true",
+    help="Run test",
+    default=False,
+)
+parser.add_argument(
+    "--central",
+    action="store_true",
+    help="Run central eta bin",
+    default=False,
+)
 args = parser.parse_args()
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -65,7 +78,7 @@ flavs = {
     ("b", "c"): [".", "x"],
     ("uds", "g"): [".", "x"],
 }
-flavs_not_inclusive = ["_b_", "_c_", "_uds_", "_g_"]
+flavs_not_inclusive = ["", "_b_", "_c_", "_uds_", "_g_"]
 
 variables_colors = {
     "ResponseJEC": "blue",
@@ -87,6 +100,12 @@ if not args.full:
         else f"{main_dir}/median_plots_binned"
     )
     os.makedirs(f"{median_dir}", exist_ok=True)
+    resolution_dir = (
+        f"{main_dir}/resolution_plots_unbinned"
+        if args.unbinned
+        else f"{main_dir}/resolution_plots_binned"
+    )
+    os.makedirs(f"{resolution_dir}", exist_ok=True)
     if args.histograms:
         response_dir = (
             f"{main_dir}/response_plots_unbinned"
@@ -95,17 +114,19 @@ if not args.full:
         )
         os.makedirs(f"{response_dir}", exist_ok=True)
 
+
+
 correct_eta_bins = eta_bins
 
 if args.load:
     # if args.full:
     #     for eta_sign in ["neg", "pos"]:
 
+    # TODO: load the npy files with the correct name for all variables
     medians = np.load(f"{median_dir}/medians.npy")
     err_medians = np.load(f"{median_dir}/err_medians.npy")
     print("loaded", medians, err_medians)
 
-    # TODO: load the npy files with the correct name for all variables
 
 else:
     if args.unbinned:
@@ -158,24 +179,28 @@ else:
         # median_dict -> flav_group -> variable -> eta bins -> pt bins
         medians_dict = dict()
         err_medians_dict = dict()
+        resolutions_dict = dict()
         response_dict = dict()
         # medians = list(list())
         # err_medians = list(list())
 
         o = load(f"{main_dir}/output_all.coffea") if not args.full else None
         variables = o["variables"].keys() if not args.full else None
-        for eta_sign in ["neg", "pos"]:
+        for eta_sign in ["neg", "pos"] if not args.central else ["central"]:
             medians_dict[eta_sign] = dict()
             err_medians_dict[eta_sign] = dict()
+            resolutions_dict[eta_sign] = dict()
             response_dict[eta_sign] = dict()
 
             for flav_group in flavs:
                 medians_dict[eta_sign][flav_group] = dict()
                 err_medians_dict[eta_sign][flav_group] = dict()
+                resolutions_dict[eta_sign][flav_group] = dict()
                 response_dict[eta_sign][flav_group] = dict()
                 for flav in flav_group:
                     medians_dict[eta_sign][flav_group][flav] = dict()
                     err_medians_dict[eta_sign][flav_group][flav] = dict()
+                    resolutions_dict[eta_sign][flav_group][flav] = dict()
                     response_dict[eta_sign][flav_group][flav] = dict()
                     if args.full:
                         o = load(
@@ -208,6 +233,9 @@ else:
                         err_medians_dict[eta_sign][flav_group][flav][variable] = list(
                             list()
                         )
+                        resolutions_dict[eta_sign][flav_group][flav][variable] = list(
+                            list()
+                        )
                         response_dict[eta_sign][flav_group][flav][variable] = list(
                             list()
                         )
@@ -233,11 +261,15 @@ else:
                                     ),
                                 )
                                 variations = list(histo.axes["variation"])
-                                for i in range(len(categories)):
+                                lenght = len(categories) if not args.test else 1
+                                for i in range(lenght):
                                     medians_dict[eta_sign][flav_group][flav][
                                         variable
                                     ].append(list())
                                     err_medians_dict[eta_sign][flav_group][flav][
+                                        variable
+                                    ].append(list())
+                                    resolutions_dict[eta_sign][flav_group][flav][
                                         variable
                                     ].append(list())
                                     response_dict[eta_sign][flav_group][flav][
@@ -253,10 +285,12 @@ else:
                                         #  TODO: I removed the _ from the flavour-> need to add it again
                                         jet_pt = (
                                             # f"MatchedJets_{flav.replace('_','')}.pt"
-                                            # if flav != ""
+                                            # if flav != "inclusive"
                                             # else
                                             "MatchedJets.pt"
                                         )
+
+
                                         for j in range(len(h.axes[jet_pt])):
                                             # print("\n\n eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
                                             # get the histo1d for the bin j in the axis MatchedJets.pt
@@ -281,7 +315,7 @@ else:
                                                 # get index where bins is > 2
                                                 index_2= np.where(bins > 2)[0][0]
 
-                                                rebinned_bins=bins[:index_2][::rebin_factor]
+                                                rebinned_bins=np.array(bins[:index_2][::rebin_factor])
                                                 rebinned_values = np.add.reduceat(values[:index_2], range(0, len(values[:index_2]), rebin_factor))
                                                 # print("bins", len(bins), "values", len(values))
                                                 # print("rebinned_bins", len(rebinned_bins), "rebinned_values", len(rebinned_values))
@@ -297,6 +331,9 @@ else:
                                                     flav
                                                 ][variable][i].append(np.nan)
                                                 err_medians_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(np.nan)
+                                                resolutions_dict[eta_sign][flav_group][
                                                     flav
                                                 ][variable][i].append(np.nan)
                                                 continue
@@ -343,6 +380,33 @@ else:
                                                 flav
                                             ][variable][i].append(err_median)
 
+
+                                            # define the resolution as the difference between the 84th and 16th percentile
+                                            # find the bin which is the 84th percentile of the histogram
+                                            percentile_84_bin_index = np.argmax(
+                                                cdf_normalized >= 0.84
+                                            )
+                                            # print("percentile_84_bin_index", percentile_84_bin_index)
+                                            percentile_84 = bins_mid[
+                                                percentile_84_bin_index
+                                            ]
+                                            # print("percentile_84", percentile_84)
+                                            # find the bin which is the 16th percentile of the histogram
+                                            percentile_16_bin_index = np.argmax(
+                                                cdf_normalized >= 0.16
+                                            )
+                                            # print("percentile_16_bin_index", percentile_16_bin_index)
+                                            percentile_16 = bins_mid[
+                                                percentile_16_bin_index
+                                            ]
+                                            # print("percentile_16", percentile_16)
+                                            resolution = (percentile_84 - percentile_16) / 2
+                                            # print("resolution", resolution)
+                                            resolutions_dict[eta_sign][flav_group][
+                                                flav
+                                            ][variable][i].append(resolution)
+
+
                         medians_dict[eta_sign][flav_group][flav][variable] = np.array(
                             medians_dict[eta_sign][flav_group][flav][variable]
                         )
@@ -350,6 +414,9 @@ else:
                             variable
                         ] = np.array(
                             err_medians_dict[eta_sign][flav_group][flav][variable]
+                        )
+                        resolutions_dict[eta_sign][flav_group][flav][variable] = np.array(
+                            resolutions_dict[eta_sign][flav_group][flav][variable]
                         )
 
         if not args.full:
@@ -367,11 +434,14 @@ else:
                     correct_eta_bins.append(eta_min)
                 if eta_max not in correct_eta_bins:
                     correct_eta_bins.append(eta_max)
+        if args.central:
+            correct_eta_bins = [-1.3, 1.3]
 
         print("correct_eta_bins", correct_eta_bins)
 
     print("medians", medians_dict)
     print("err_medians", err_medians_dict)
+    print("resolution", resolutions_dict)
 
     for eta_sign in medians_dict.keys():
         # TODO: save the medians in the correct directory
@@ -385,6 +455,12 @@ else:
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
                         )
                         os.makedirs(f"{median_dir}", exist_ok=True)
+                        resolution_dir = (
+                            f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                        )
+                        os.makedirs(f"{resolution_dir}", exist_ok=True)
                     np.save(
                         f"{median_dir}/medians_{eta_sign}_{flav}_{variable}.npy",
                         medians_dict[eta_sign][flav_group][flav][variable],
@@ -393,24 +469,54 @@ else:
                         f"{median_dir}/err_medians_{eta_sign}_{flav}_{variable}.npy",
                         err_medians_dict[eta_sign][flav_group][flav][variable],
                     )
+                    np.save(
+                        f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy",
+                        resolutions_dict[eta_sign][flav_group][flav][variable],
+                    )
+                    if args.histograms:
+                        response_dir = (
+                            f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_binned"
+                        )
+                        os.makedirs(f"{response_dir}", exist_ok=True)
+                        np.save(
+                            f"{response_dir}/response_{eta_sign}_{flav}_{variable}.npy",
+                            response_dict[eta_sign][flav_group][flav][variable],
+                        )
 
 
-def plot_median(i):
-    index = int(i % ((len(correct_eta_bins) - 1) / 2))
-    if i >= (len(correct_eta_bins) - 1) / 2:
-        eta_sign = "pos"
+def plot_median_resolution(i, plot_type):
+    if not args.central:
+        index = int(i % ((len(correct_eta_bins) - 1) / 2))
+        if i >= (len(correct_eta_bins) - 1) / 2:
+            eta_sign = "pos"
+        else:
+            eta_sign = "neg"
     else:
-        eta_sign = "neg"
+        index = 0
+        eta_sign = "central"
+
+    if plot_type == "median":
+        plot_dict = medians_dict
+        err_plot_dict = err_medians_dict
+    elif plot_type == "resolution":
+        plot_dict = resolutions_dict
+        err_plot_dict = None
+    else:
+        print("plot_type not valid")
+        return
+
     # for eta_sign in medians_dict.keys():
-    for flav_group in medians_dict[eta_sign].keys():
+    for flav_group in plot_dict[eta_sign].keys():
         # print("plotting median", flav_group, "eta", eta_sign)
         fig, ax = plt.subplots()
         j = 0
         plot = False
-        for flav in medians_dict[eta_sign][flav_group].keys():
-            for variable in medians_dict[eta_sign][flav_group][flav].keys():
-                medians = medians_dict[eta_sign][flav_group][flav][variable]
-                err_medians = err_medians_dict[eta_sign][flav_group][flav][variable]
+        for flav in plot_dict[eta_sign][flav_group].keys():
+            for variable in plot_dict[eta_sign][flav_group][flav].keys():
+                plot_array = plot_dict[eta_sign][flav_group][flav][variable]
+                err_plot_array = err_plot_dict[eta_sign][flav_group][flav][variable] if err_plot_dict is not None else None
                 if variable not in variables_colors.keys():
                     continue
                 # print(
@@ -427,8 +533,8 @@ def plot_median(i):
                 plot = True
                 ax.errorbar(
                     pt_bins[1:],
-                    medians[index, :],
-                    yerr=err_medians[index, :],
+                    plot_array[index, :],
+                    yerr=err_plot_array[index, :] if err_plot_array is not None else None,
                     label=f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
                     marker=flavs[flav_group][j],
                     color=variables_colors[variable],
@@ -441,9 +547,13 @@ def plot_median(i):
         # write axis name in latex
         ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
         ax.set_ylabel(
-            f"Median (Response) unbinned"
+            (f"Median (Response) unbinned"
             if args.unbinned
-            else f"Median (Response) binned"
+            else f"Median (Response) binned") if plot_type == "median" else (
+                f"Resolution (Response) unbinned"
+                if args.unbinned
+                else f"Resolution (Response) binned"
+            )
         )
         # log x scale
         ax.set_xscale("log")
@@ -465,24 +575,32 @@ def plot_median(i):
         for flav in flav_group:
             flav_str += flav.replace("_", "")
 
+        plots_dir = median_dir if plot_type == "median" else resolution_dir
+
         if args.full:
-            median_dir = [
+            plots_dir = [
                 f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
                 if args.unbinned
                 else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
                 for flav in flav_group
+            ] if plot_type == "median" else [
+                f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
+                if args.unbinned
+                else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                for flav in flav_group
             ]
+
         # print("ok")
-        if type(median_dir) == str:
+        if type(plots_dir) == str:
             fig.savefig(
-                f"{median_dir}/median_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
+                f"{plots_dir}/{'median' if plot_type == 'median' else 'resolution'}_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
                 bbox_inches="tight",
                 dpi=300,
             )
         else:
-            for med_dir in median_dir:
+            for plot_dir in plots_dir:
                 fig.savefig(
-                    f"{med_dir}/median_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
+                    f"{plot_dir}/{'median' if plot_type == 'median' else 'resolution'}_Response_{flav_str}_eta{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.png",
                     bbox_inches="tight",
                     dpi=300,
                 )
@@ -492,11 +610,16 @@ def plot_median(i):
 def plot_histos(eta_pt):
     eta_bin = eta_pt[0]
     pt_bin = eta_pt[1]
-    index = int(eta_bin % ((len(correct_eta_bins) - 1) / 2))
-    if eta_bin >= (len(correct_eta_bins) - 1) / 2:
-        eta_sign = "pos"
+    if not args.central:
+        index = int(eta_bin % ((len(correct_eta_bins) - 1) / 2))
+        if eta_bin >= (len(correct_eta_bins) - 1) / 2:
+            eta_sign = "pos"
+        else:
+            eta_sign = "neg"
     else:
-        eta_sign = "neg"
+        index = 0
+        eta_sign = "central"
+
     # for eta_sign in medians_dict.keys():
     for flav_group in response_dict[eta_sign].keys():
         # print("plotting histos", flav_group, "eta", eta_sign    )
@@ -563,9 +686,9 @@ def plot_histos(eta_pt):
                     f"{correct_eta_bins[eta_bin]} <"
                     + r"$\eta^{Gen}$"
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
-                        + f" {pt_bins[pt_bin]} GeV <"
+                        + f" {int(pt_bins[pt_bin])} <"
                         + r"$p_{T}^{Gen}$"
-                        + f"< {pt_bins[pt_bin+1]} GeV",
+                        + f"< {int(pt_bins[pt_bin+1])}",
                     horizontalalignment="right",
                     verticalalignment="top",
                     transform=ax.transAxes,
@@ -589,13 +712,17 @@ def plot_histos(eta_pt):
 
 print("Plotting medians...")
 with Pool(32) as p:
-    p.map(plot_median, range(len(correct_eta_bins) - 1))
+    p.map(functools.partial(plot_median_resolution, plot_type="median"), range(len(correct_eta_bins) - 1 if not args.test else 1))
+
+print("Plotting resolution...")
+with Pool(32) as p:
+    p.map(functools.partial(plot_median_resolution, plot_type="resolution"), range(len(correct_eta_bins) - 1 if not args.test else 1))
 
 
 if args.histograms:
     print("Plotting histograms...")
     eta_pt_bins = []
-    for eta in range(len(correct_eta_bins) - 1):
+    for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
         for pt in range(len(pt_bins) - 1):
             eta_pt_bins.append((eta, pt))
     with Pool(32) as p:

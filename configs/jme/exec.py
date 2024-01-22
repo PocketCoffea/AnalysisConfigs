@@ -79,10 +79,17 @@ parser.add_argument(
     help="Make plots",
     default=False,
 )
+parser.add_argument(
+    "--central",
+    action="store_true",
+    help="Central eta bin (-1.3, 1.3)",
+    default=False,
+)
 args = parser.parse_args()
 
 args.flavsplit = int(args.flavsplit)
 args.pnet = int(args.pnet)
+args.central = int(args.central)
 
 # Define a list of eta bins
 eta_bins = eta_bins if not args.inclusive_eta else None
@@ -91,7 +98,7 @@ test = "--test" if args.test else ""
 
 
 def run_command(sign, flav, dir_name):
-    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav}" "C-m"'
+    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central}" "C-m"'
     command3 = f'tmux send-keys "time runner.py --cfg cartesian_config.py {test} --full -o {dir_name}" "C-m"'
     command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 64" "C-m"'
 
@@ -126,17 +133,17 @@ if args.cartesian or args.full:
         subprocess.run(command1, shell=True)
 
     if args.full:
-        for sign in ["-", "+"]:
+        for sign in ["-", "+"] if not args.central else [""]:
             for flav in flavs_list:
                 dir_name = (
-                    f"out_cartesian_full{'_test' if args.test else ''}/{'neg' if sign=='-' else 'pos'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
+                    f"out_cartesian_full{'_test' if args.test else ''}/{('neg' if sign=='-' else 'pos')if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
                 )
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"out_cartesian_{'neg' if sign=='-' else ('pos' if sign=='+' else 'all')}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
+            f"out_cartesian_{('neg' if sign=='-' else ('pos' if sign=='+' else 'all')) if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )
