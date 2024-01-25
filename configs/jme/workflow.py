@@ -60,17 +60,16 @@ class QCDBaseProcessor(BaseProcessorABC):
         super().__init__(cfg)
 
     def apply_object_preselection(self, variation):
-        self.events["JetGood"], self.jetGoodMask = jet_selection_nopu(
-            self.events, "Jet", self.params  # , "LeptonGood"
-        )
-
-        # self.events["JetGood"], self.jetGoodMask = self.events["Jet"], ak.ones_like(
-        #     self.events["Jet"].pt, dtype=bool
+        # self.events["Jet"], self.jetGoodMask = jet_selection_nopu(
+        #     self.events, "Jet", self.params  # , "LeptonGood"
         # )
+
+        # self.events["Jet"] = self.events["Jet"]
         if self._isMC:
-            self.events["GenJetGood"], self.genjetGoodMask = jet_selection_nopu(
-                self.events, "GenJet", self.params  # , "LeptonGood"
-            )
+            # self.events["GenJet"], self.genjetGoodMask = jet_selection_nopu(
+            #     self.events, "GenJet", self.params  # , "LeptonGood"
+            # )
+            # self.events["GenJet"] = self.events["GenJet"]
 
             # Idx matching
             # Ngenjet = ak.num(self.events["GenJet"])
@@ -86,10 +85,10 @@ class QCDBaseProcessor(BaseProcessorABC):
 
             # for the flavsplit
             if flavour != "inclusive":
-                mask_flav = self.events["GenJetGood"].partonFlavour == flav_def[flavour] if  type(flav_def[flavour]) == int else ak.any([self.events["GenJetGood"].partonFlavour == flav for flav in flav_def[flavour]], axis=0)
-                # self.events["GenJetGood_mask"]=self.events.GenJetGood[mask_flav]
-                # self.events["GenJetGood_mask"] = self.events.GenJetGood_mask[
-                #     ~ak.is_none(self.events.GenJetGood_mask, axis=1)
+                mask_flav = self.events["GenJet"].partonFlavour == flav_def[flavour] if  type(flav_def[flavour]) == int else ak.any([self.events["GenJet"].partonFlavour == flav for flav in flav_def[flavour]], axis=0)
+                # self.events["GenJet_mask"]=self.events.GenJet[mask_flav]
+                # self.events["GenJet_mask"] = self.events.GenJet_mask[
+                #     ~ak.is_none(self.events.GenJet_mask, axis=1)
                 # ]
                 # # mask_flav = ak.mask(mask_flav, mask_flav)
                 (
@@ -97,25 +96,27 @@ class QCDBaseProcessor(BaseProcessorABC):
                     self.events["JetMatched"],
                     _,
                 ) = object_matching(
-                    self.events["GenJetGood"][mask_flav], self.events["JetGood"], 0.2
+                    self.events["GenJet"][mask_flav], self.events["Jet"], 0.2 # 0.4
                 )
             # elif flav_dict:
             #     for flav, parton_flavs in flav_dict.items():
-            #         self.events[f"GenJetGood_{flav}"] = genjet_selection_flavsplit(
-            #             self.events, "GenJetGood", parton_flavs
+            #         self.events[f"GenJet_{flav}"] = genjet_selection_flavsplit(
+            #             self.events, "GenJet", parton_flavs
             #         )
             #         (
             #             self.events[f"GenJetMatched_{flav}"],
             #             self.events[f"JetMatched_{flav}"],
             #             deltaR_matched,
-            #         ) = object_matching(self.events[f"GenJetGood_{flav}"], self.events["JetGood"], 0.2)
+            #         ) = object_matching(self.events[f"GenJet_{flav}"], self.events["Jet"], 0.2)
 
             else:
+                mask_pt = self.events["Jet"].pt * (1 - self.events["Jet"].rawFactor)>6# < 13
                 (
                     self.events["GenJetMatched"],
                     self.events["JetMatched"],
                     _,
-                ) = object_matching(self.events["GenJetGood"], self.events["JetGood"], 0.2)
+                ) = object_matching(self.events["GenJet"], self.events["Jet"][mask_pt], 3# 0.2 #0.4
+                                    )
 
             self.events["GenJetMatched"] = self.events.GenJetMatched[
                 ~ak.is_none(self.events.GenJetMatched, axis=1)
@@ -140,6 +141,28 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.JetMatched.pt / self.events.GenJetMatched.pt,
                 "ResponseJEC",
             )
+
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.pt,
+                "JetPtJEC",
+            )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.pt* (1 - self.events.JetMatched.rawFactor),
+                "JetPtRaw",
+            )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.eta- self.events.MatchedJets.eta,
+                "DeltaEta",
+            )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.eta/ self.events.MatchedJets.eta,
+                "EtaRecoGen",
+            )
+
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.MatchedJets,
                 self.events.MatchedJets.ResponseJEC
@@ -249,9 +272,9 @@ class QCDBaseProcessor(BaseProcessorABC):
             #     self.events[name] = self.events.MatchedJets[mask]
 
     def count_objects(self, variation):
-        self.events["nJetGood"] = ak.num(self.events.JetGood)
+        self.events["nJet"] = ak.num(self.events.Jet)
         if self._isMC:
-            self.events["nGenJetGood"] = ak.num(self.events.GenJetGood)
+            self.events["nGenJet"] = ak.num(self.events.GenJet)
 
     # # Function that defines common variables employed in analyses and save them as attributes of `events`
     # def define_common_variables_after_presel(self, variation):
@@ -272,10 +295,10 @@ class QCDBaseProcessor(BaseProcessorABC):
     #         )
 
     #         # questo sotto non va bene perchè viene calcolata indipendentemente per ogni chunk
-    #         # print(f"computing median for JetGood")
-    #         # print(self.events["JetGood"].pt)
-    #         # print(ak.flatten(self.events["JetGood"].pt))
-    #         # print(np.median(ak.to_numpy(ak.flatten(self.events["JetGood"].pt))))
+    #         # print(f"computing median for Jet")
+    #         # print(self.events["Jet"].pt)
+    #         # print(ak.flatten(self.events["Jet"].pt))
+    #         # print(np.median(ak.to_numpy(ak.flatten(self.events["Jet"].pt))))
     #         # print("\n")
 
     #         # define multiple objects dividing jets in eta bins

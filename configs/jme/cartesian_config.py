@@ -59,7 +59,7 @@ for i in range(len(eta_bins) - 1):
 
 multicuts = [
     MultiCut(name="eta", cuts=cuts_eta, cuts_names=cuts_names_eta),
-    # MultiCut(name="pt",
+    # MultiCut(name="pt", #HERE
     #          cuts=cuts_pt,
     #          cuts_names=cuts_names_pt),
 ]
@@ -80,6 +80,81 @@ variables_dict = {
                     start=0,
                     stop=22,
                     label=f"MatchedJets{flav}_flav",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_JetPtJEC": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="JetPtJEC",
+                    bins=100,
+                    start=0,
+                    stop=50,
+                    label=f"MatchedJets{flav}_JetPtJEC",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_JetPtRaw": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="JetPtRaw",
+                    bins=100,
+                    start=0,
+                    stop=50,
+                    label=f"MatchedJets{flav}_JetPtRaw",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_GenJetPt": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="pt",
+                    bins=100,
+                    start=0,
+                    stop=50,
+                    label=f"MatchedJets{flav}_GenJetPt",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_DeltaEta": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="DeltaEta",
+                    bins=100,
+                    start=-0.5,
+                    stop=0.5,
+                    label=f"MatchedJets{flav}_DeltaEta",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_EtaRecoGen": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="EtaRecoGen",
+                    bins=100,
+                    start=-0.5,
+                    stop=2,
+                    label=f"MatchedJets{flav}_EtaRecoGen",
                 )
             ]
         )

@@ -143,6 +143,8 @@ elif str(os.environ.get("SIGN", None)) == "+":
 
 if int(os.environ.get("CENTRAL", 0)) == 1:
     eta_bins=[-1.3, 1.3]
+    # eta_bins=[-6., -1.3, 1.3, 6.] #HERE
+    # eta_bins=[-6., -1.3,-0.5, 0, 0.5, 1.3, 6.] #HERE
 
 pt_bins = [
     15.0,
@@ -174,6 +176,8 @@ pt_bins = [
     4500.0,
     5000.0,
 ]
+
+pt_bins=[8, 13, 15, 30] #HERE
 
 
 # response_bins = [0, 0.8] + list(np.arange(0.9, 1.2, 0.1)) + [1.2, 8.0]

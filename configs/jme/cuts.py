@@ -6,8 +6,8 @@ def ptbin(events, params, **kwargs):
     if params["pt_high"] == "Inf":
         mask = events.MatchedJets.pt > params["pt_low"]
     elif type(params["pt_high"]) != str:
-        mask = (events.MatchedJets.pt > params["pt_low"]) & (
-            events.MatchedJets.pt < params["pt_high"]
+        mask = (events.MatchedJets.JetPtRaw > params["pt_low"]) & ( #HERE
+            events.MatchedJets.JetPtRaw < params["pt_high"]
         )
     else:
         raise NotImplementedError

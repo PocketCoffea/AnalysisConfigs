@@ -510,7 +510,21 @@ def plot_median_resolution(i, plot_type):
     # for eta_sign in medians_dict.keys():
     for flav_group in plot_dict[eta_sign].keys():
         # print("plotting median", flav_group, "eta", eta_sign)
-        fig, ax = plt.subplots()
+        if plot_type == "median":
+            fig, ax = plt.subplots()
+        else:
+            fig, (ax, ax_ratio) = plt.subplots(2, 1, sharex=True,  gridspec_kw={'height_ratios': [2, 1]})
+            ax_ratio
+
+        hep.cms.label(
+            year="2022",
+            com="13.6",
+            label=f"Private Work ({correct_eta_bins[i]} <"
+            + r"$\eta^{Gen}$"
+            + f"< {correct_eta_bins[i+1]})",
+            ax=ax,
+        )
+
         j = 0
         plot = False
         for flav in plot_dict[eta_sign][flav_group].keys():
@@ -540,35 +554,52 @@ def plot_median_resolution(i, plot_type):
                     color=variables_colors[variable],
                     linestyle="None",
                 )
+                if variable == "ResponsePNetReg" and plot_type == "resolution":
+                    # plot ratio pnreg / jec
+                    jec=plot_dict[eta_sign][flav_group][flav][
+                            "ResponseJEC"
+                        ]
+                    ax_ratio.errorbar(
+                        pt_bins[1:],
+                        (jec[index, :] - plot_array[index, :]) / jec[index, :],
+                        # label= f"{variable.replace('Response','')} / JEC ({flav.replace('_','') if flav != '' else 'inclusive'})",
+                        marker=flavs[flav_group][j],
+                        color=variables_colors[variable],
+                        linestyle="None",
+                    )
+
             j += 1
         # if no variable is plotted, skip
         if plot == False:
             continue
         # write axis name in latex
-        ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
+        if plot_type == "median":
+            ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
+        else:
+            ax_ratio.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
         ax.set_ylabel(
-            (f"Median (Response) unbinned"
+            (f"Median (Response)"
             if args.unbinned
-            else f"Median (Response) binned") if plot_type == "median" else (
-                f"Resolution (Response) unbinned"
+            else f"Median (Response)") if plot_type == "median" else (
+                f"Resolution (Response)"
                 if args.unbinned
-                else f"Resolution (Response) binned"
+                else f"Resolution (Response)"
             )
         )
+        if plot_type == "resolution":
+            ax_ratio.set_ylabel(
+                r" $\Delta$ resolution / JEC"
+            )
+
         # log x scale
         ax.set_xscale("log")
         # remove border of legend
         ax.legend(frameon=False, ncol=2)
 
-        plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
+        ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
+        if plot_type== "resolution":
+            ax_ratio.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
         # hep.style.use("CMS")
-        hep.cms.label(
-            year="2022",
-            com="13.6",
-            label=f"Private Work ({correct_eta_bins[i]} <"
-            + r"$\eta^{Gen}$"
-            + f"< {correct_eta_bins[i+1]})",
-        )
 
         # create string for flavour
         flav_str = ""

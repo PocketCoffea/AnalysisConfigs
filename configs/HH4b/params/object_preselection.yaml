@@ -1,10 +1,29 @@
 object_preselection:
   Jet:
-    dr_lepton: 0.4
-    pt: 30
+    dr_lepton: 0.4 #useless?
+    pt: 40
+    eta: 10 #2.5
+    jetId: 2 # 6 with lepveto or 2 w/o lepveto
+    # puId:
+    #   wp: M
+    #   value: 6
+    #   maxpt: 50.0
+    #trigger matching?
+  Electron:
+    pt: 15
     eta: 2.4
-    jetId: 2
-    puId:
-      wp: M
-      value: 6
-      maxpt: 50.0
+    id: mvaNoIso_WPL # iso / no iso
+    iso: 0.15 # 0.3? #DeltaR=0.3
+    dxy_barrel: 0.05
+    dz_barrel: 0.1
+    dxy_endcap: 0.1
+    dz_endcap: 0.2
+  Muon:
+    pt: 10
+    eta: 2.4
+    id: looseId
+    iso: 0.15 # 0.3? #DeltaR=0.3
+    dxy_barrel: 0.05
+    dz_barrel: 0.1
+    dxy_endcap: 0.1
+    dz_endcap: 0.2

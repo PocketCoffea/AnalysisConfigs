@@ -3,7 +3,7 @@
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv10-Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B",
-            "year": "2022",
+            "year": "2018",
             "isMC": "True",
             "xsec": "0.02964",
             "part": "kl-1p00_kt-1p00_c2-0p00",
@@ -11,11 +11,11 @@
             "size": "224512853"
         },
         "files": [
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/46c288ba-4f36-450b-9108-8070eca82d95.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/a0b92ac1-7481-4be1-960d-6eea81bf3822.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/a5e973c7-9e82-4dc5-8de6-734b22915f33.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/d152db5c-e786-4121-91ee-dad2ee1e1e75.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/30000/d6e0e36f-9427-4ee4-8b3d-d5a4c93b9322.root"
+            "root://eoscms.cern.ch//eos/cms//store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/46c288ba-4f36-450b-9108-8070eca82d95.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/a0b92ac1-7481-4be1-960d-6eea81bf3822.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/a5e973c7-9e82-4dc5-8de6-734b22915f33.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/2540000/d152db5c-e786-4121-91ee-dad2ee1e1e75.root",
+            "root://eoscms.cern.ch//eos/cms//store/mc/Run3Summer22EENanoAODv10/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/30000/d6e0e36f-9427-4ee4-8b3d-d5a4c93b9322.root"
         ]
     }
 }
