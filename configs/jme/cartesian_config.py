@@ -137,9 +137,39 @@ variables_dict = {
                     coll=f"MatchedJets{flav}",
                     field="DeltaEta",
                     bins=100,
-                    start=-0.5,
-                    stop=0.5,
-                    label=f"MatchedJets{flav}_DeltaEta",
+                    start=-3,
+                    stop=3,
+                    label=f"MatchedJets{flav}_"+r"$\Delta \eta$",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_DeltaPhi": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="DeltaPhi",
+                    bins=100,
+                    start=-3,
+                    stop=3,
+                    label=f"MatchedJets{flav}_"+r"$\Delta \phi$",
+                )
+            ]
+        )
+        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    },
+    **{
+        f"MatchedJets{flav}_DeltaR": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets{flav}",
+                    field="DeltaR",
+                    bins=100,
+                    start=0,
+                    stop=3,
+                    label=f"MatchedJets{flav}_"+r"$\Delta R$",
                 )
             ]
         )

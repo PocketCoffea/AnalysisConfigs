@@ -96,6 +96,8 @@ eta_bins = eta_bins if not args.inclusive_eta else None
 
 test = "--test" if args.test else ""
 
+dir_prefix = os.environ.get("STORE", "")
+# print("dir_prefix", dir_prefix)
 
 def run_command(sign, flav, dir_name):
     command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central}" "C-m"'
@@ -136,14 +138,14 @@ if args.cartesian or args.full:
         for sign in ["-", "+"] if not args.central else [""]:
             for flav in flavs_list:
                 dir_name = (
-                    f"out_cartesian_full{'_test' if args.test else ''}/{('neg' if sign=='-' else 'pos')if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
+                    f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}/{('neg' if sign=='-' else 'pos')if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
                 )
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"out_cartesian_{('neg' if sign=='-' else ('pos' if sign=='+' else 'all')) if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{('neg' if sign=='-' else ('pos' if sign=='+' else 'all')) if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )
@@ -191,7 +193,7 @@ else:
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
                 dir_name = (
-                    f"out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
+                    f"{dir_prefix}out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
                     if not args.dir
                     else args.dir
                 )

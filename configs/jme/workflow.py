@@ -55,6 +55,7 @@ flavour = str(os.environ.get("FLAV", "inclusive"))
 print(f"\n flav_dict: {flav_dict}")
 print(f"\n flavour: {flavour}")
 
+
 class QCDBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
         super().__init__(cfg)
@@ -85,7 +86,17 @@ class QCDBaseProcessor(BaseProcessorABC):
 
             # for the flavsplit
             if flavour != "inclusive":
-                mask_flav = self.events["GenJet"].partonFlavour == flav_def[flavour] if  type(flav_def[flavour]) == int else ak.any([self.events["GenJet"].partonFlavour == flav for flav in flav_def[flavour]], axis=0)
+                mask_flav = (
+                    self.events["GenJet"].partonFlavour == flav_def[flavour]
+                    if type(flav_def[flavour]) == int
+                    else ak.any(
+                        [
+                            self.events["GenJet"].partonFlavour == flav
+                            for flav in flav_def[flavour]
+                        ],
+                        axis=0,
+                    )
+                )
                 # self.events["GenJet_mask"]=self.events.GenJet[mask_flav]
                 # self.events["GenJet_mask"] = self.events.GenJet_mask[
                 #     ~ak.is_none(self.events.GenJet_mask, axis=1)
@@ -94,9 +105,9 @@ class QCDBaseProcessor(BaseProcessorABC):
                 (
                     self.events["GenJetMatched"],
                     self.events["JetMatched"],
-                    _,
+                    deltaR_matched,
                 ) = object_matching(
-                    self.events["GenJet"][mask_flav], self.events["Jet"], 0.2 # 0.4
+                    self.events["GenJet"][mask_flav], self.events["Jet"], 0.2  # 0.4
                 )
             # elif flav_dict:
             #     for flav, parton_flavs in flav_dict.items():
@@ -110,13 +121,18 @@ class QCDBaseProcessor(BaseProcessorABC):
             #         ) = object_matching(self.events[f"GenJet_{flav}"], self.events["Jet"], 0.2)
 
             else:
-                mask_pt = self.events["Jet"].pt * (1 - self.events["Jet"].rawFactor)>6# < 13
+                mask_pt = (
+                    self.events["Jet"].pt * (1 - self.events["Jet"].rawFactor) >0 #< 12
+                )  # HERE #cut on pt_raw>8 inside the file
                 (
                     self.events["GenJetMatched"],
                     self.events["JetMatched"],
-                    _,
-                ) = object_matching(self.events["GenJet"], self.events["Jet"][mask_pt], 3# 0.2 #0.4
-                                    )
+                    deltaR_matched,
+                ) = object_matching(
+                    self.events["GenJet"],
+                    self.events["Jet"][mask_pt],
+                    0.2  # HERE # 0.2 #0.4
+                )
 
             self.events["GenJetMatched"] = self.events.GenJetMatched[
                 ~ak.is_none(self.events.GenJetMatched, axis=1)
@@ -124,6 +140,8 @@ class QCDBaseProcessor(BaseProcessorABC):
             self.events["JetMatched"] = self.events.JetMatched[
                 ~ak.is_none(self.events.JetMatched, axis=1)
             ]
+
+            deltaR_matched = deltaR_matched[~ak.is_none(deltaR_matched, axis=1)]
 
             # this might be useless
             # if flavour != "inclusive":
@@ -149,17 +167,28 @@ class QCDBaseProcessor(BaseProcessorABC):
             )
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.MatchedJets,
-                self.events.JetMatched.pt* (1 - self.events.JetMatched.rawFactor),
+                self.events.JetMatched.pt * (1 - self.events.JetMatched.rawFactor),
                 "JetPtRaw",
             )
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.MatchedJets,
-                self.events.JetMatched.eta- self.events.MatchedJets.eta,
+                self.events.JetMatched.eta - self.events.MatchedJets.eta,
                 "DeltaEta",
             )
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.MatchedJets,
-                self.events.JetMatched.eta/ self.events.MatchedJets.eta,
+                self.events.JetMatched.phi - self.events.MatchedJets.phi,
+                "DeltaPhi",
+            )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                deltaR_matched,
+                "DeltaR",
+            )
+
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.eta / self.events.MatchedJets.eta,
                 "EtaRecoGen",
             )
 
