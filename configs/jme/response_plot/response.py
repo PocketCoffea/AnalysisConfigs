@@ -143,11 +143,14 @@ if not args.full:
         os.makedirs(f"{response_dir}", exist_ok=True)
         print("response_dir", response_dir)
 
+plot_2d_dir = f"{main_dir}/2d_plots"
+os.makedirs(f"{plot_2d_dir}", exist_ok=True)
+print("plot_2d_dir", plot_2d_dir)
+
 
 correct_eta_bins = eta_bins
 
 if args.load:
-    # TODO: load the npy files with the correct name for all variables
     print("loading response from file")
     medians_dict = dict()
     err_medians_dict = dict()
@@ -291,12 +294,6 @@ else:
                         )
                         variables = o["variables"].keys()
                     for variable in variables:
-                        # TODO: the check of the flavour must be done when opening the file for the new configuration
-                        # if flav not in variable or (
-                        #     flav == ""
-                        #     and any([f in variable for f in flavs_not_inclusive])
-                        # ):
-                        #     continue
                         if "Response" not in variable or "VSpt" not in variable:
                             continue
                         histos_dict = o["variables"][variable]
@@ -305,9 +302,7 @@ else:
                             variable.replace(
                                 "MatchedJets_",
                                 "",  # if flav == "" else "MatchedJets", ""
-                            ).replace(  # TODO: I removed the _ from the MatchedJets_-> need to add it again?
-                                "VSpt", ""
-                            )
+                            ).replace("VSpt", "")
                             # .replace(flav, "")
                         )
                         medians_dict[eta_sign][flav_group][flav][variable] = list(
@@ -365,13 +360,7 @@ else:
                                         # h is a histo2d and we want to find the median of the distribution along the axis MatchedJets.Response
                                         # for each bin in the axis MatchedJets.pt
                                         # so we need to loop over the bins in the axis MatchedJets.pt
-                                        #  TODO: I removed the _ from the flavour-> need to add it again
-                                        jet_pt = (
-                                            # f"MatchedJets_{flav.replace('_','')}.pt"
-                                            # if flav != "inclusive"
-                                            # else
-                                            "MatchedJets.pt"
-                                        )
+                                        jet_pt = "MatchedJets.pt"
 
                                         for j in range(len(h.axes[jet_pt])):
                                             # print("\n\n eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
@@ -382,12 +371,10 @@ else:
                                             values = h1d.values()
                                             bins = h1d.axes[0].edges
                                             bins_mid = (bins[1:] + bins[:-1]) / 2
+
+                                            # HERE: uncomment HERE
                                             bins_mid = bins_mid[1:]
-                                            if "PNetReg" in variable:
-                                                print(values)
                                             values = values[1:]
-                                            if "PNetReg" in variable:
-                                                print(values)
 
                                             if args.histograms:
                                                 #     h_rebin = Hist(hist.axis.Regular(100, 0.0, 2., name=variable))
@@ -422,16 +409,18 @@ else:
                                                 )
                                             # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable, "eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
                                             if all([v <= 1 for v in values]):
-                                                # print("all values are 0")
-                                                medians_dict[eta_sign][flav_group][
-                                                    flav
-                                                ][variable][i].append(np.nan)
-                                                err_medians_dict[eta_sign][flav_group][
-                                                    flav
-                                                ][variable][i].append(np.nan)
-                                                resolutions_dict[eta_sign][flav_group][
-                                                    flav
-                                                ][variable][i].append(np.nan)
+                                                for k in range(j, len(h.axes[jet_pt])):
+                                                    # print("all values are 0")
+                                                    medians_dict[eta_sign][flav_group][
+                                                        flav
+                                                    ][variable][i].append(np.nan)
+                                                    err_medians_dict[eta_sign][
+                                                        flav_group
+                                                    ][flav][variable][i].append(np.nan)
+                                                    resolutions_dict[eta_sign][
+                                                        flav_group
+                                                    ][flav][variable][i].append(np.nan)
+                                                break
                                                 continue
                                             # print("values", values)
                                             # print(variable)
@@ -580,7 +569,7 @@ else:
 if args.central:
     correct_eta_bins = [-5.191, -1.3, 1.3, 5.191]
 
-print("correct_eta_bins", correct_eta_bins)
+print("correct_eta_bins", correct_eta_bins, len(correct_eta_bins))
 
 
 def plot_median_resolution(i, plot_type):
@@ -829,6 +818,7 @@ def plot_histos(eta_pt, response_dir):
                     histtype="step",
                     label=f'{variable.replace("Response", "")} ({flav})',
                     color=variables_colors[variable],
+                    density=True,
                 )
 
                 ax_tot.hist(
@@ -838,13 +828,14 @@ def plot_histos(eta_pt, response_dir):
                     histtype="step",
                     label=f'{variable.replace("Response", "")} ({flav})',
                     color=variables_colors[variable],
+                    density=True,
                 )
 
                 # write axis name in latex
                 ax.set_xlabel(f"Response")
                 ax.set_ylabel(f"Events")
-                if np.any(values != np.nan) and np.any(values != 0):
-                    ax.set_ylim(top=1.3 * np.nanmax(values))
+                # if np.any(values != np.nan) and np.any(values != 0):
+                #     ax.set_ylim(top=1.3 * np.nanmax(values))
 
                 ax.legend(frameon=False, loc="upper right")
 
@@ -892,8 +883,8 @@ def plot_histos(eta_pt, response_dir):
             ax_tot.set_ylabel(f"Events")
 
             ax_tot.legend(frameon=False, loc="upper right")
-            if np.any(values != np.nan) and np.any(values != 0):
-                ax_tot.set_ylim(top=1.3 * max_value)
+            # if np.any(values != np.nan) and np.any(values != 0):
+            #     ax_tot.set_ylim(top=1.3 * max_value)
 
             plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
             # hep.style.use("CMS")
@@ -926,6 +917,115 @@ def plot_histos(eta_pt, response_dir):
             plt.close(fig_tot)
 
 
+def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
+    # plot_dict["full"] = dict()
+    # for eta_sign in plot_dict.keys():
+    #     for flav_group in plot_dict[eta_sign].keys():
+    #         plot_dict["full"][flav_group] = dict()
+    #         print(eta_sign,  plot_dict[eta_sign][flav_group].keys())
+    #         for flav in plot_dict[eta_sign][flav_group].keys():
+    #             plot_dict["full"][flav_group][flav] = dict()
+    #             print("full", plot_dict["full"][flav_group][flav].keys())
+    #             for variable in plot_dict[eta_sign][flav_group][flav].keys():
+    #                 length = len(plot_dict[eta_sign][flav_group][flav][variable])
+    #                 # print("length", length)
+    #                 plot_dict["full"][flav_group][flav][variable] = list(list())
+    #                 for i in range(length):
+    #                     plot_dict["full"][flav_group][flav][variable].append(
+    #                         plot_dict[eta_sign][flav_group][flav][variable][i]
+    #                     )
+
+    # print("plot_dict[full]", plot_dict["full"])
+    # print(plot_dict["full"][("inclusive",)]["inclusive"].keys())
+
+    for eta_sign in plot_dict.keys(): #["full"]:
+        for flav_group in plot_dict[eta_sign].keys():
+            # print("plotting median", flav_group, "eta", eta_sign)
+
+            for flav in plot_dict[eta_sign][flav_group].keys():
+                for variable in plot_dict[eta_sign][flav_group][flav].keys():
+                    if variable not in variables_colors.keys():
+                        continue
+                    h_2d = plot_dict[eta_sign][flav_group][flav][variable]
+
+                    fig, ax = plt.subplots()
+                    hep.cms.label(
+                        year="2022",
+                        com="13.6",
+                        label=f"Private Work",
+                        ax=ax,
+                    )
+                    # print(
+                    #     "plotting median",
+                    #     flav_group,
+                    #     flav,
+                    #     variable,
+                    #     "eta",
+                    #     correct_eta_bins[i],
+                    #     correct_eta_bins[i + 1],
+                    #     "index",
+                    #     index,
+                    # )
+
+                    # plot 2d
+                    # print(h_2d)
+                    # put zeros instead of nan
+                    # h_2d[np.isnan(h_2d)] = 0
+                    # print(h_2d)
+                    len_eta=int((len(correct_eta_bins_2d)-1)/2)
+                    # require pt > 30 and < 1000
+                    mask_pt=(pt_bins_2d >= 30) & (pt_bins_2d <= 3000)
+                    mask_eta=abs(correct_eta_bins_2d[:len_eta+1]) < 4
+                    # print(pt_bins_2d, len(pt_bins_2d))
+                    # print(correct_eta_bins_2d, len(correct_eta_bins_2d))
+                    # print("h2d", h_2d[-1])
+                    pt_bins_2d_cut=pt_bins_2d[mask_pt]
+                    correct_eta_bins_2d_cut=correct_eta_bins_2d[:len_eta+1][mask_eta] if eta_sign == "neg" else correct_eta_bins_2d[len_eta:][mask_eta]
+                    h_2d=h_2d[mask_eta[:-1],:]
+                    # print("h2d0", h_2d[-1], len(h_2d),   len(h_2d[0]))
+                    h_2d=h_2d[:, mask_pt[:-1]][:, :-1]
+                    # print(pt_bins_2d, len(pt_bins_2d))
+                    # print(correct_eta_bins_2d, len(correct_eta_bins_2d))
+                    # print("h2d1", h_2d[-1], len(h_2d),   len(h_2d[0]))
+                    c=plt.pcolormesh(
+                        pt_bins_2d_cut, correct_eta_bins_2d_cut,
+                        h_2d,
+                        cmap="viridis",
+                        # norm=LogNorm(vmin=0.0001, vmax=1),
+                        # vmin=0.95,
+                        # vmax=1.05,
+                        # label=f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
+                    )
+                    plt.colorbar(c)
+                    ax.text(
+                        0.98,
+                        0.8 if eta_sign == "pos" else 0.2,
+                        f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
+                        horizontalalignment="right",
+                        verticalalignment="top",
+                        transform=ax.transAxes,
+                        fontsize=10,
+                        bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+                    )
+
+                    ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
+                    ax.set_ylabel(r"$\eta^{Gen}$")
+                    ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
+
+                    # ax.legend(frameon=False, ncol=2, loc="upper right")
+
+                    fig.savefig(
+                        f"{plot_2d_dir.replace('/pnfs/psi.ch/cms/trivcat/store/user/mmalucch//out_jme/', '')}/median_response_2d_{eta_sign}_{flav}_{variable}.png",
+                        bbox_inches="tight",
+                        dpi=300,
+                    )
+
+                    plt.close(fig)
+
+
+print("Plotting 2d median...")
+plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
+
 if args.no_plot:
     sys.exit()
 
@@ -943,8 +1043,8 @@ with Pool(args.num_processes) as p:
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
+
 if args.histograms:
-    print(response_dir)
     print("Plotting histograms...")
     eta_pt_bins = []
     for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):

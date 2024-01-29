@@ -148,3 +148,4 @@ output
 *slurm*
 *.pkl.gz
 *.code-workspace
+test*
