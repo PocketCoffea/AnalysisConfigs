@@ -57,7 +57,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         quarks = self.events.LHEPart[isOutgoing & isParton]
 
         # Select b-quarks at Gen level, coming from H->bb decay
-        if self._sample == 'ttHTobb':
+        if self._sample in ['ttHTobb', 'ttHTobb_ttToSemiLep']:
             higgs = self.events.GenPart[
                 (self.events.GenPart.pdgId == 25)
                 & (self.events.GenPart.hasFlags(['fromHardProcess']))
@@ -74,7 +74,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
             )
 
         # Get the interpretation
-        if self._sample == "ttHTobb":
+        if self._sample in ['ttHTobb', 'ttHTobb_ttToSemiLep']:
             prov = get_partons_provenance_ttHbb(
                 ak.Array(quarks.pdgId, behavior={}), ak.ArrayBuilder()
             ).snapshot()
@@ -125,6 +125,6 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         )  # use count since we have None
 
     def process_extra_after_presel(self, variation) -> ak.Array:
-        if self._isMC & (self._sample in ["ttHTobb", "TTbbSemiLeptonic", "TTToSemiLeptonic"]):
+        if self._isMC & (self._sample in ["ttHTobb", "ttHTobb_ttToSemiLep", "TTbbSemiLeptonic", "TTToSemiLeptonic"]):
             self.do_parton_matching()
             self.count_partons()
