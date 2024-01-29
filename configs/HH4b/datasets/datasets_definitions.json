@@ -26,7 +26,7 @@
         "files": [
             {
                 "das_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv10-Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/NANOAODSIM"
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
                 ],
                 "metadata": {
                     "year": "2022",
@@ -35,7 +35,7 @@
                     "part": "kl-1p00_kt-1p00_c2-0p00"
                 },
                 "das_parents_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv3-Poisson60KeepRAW_124X_mcRun3_2022_realistic_postEE_v1-v2/MINIAODSIM"
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
                 ]
             }
         ]

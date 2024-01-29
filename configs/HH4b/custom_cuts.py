@@ -46,8 +46,8 @@ def lepton_selection(events, lepton_flavour, params):
     passes_eta = abs(leptons.eta) < cuts["eta"]
     passes_pt = leptons.pt > cuts["pt"]
 
-    passes_dxy = leptons.dxy < cuts["dxy_barrel"] # if abs(leptons.eta) < 1.479 else leptons.dxy < cuts["dxy_endcap"]
-    passes_dz = leptons.dz < cuts["dz_barrel"] # if abs(leptons.eta) < 1.479 else leptons.dz < cuts["dz_endcap"]
+    passes_dxy = leptons.dxy < cuts["dxy_barrel"]  if abs(leptons.eta) < 1.479 else leptons.dxy < cuts["dxy_endcap"]
+    passes_dz = leptons.dz < cuts["dz_barrel"]  if abs(leptons.eta) < 1.479 else leptons.dz < cuts["dz_endcap"]
 
 
     if lepton_flavour == "Electron":
