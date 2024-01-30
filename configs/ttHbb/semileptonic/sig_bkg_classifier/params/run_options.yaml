@@ -1,6 +1,6 @@
 scaleout: 200
 chunksize: 400000
-mem-per-worker: "4GB"
+mem-per-worker: "6GB"
 disk-per-worker: "2GB"
 queue: "standard"
 walltime: "6:00:00"
