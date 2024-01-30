@@ -31,11 +31,13 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
+                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
                   f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
                   f"{localdir}/datasets/backgrounds_MC_ttbar_local.json"
                   ],
         "filter" : {
             "samples": ["ttHTobb",
+                        "ttHTobb_ttToSemiLep",
                         "TTbbSemiLeptonic",
                         "TTToSemiLeptonic"
                         ],
@@ -93,12 +95,12 @@ cfg = Configurator(
     columns = {
         "common": {
             "inclusive": [],
-        },
-        "bysample": {
-            "ttHTobb": {
-                "bycategory": {
+            "bycategory": {
                     "semilep_LHE": [
-                        ColOut("Parton", ["pt", "eta", "phi", "mass", "pdgId", "provenance"]),
+                        ColOut(
+                            "Parton",
+                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"]
+                        ),
                         ColOut(
                             "PartonMatched",
                             ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
@@ -109,17 +111,8 @@ cfg = Configurator(
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            [
-                                "pt",
-                                "eta",
-                                "phi",
-                                "hadronFlavour",
-                                "btagDeepFlavB",
-                                "dRMatchedJet",
-                            ],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "dRMatchedJet"],
                         ),
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
                         ColOut("LeptonGood",
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
                                pos_end=1, store_size=False),
@@ -127,37 +120,31 @@ cfg = Configurator(
                         ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
                         ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
                     ]
+            }
+        },
+        "bysample": {
+            "ttHTobb": {
+                "bycategory": {
+                    "semilep_LHE": [
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                    ]
+                }
+            },
+            "ttHTobb_ttToSemiLep": {
+                "bycategory": {
+                    "semilep_LHE": [
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                    ]
                 }
             }
         },
     },
 )
 
-
-
-
-run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "conda",
-        "workers"        : 1,
-        "scaleout"       : 50,
-        "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "standard",
-        "walltime"       : "00:40:00",
-        "mem_per_worker" : "8GB", # GB
-        "disk_per_worker" : "1GB", # GB
-        "exclusive"      : False,
-        "chunk"          : 400000,
-        "retries"        : 50,
-        "treereduction"  : 20,
-        "adapt"          : False,
-        
-    }
-   
-
-
-if "dask"  in run_options["executor"]:
-    import cloudpickle
-    cloudpickle.register_pickle_by_value(workflow)
-    cloudpickle.register_pickle_by_value(custom_cut_functions)
-    cloudpickle.register_pickle_by_value(custom_cuts)
+# Registering custom functions
+import cloudpickle
+cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(custom_cut_functions)
+cloudpickle.register_pickle_by_value(custom_cuts)
