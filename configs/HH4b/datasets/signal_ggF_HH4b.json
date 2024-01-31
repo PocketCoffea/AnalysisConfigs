@@ -3,7 +3,7 @@
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B",
-            "year": "2022",
+            "year": "2018",
             "isMC": "True",
             "xsec": "0.02964",
             "part": "kl-1p00_kt-1p00_c2-0p00",

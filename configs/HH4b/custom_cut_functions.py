@@ -22,7 +22,7 @@ def hh4b(events, params, **kwargs):
     # convert none to false
     mask_pt = ak.where(ak.is_none(mask_pt_none), False, mask_pt_none)
 
-    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBtagOrdered.btagDeepFlavB # TODO: use particlenet!
+    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBtagOrdered.btagPNetB
     mask_btag = (
         ((jets_btag_order[:, 0] + jets_btag_order[:, 1]) / 2 > params["mean_pnet_jet"])
         & (jets_btag_order[:, 2] > params["third_pnet_jet"])

@@ -21,7 +21,7 @@ hh4b_presel = Cut(
     function=cuts_f.hh4b,
 )
 
-hh4b_base = Cut(
+hh4b_parton_matching = Cut(
     name="hh4b_base",
     params={
         "njet": 4,
@@ -39,36 +39,45 @@ hh4b_base = Cut(
 
 
 def lepton_selection(events, lepton_flavour, params):
-
     leptons = events[lepton_flavour]
     cuts = params.object_preselection[lepton_flavour]
     # Requirements on pT and eta
     passes_eta = abs(leptons.eta) < cuts["eta"]
     passes_pt = leptons.pt > cuts["pt"]
 
-    passes_dxy = leptons.dxy < cuts["dxy_barrel"]  if abs(leptons.eta) < 1.479 else leptons.dxy < cuts["dxy_endcap"]
-    passes_dz = leptons.dz < cuts["dz_barrel"]  if abs(leptons.eta) < 1.479 else leptons.dz < cuts["dz_endcap"]
-
+    passes_dxy = ak.where(
+        abs(leptons.eta) < 1.479,
+        leptons.dxy < cuts["dxy_barrel"],
+        leptons.dxy < cuts["dxy_endcap"],
+    )
+    passes_dz = ak.where(
+        abs(leptons.eta) < 1.479,
+        leptons.dz < cuts["dz_barrel"],
+        leptons.dz < cuts["dz_endcap"],
+    )
 
     if lepton_flavour == "Electron":
         # Requirements on SuperCluster eta, isolation and id
         # etaSC = abs(leptons.deltaEtaSC + leptons.eta)
         # passes_SC = np.invert((etaSC >= 1.4442) & (etaSC <= 1.5660))
         passes_iso = leptons.pfRelIso03_all < cuts["iso"]
-        passes_id = leptons[cuts['id']] == True
+        # passes_id = leptons[cuts["id"]] == True #TODO: check if this is correct
 
-        good_leptons = passes_eta & passes_pt & passes_iso & passes_id  & passes_dxy & passes_dz
+        good_leptons = (
+            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz  # & passes_id #TODO: check if this is correct
+        )
         # & passes_SC
 
     elif lepton_flavour == "Muon":
         # Requirements on isolation and id
         passes_iso = leptons.pfRelIso03_all < cuts["iso"]
-        passes_id = leptons[cuts['id']] == True
+        passes_id = leptons[cuts["id"]] == True #TODO: check if this is correct
 
-        good_leptons = passes_eta & passes_pt & passes_iso & passes_id & passes_dxy & passes_dz
+        good_leptons = (
+            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz  & passes_id #TODO: check if this is correct
+        )
 
     return leptons[good_leptons]
-
 
 
 def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
@@ -87,6 +96,5 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
         mask_lepton_cleaning = ak.prod(dR_jets_lep > cuts["dr_lepton"], axis=2) == 1
 
     mask_good_jets = mask_presel  # & mask_lepton_cleaning
-
 
     return jets[mask_good_jets]
