@@ -32,7 +32,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 # adding object preselection
-year = "2018"
+year = "2018" #TODO: change year to 2022
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -62,21 +62,12 @@ cfg = Configurator(
     workflow=HH4bPartonMatchingProcessor,
     workflow_options={"parton_jet_min_dR": 0.4, "max_num_jets": 4},
     skim=[
-        # get_nObj_min(4, 15.0, "Jet"),
-        # get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"]),
+        get_HLTsel(primaryDatasets=["JetMET"]),
     ],
     preselections=[hh4b_presel],
     categories={
         # "baseline": [passthrough],
         "hh4b_parton_matching": [get_nObj_eq(4, coll="PartonMatched")],
-        # "SingleEle_3b" : [ get_nElectron(1, coll="ElectronGood"), get_nObj_eq(3, coll="BJetGood") ],
-        # "SingleEle_>=4b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(4, coll="BJetGood") ],
-        # "SingleEle_>=5b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(5, coll="BJetGood") ],
-        # "SingleEle_>=6b" : [ get_nElectron(1, coll="ElectronGood"), get_nBtagMin(6, coll="BJetGood") ],
-        # "SingleMuon_3b" : [ get_nMuon(1, coll="MuonGood"), get_nObj_eq(3, coll="BJetGood") ],
-        # "SingleMuon_>=4b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(4, coll="BJetGood") ],
-        # "SingleMuon_>=5b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(5, coll="BJetGood") ],
-        # "SingleMuon_>=6b" : [ get_nMuon(1, coll="MuonGood"), get_nBtagMin(6, coll="BJetGood") ],
     },
     weights={
         "common": {
@@ -113,7 +104,7 @@ cfg = Configurator(
                 # + [f"sf_ele_trigger_{v}" for v in parameters["systematic_variations"]["weight_variations"]["sf_ele_trigger"][year]],
                 "bycategory": {},
             },
-            "bysample": {}
+            "bysample": {},
             # },
             # "shape": {
             #     "common":{
@@ -122,39 +113,181 @@ cfg = Configurator(
         }
     },
     variables={
-        **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
-        **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
-        **count_hist(coll="JetGoodBtagOrderedMatched", bins=10, start=0, stop=10),
-        **count_hist(coll="PartonMatched", bins=10, start=0, stop=10),
-        **jet_hists(coll="JetGood", pos=0),
-        **jet_hists(coll="JetGood", pos=1),
-        **jet_hists(coll="JetGood", pos=2),
-        **jet_hists(coll="JetGood", pos=3),
-        **jet_hists(coll="JetGoodBtagOrdered", pos=0),
-        **jet_hists(coll="JetGoodBtagOrdered", pos=1),
-        **jet_hists(coll="JetGoodBtagOrdered", pos=2),
-        **jet_hists(coll="JetGoodBtagOrdered", pos=3),
-        **parton_hists(coll="PartonMatched", pos=0),
-        **parton_hists(coll="PartonMatched", pos=1),
-        **parton_hists(coll="PartonMatched", pos=2),
-        **parton_hists(coll="PartonMatched", pos=3),
+        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
+        # **count_hist(coll="JetGoodBTagOrder", bins=10, start=0, stop=10),
+        # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
+        # **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
+        # **count_hist(coll="JetGoodBTagOrderMatched", bins=10, start=0, stop=10),
+        # **count_hist(coll="PartonMatched", bins=10, start=0, stop=10),
+        # **jet_hists(coll="JetGood", pos=0),
+        # **jet_hists(coll="JetGood", pos=1),
+        # **jet_hists(coll="JetGood", pos=2),
+        # **jet_hists(coll="JetGood", pos=3),
+        # **jet_hists(coll="JetGoodPtOrder", pos=0),
+        # **jet_hists(coll="JetGoodPtOrder", pos=1),
+        # **jet_hists(coll="JetGoodPtOrder", pos=2),
+        # **jet_hists(coll="JetGoodPtOrder", pos=3),
+        # **jet_hists(coll="JetGoodBTagOrder", pos=0),
+        # **jet_hists(coll="JetGoodBTagOrder", pos=1),
+        # **jet_hists(coll="JetGoodBTagOrder", pos=2),
+        # **jet_hists(coll="JetGoodBTagOrder", pos=3),
+        # **parton_hists(coll="PartonMatched", pos=0),
+        # **parton_hists(coll="PartonMatched", pos=1),
+        # **parton_hists(coll="PartonMatched", pos=2),
+        # **parton_hists(coll="PartonMatched", pos=3),
         **parton_hists(coll="PartonMatched"),
-        **parton_hists(coll="JetGoodBtagOrderedMatched", pos=0),
-        **parton_hists(coll="JetGoodBtagOrderedMatched", pos=1),
-        **parton_hists(coll="JetGoodBtagOrderedMatched", pos=2),
-        **parton_hists(coll="JetGoodBtagOrderedMatched", pos=3),
-        **parton_hists(coll="JetGoodBtagOrderedMatched"),
-
-
+        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=0),
+        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=1),
+        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=2),
+        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=3),
+        **parton_hists(coll="JetGoodBTagOrderMatched"),
+        # **{
+        #     f"GenHiggs1Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="GenHiggs1Mass",
+        #                 bins=60,
+        #                 start=123,
+        #                 stop=126,
+        #                 label=f"GenHiggs1Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        # **{
+        #     f"GenHiggs2Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="GenHiggs2Mass",
+        #                 bins=60,
+        #                 start=123,
+        #                 stop=126,
+        #                 label=f"GenHiggs2Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        **{
+            f"RecoHiggs1Mass": HistConf(
+                [
+                    Axis(
+                        coll=f"events",
+                        field="RecoHiggs1Mass",
+                        bins=30,
+                        start=60,
+                        stop=200,
+                        label=f"RecoHiggs1Mass",
+                    )
+                ]
+            )
+        },
+        **{
+            f"RecoHiggs2Mass": HistConf(
+                [
+                    Axis(
+                        coll=f"events",
+                        field="RecoHiggs2Mass",
+                        bins=30,
+                        start=60,
+                        stop=200,
+                        label=f"RecoHiggs2Mass",
+                    )
+                ]
+            )
+        },
+        **{
+            f"PNetRegRecoHiggs1Mass": HistConf(
+                [
+                    Axis(
+                        coll=f"events",
+                        field="PNetRegRecoHiggs1Mass",
+                        bins=30,
+                        start=60,
+                        stop=200,
+                        label=f"PNetRegRecoHiggs1Mass",
+                    )
+                ]
+            )
+        },
+        **{
+            f"PNetRegRecoHiggs2Mass": HistConf(
+                [
+                    Axis(
+                        coll=f"events",
+                        field="PNetRegRecoHiggs2Mass",
+                        bins=30,
+                        start=60,
+                        stop=200,
+                        label=f"PNetRegRecoHiggs2Mass",
+                    )
+                ]
+            )
+        },
+        # **{
+        #     f"AllGenHiggs1Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="AllGenHiggs1Mass",
+        #                 bins=80,
+        #                 start=120,
+        #                 stop=130,
+        #                 label=f"AllGenHiggs1Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        # **{
+        #     f"AllGenHiggs2Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="AllGenHiggs2Mass",
+        #                 bins=80,
+        #                 start=120,
+        #                 stop=130,
+        #                 label=f"AllGenHiggs2Mass",
+        #             )
+        #         ]
+        #     )
+        # },
     },
-    columns={"common": {
-        "inclusive": [
-            ColOut("PartonMatched", ["provenance", "pdgId", "dRMatchedJet", "genPartIdxMother", "pt", "eta", "phi"]),
-            ColOut("JetGoodBtagOrderedMatched", ["provenance", "pdgId", "dRMatchedJet", "pt", "eta", "phi", "btagPNetB"]),
+    columns={
+        "common": {
+            "inclusive": [
+                # ColOut("PartonMatched", ["provenance", "pdgId", "dRMatchedJet", "genPartIdxMother", "pt", "eta", "phi"]),
+                # ColOut("JetGoodBTagOrderMatched", ["provenance", "pdgId", "dRMatchedJet", "pt", "eta", "phi", "btagPNetB"]),
+                # ColOut("JetGoodBTagOrder", ["pt", "eta", "phi", "btagPNetB"]),
+                # ColOut("JetGood", ["pt", "eta", "phi", "btagPNetB"]),
+                # ColOut("JetGoodPtOrder", ["pt", "eta", "phi", "btagPNetB"]),
+                ColOut(
+                    "events",
+                    [
+                        "GenHiggs1Mass",
+                        "GenHiggs2Mass",
+                        "RecoHiggs1Mass",
+                        "RecoHiggs2Mass",
+                        "PNetRegRecoHiggs1Mass",
+                        "PNetRegRecoHiggs2Mass",
+                        "PNetRegNeutrinoRecoHiggs1Mass",
+                        "PNetRegNeutrinoRecoHiggs2Mass",
+                        "GenHiggs1Pt",
+                        "GenHiggs2Pt",
+                        "RecoHiggs1Pt",
+                        "RecoHiggs2Pt",
+                        "PNetRegRecoHiggs1Pt",
+                        "PNetRegRecoHiggs2Pt",
+                        "PNetRegNeutrinoRecoHiggs1Pt",
+                        "PNetRegNeutrinoRecoHiggs2Pt",
 
-        ],
-        }, "bysample": {}},
+                    ],
+                ),
+            ],
+        },
+        "bysample": {},
+    },
 )
 
 run_options = {

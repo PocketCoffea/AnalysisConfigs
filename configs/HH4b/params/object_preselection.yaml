@@ -12,7 +12,7 @@ object_preselection:
   Electron:
     pt: 15
     eta: 2.4
-    id: Electron_mvaIso_WP80 #TODO mvaIso_WPL iso / no iso # loose not in nanoaodv12
+    id: mvaIso_WP80 #TODO mvaIso_WPL iso / no iso # loose not in nanoaodv12
     iso: 0.15 # 0.3? #DeltaR=0.3
     dxy_barrel: 0.05
     dz_barrel: 0.1
