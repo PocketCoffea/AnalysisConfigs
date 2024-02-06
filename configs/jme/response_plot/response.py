@@ -145,6 +145,7 @@ if not args.full:
 
 plot_2d_dir = f"{main_dir}/2d_plots"
 os.makedirs(f"{plot_2d_dir}", exist_ok=True)
+os.makedirs(f"{plot_2d_dir.replace('/pnfs/psi.ch/cms/trivcat/store/user/mmalucch//out_jme/', '')}", exist_ok=True)
 print("plot_2d_dir", plot_2d_dir)
 
 
@@ -327,9 +328,11 @@ else:
                                 # print("categories", categories)
 
                                 # remove the baseline category
-                                categories.remove(
-                                    "baseline"
-                                ) if "baseline" in categories else None
+                                (
+                                    categories.remove("baseline")
+                                    if "baseline" in categories
+                                    else None
+                                )
 
                                 # order the categories so that the ranges in eta are increasing
                                 categories = sorted(
@@ -494,15 +497,15 @@ else:
                         medians_dict[eta_sign][flav_group][flav][variable] = np.array(
                             medians_dict[eta_sign][flav_group][flav][variable]
                         )
-                        err_medians_dict[eta_sign][flav_group][flav][
-                            variable
-                        ] = np.array(
-                            err_medians_dict[eta_sign][flav_group][flav][variable]
+                        err_medians_dict[eta_sign][flav_group][flav][variable] = (
+                            np.array(
+                                err_medians_dict[eta_sign][flav_group][flav][variable]
+                            )
                         )
-                        resolutions_dict[eta_sign][flav_group][flav][
-                            variable
-                        ] = np.array(
-                            resolutions_dict[eta_sign][flav_group][flav][variable]
+                        resolutions_dict[eta_sign][flav_group][flav][variable] = (
+                            np.array(
+                                resolutions_dict[eta_sign][flav_group][flav][variable]
+                            )
                         )
 
         if not args.full:
@@ -659,9 +662,9 @@ def plot_median_resolution(i, plot_type):
                 ax.errorbar(
                     pt_bins[1:],
                     plot_array[index, :],
-                    yerr=err_plot_array[index, :]
-                    if err_plot_array is not None
-                    else None,
+                    yerr=(
+                        err_plot_array[index, :] if err_plot_array is not None else None
+                    ),
                     label=f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
                     marker=flavs[flav_group][j],
                     color=variables_colors[variable],
@@ -725,16 +728,20 @@ def plot_median_resolution(i, plot_type):
         if args.full:
             plots_dir = (
                 [
-                    f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
-                    if args.unbinned
-                    else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
+                    (
+                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
+                    )
                     for flav in flav_group
                 ]
                 if plot_type == "median"
                 else [
-                    f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
-                    if args.unbinned
-                    else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                    (
+                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                    )
                     for flav in flav_group
                 ]
             )
@@ -938,7 +945,7 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
     # print("plot_dict[full]", plot_dict["full"])
     # print(plot_dict["full"][("inclusive",)]["inclusive"].keys())
 
-    for eta_sign in plot_dict.keys(): #["full"]:
+    for eta_sign in plot_dict.keys():  # ["full"]:
         for flav_group in plot_dict[eta_sign].keys():
             # print("plotting median", flav_group, "eta", eta_sign)
 
@@ -946,7 +953,8 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                 for variable in plot_dict[eta_sign][flav_group][flav].keys():
                     if variable not in variables_colors.keys():
                         continue
-                    h_2d = plot_dict[eta_sign][flav_group][flav][variable]
+                    median_2d = plot_dict[eta_sign][flav_group][flav][variable]
+                    median_2d = np.array(median_2d) #-1
 
                     fig, ax = plt.subplots()
                     hep.cms.label(
@@ -968,28 +976,35 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     # )
 
                     # plot 2d
-                    # print(h_2d)
+                    # print(median_2d)
                     # put zeros instead of nan
-                    # h_2d[np.isnan(h_2d)] = 0
-                    # print(h_2d)
-                    len_eta=int((len(correct_eta_bins_2d)-1)/2)
+                    # median_2d[np.isnan(median_2d)] = 0
+                    # print(median_2d)
+                    len_eta = int((len(correct_eta_bins_2d) - 1) / 2)
                     # require pt > 30 and < 1000
-                    mask_pt=(pt_bins_2d >= 30) & (pt_bins_2d <= 3000)
-                    mask_eta=abs(correct_eta_bins_2d[:len_eta+1]) < 4
+                    mask_pt = (pt_bins_2d >= 30) & (pt_bins_2d <= 3000)
+                    mask_eta = abs(correct_eta_bins_2d[: len_eta + 1]) < 4 if eta_sign == "neg" else abs(correct_eta_bins_2d[len_eta:]) < 4
                     # print(pt_bins_2d, len(pt_bins_2d))
                     # print(correct_eta_bins_2d, len(correct_eta_bins_2d))
-                    # print("h2d", h_2d[-1])
-                    pt_bins_2d_cut=pt_bins_2d[mask_pt]
-                    correct_eta_bins_2d_cut=correct_eta_bins_2d[:len_eta+1][mask_eta] if eta_sign == "neg" else correct_eta_bins_2d[len_eta:][mask_eta]
-                    h_2d=h_2d[mask_eta[:-1],:]
-                    # print("h2d0", h_2d[-1], len(h_2d),   len(h_2d[0]))
-                    h_2d=h_2d[:, mask_pt[:-1]][:, :-1]
+                    # print("h2d", median_2d[-1])
+                    pt_bins_2d_cut = pt_bins_2d[mask_pt]
+                    correct_eta_bins_2d_cut = (
+                        correct_eta_bins_2d[: len_eta + 1][mask_eta]
+                        if eta_sign == "neg"
+                        else correct_eta_bins_2d[len_eta:][mask_eta]
+                    )
+                    median_2d = median_2d[mask_eta[:-1], :]
+                    # print("h2d0", median_2d[-1], len(median_2d),   len(median_2d[0]))
+                    median_2d = median_2d[:, mask_pt[:-1]][:, :-1]
+                    if eta_sign == "pos":
+                        median_2d = median_2d[:-1,:]
                     # print(pt_bins_2d, len(pt_bins_2d))
                     # print(correct_eta_bins_2d, len(correct_eta_bins_2d))
-                    # print("h2d1", h_2d[-1], len(h_2d),   len(h_2d[0]))
-                    c=plt.pcolormesh(
-                        pt_bins_2d_cut, correct_eta_bins_2d_cut,
-                        h_2d,
+                    # print("h2d1", median_2d[-1], len(median_2d),   len(median_2d[0]))
+                    c = plt.pcolormesh(
+                        pt_bins_2d_cut,
+                        correct_eta_bins_2d_cut,
+                        median_2d,
                         cmap="viridis",
                         # norm=LogNorm(vmin=0.0001, vmax=1),
                         # vmin=0.95,
@@ -1000,7 +1015,7 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     ax.text(
                         0.98,
                         0.8 if eta_sign == "pos" else 0.2,
-                        f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
+                        f"Median (response)\n{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
                         horizontalalignment="right",
                         verticalalignment="top",
                         transform=ax.transAxes,

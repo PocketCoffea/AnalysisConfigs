@@ -14,6 +14,14 @@ class HH4bPartonMatchingProcessor(BaseProcessorABC):
 
     def apply_object_preselection(self, variation):
         # super().apply_object_preselection(variation=variation)
+        self.events["Jet"] = ak.with_field(
+            self.events.Jet,
+            self.events.Jet.pt
+            * (1 - self.events.Jet.rawFactor)
+            * self.events.Jet.PNetRegPtRawCorr
+            * self.events.Jet.PNetRegPtRawCorrNeutrino,
+            "ptPnetRegNeutrino",
+        )
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
@@ -24,8 +32,9 @@ class HH4bPartonMatchingProcessor(BaseProcessorABC):
             ak.argsort(self.events.JetGood.btagPNetB, axis=1, ascending=False)
         ]
         self.events["JetGoodBTagOrder"] = self.events.JetGood[:, : self.max_num_jets]
+
         self.events["JetGoodPtOrder"] = self.events.JetGoodBTagOrder[
-            ak.argsort(self.events.JetGoodBTagOrder.pt, axis=1, ascending=False)
+            ak.argsort(self.events.JetGoodBTagOrder.ptPnetRegNeutrino, axis=1, ascending=False)
         ]
 
     # def define_common_variables_before_presel(self, variation):
@@ -39,11 +48,13 @@ class HH4bPartonMatchingProcessor(BaseProcessorABC):
             & self.events.GenPart.hasFlags(["isLastCopy"])
         ]
         higgs = higgs[ak.num(higgs.childrenIdxG, axis=2) == 2]
-        bquarks = ak.flatten(higgs.children, axis=2)
         #print("pt", higgs.pt[:5])
         #print(bquarks.genPartIdxMother)
         higgs=higgs[ak.argsort(higgs.pt,ascending=False)]
         bquarks = ak.flatten(higgs.children, axis=2)
+
+        #TODO: loop over the children of the bquarks until we find the last copy
+
         #print("pt", higgs.pt[:5])
         #print(bquarks.genPartIdxMother)
 

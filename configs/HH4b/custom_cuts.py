@@ -5,11 +5,34 @@ import awkward as ak
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
 
-hh4b_presel = Cut(
-    name="hh4b",
+lepton_veto_presel = Cut(
+    name="lepton_veto",
+    params={},
+    function=cuts_f.lepton_veto,
+)
+
+four_jet_presel = Cut(
+    name="four_jet",
     params={
         "njet": 4,
-        # "nbjet": 3,
+    },
+    function=cuts_f.four_jet,
+)
+jet_pt_presel = Cut(
+    name="jet_pt_sel",
+    params={
+        "njet": 4,
+        "pt_jet0": 80,
+        "pt_jet1": 60,
+        "pt_jet2": 45,
+        "pt_jet3": 40,
+    },
+    function=cuts_f.jet_pt,
+)
+jet_btag_presel = Cut(
+    name="jet_btag_sel",
+    params={
+        "njet": 4,
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
@@ -18,11 +41,25 @@ hh4b_presel = Cut(
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
     },
-    function=cuts_f.hh4b,
+    function=cuts_f.jet_btag,
+)
+jet_btag_loose_presel = Cut(
+    name="jet_btag_sel",
+    params={
+        "njet": 4,
+        "pt_jet0": 80,
+        "pt_jet1": 60,
+        "pt_jet2": 45,
+        "pt_jet3": 40,
+        "mean_pnet_jet": 0.65,
+        "third_pnet_jet": 0.2605,
+        "fourth_pnet_jet": 0.2605,
+    },
+    function=cuts_f.jet_btag_loose,
 )
 
-hh4b_parton_matching = Cut(
-    name="hh4b_base",
+hh4b_presel = Cut(
+    name="hh4b",
     params={
         "njet": 4,
         # "nbjet": 3,
@@ -61,10 +98,15 @@ def lepton_selection(events, lepton_flavour, params):
         # etaSC = abs(leptons.deltaEtaSC + leptons.eta)
         # passes_SC = np.invert((etaSC >= 1.4442) & (etaSC <= 1.5660))
         passes_iso = leptons.pfRelIso03_all < cuts["iso"]
-        passes_id = leptons[cuts["id"]] == True #TODO: check if this is correct
+        passes_id = leptons[cuts["id"]] == True  # TODO: check if this is correct
 
         good_leptons = (
-            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz   & passes_id #TODO: check if this is correct
+            passes_eta
+            & passes_pt
+            & passes_iso
+            & passes_dxy
+            & passes_dz
+            & passes_id  # TODO: check if this is correct
         )
         # & passes_SC
 
@@ -74,7 +116,7 @@ def lepton_selection(events, lepton_flavour, params):
         passes_id = leptons[cuts["id"]] == True
 
         good_leptons = (
-            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz  & passes_id
+            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz & passes_id
         )
 
     return leptons[good_leptons]
@@ -86,7 +128,8 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
     mask_presel = (
-        (jets.pt > cuts["pt"])
+        (jets.ptPnetRegNeutrino > cuts["pt"])  # TODO: use pnet regressed pt
+        # (jets.pt > cuts["pt"])
         & (np.abs(jets.eta) < cuts["eta"])
         & (jets.jetId >= cuts["jetId"])
     )

@@ -32,7 +32,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 # adding object preselection
-year = "2018" #TODO: change year to 2022
+year = "2018"  # TODO: change year to 2022
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -64,10 +64,22 @@ cfg = Configurator(
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
-    preselections=[hh4b_presel],
+    preselections=[
+        # lepton_veto_presel,
+        # four_jet_presel,
+        # jet_pt_presel,
+        # jet_btag_presel,
+        # hh4b_presel,
+    ],
     categories={
-        # "baseline": [passthrough],
-        "hh4b_parton_matching": [get_nObj_eq(4, coll="PartonMatched")],
+        "lepton_veto": [lepton_veto_presel],
+        "four_jet": [four_jet_presel],
+        "jet_pt": [jet_pt_presel],
+        "jet_btag": [jet_btag_presel],
+        "jet_pt_copy": [jet_pt_presel],
+        "jet_btag_loose": [jet_btag_loose_presel],
+        "baseline": [jet_btag_presel],
+        "full_parton_matching": [jet_btag_presel, get_nObj_eq(4, coll="PartonMatched")],
     },
     weights={
         "common": {
@@ -113,33 +125,33 @@ cfg = Configurator(
         }
     },
     variables={
-        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        # **count_hist(coll="JetGoodBTagOrder", bins=10, start=0, stop=10),
-        # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
-        # **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
-        # **count_hist(coll="JetGoodBTagOrderMatched", bins=10, start=0, stop=10),
-        # **count_hist(coll="PartonMatched", bins=10, start=0, stop=10),
-        # **jet_hists(coll="JetGood", pos=0),
-        # **jet_hists(coll="JetGood", pos=1),
-        # **jet_hists(coll="JetGood", pos=2),
-        # **jet_hists(coll="JetGood", pos=3),
-        # **jet_hists(coll="JetGoodPtOrder", pos=0),
-        # **jet_hists(coll="JetGoodPtOrder", pos=1),
-        # **jet_hists(coll="JetGoodPtOrder", pos=2),
-        # **jet_hists(coll="JetGoodPtOrder", pos=3),
-        # **jet_hists(coll="JetGoodBTagOrder", pos=0),
-        # **jet_hists(coll="JetGoodBTagOrder", pos=1),
-        # **jet_hists(coll="JetGoodBTagOrder", pos=2),
-        # **jet_hists(coll="JetGoodBTagOrder", pos=3),
-        # **parton_hists(coll="PartonMatched", pos=0),
-        # **parton_hists(coll="PartonMatched", pos=1),
-        # **parton_hists(coll="PartonMatched", pos=2),
-        # **parton_hists(coll="PartonMatched", pos=3),
+        **count_hist(coll="JetGood", bins=10, start=0, stop=10),
+        **count_hist(coll="JetGoodBTagOrder", bins=10, start=0, stop=10),
+        **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
+        **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
+        **count_hist(coll="JetGoodBTagOrderMatched", bins=10, start=0, stop=10),
+        **count_hist(coll="PartonMatched", bins=10, start=0, stop=10),
+        **jet_hists(coll="JetGood", pos=0),
+        **jet_hists(coll="JetGood", pos=1),
+        **jet_hists(coll="JetGood", pos=2),
+        **jet_hists(coll="JetGood", pos=3),
+        **jet_hists(coll="JetGoodPtOrder", pos=0),
+        **jet_hists(coll="JetGoodPtOrder", pos=1),
+        **jet_hists(coll="JetGoodPtOrder", pos=2),
+        **jet_hists(coll="JetGoodPtOrder", pos=3),
+        **jet_hists(coll="JetGoodBTagOrder", pos=0),
+        **jet_hists(coll="JetGoodBTagOrder", pos=1),
+        **jet_hists(coll="JetGoodBTagOrder", pos=2),
+        **jet_hists(coll="JetGoodBTagOrder", pos=3),
+        **parton_hists(coll="PartonMatched", pos=0),
+        **parton_hists(coll="PartonMatched", pos=1),
+        **parton_hists(coll="PartonMatched", pos=2),
+        **parton_hists(coll="PartonMatched", pos=3),
         **parton_hists(coll="PartonMatched"),
-        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=0),
-        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=1),
-        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=2),
-        # **parton_hists(coll="JetGoodBTagOrderMatched", pos=3),
+        **parton_hists(coll="JetGoodBTagOrderMatched", pos=0),
+        **parton_hists(coll="JetGoodBTagOrderMatched", pos=1),
+        **parton_hists(coll="JetGoodBTagOrderMatched", pos=2),
+        **parton_hists(coll="JetGoodBTagOrderMatched", pos=3),
         **parton_hists(coll="JetGoodBTagOrderMatched"),
         # **{
         #     f"GenHiggs1Mass": HistConf(
@@ -257,11 +269,42 @@ cfg = Configurator(
     columns={
         "common": {
             "inclusive": [
-                # ColOut("PartonMatched", ["provenance", "pdgId", "dRMatchedJet", "genPartIdxMother", "pt", "eta", "phi"]),
-                # ColOut("JetGoodBTagOrderMatched", ["provenance", "pdgId", "dRMatchedJet", "pt", "eta", "phi", "btagPNetB"]),
-                # ColOut("JetGoodBTagOrder", ["pt", "eta", "phi", "btagPNetB"]),
-                # ColOut("JetGood", ["pt", "eta", "phi", "btagPNetB"]),
-                # ColOut("JetGoodPtOrder", ["pt", "eta", "phi", "btagPNetB"]),
+                ColOut(
+                    "PartonMatched",
+                    [
+                        "provenance",
+                        "pdgId",
+                        "dRMatchedJet",
+                        "genPartIdxMother",
+                        "pt",
+                        "eta",
+                        "phi",
+                    ],
+                ),
+                ColOut(
+                    "JetGoodBTagOrderMatched",
+                    [
+                        "provenance",
+                        "pdgId",
+                        "dRMatchedJet",
+                        "pt",
+                        "eta",
+                        "phi",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                    ],
+                ),
+                ColOut(
+                    "JetGoodBTagOrder",
+                    ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"],
+                ),
+                ColOut(
+                    "JetGood", ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"]
+                ),
+                ColOut(
+                    "JetGoodPtOrder",
+                    ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"],
+                ),
                 ColOut(
                     "events",
                     [
@@ -281,7 +324,6 @@ cfg = Configurator(
                         "PNetRegRecoHiggs2Pt",
                         "PNetRegNeutrinoRecoHiggs1Pt",
                         "PNetRegNeutrinoRecoHiggs2Pt",
-
                     ],
                 ),
             ],
