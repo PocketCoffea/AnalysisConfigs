@@ -52,6 +52,7 @@ cfg = Configurator(
         "filter": {
             "samples": [
                 "GluGlutoHHto4B",
+                # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
             ],
             "samples_exclude": [],
@@ -60,7 +61,11 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=HH4bPartonMatchingProcessor,
-    workflow_options={"parton_jet_min_dR": 0.4, "max_num_jets": 4},
+    workflow_options={
+        "parton_jet_min_dR": 0.4,
+        "max_num_jets": 4,
+        "which_bquark": "last",
+    },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
@@ -75,11 +80,16 @@ cfg = Configurator(
         "lepton_veto": [lepton_veto_presel],
         "four_jet": [four_jet_presel],
         "jet_pt": [jet_pt_presel],
-        "jet_btag": [jet_btag_presel],
+        "jet_btag_lead": [jet_btag_lead_presel],
         "jet_pt_copy": [jet_pt_presel],
+        "jet_btag_medium": [jet_btag_medium_presel],
+        "jet_pt_copy2": [jet_pt_presel],
         "jet_btag_loose": [jet_btag_loose_presel],
-        "baseline": [jet_btag_presel],
-        "full_parton_matching": [jet_btag_presel, get_nObj_eq(4, coll="PartonMatched")],
+        "baseline": [jet_btag_lead_presel],
+        "full_parton_matching": [
+            jet_btag_lead_presel,
+            get_nObj_eq(4, coll="PartonMatched"),
+        ],
     },
     weights={
         "common": {
@@ -181,62 +191,62 @@ cfg = Configurator(
         #         ]
         #     )
         # },
-        **{
-            f"RecoHiggs1Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"events",
-                        field="RecoHiggs1Mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=f"RecoHiggs1Mass",
-                    )
-                ]
-            )
-        },
-        **{
-            f"RecoHiggs2Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"events",
-                        field="RecoHiggs2Mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=f"RecoHiggs2Mass",
-                    )
-                ]
-            )
-        },
-        **{
-            f"PNetRegRecoHiggs1Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"events",
-                        field="PNetRegRecoHiggs1Mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=f"PNetRegRecoHiggs1Mass",
-                    )
-                ]
-            )
-        },
-        **{
-            f"PNetRegRecoHiggs2Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"events",
-                        field="PNetRegRecoHiggs2Mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=f"PNetRegRecoHiggs2Mass",
-                    )
-                ]
-            )
-        },
+        # **{
+        #     f"RecoHiggs1Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="RecoHiggs1Mass",
+        #                 bins=30,
+        #                 start=60,
+        #                 stop=200,
+        #                 label=f"RecoHiggs1Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        # **{
+        #     f"RecoHiggs2Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="RecoHiggs2Mass",
+        #                 bins=30,
+        #                 start=60,
+        #                 stop=200,
+        #                 label=f"RecoHiggs2Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        # **{
+        #     f"PNetRegRecoHiggs1Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="PNetRegRecoHiggs1Mass",
+        #                 bins=30,
+        #                 start=60,
+        #                 stop=200,
+        #                 label=f"PNetRegRecoHiggs1Mass",
+        #             )
+        #         ]
+        #     )
+        # },
+        # **{
+        #     f"PNetRegRecoHiggs2Mass": HistConf(
+        #         [
+        #             Axis(
+        #                 coll=f"events",
+        #                 field="PNetRegRecoHiggs2Mass",
+        #                 bins=30,
+        #                 start=60,
+        #                 stop=200,
+        #                 label=f"PNetRegRecoHiggs2Mass",
+        #             )
+        #         ]
+        #     )
+        # },
         # **{
         #     f"AllGenHiggs1Mass": HistConf(
         #         [
@@ -282,6 +292,17 @@ cfg = Configurator(
                     ],
                 ),
                 ColOut(
+                    "Parton",
+                    [
+                        "provenance",
+                        "pdgId",
+                        "genPartIdxMother",
+                        "pt",
+                        "eta",
+                        "phi",
+                    ],
+                ),
+                ColOut(
                     "JetGoodBTagOrderMatched",
                     [
                         "provenance",
@@ -292,18 +313,41 @@ cfg = Configurator(
                         "phi",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
+                        "hadronFlavour",
                     ],
                 ),
                 ColOut(
                     "JetGoodBTagOrder",
-                    ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"],
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "hadronFlavour",
+                    ],
                 ),
                 ColOut(
-                    "JetGood", ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"]
+                    "JetGood",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "hadronFlavour",
+                    ],
                 ),
                 ColOut(
                     "JetGoodPtOrder",
-                    ["pt", "eta", "phi", "btagPNetB", "ptPnetRegNeutrino"],
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "hadronFlavour",
+                    ],
                 ),
                 ColOut(
                     "events",
@@ -340,10 +384,10 @@ run_options = {
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
     "walltime": "00:40:00",
-    "mem_per_worker": "6GB",  # GB
+    "mem_per_worker": "4GB",  # GB
     "disk_per_worker": "1GB",  # GB
     "exclusive": False,
-    "chunk": 400000,
+    "chunk": 400000,  
     "retries": 50,
     "treereduction": 5,
     "adapt": False,

@@ -570,7 +570,8 @@ else:
                             response_dict[eta_sign][flav_group][flav][variable],
                         )
 if args.central:
-    correct_eta_bins = [-5.191, -1.3, 1.3, 5.191]
+    correct_eta_bins = [ -1.3, 1.3]
+    # correct_eta_bins = [-5.191, -1.3, 1.3, 5.191]
 
 print("correct_eta_bins", correct_eta_bins, len(correct_eta_bins))
 
@@ -840,7 +841,7 @@ def plot_histos(eta_pt, response_dir):
 
                 # write axis name in latex
                 ax.set_xlabel(f"Response")
-                ax.set_ylabel(f"Events")
+                ax.set_ylabel(f"Normalized events")
                 # if np.any(values != np.nan) and np.any(values != 0):
                 #     ax.set_ylim(top=1.3 * np.nanmax(values))
 
@@ -1038,11 +1039,12 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     plt.close(fig)
 
 
-print("Plotting 2d median...")
-plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
 
 if args.no_plot:
     sys.exit()
+
+print("Plotting 2d median...")
+plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
 
 print("Plotting medians...")
 with Pool(args.num_processes) as p:

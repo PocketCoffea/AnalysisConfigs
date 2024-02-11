@@ -43,7 +43,7 @@ def jet_pt(events, params, **kwargs):
     return ak.where(ak.is_none(mask), False, mask)
 
 
-def jet_btag(events, params, **kwargs):
+def jet_btag_lead(events, params, **kwargs):
     no_electron = events.nElectronGood == 0
     no_muon = events.nMuonGood == 0
     mask_4jet = events.nJetGood >= params["njet"]
@@ -66,15 +66,13 @@ def jet_btag(events, params, **kwargs):
     mask_btag = (
         jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]
     ) / 2 > params["mean_pnet_jet"]
-    #     & (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
 
     mask = mask_pt & mask_btag
 
     return ak.where(ak.is_none(mask), False, mask)
 
 
-def jet_btag_loose(events, params, **kwargs):
+def jet_btag_all(events, params, **kwargs):
     no_electron = events.nElectronGood == 0
     no_muon = events.nMuonGood == 0
     mask_4jet = events.nJetGood >= params["njet"]
@@ -149,7 +147,6 @@ def hh4b(events, params, **kwargs):
     mask_btag = ak.where(ak.is_none(mask_btag), False, mask_btag)
 
     mask = mask_pt & mask_btag
-    # mask = mask_4jet_nolep
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)

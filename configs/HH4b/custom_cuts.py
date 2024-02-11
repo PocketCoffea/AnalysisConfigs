@@ -29,8 +29,20 @@ jet_pt_presel = Cut(
     },
     function=cuts_f.jet_pt,
 )
-jet_btag_presel = Cut(
-    name="jet_btag_sel",
+jet_btag_lead_presel = Cut(
+    name="jet_btag_lead_sel",
+    params={
+        "njet": 4,
+        "pt_jet0": 80,
+        "pt_jet1": 60,
+        "pt_jet2": 45,
+        "pt_jet3": 40,
+        "mean_pnet_jet": 0.65,
+    },
+    function=cuts_f.jet_btag_lead,
+)
+jet_btag_medium_presel = Cut(
+    name="jet_btag_medium_sel",
     params={
         "njet": 4,
         "pt_jet0": 80,
@@ -41,10 +53,10 @@ jet_btag_presel = Cut(
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
     },
-    function=cuts_f.jet_btag,
+    function=cuts_f.jet_btag_all,
 )
 jet_btag_loose_presel = Cut(
-    name="jet_btag_sel",
+    name="jet_btag_loose_sel",
     params={
         "njet": 4,
         "pt_jet0": 80,
@@ -52,10 +64,10 @@ jet_btag_loose_presel = Cut(
         "pt_jet2": 45,
         "pt_jet3": 40,
         "mean_pnet_jet": 0.65,
-        "third_pnet_jet": 0.2605,
-        "fourth_pnet_jet": 0.2605,
+        "third_pnet_jet": 0.0499,
+        "fourth_pnet_jet": 0.0499,
     },
-    function=cuts_f.jet_btag_loose,
+    function=cuts_f.jet_btag_all,
 )
 
 hh4b_presel = Cut(
