@@ -28,7 +28,7 @@ def jet_pt(events, params, **kwargs):
     mask_4jet_nolep = mask_4jet & no_electron & no_muon
 
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
-    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBTagOrder
+    jets_btag_order = events[mask_4jet_nolep_none].JetGoodHiggs
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
@@ -50,7 +50,7 @@ def jet_btag_lead(events, params, **kwargs):
     mask_4jet_nolep = mask_4jet & no_electron & no_muon
 
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
-    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBTagOrder
+    jets_btag_order = events[mask_4jet_nolep_none].JetGoodHiggs
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
@@ -79,7 +79,7 @@ def jet_btag_all(events, params, **kwargs):
     mask_4jet_nolep = mask_4jet & no_electron & no_muon
 
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
-    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBTagOrder
+    jets_btag_order = events[mask_4jet_nolep_none].JetGoodHiggs
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
@@ -115,7 +115,7 @@ def hh4b(events, params, **kwargs):
 
     # convert false to None
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
-    jets_btag_order = events[mask_4jet_nolep_none].JetGoodBTagOrder
+    jets_btag_order = events[mask_4jet_nolep_none].JetGoodHiggs
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
@@ -126,24 +126,16 @@ def hh4b(events, params, **kwargs):
         & (jets_pt_order.ptPnetRegNeutrino[:, 1] > params["pt_jet1"])
         & (jets_pt_order.ptPnetRegNeutrino[:, 2] > params["pt_jet2"])
         & (jets_pt_order.ptPnetRegNeutrino[:, 3] > params["pt_jet3"])
-    )  # TODO: use the pnetRegNeutrino
+    )
     # convert none to false
     mask_pt = ak.where(ak.is_none(mask_pt_none), False, mask_pt_none)
 
-    # mask_btag = (
-    #     (jets_btag_order.btagPNetB[:, 0] > params["fourth_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 1] > params["fourth_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 2] > params["fourth_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
-    # )
-    # mask_btag = (
-    #     ((jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]) / 2 > params["mean_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"])
-    #     & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
-    # )
     mask_btag = (
-        jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]
-    ) / 2 > params["mean_pnet_jet"]
+        ((jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]) / 2 > params["mean_pnet_jet"])
+        & (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"])
+        & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
+    )
+
     mask_btag = ak.where(ak.is_none(mask_btag), False, mask_btag)
 
     mask = mask_pt & mask_btag

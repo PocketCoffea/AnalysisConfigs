@@ -13,7 +13,7 @@ from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 
 import workflow
-from workflow import HH4bPartonMatchingProcessor
+from workflow import HH4bbQuarkMatchingProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -37,7 +37,6 @@ parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
     f"{localdir}/params/triggers.yaml",
-    # f"{localdir}/params/lepton_scale_factors.yaml",
     # f"{localdir}/params/plotting_style.yaml",
     update=True,
 )
@@ -60,11 +59,11 @@ cfg = Configurator(
         },
         "subsamples": {},
     },
-    workflow=HH4bPartonMatchingProcessor,
+    workflow=HH4bbQuarkMatchingProcessor,
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 4,
-        "which_bquark": "last",
+        "which_bquark": "last",  # HERE
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -75,21 +74,22 @@ cfg = Configurator(
         # jet_pt_presel,
         # jet_btag_presel,
         # hh4b_presel,
+        hh4b_presel
     ],
     categories={
-        "lepton_veto": [lepton_veto_presel],
-        "four_jet": [four_jet_presel],
-        "jet_pt": [jet_pt_presel],
-        "jet_btag_lead": [jet_btag_lead_presel],
-        "jet_pt_copy": [jet_pt_presel],
-        "jet_btag_medium": [jet_btag_medium_presel],
-        "jet_pt_copy2": [jet_pt_presel],
-        "jet_btag_loose": [jet_btag_loose_presel],
-        "baseline": [jet_btag_lead_presel],
-        "full_parton_matching": [
-            jet_btag_lead_presel,
-            get_nObj_eq(4, coll="PartonMatched"),
-        ],
+        # "lepton_veto": [lepton_veto_presel],
+        # "four_jet": [four_jet_presel],
+        # "jet_pt": [jet_pt_presel],
+        # "jet_btag_lead": [jet_btag_lead_presel],
+        # "jet_pt_copy": [jet_pt_presel],
+        # "jet_btag_medium": [jet_btag_medium_presel],
+        # "jet_pt_copy2": [jet_pt_presel],
+        # "jet_btag_loose": [jet_btag_loose_presel],
+        "baseline": [passthrough],
+        # "full_parton_matching": [
+        #     jet_btag_medium,
+        #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
+        # ],
     },
     weights={
         "common": {
@@ -97,15 +97,6 @@ cfg = Configurator(
                 "genWeight",
                 "lumi",
                 "XS",
-                # "pileup",
-                # "sf_ele_reco",
-                # "sf_ele_id",
-                # "sf_ele_trigger",
-                # "sf_mu_id",
-                # "sf_mu_iso",
-                # "sf_mu_trigger",
-                # "sf_btag",  # "sf_btag_calib",
-                # "sf_jet_puId",
             ],
             "bycategory": {},
         },
@@ -115,54 +106,54 @@ cfg = Configurator(
         "weights": {
             "common": {
                 "inclusive": [
-                    # "pileup",
-                    # "sf_ele_reco",
-                    # "sf_ele_id",
-                    # "sf_mu_id",
-                    # "sf_mu_iso",
-                    # "sf_mu_trigger",
-                    # "sf_jet_puId",
-                ],  # + [ f"sf_btag_{b}" for b in parameters["systematic_variations"]["weight_variations"]["sf_btag"][year]],
-                # + [f"sf_ele_trigger_{v}" for v in parameters["systematic_variations"]["weight_variations"]["sf_ele_trigger"][year]],
+                ],
                 "bycategory": {},
             },
             "bysample": {},
-            # },
-            # "shape": {
-            #     "common":{
-            #         "inclusive": [ "JES_Total", "JER" ]
-            #     }
+
         }
     },
     variables={
-        **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        **count_hist(coll="JetGoodBTagOrder", bins=10, start=0, stop=10),
-        **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
-        **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
-        **count_hist(coll="JetGoodBTagOrderMatched", bins=10, start=0, stop=10),
-        **count_hist(coll="PartonMatched", bins=10, start=0, stop=10),
-        **jet_hists(coll="JetGood", pos=0),
-        **jet_hists(coll="JetGood", pos=1),
-        **jet_hists(coll="JetGood", pos=2),
-        **jet_hists(coll="JetGood", pos=3),
-        **jet_hists(coll="JetGoodPtOrder", pos=0),
-        **jet_hists(coll="JetGoodPtOrder", pos=1),
-        **jet_hists(coll="JetGoodPtOrder", pos=2),
-        **jet_hists(coll="JetGoodPtOrder", pos=3),
-        **jet_hists(coll="JetGoodBTagOrder", pos=0),
-        **jet_hists(coll="JetGoodBTagOrder", pos=1),
-        **jet_hists(coll="JetGoodBTagOrder", pos=2),
-        **jet_hists(coll="JetGoodBTagOrder", pos=3),
-        **parton_hists(coll="PartonMatched", pos=0),
-        **parton_hists(coll="PartonMatched", pos=1),
-        **parton_hists(coll="PartonMatched", pos=2),
-        **parton_hists(coll="PartonMatched", pos=3),
-        **parton_hists(coll="PartonMatched"),
-        **parton_hists(coll="JetGoodBTagOrderMatched", pos=0),
-        **parton_hists(coll="JetGoodBTagOrderMatched", pos=1),
-        **parton_hists(coll="JetGoodBTagOrderMatched", pos=2),
-        **parton_hists(coll="JetGoodBTagOrderMatched", pos=3),
-        **parton_hists(coll="JetGoodBTagOrderMatched"),
+        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
+        # **count_hist(coll="JetGoodHiggs", bins=10, start=0, stop=10),
+        # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
+        # **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
+        # **count_hist(coll="JetGoodHiggsMatched", bins=10, start=0, stop=10),
+        # **count_hist(coll="bQuarkHiggsMatched", bins=10, start=0, stop=10),
+        # **count_hist(coll="JetGoodMatched", bins=10, start=0, stop=10),
+        # **count_hist(coll="bQuarkMatched", bins=10, start=0, stop=10),
+        # **jet_hists(coll="JetGood", pos=0),
+        # **jet_hists(coll="JetGood", pos=1),
+        # **jet_hists(coll="JetGood", pos=2),
+        # **jet_hists(coll="JetGood", pos=3),
+        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=0),
+        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=1),
+        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=2),
+        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=3),
+        # **jet_hists(coll="JetGoodHiggs", pos=0),
+        # **jet_hists(coll="JetGoodHiggs", pos=1),
+        # **jet_hists(coll="JetGoodHiggs", pos=2),
+        # **jet_hists(coll="JetGoodHiggs", pos=3),
+        # **parton_hists(coll="bQuarkHiggsMatched", pos=0),
+        # **parton_hists(coll="bQuarkHiggsMatched", pos=1),
+        # **parton_hists(coll="bQuarkHiggsMatched", pos=2),
+        # **parton_hists(coll="bQuarkHiggsMatched", pos=3),
+        # **parton_hists(coll="bQuarkHiggsMatched"),
+        # **parton_hists(coll="JetGoodHiggsMatched", pos=0),
+        # **parton_hists(coll="JetGoodHiggsMatched", pos=1),
+        # **parton_hists(coll="JetGoodHiggsMatched", pos=2),
+        # **parton_hists(coll="JetGoodHiggsMatched", pos=3),
+        # **parton_hists(coll="JetGoodHiggsMatched"),
+        # **parton_hists(coll="bQuarkMatched", pos=0),
+        # **parton_hists(coll="bQuarkMatched", pos=1),
+        # **parton_hists(coll="bQuarkMatched", pos=2),
+        # **parton_hists(coll="bQuarkMatched", pos=3),
+        # **parton_hists(coll="bQuarkMatched"),
+        # **parton_hists(coll="JetGoodMatched", pos=0),
+        # **parton_hists(coll="JetGoodMatched", pos=1),
+        # **parton_hists(coll="JetGoodMatched", pos=2),
+        # **parton_hists(coll="JetGoodMatched", pos=3),
+        # **parton_hists(coll="JetGoodMatched"),
         # **{
         #     f"GenHiggs1Mass": HistConf(
         #         [
@@ -280,7 +271,7 @@ cfg = Configurator(
         "common": {
             "inclusive": [
                 ColOut(
-                    "PartonMatched",
+                    "bQuarkHiggsMatched",
                     [
                         "provenance",
                         "pdgId",
@@ -292,7 +283,19 @@ cfg = Configurator(
                     ],
                 ),
                 ColOut(
-                    "Parton",
+                    "bQuarkMatched",
+                    [
+                        "provenance",
+                        "pdgId",
+                        "dRMatchedJet",
+                        "genPartIdxMother",
+                        "pt",
+                        "eta",
+                        "phi",
+                    ],
+                ),
+                ColOut(
+                    "bQuark",
                     [
                         "provenance",
                         "pdgId",
@@ -303,7 +306,7 @@ cfg = Configurator(
                     ],
                 ),
                 ColOut(
-                    "JetGoodBTagOrderMatched",
+                    "JetGoodHiggsMatched",
                     [
                         "provenance",
                         "pdgId",
@@ -317,7 +320,21 @@ cfg = Configurator(
                     ],
                 ),
                 ColOut(
-                    "JetGoodBTagOrder",
+                    "JetGoodMatched",
+                    [
+                        "provenance",
+                        "pdgId",
+                        "dRMatchedJet",
+                        "pt",
+                        "eta",
+                        "phi",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "hadronFlavour",
+                    ],
+                ),
+                ColOut(
+                    "JetGoodHiggs",
                     [
                         "pt",
                         "eta",
@@ -338,38 +355,39 @@ cfg = Configurator(
                         "hadronFlavour",
                     ],
                 ),
-                ColOut(
-                    "JetGoodPtOrder",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "btagPNetB",
-                        "ptPnetRegNeutrino",
-                        "hadronFlavour",
-                    ],
-                ),
-                ColOut(
-                    "events",
-                    [
-                        "GenHiggs1Mass",
-                        "GenHiggs2Mass",
-                        "RecoHiggs1Mass",
-                        "RecoHiggs2Mass",
-                        "PNetRegRecoHiggs1Mass",
-                        "PNetRegRecoHiggs2Mass",
-                        "PNetRegNeutrinoRecoHiggs1Mass",
-                        "PNetRegNeutrinoRecoHiggs2Mass",
-                        "GenHiggs1Pt",
-                        "GenHiggs2Pt",
-                        "RecoHiggs1Pt",
-                        "RecoHiggs2Pt",
-                        "PNetRegRecoHiggs1Pt",
-                        "PNetRegRecoHiggs2Pt",
-                        "PNetRegNeutrinoRecoHiggs1Pt",
-                        "PNetRegNeutrinoRecoHiggs2Pt",
-                    ],
-                ),
+
+                # ColOut(
+                #     "JetGoodHiggsPtOrder",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "btagPNetB",
+                #         "ptPnetRegNeutrino",
+                #         "hadronFlavour",
+                #     ],
+                # ),
+                # ColOut(
+                #     "events",
+                #     [
+                #         "GenHiggs1Mass",
+                #         "GenHiggs2Mass",
+                #         "RecoHiggs1Mass",
+                #         "RecoHiggs2Mass",
+                #         "PNetRegRecoHiggs1Mass",
+                #         "PNetRegRecoHiggs2Mass",
+                #         "PNetRegNeutrinoRecoHiggs1Mass",
+                #         "PNetRegNeutrinoRecoHiggs2Mass",
+                #         "GenHiggs1Pt",
+                #         "GenHiggs2Pt",
+                #         "RecoHiggs1Pt",
+                #         "RecoHiggs2Pt",
+                #         "PNetRegRecoHiggs1Pt",
+                #         "PNetRegRecoHiggs2Pt",
+                #         "PNetRegNeutrinoRecoHiggs1Pt",
+                #         "PNetRegNeutrinoRecoHiggs2Pt",
+                #     ],
+                # ),
             ],
         },
         "bysample": {},
@@ -383,11 +401,11 @@ run_options = {
     "scaleout": 200,
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
-    "walltime": "00:40:00",
-    "mem_per_worker": "4GB",  # GB
+    "walltime": "00:20:00",
+    "mem_per_worker": "6GB",  # GB
     "disk_per_worker": "1GB",  # GB
     "exclusive": False,
-    "chunk": 400000,  
+    "chunk":  100000,
     "retries": 50,
     "treereduction": 5,
     "adapt": False,

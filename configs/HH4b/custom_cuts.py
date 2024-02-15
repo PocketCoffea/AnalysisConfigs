@@ -25,7 +25,7 @@ jet_pt_presel = Cut(
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
-        "pt_jet3": 40,
+        "pt_jet3": 35,
     },
     function=cuts_f.jet_pt,
 )
@@ -36,7 +36,7 @@ jet_btag_lead_presel = Cut(
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
-        "pt_jet3": 40,
+        "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
     },
     function=cuts_f.jet_btag_lead,
@@ -48,7 +48,7 @@ jet_btag_medium_presel = Cut(
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
-        "pt_jet3": 40,
+        "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
@@ -62,7 +62,7 @@ jet_btag_loose_presel = Cut(
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
-        "pt_jet3": 40,
+        "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
         "third_pnet_jet": 0.0499,
         "fourth_pnet_jet": 0.0499,
@@ -78,7 +78,7 @@ hh4b_presel = Cut(
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
-        "pt_jet3": 40,
+        "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
@@ -110,15 +110,14 @@ def lepton_selection(events, lepton_flavour, params):
         # etaSC = abs(leptons.deltaEtaSC + leptons.eta)
         # passes_SC = np.invert((etaSC >= 1.4442) & (etaSC <= 1.5660))
         passes_iso = leptons.pfRelIso03_all < cuts["iso"]
-        passes_id = leptons[cuts["id"]] == True  # TODO: check if this is correct
-
+        passes_id = leptons[cuts["id"]] == True
         good_leptons = (
             passes_eta
             & passes_pt
             & passes_iso
             & passes_dxy
             & passes_dz
-            & passes_id  # TODO: check if this is correct
+            & passes_id
         )
         # & passes_SC
 
