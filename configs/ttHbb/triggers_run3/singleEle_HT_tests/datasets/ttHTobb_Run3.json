@@ -1,0 +1,33 @@
+{
+    "ttHTobb_Run3_Run3": {
+        "metadata": {
+            "das_names": "['/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/Run3Winter24NanoAOD-133X_mcRun3_2024_realistic_v8-v2/NANOAODSIM']",
+            "sample": "ttHTobb",
+            "year": "Run3",
+            "isMC": "True",
+            "xsec": "0.2953",
+            "nevents": "2542150",
+            "size": "8337661901"
+        },
+        "files": [
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/180d9113-cf1b-4b6c-a8ba-409ffa0f3628.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/202da5a8-fb21-4192-a666-429322a94188.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/2aca2331-cc2c-4219-8693-4eec5bda05a1.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/3072b68b-1916-4b86-b0b1-9742017605eb.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/36b4fef4-698e-489e-b069-7fe61ef77d2f.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/4420b25a-e257-461b-939d-e58c5d7b7858.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/46531408-799b-4743-9891-c948a8d92bc1.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/487c6af9-06c7-4de9-9510-46d4147bcbd2.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/6abcdc71-0468-458a-b664-542b94c386a3.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/8a2ff9b4-585a-45f1-bd48-47a5217360da.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/943d363d-bb67-4fd3-afe9-9b0826c29a15.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/9cf029b6-74a4-4564-be00-791983131f1d.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/9fc28e6a-cdcb-499b-874c-a45bfb4c59cb.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/a55c7ffc-1a76-4680-989b-f3cb6b945fac.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/aeb64936-5bfc-4573-ba7e-a87f5da2b105.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/af8a83e1-5927-45d1-82ff-00375230ca8e.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/c3052505-be0f-4fe8-9ac7-8a1e1de00ea3.root",
+            "root://storage01.lcg.cscs.ch:1096//pnfs/lcg.cscs.ch/cms/trivcat//store/mc/Run3Winter24NanoAOD/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/133X_mcRun3_2024_realistic_v8-v2/2560000/d5e5b562-3701-4a64-af14-ca9fdf5c3dd2.root"
+        ]
+    }
+}

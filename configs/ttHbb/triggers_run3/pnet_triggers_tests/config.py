@@ -50,7 +50,7 @@ cfg = Configurator(
         "semilep_tripleB": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["TripleBTag"])] ,
         "semilep_doubleB_tighter": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_tighter"])] ,
         "semilep_doubleB_looser": [semilep_lhe, notau,get_nObj_min(1, 20., coll="Lepton"), get_HLTsel(["Jet4_btag2_looser"])],
-        
+  
         "had": [had_lhe  ],
         "had_tripleB": [had_lhe, get_HLTsel(["TripleBTag"])] ,
         "had_doubleB_tighter": [had_lhe, get_HLTsel(["Jet4_btag2_tighter"])] ,
