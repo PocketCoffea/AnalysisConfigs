@@ -1,0 +1,6 @@
+object_preselection:
+  Electron:
+    pt: 15.0
+    eta: 2.4
+    iso: 9999
+    id: mvaIso_WP80
