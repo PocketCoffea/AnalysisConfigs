@@ -66,7 +66,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             while True:
                 #print("\nloop")
                 b_mother = self.events.GenPart[bquarks_first.genPartIdxMother]
-                mask_mother=(abs(b_mother.pdgId) == 5) | (abs(b_mother.pdgId) == 25)
+                mask_mother=(abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
                 #print("mask_mother", mask_mother)
                 bquarks=bquarks[mask_mother]
                 bquarks_first=bquarks_first[mask_mother]
@@ -78,7 +78,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 #         #print("loop", b_mother[k].pdgId, b_mother[k].genPartIdxMother, b_mother[k].pt)
                 #print(abs(b_mother.pdgId) != 25, len(abs(b_mother.pdgId) != 25))
                 #print(b_mother[abs(b_mother.pdgId) != 25].pdgId, len(b_mother[abs(b_mother.pdgId) != 25]))
-                if ak.all(abs(b_mother.pdgId) == 25):
+                if ak.all((b_mother.pdgId) == 25):
                     break
                 bquarks_first = ak.where(abs(b_mother.pdgId) == 5, b_mother, bquarks_first)
                 #print("new: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
@@ -165,8 +165,14 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         matched_jets_higgs = ak.with_field(
             matched_jets_higgs, matched_bquarks_higgs.provenance, "provenance"
         )
+        self.events["JetGoodHiggs"]= ak.with_field(
+            self.events.JetGoodHiggs, matched_bquarks_higgs.provenance, "provenance"
+        )
         matched_jets= ak.with_field(
             matched_jets, matched_bquarks.provenance, "provenance"
+        )
+        self.events["JetGood"]= ak.with_field(
+            self.events.JetGood, matched_bquarks.provenance, "provenance"
         )
         # #print(matched_jets_higgs.provenance)
         # #print(matched_jets_higgs.provenance == 1)
