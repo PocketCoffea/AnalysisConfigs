@@ -75,6 +75,7 @@ cfg = Configurator(
         "semilep_recoele15tight": [get_nObj_min(1, coll="ElectronGood")],
         "semilep_recoele15tight_Ele28" : [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Ele28"])],
         "semilep_recoele15tight_Ele30" : [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Ele30"])],
+        "semilep_recoele15tight_Ele28_or_Ele30" : [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Ele28","Ele30"])],
         "semilep_recoele15tight_Ele32" : [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Ele32"])],
         "semilep_recoele15tight_tripleB_Ele30": [ get_nObj_min(1, coll="ElectronGood"),
                                       get_HLTsel(["TripleBTag","Ele30"])] ,
@@ -85,6 +86,37 @@ cfg = Configurator(
         "semilep_recoele15tight_tripleB": [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["TripleBTag"])] ,
         "semilep_recoele15tight_doubleB_tighter": [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Jet4_btag2_tighter"])] ,
         "semilep_recoele15tight_doubleB_looser": [ get_nObj_min(1, coll="ElectronGood"), get_HLTsel(["Jet4_btag2_looser"])],
+
+        "semilep_recoele25tight": [get_nObj_min(1, 25., coll="ElectronGood")],
+        "semilep_recoele25tight_Ele28" : [ get_nObj_min(1,25., coll="ElectronGood"), get_HLTsel(["Ele28"])],
+        "semilep_recoele25tight_Ele30" : [ get_nObj_min(1, 25.,coll="ElectronGood"), get_HLTsel(["Ele30"])],
+        "semilep_recoele25tight_Ele28_or_Ele30" : [ get_nObj_min(1,25., coll="ElectronGood"), get_HLTsel(["Ele28","Ele30"])],
+        "semilep_recoele25tight_Ele32" : [ get_nObj_min(1,25., coll="ElectronGood"), get_HLTsel(["Ele32"])],
+        "semilep_recoele25tight_tripleB_Ele30": [ get_nObj_min(1, 25.,coll="ElectronGood"),
+                                      get_HLTsel(["TripleBTag","Ele30"])] ,
+        "semilep_recoele25tight_doubleB_tighter_Ele30": [ get_nObj_min(1, 25.,coll="ElectronGood"),
+                                          get_HLTsel(["Jet4_btag2_tighter","Ele30"])] ,
+        "semilep_recoele25tight_doubleB_looser_Ele30": [ get_nObj_min(1, 25.,coll="ElectronGood"),
+                                         get_HLTsel(["Jet4_btag2_looser","Ele30"])],
+        "semilep_recoele25tight_tripleB": [ get_nObj_min(1,25., coll="ElectronGood"), get_HLTsel(["TripleBTag"])] ,
+        "semilep_recoele25tight_doubleB_tighter": [ get_nObj_min(1, 25.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_tighter"])] ,
+        "semilep_recoele25tight_doubleB_looser": [ get_nObj_min(1, 25.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_looser"])],
+
+        "semilep_recoele30tight": [get_nObj_min(1, 30., coll="ElectronGood")],
+        "semilep_recoele30tight_Ele28" : [ get_nObj_min(1,30., coll="ElectronGood"), get_HLTsel(["Ele28"])],
+        "semilep_recoele30tight_Ele30" : [ get_nObj_min(1, 30.,coll="ElectronGood"), get_HLTsel(["Ele30"])],
+        "semilep_recoele30tight_Ele28_or_Ele30" : [ get_nObj_min(1,30., coll="ElectronGood"), get_HLTsel(["Ele28","Ele30"])],
+        "semilep_recoele30tight_Ele32" : [ get_nObj_min(1,30., coll="ElectronGood"), get_HLTsel(["Ele32"])],
+        "semilep_recoele30tight_tripleB_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"),
+                                      get_HLTsel(["TripleBTag","Ele30"])] ,
+        "semilep_recoele30tight_doubleB_tighter_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"),
+                                          get_HLTsel(["Jet4_btag2_tighter","Ele30"])] ,
+        "semilep_recoele30tight_doubleB_looser_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"),
+                                         get_HLTsel(["Jet4_btag2_looser","Ele30"])],
+        "semilep_recoele30tight_tripleB": [ get_nObj_min(1,30., coll="ElectronGood"), get_HLTsel(["TripleBTag"])] ,
+        "semilep_recoele30tight_doubleB_tighter": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_tighter"])] ,
+        "semilep_recoele30tight_doubleB_looser": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_looser"])],
+
     },
     
     weights= {
@@ -136,7 +168,8 @@ cfg = Configurator(
         ]),
         **count_hist(name="nJets", coll="Jets", bins=12, start=2, stop=14),
 
-    }
+    
+    },
 
 )
 
