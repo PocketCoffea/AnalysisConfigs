@@ -61,5 +61,26 @@
                 ]
             }
         ]
+    },
+    "QCD_PT-15to7000_JMENano": {
+        "sample": "QCD_PT-15to7000_JMENano",
+        "json_output": "datasets/QCD.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&ordDirection=1&ordFieldName=cross_section&pageSize=10&searchQuery=process_name%3DQCD_PT-15to7000_TuneCP5_13p6TeV_pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/Run3Summer22NanoAODv12-JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": true,
+                    "xsec": 1438000000.0,
+                    "part": "PT-15to7000_JMENano"
+                },
+                "das_parents_names": [
+                    "QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/Run3Summer22MiniAODv4-130X_mcRun3_2022_realistic_v5-v2/MINIAODSIM"
+                ]
+            }
+        ]
     }
 }

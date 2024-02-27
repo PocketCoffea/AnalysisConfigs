@@ -94,9 +94,9 @@ cfg = Configurator(
     weights={
         "common": {
             "inclusive": ["genWeight", "XS", "lumi", "pileup"],
-            "bycategory": {},
+            # "bycategory": {},
         },
-        "bysample": {},
+        # "bysample": {},
     },
     variations={
         "weights": {
@@ -106,14 +106,25 @@ cfg = Configurator(
             },
             "bysample": {},
         },
+        "shape": {
+            "common": {
+                "inclusive": [],
+                "bycategory": {},
+            },
+            "bysample": {},
+        },
         "norm": {
             "common": {
-                "inclusive": {"luminosity": 1.025, "xsec_sig": [0.97, 1.03]},
-                # "bycategory": {"baseline": {"xsec_sig": 1.005}},
+                "inclusive": {"luminosity": 1.025},
+                "bycategory": {
+                    "baseline": {},
+                },
             },
             "bysample": {
-                # "GluGlutoHHto4B":
-                # {"inclusive": {"luminosity": 1.025}, "bycategory": {"baseline": {"xsec_sig": 1.005}}},
+                "GluGlutoHHto4B": {
+                    # "inclusive": {"xsec_ggHH4b": [0.99, 1.03]},
+                    "bycategory": {"baseline": {"xsec_ggHH4b": [0.99, 1.03]}},
+                },
             },
         },
     },

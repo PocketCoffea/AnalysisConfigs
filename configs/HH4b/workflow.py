@@ -37,63 +37,69 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["JetGoodHiggs"] = self.events.JetGood[:, : self.max_num_jets]
 
         self.events["JetGoodHiggsPtOrder"] = self.events.JetGoodHiggs[
-            ak.argsort(self.events.JetGoodHiggs.ptPnetRegNeutrino, axis=1, ascending=False)
+            ak.argsort(
+                self.events.JetGoodHiggs.ptPnetRegNeutrino, axis=1, ascending=False
+            )
         ]
 
     # def define_common_variables_before_presel(self, variation):
 
     def do_parton_matching(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
-        self.events.GenPart=ak.with_field(self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index")
-        #print("num_events", len(self.events.GenPart))
+        self.events.GenPart = ak.with_field(
+            self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
+        )
+        # print("num_events", len(self.events.GenPart))
         isHiggs = self.events.GenPart.pdgId == 25
         isLast = self.events.GenPart.hasFlags(["isLastCopy"])
         isHard = self.events.GenPart.hasFlags(["fromHardProcess"])
-        higgs = self.events.GenPart[
-            isHiggs & isLast & isHard
-        ]
-
+        higgs = self.events.GenPart[isHiggs & isLast & isHard]
 
         higgs = higgs[ak.num(higgs.childrenIdxG, axis=2) == 2]
 
-        higgs=higgs[ak.argsort(higgs.pt,ascending=False)]
-        num_ev=5
+        higgs = higgs[ak.argsort(higgs.pt, ascending=False)]
+        num_ev = 5
         if which_bquark == "last":
-            isB=abs(self.events.GenPart.pdgId) == 5
+            isB = abs(self.events.GenPart.pdgId) == 5
             bquarks = self.events.GenPart[isB & isLast & isHard]
-            #print("bquarks: ", "pdg", bquarks[:num_ev].pdgId, "mother_idx",bquarks[:num_ev].genPartIdxMother, "pt", bquarks[:num_ev].pt)
+            # print("bquarks: ", "pdg", bquarks[:num_ev].pdgId, "mother_idx",bquarks[:num_ev].genPartIdxMother, "pt", bquarks[:num_ev].pt)
             bquarks_first = bquarks
             while True:
-                #print("\nloop")
+                # print("\nloop")
                 b_mother = self.events.GenPart[bquarks_first.genPartIdxMother]
-                mask_mother=(abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
-                #print("mask_mother", mask_mother)
-                bquarks=bquarks[mask_mother]
-                bquarks_first=bquarks_first[mask_mother]
+                mask_mother = (abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
+                # print("mask_mother", mask_mother)
+                bquarks = bquarks[mask_mother]
+                bquarks_first = bquarks_first[mask_mother]
                 b_mother = b_mother[mask_mother]
-                #print("old: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
-                #print("mother: ", "pdg", b_mother[:num_ev].pdgId, "mother_idx",b_mother[:num_ev].genPartIdxMother, "pt", b_mother[:num_ev].pt)
+                # print("old: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
+                # print("mother: ", "pdg", b_mother[:num_ev].pdgId, "mother_idx",b_mother[:num_ev].genPartIdxMother, "pt", b_mother[:num_ev].pt)
                 # for k in range(len(b_mother)):
                 #     if ak.any((abs(b_mother.pdgId) != 5) & (abs(b_mother.pdgId) != 25)):
                 #         #print("loop", b_mother[k].pdgId, b_mother[k].genPartIdxMother, b_mother[k].pt)
-                #print(abs(b_mother.pdgId) != 25, len(abs(b_mother.pdgId) != 25))
-                #print(b_mother[abs(b_mother.pdgId) != 25].pdgId, len(b_mother[abs(b_mother.pdgId) != 25]))
+                # print(abs(b_mother.pdgId) != 25, len(abs(b_mother.pdgId) != 25))
+                # print(b_mother[abs(b_mother.pdgId) != 25].pdgId, len(b_mother[abs(b_mother.pdgId) != 25]))
                 if ak.all((b_mother.pdgId) == 25):
                     break
-                bquarks_first = ak.where(abs(b_mother.pdgId) == 5, b_mother, bquarks_first)
-                #print("new: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
-            provenance = ak.where(bquarks_first.genPartIdxMother == higgs.index[:,0], 1, 2)
-            #print("provenance", provenance[:num_ev])
+                bquarks_first = ak.where(
+                    abs(b_mother.pdgId) == 5, b_mother, bquarks_first
+                )
+                # print("new: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
+            provenance = ak.where(
+                bquarks_first.genPartIdxMother == higgs.index[:, 0], 1, 2
+            )
+            # print("provenance", provenance[:num_ev])
         elif which_bquark == "first":
             bquarks = ak.flatten(higgs.children, axis=2)
-            provenance = ak.where(bquarks.genPartIdxMother == higgs.index[:,0], 1, 2)
+            provenance = ak.where(bquarks.genPartIdxMother == higgs.index[:, 0], 1, 2)
         else:
-            raise ValueError("which_bquark for the parton matching must be 'first' or 'last'")
+            raise ValueError(
+                "which_bquark for the parton matching must be 'first' or 'last'"
+            )
 
-        #print("\nhiggs", higgs.pt[:num_ev], higgs.index[:num_ev])
-        #print("bquarks", bquarks.pt[:num_ev], bquarks.genPartIdxMother[:num_ev])
-        #print("provenance", provenance[:num_ev])
-
+        # print("\nhiggs", higgs.pt[:num_ev], higgs.index[:num_ev])
+        # print("bquarks", bquarks.pt[:num_ev], bquarks.genPartIdxMother[:num_ev])
+        # print("provenance", provenance[:num_ev])
 
         # #print("pt", higgs.pt[:5])
         # #print(bquarks.genPartIdxMother)
@@ -117,19 +123,21 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # Adding the provenance to the quark object
         bquarks = ak.with_field(bquarks, provenance, "provenance")
         self.events["bQuark"] = bquarks
-        #print(bquarks.provenance[:num_ev])
-        #print(bquarks.pt[:num_ev])
-        #print(bquarks.genPartIdxMother[:num_ev])
+        # print(bquarks.provenance[:num_ev])
+        # print(bquarks.pt[:num_ev])
+        # print(bquarks.genPartIdxMother[:num_ev])
         # #print(len(bquarks.provenance[bquarks.provenance == 1]))
         # #print(len(bquarks.provenance[bquarks.provenance == 2]))
 
         # Calling our general object_matching function.
         # The output is an awkward array with the shape of the second argument and None where there is no matching.
         # So, calling like this, we will get out an array of matched_quarks with the dimension of the JetGood.
-        matched_bquarks_higgs, matched_jets_higgs, deltaR_matched_higgs = object_matching(
-            bquarks,
-            self.events.JetGoodHiggs,
-            dr_min=self.dr_min,
+        matched_bquarks_higgs, matched_jets_higgs, deltaR_matched_higgs = (
+            object_matching(
+                bquarks,
+                self.events.JetGoodHiggs,
+                dr_min=self.dr_min,
+            )
         )
         # matched all jetgood
         matched_bquarks, matched_jets, deltaR_matched = object_matching(
@@ -138,15 +146,13 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             dr_min=self.dr_min,
         )
 
-        #TODO: remove none
+        # TODO: remove none
         # matched_bquarks_higgs = matched_bquarks_higgs[~ak.is_none(matched_bquarks_higgs, axis=1)]
         # matched_jets_higgs = matched_jets_higgs[~ak.is_none(matched_jets_higgs, axis=1)]
         # deltaR_matched_higgs = deltaR_matched_higgs[~ak.is_none(deltaR_matched_higgs, axis=1)]
         # matched_bquarks = matched_bquarks[~ak.is_none(matched_bquarks, axis=1)]
         # matched_jets = matched_jets[~ak.is_none(matched_jets, axis=1)]
         # deltaR_matched = deltaR_matched[~ak.is_none(deltaR_matched, axis=1)]
-
-
 
         # mask and keep only events with exatcly 4 matched b-quarks
         # mask = ak.num(matched_bquarks_higgs, axis=1) == 4
@@ -165,13 +171,13 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         matched_jets_higgs = ak.with_field(
             matched_jets_higgs, matched_bquarks_higgs.provenance, "provenance"
         )
-        self.events["JetGoodHiggs"]= ak.with_field(
+        self.events["JetGoodHiggs"] = ak.with_field(
             self.events.JetGoodHiggs, matched_bquarks_higgs.provenance, "provenance"
         )
-        matched_jets= ak.with_field(
+        matched_jets = ak.with_field(
             matched_jets, matched_bquarks.provenance, "provenance"
         )
-        self.events["JetGood"]= ak.with_field(
+        self.events["JetGood"] = ak.with_field(
             self.events.JetGood, matched_bquarks.provenance, "provenance"
         )
         # #print(matched_jets_higgs.provenance)
@@ -214,23 +220,116 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood, axis=1)
         self.events["nJetGoodHiggs"] = ak.num(self.events.JetGoodHiggs, axis=1)
 
+    def reconstruct_higgs_candidates(self, matched_jets_higgs):
+        # mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+        # mask_num = ak.mask(mask_num, mask_num)
+        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+        # jet_higgs1 = jet_higgs1[mask_num]
+        # jet_higgs2 = jet_higgs2[mask_num]
+        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.pt, "pt")
+        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.pt, "pt")
+        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.eta, "eta")
+        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.eta, "eta")
+        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.phi, "phi")
+        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.phi, "phi")
+        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
+        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
+
+        return reco_higgs1, reco_higgs2
+
+
     def process_extra_after_presel(self, variation) -> ak.Array:
         self.do_parton_matching(which_bquark=self.which_bquark)
+        # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
         self.events["nJetGoodHiggsMatched"] = ak.num(
             self.events.JetGoodHiggsMatched, axis=1
         )
-        self.events["nJetGoodMatched"] = ak.num(
-            self.events.JetGoodMatched, axis=1
-        )
+        self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
         self.events["nbQuarkHiggsMatched"] = ak.num(
             self.events.bQuarkHiggsMatched, axis=1
         )
-        self.events["nbQuarkMatched"] = ak.num(
-            self.events.bQuarkMatched, axis=1
+        self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
+
+        # collection with the pt regressed without neutrino
+        self.events["JetGoodHiggsRegMatched"] = ak.with_field(
+            self.events.JetGoodHiggsMatched,
+            self.events.JetGoodHiggsMatched.pt
+            * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr,
+            "pt",
+        )
+        # collection with the pt regressed with neutrino
+        self.events["JetGoodHiggsRegNeutrinoMatched"] = ak.with_field(
+            self.events.JetGoodHiggsMatched,
+            self.events.JetGoodHiggsMatched.pt
+            * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr
+            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorrNeutrino,
+            "pt",
+        )
+
+        # reconstruct the higgs candidates
+        self.events["RecoHiggs1"], self.events["RecoHiggs2"] = self.reconstruct_higgs_candidates(
+            self.events.JetGoodHiggsMatched
+        )
+
+        # reconstruct the higgs candidates with the pt regressed without neutrino
+        self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = self.reconstruct_higgs_candidates(
+            self.events.JetGoodHiggsRegMatched
+        )
+
+        # reconstruct the higgs candidates with the pt regressed with neutrino
+        self.events["PNetRegNeutrinoRecoHiggs1"], self.events["PNetRegNeutrinoRecoHiggs2"] = self.reconstruct_higgs_candidates(
+            self.events.JetGoodHiggsRegNeutrinoMatched
         )
 
 
-        '''matched_bquarks_higgs = self.events.bQuarkHiggsMatched
+
+        """matched_jets_higgs = self.events.JetGoodHiggsMatched
+        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+        mask_num = ak.mask(mask_num, mask_num)
+        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+        jet_higgs1 = jet_higgs1[mask_num]
+        jet_higgs2 = jet_higgs2[mask_num]
+        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+        self.events["RecoHiggs1"] = ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
+        self.events["RecoHiggs2"] = ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
+
+        # collection with the pt regressed without neutrino
+        matched_jets_higgs = self.events.JetGoodHiggsRegMatched
+        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+        mask_num = ak.mask(mask_num, mask_num)
+        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+        jet_higgs1 = jet_higgs1[mask_num]
+        jet_higgs2 = jet_higgs2[mask_num]
+        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+        self.events["PNetRegRecoHiggs1"] = ak.with_field(
+            reco_higgs1, reco_higgs1.mass, "mass"
+        )
+        self.events["PNetRegRecoHiggs2"] = ak.with_field(
+            reco_higgs2, reco_higgs2.mass, "mass"
+        )
+
+        # collection with the pt regressed with neutrino
+        matched_jets_higgs = self.events.JetGoodHiggsRegNeutrinoMatched
+        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+        mask_num = ak.mask(mask_num, mask_num)
+        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+        jet_higgs1 = jet_higgs1[mask_num]
+        jet_higgs2 = jet_higgs2[mask_num]
+        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+
+
+        matched_bquarks_higgs = self.events.bQuarkHiggsMatched
         matched_jets_higgs = self.events.JetGoodHiggsMatched
 
         #print("\n matched gen")
@@ -439,4 +538,4 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["PNetRegNeutrinoRecoHiggs1Mass"] = reco_higgs1_mass
         self.events["PNetRegNeutrinoRecoHiggs2Mass"] = reco_higgs2_mass
         self.events["PNetRegNeutrinoRecoHiggs1Pt"] = reco_higgs1.pt
-        self.events["PNetRegNeutrinoRecoHiggs2Pt"] = reco_higgs2.pt'''
+        self.events["PNetRegNeutrinoRecoHiggs2Pt"] = reco_higgs2.pt"""

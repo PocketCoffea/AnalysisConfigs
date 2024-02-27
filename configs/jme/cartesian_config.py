@@ -448,9 +448,10 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                "QCD_PT-15to7000_FlatPU"
-                if int(os.environ.get("PNET", 0)) == 1
-                else "QCD_PT-15to7000",
+                "QCD_PT-15to7000_JMENano"
+                # "QCD_PT-15to7000_FlatPU"
+                # if int(os.environ.get("PNET", 0)) == 1
+                # else "QCD_PT-15to7000",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -548,19 +549,19 @@ run_options = {
     "worker_image": "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
     "queue": "standard",
     "walltime": "00:40:00",  # 00:40:00
-    "mem_per_worker": "10GB",  # 4GB
+    "mem_per_worker": "8GB",  # 4GB
     "disk_per_worker": "1GB",
     "exclusive": False,
-    "chunk": 400000,  # 400000
+    "chunk": 100000,  # 400000
     "retries": 50,
     "treereduction": 20,  # 5,
     "adapt": False,
 }
 
 
-# if "dask" in run_options["executor"]:
-#     import cloudpickle
+if "dask" in run_options["executor"]:
+    import cloudpickle
 
-#     cloudpickle.register_pickle_by_value(workflow)
-#     cloudpickle.register_pickle_by_value(custom_cut_functions)
-#     # cloudpickle.register_pickle_by_value(custom_cuts)
+    cloudpickle.register_pickle_by_value(workflow)
+    cloudpickle.register_pickle_by_value(custom_cut_functions)
+    # cloudpickle.register_pickle_by_value(custom_cuts)

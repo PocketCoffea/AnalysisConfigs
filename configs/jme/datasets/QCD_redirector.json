@@ -64,5 +64,33 @@
             "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_Pt-15To7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/FlatPU0to80_castor_130X_mcRun3_2022_realistic_v5-v2/40000/8a94c54e-6e6a-4fa8-9679-e50a5a5c10f0.root",
             "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_Pt-15To7000_TuneCP5_13p6TeV_pythia8/NANOAODSIM/FlatPU0to80_castor_130X_mcRun3_2022_realistic_v5-v2/40000/ce922dcf-d6bc-4696-bde9-7ec358f1dd06.root"
         ]
+    },
+    "QCD_PT-15to7000_JMENano_PT-15to7000_JMENano_2018": {
+        "metadata": {
+            "das_names": "['/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/Run3Summer22NanoAODv12-JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/NANOAODSIM']",
+            "sample": "QCD_PT-15to7000_JMENano",
+            "year": "2018",
+            "isMC": "True",
+            "xsec": "1438000000.0",
+            "part": "PT-15to7000_JMENano",
+            "nevents": "9285964",
+            "size": "36159010610"
+        },
+        "files": [
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/b2e33d39-2d32-4ed2-b2b4-1d2c81d746d9.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/83add58a-5211-45f8-b45e-aab78143d7b2.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/ce866816-375e-4201-ab6a-80a708a4c15c.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/5896d6af-caee-499f-bdbb-9989378145a7.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/ac019af5-de77-41bd-a27e-2c67c7a81235.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/794fe928-0f8f-4fec-87d2-7c3f0c972275.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/dc8f9563-a648-448a-a61d-dc8a692cd023.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/9a9451b1-a3bb-4e90-bb11-1905dde5bb55.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/ed202bca-ce53-42b9-9374-2e6e0112411c.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/a834050b-442c-4554-a899-f3fd9201e8e2.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/cbb0c2ea-cb05-4da1-8e8e-012e42affaeb.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/f7c25b9b-d486-4c12-9ed6-0cfd3afc116f.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/f2b200dd-dfea-4d44-ad16-73cfca0e419d.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22NanoAODv12/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/NANOAODSIM/JMENano12p5_132X_mcRun3_2022_realistic_v3-v2/70000/1a3d12b4-15b7-415c-a25a-df0e81f71648.root"
+        ]
     }
 }

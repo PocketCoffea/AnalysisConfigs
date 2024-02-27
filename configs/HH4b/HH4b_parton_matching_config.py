@@ -355,6 +355,61 @@ cfg = Configurator(
                         "hadronFlavour",
                     ],
                 ),
+                ColOut(
+                    "RecoHiggs1",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+                ColOut(
+                    "RecoHiggs2",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+                ColOut(
+                    "PNetRegRecoHiggs1",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+                ColOut(
+                    "PNetRegRecoHiggs2",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+                ColOut(
+                    "PNetRegNeutrinoRecoHiggs1",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+                ColOut(
+                    "PNetRegNeutrinoRecoHiggs2",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                    ],
+                ),
+
 
                 # ColOut(
                 #     "JetGoodHiggsPtOrder",
