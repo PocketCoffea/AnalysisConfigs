@@ -1,6 +1,7 @@
 scaleout: 300
-chunksize: 200000
-mem-per-worker: "6GB"
+chunksize: 100000
+mem-per-worker: "8GB"
 disk-per-worker: "2GB"
 queue: "standard"
-walltime: "6:00:00"
+walltime: "12:00:00"
+performance-report: True
