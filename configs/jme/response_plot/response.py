@@ -222,6 +222,7 @@ if args.load:
                     resolutions_dict[eta_sign][flav_group][flav][variable] = np.load(
                         f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy"
                     )
+                    # TODO: load inverse median and weighted resolution
                     if args.histograms:
                         response_dict[eta_sign][flav_group][flav][variable] = np.load(
                             f"{response_dir}/response_{eta_sign}_{flav}_{variable}.npy"
@@ -587,6 +588,7 @@ else:
                         f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy",
                         resolutions_dict[eta_sign][flav_group][flav][variable],
                     )
+                    # TODO: save inverse median and weighted resolution
                     if args.histograms:
                         if args.full:
                             response_dir = (
@@ -1151,6 +1153,7 @@ with Pool(args.num_processes) as p:
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
+# TODO: fit inverse median
 
 if args.histograms:
     print("Plotting histograms...")

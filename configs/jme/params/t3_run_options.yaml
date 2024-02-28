@@ -1,0 +1,7 @@
+scaleout: 200
+cores-per-worker: 1
+mem-per-worker: "10GB"
+disk-per-worker: "1GB"
+queue: "standard"
+walltime: "00:40:00"
+chunk: 400000d
