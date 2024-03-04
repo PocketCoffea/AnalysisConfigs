@@ -4,4 +4,4 @@ mem-per-worker: "10GB"
 disk-per-worker: "1GB"
 queue: "standard"
 walltime: "00:40:00"
-chunk: 00000
+chunk: 100000
