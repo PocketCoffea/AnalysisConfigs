@@ -30,16 +30,28 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
+        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
+                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
                   f"{localdir}/datasets/backgrounds_MC_ttbar_local.json"
                   ],
         "filter" : {
-            "samples": ["TTToSemiLeptonic"],
+            "samples": [
+                        "TTToSemiLeptonic"
+                        ],
             "samples_exclude" : [],
-            "year": [#"2017",
-                     "2018"]
+            "year": ["2016_PreVFP",
+                     "2016_PostVFP",
+                     "2017",
+                     "2018"
+                     ] #All the years
         },
         "subsamples": {
+            'TTbbSemiLeptonic' : {
+                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+            },
             'TTToSemiLeptonic' : {
                 'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
                 'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
@@ -52,7 +64,7 @@ cfg = Configurator(
     workflow_options = {"parton_jet_min_dR": 0.3},
     
     skim = [get_nObj_min(4, 15., "Jet"),
-            get_nBtagMin(3, 15., coll="Jet"),
+            get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [semileptonic_presel],
@@ -95,11 +107,11 @@ cfg = Configurator(
                         ),
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "dRMatchedJet"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
                         ),
                         ColOut("LeptonGood",
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
@@ -111,6 +123,22 @@ cfg = Configurator(
             }
         },
         "bysample": {
+            "ttHTobb": {
+                "bycategory": {
+                    "semilep_LHE": [
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                    ]
+                }
+            },
+            "ttHTobb_ttToSemiLep": {
+                "bycategory": {
+                    "semilep_LHE": [
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                    ]
+                }
+            }
         },
     },
 )

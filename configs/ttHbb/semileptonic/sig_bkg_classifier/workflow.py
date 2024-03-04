@@ -50,6 +50,14 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         self.events["deltaPhibb_min"] = ak.min(deltaPhi, axis=1)
         self.events["mbb"] = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
 
+        # Define labels for btagged jets at different working points
+        for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
+            self.events["JetGood"] = ak.with_field(
+                self.events.JetGood,
+                ak.values_astype(self.events.JetGood.btagDeepFlavB > val, int),
+                f"btag_{wp}"
+            )
+
     def do_parton_matching(self) -> ak.Array:
         # Selects quarks at LHE level
         isOutgoing = self.events.LHEPart.status == 1
