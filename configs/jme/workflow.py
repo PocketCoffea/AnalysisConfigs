@@ -109,6 +109,14 @@ class QCDBaseProcessor(BaseProcessorABC):
                 ) = object_matching(
                     self.events["GenJet"][mask_flav], self.events["Jet"], 0.2  # 0.4
                 )
+
+                # TODO: add the energy of the gen neutrinos
+                # match genjet with all the gen neutrinos with DeltaR<0.4
+                # then sum the 4-vecs of all the matched neutrinos an save just the 4-vec of the sum
+                # then recompute the matched jets quadrivector summing the 4-vecs of the genjets and the gen neutrinos
+                # and then do the a new matching with the reco jets
+
+
             # elif flav_dict:
             #     for flav, parton_flavs in flav_dict.items():
             #         self.events[f"GenJet_{flav}"] = genjet_selection_flavsplit(
