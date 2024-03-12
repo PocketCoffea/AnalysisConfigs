@@ -238,6 +238,7 @@ variables_dict = {
         )
         for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
     },
+
     # # plot variables in eta bins and pt bins
     # **{
     #     f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}_{var}": HistConf(
@@ -325,6 +326,22 @@ if int(os.environ.get("PNET", 0)) == 1:
                 )
                 for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
             },
+            **{
+                f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino": HistConf(
+                    [
+                        Axis(
+                            coll=f"MatchedJetsNeutrino{flav}",
+                            field="ResponsePNetRegNeutrino",
+                            bins=100,
+                            start=0,
+                            stop=4,
+                            pos=None,
+                            label=f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino",
+                        )
+                    ]
+                )
+                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            },
             # **{
             #     f"JetMatched_PNetRegPtRawCorr": HistConf(
             #         [
@@ -382,6 +399,28 @@ if int(os.environ.get("PNET", 0)) == 1:
                         ),
                         Axis(
                             coll=f"MatchedJets{flav}",
+                            field="pt",
+                            bins=pt_bins,
+                            label=f"MatchedJets{flav}_pt",
+                            type="variable",
+                            pos=None,
+                        ),
+                    ]
+                )
+                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            },
+            **{
+                f"MatchedJets{flav}_ResponsePNetRegNeutrinoVSpt": HistConf(
+                    [
+                        Axis(
+                            coll=f"MatchedJetsNeutrino{flav}",
+                            field="ResponsePNetRegNeutrino",
+                            bins=response_bins,
+                            pos=None,
+                            label=f"MatchedJets{flav}_ResponsePNetRegNeutrino",
+                        ),
+                        Axis(
+                            coll=f"MatchedJetsNeutrino{flav}",
                             field="pt",
                             bins=pt_bins,
                             label=f"MatchedJets{flav}_pt",

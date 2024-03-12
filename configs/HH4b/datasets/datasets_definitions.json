@@ -60,5 +60,68 @@
                 ]
             }
         ]
+    },
+    "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson": {
+        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": true,
+                    "xsec": 0.06648,
+                    "part": "kl-0p00_kt-1p00_c2-0p00"
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson": {
+        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": true,
+                    "xsec": 0.01252,
+                    "part": "kl-2p45_kt-1p00_c2-0p00"
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson": {
+        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": true,
+                    "xsec": 0.08664,
+                    "part": "kl-5p00_kt-1p00_c2-0p00"
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            }
+        ]
     }
 }

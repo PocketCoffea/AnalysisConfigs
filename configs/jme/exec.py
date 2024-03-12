@@ -1,3 +1,5 @@
+# python exec.py --full -pnet  --test
+
 import subprocess
 import argparse
 from params.binning import eta_bins
@@ -94,14 +96,14 @@ args.central = int(args.central)
 # Define a list of eta bins
 eta_bins = eta_bins if not args.inclusive_eta else None
 
-test = "--test" if args.test else ""
+executor = "--test" if args.test else "-e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml"
 
-dir_prefix = os.environ.get("STORE", "")
-# print("dir_prefix", dir_prefix)
+dir_prefix = os.environ.get("WORK", "") + "/out_jme/"
+print("dir_prefix", dir_prefix)
 
 def run_command(sign, flav, dir_name):
     command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central}" "C-m"'
-    command3 = f'tmux send-keys "time runner.py --cfg cartesian_config.py {test} --full -o {dir_name}" "C-m"'
+    command3 = f'tmux send-keys "time pocket-coffea run --cfg cartesian_config.py {executor} --full -o {dir_name}" "C-m"'
     command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 64" "C-m"'
 
     subprocess.run(command2, shell=True)
@@ -138,7 +140,7 @@ if args.cartesian or args.full:
         for sign in ["-", "+"] if not args.central else [""]:
             for flav in flavs_list:
                 dir_name = (
-                    f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}/{('neg' if sign=='-' else 'pos')if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
+                    f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}{args.dir}/{('neg' if sign=='-' else 'pos')if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
                 )
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
@@ -167,7 +169,7 @@ else:
 
                 comand0 = f"tmux kill-session -t {eta_bin_min}to{eta_bin_max}"
                 command1 = f'tmux new-session -d -s {eta_bin_min}to{eta_bin_max} && tmux send-keys "export ETA_MIN={eta_bin_min}" "C-m" "export ETA_MAX={eta_bin_max}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
-                command2 = f'tmux send-keys "micromamba activate pocket-coffea" "C-m" "time runner.py --cfg jme_config.py  {test} --full -o out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
+                command2 = f'tmux send-keys "micromamba activate pocket-coffea" "C-m" "time pocket-coffea run --cfg jme_config.py  {executor} --full -o out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max}" "C-m"'
                 command3 = f'tmux send-keys "make_plots.py out_separate_eta_bin/eta{eta_bin_min}to{eta_bin_max} --overwrite -j 1" "C-m"'
                 subprocess.run(comand0, shell=True)
                 print(f"killed session {eta_bin_min}to{eta_bin_max}")
@@ -198,7 +200,7 @@ else:
                     else args.dir
                 )
                 command2 = f'tmux send-keys "export ETA_MIN={eta_bin_min} && export ETA_MAX={eta_bin_max} && export PNET={args.pnet}" "C-m" "echo $ETA_MIN" "C-m" "echo $ETA_MAX" "C-m"'
-                command3 = f'tmux send-keys "time runner.py --cfg jme_config.py  {test} --full -o {dir_name}" "C-m"'
+                command3 = f'tmux send-keys "time pocket-coffea run --cfg jme_config.py  {executor} --full -o {dir_name}" "C-m"'
                 # command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 8" "C-m"'
 
                 # os.environ["ETA_MIN"] = f"{eta_bin_min}"
@@ -216,7 +218,7 @@ else:
         print("Running over inclusive eta")
         comand0 = f"tmux kill-session -t inclusive_eta"
         command1 = f"tmux new-session -d -s inclusive_eta"
-        command2 = f'tmux send-keys "micromamba activate pocket-coffea" "C-m" "time runner.py --cfg jme_config.py  {test} --full -o out_inclusive_eta" "C-m"'
+        command2 = f'tmux send-keys "micromamba activate pocket-coffea" "C-m" "time pocket-coffea run --cfg jme_config.py  {executor} --full -o out_inclusive_eta" "C-m"'
         command3 = (
             f'tmux send-keys "make_plots.py out_inclusive_eta --overwrite -j 8" "C-m"'
         )

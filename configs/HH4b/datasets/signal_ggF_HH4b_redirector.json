@@ -166,5 +166,55 @@
             "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2022_realistic_postEE_v6-v1/2810000/079d5966-1036-4de4-b5d6-c24b09022360.root",
             "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2022_realistic_postEE_v6-v1/2810000/8572607c-b610-4f90-bcc4-4ee7f63751ad.root"
         ]
+    },
+    "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson_kl-0p00_kt-1p00_c2-0p00_2018": {
+        "metadata": {
+            "das_names": "['/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+            "sample": "GluGlutoHHto4B_BSM_poisson",
+            "year": "2018",
+            "isMC": "True",
+            "xsec": "0.06648",
+            "part": "kl-0p00_kt-1p00_c2-0p00",
+            "nevents": "96000",
+            "size": "209185698"
+        },
+        "files": [
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/d6fa4680-3295-401b-8043-8663ebbaa606.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/2530000/19936bfe-4a71-4817-a139-9fe14f6a950a.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/2530000/70461209-d93d-4127-afae-bd710a01fa96.root"
+        ]
+    },
+    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson_kl-2p45_kt-1p00_c2-0p00_2018": {
+        "metadata": {
+            "das_names": "['/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+            "sample": "GluGlutoHHto4B_BSM_poisson",
+            "year": "2018",
+            "isMC": "True",
+            "xsec": "0.01252",
+            "part": "kl-2p45_kt-1p00_c2-0p00",
+            "nevents": "75500",
+            "size": "169923027"
+        },
+        "files": [
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/60000/f30782db-d93d-42b7-b4a5-e14d8ee09c56.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/2550000/c47333be-303e-4071-8e85-fbeb8ba01f2f.root"
+        ]
+    },
+    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson_kl-5p00_kt-1p00_c2-0p00_2018": {
+        "metadata": {
+            "das_names": "['/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+            "sample": "GluGlutoHHto4B_BSM_poisson",
+            "year": "2018",
+            "isMC": "True",
+            "xsec": "0.08664",
+            "part": "kl-5p00_kt-1p00_c2-0p00",
+            "nevents": "100000",
+            "size": "201663613"
+        },
+        "files": [
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/8e6d78d6-63a8-41bf-afb9-e5d6a93e6303.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/30000/a59b19b9-8d64-4cb0-99f8-4a1a146cd6aa.root",
+            "root://xrootd-cms.infn.it///store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/0298fd49-3a5b-498b-9678-0a0f92d9d017.root"
+        ]
     }
 }

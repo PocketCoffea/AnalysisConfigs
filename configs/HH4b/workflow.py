@@ -25,6 +25,17 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "ptPnetRegNeutrino",
         )
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
+        self.events["JetGood"] = ak.with_field(
+            self.events.JetGood,
+            np.cos(self.events.JetGood.phi),
+            "cosPhi",
+        )
+        self.events["JetGood"] = ak.with_field(
+            self.events.JetGood,
+            np.sin(self.events.JetGood.phi),
+            "sinPhi",
+        )
+
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
         )
@@ -123,6 +134,11 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # Adding the provenance to the quark object
         bquarks = ak.with_field(bquarks, provenance, "provenance")
         self.events["bQuark"] = bquarks
+        # self.events["bQuark"] = ak.with_field(bquarks, np.cos(bquarks.phi), "cosPhi")
+        # self.events["bQuark"] = ak.with_field(
+        #     self.events.bQuark, np.sin(self.events.bQuark.phi), "sinPhi"
+        # )
+
         # print(bquarks.provenance[:num_ev])
         # print(bquarks.pt[:num_ev])
         # print(bquarks.genPartIdxMother[:num_ev])
@@ -229,17 +245,16 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # jet_higgs2 = jet_higgs2[mask_num]
         reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
         reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.pt, "pt")
-        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.pt, "pt")
-        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.eta, "eta")
-        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.eta, "eta")
-        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.phi, "phi")
-        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.phi, "phi")
-        reco_higgs1=ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
-        reco_higgs2=ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
+        reco_higgs1 = ak.with_field(reco_higgs1, reco_higgs1.pt, "pt")
+        reco_higgs2 = ak.with_field(reco_higgs2, reco_higgs2.pt, "pt")
+        reco_higgs1 = ak.with_field(reco_higgs1, reco_higgs1.eta, "eta")
+        reco_higgs2 = ak.with_field(reco_higgs2, reco_higgs2.eta, "eta")
+        reco_higgs1 = ak.with_field(reco_higgs1, reco_higgs1.phi, "phi")
+        reco_higgs2 = ak.with_field(reco_higgs2, reco_higgs2.phi, "phi")
+        reco_higgs1 = ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
+        reco_higgs2 = ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
 
         return reco_higgs1, reco_higgs2
-
 
     def process_extra_after_presel(self, variation) -> ak.Array:
         self.do_parton_matching(which_bquark=self.which_bquark)
@@ -272,21 +287,22 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         )
 
         # reconstruct the higgs candidates
-        self.events["RecoHiggs1"], self.events["RecoHiggs2"] = self.reconstruct_higgs_candidates(
-            self.events.JetGoodHiggsMatched
+        self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
+            self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
         )
 
         # reconstruct the higgs candidates with the pt regressed without neutrino
-        self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = self.reconstruct_higgs_candidates(
-            self.events.JetGoodHiggsRegMatched
+        self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = (
+            self.reconstruct_higgs_candidates(self.events.JetGoodHiggsRegMatched)
         )
 
         # reconstruct the higgs candidates with the pt regressed with neutrino
-        self.events["PNetRegNeutrinoRecoHiggs1"], self.events["PNetRegNeutrinoRecoHiggs2"] = self.reconstruct_higgs_candidates(
+        (
+            self.events["PNetRegNeutrinoRecoHiggs1"],
+            self.events["PNetRegNeutrinoRecoHiggs2"],
+        ) = self.reconstruct_higgs_candidates(
             self.events.JetGoodHiggsRegNeutrinoMatched
         )
-
-
 
         """matched_jets_higgs = self.events.JetGoodHiggsMatched
         mask_num = ak.count(matched_jets_higgs, axis=1) == 4

@@ -46,11 +46,12 @@ cfg = Configurator(
     datasets={
         "jsons": [
             # f"{localdir}/datasets/DATA_JetMET.json"
-            f"{localdir}/datasets/signal_ggF_HH4b.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
             "samples": [
                 "GluGlutoHHto4B",
+                "GluGlutoHHto4B_BSM_poisson",
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
             ],
@@ -105,12 +106,10 @@ cfg = Configurator(
     variations={
         "weights": {
             "common": {
-                "inclusive": [
-                ],
+                "inclusive": [],
                 "bycategory": {},
             },
             "bysample": {},
-
         }
     },
     variables={
@@ -274,9 +273,7 @@ cfg = Configurator(
                     "bQuarkHiggsMatched",
                     [
                         "provenance",
-                        "pdgId",
                         "dRMatchedJet",
-                        "genPartIdxMother",
                         "pt",
                         "eta",
                         "phi",
@@ -287,9 +284,7 @@ cfg = Configurator(
                     "bQuarkMatched",
                     [
                         "provenance",
-                        "pdgId",
                         "dRMatchedJet",
-                        "genPartIdxMother",
                         "pt",
                         "eta",
                         "phi",
@@ -300,8 +295,6 @@ cfg = Configurator(
                     "bQuark",
                     [
                         "provenance",
-                        "pdgId",
-                        "genPartIdxMother",
                         "pt",
                         "eta",
                         "phi",
@@ -317,6 +310,8 @@ cfg = Configurator(
                         "pt",
                         "eta",
                         "phi",
+                        # "cosPhi",
+                        # "sinPhi",
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
@@ -332,6 +327,8 @@ cfg = Configurator(
                         "pt",
                         "eta",
                         "phi",
+                        # "cosPhi",
+                        # "sinPhi",
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
@@ -344,6 +341,8 @@ cfg = Configurator(
                         "pt",
                         "eta",
                         "phi",
+                        # "cosPhi",
+                        # "sinPhi",
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
@@ -356,6 +355,8 @@ cfg = Configurator(
                         "pt",
                         "eta",
                         "phi",
+                        # "cosPhi",
+                        # "sinPhi",
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
@@ -416,40 +417,6 @@ cfg = Configurator(
                         "mass",
                     ],
                 ),
-
-
-                # ColOut(
-                #     "JetGoodHiggsPtOrder",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "btagPNetB",
-                #         "ptPnetRegNeutrino",
-                #         "hadronFlavour",
-                #     ],
-                # ),
-                # ColOut(
-                #     "events",
-                #     [
-                #         "GenHiggs1Mass",
-                #         "GenHiggs2Mass",
-                #         "RecoHiggs1Mass",
-                #         "RecoHiggs2Mass",
-                #         "PNetRegRecoHiggs1Mass",
-                #         "PNetRegRecoHiggs2Mass",
-                #         "PNetRegNeutrinoRecoHiggs1Mass",
-                #         "PNetRegNeutrinoRecoHiggs2Mass",
-                #         "GenHiggs1Pt",
-                #         "GenHiggs2Pt",
-                #         "RecoHiggs1Pt",
-                #         "RecoHiggs2Pt",
-                #         "PNetRegRecoHiggs1Pt",
-                #         "PNetRegRecoHiggs2Pt",
-                #         "PNetRegNeutrinoRecoHiggs1Pt",
-                #         "PNetRegNeutrinoRecoHiggs2Pt",
-                #     ],
-                # ),
             ],
         },
         "bysample": {},
@@ -467,7 +434,7 @@ run_options = {
     "mem_per_worker": "6GB",  # GB
     "disk_per_worker": "1GB",  # GB
     "exclusive": False,
-    "chunk":  100000,
+    "chunk": 100000,
     "retries": 50,
     "treereduction": 5,
     "adapt": False,
