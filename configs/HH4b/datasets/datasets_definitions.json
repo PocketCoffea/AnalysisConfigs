@@ -62,7 +62,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson": {
-        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "sample": "GluGlutoHHto4B_kl0_poisson",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
         "files": [
@@ -83,7 +83,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson": {
-        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "sample": "GluGlutoHHto4B_kl2p45_poisson",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
         "files": [
@@ -104,7 +104,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson": {
-        "sample": "GluGlutoHHto4B_BSM_poisson",
+        "sample": "GluGlutoHHto4B_kl5_poisson",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
         "files": [

@@ -1,4 +1,4 @@
-scaleout: 200
+scaleout: 20
 cores-per-worker: 1
 mem-per-worker: "6GB"
 disk-per-worker: "1GB"
