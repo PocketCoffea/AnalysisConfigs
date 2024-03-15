@@ -30,9 +30,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
+        "jsons": [
                   f"{localdir}/datasets/backgrounds_MC_ttbar_local.json"
                   ],
         "filter" : {
@@ -122,22 +120,6 @@ cfg = Configurator(
             }
         },
         "bysample": {
-            "ttHTobb": {
-                "bycategory": {
-                    "semilep_LHE": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
-                    ]
-                }
-            },
-            "ttHTobb_ttToSemiLep": {
-                "bycategory": {
-                    "semilep_LHE": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
-                    ]
-                }
-            }
         },
     },
 )
