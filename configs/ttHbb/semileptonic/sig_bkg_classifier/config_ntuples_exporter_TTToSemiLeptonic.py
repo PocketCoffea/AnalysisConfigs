@@ -40,11 +40,9 @@ cfg = Configurator(
                         "TTToSemiLeptonic"
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
-                     "2017",
+            "year": [
                      "2018"
-                     ] #All the years
+                     ]
         },
         "subsamples": {
             'TTbbSemiLeptonic' : {
@@ -61,7 +59,8 @@ cfg = Configurator(
     },
 
     workflow = ttbarBackgroundProcessor,
-    workflow_options = {"parton_jet_min_dR": 0.3},
+    workflow_options = {"parton_jet_min_dR": 0.3,
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/sig_bkg_classifier/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
