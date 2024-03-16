@@ -96,26 +96,45 @@ cfg = Configurator(
                     "semilep_LHE": [
                         ColOut(
                             "Parton",
-                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"]
+                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"],
+                            flatten=False
                         ),
                         ColOut(
                             "PartonMatched",
                             ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGood",
                             ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGoodMatched",
                             ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                            flatten=False
                         ),
-                        ColOut("LeptonGood",
-                               ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
-                               pos_end=1, store_size=False),
-                        ColOut("MET", ["phi","pt","significance"]),
-                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
+                        ColOut(
+                            "LeptonGood",
+                            ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
+                            pos_end=1,
+                            flatten=False
+                        ),
+                        ColOut(
+                            "MET",
+                            ["phi","pt","significance"],
+                            flatten=False
+                        ),
+                        ColOut(
+                            "Generator",
+                            ["x1","x2","id1","id2","xpdf1","xpdf2"],
+                            flatten=False
+                        ),
+                        ColOut(
+                            "LeptonParton",
+                            ["pt","eta","phi","mass","pdgId"],
+                            flatten=False
+                        ),
                     ]
             }
         },
