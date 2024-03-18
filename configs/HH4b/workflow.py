@@ -257,301 +257,302 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         return reco_higgs1, reco_higgs2
 
     def process_extra_after_presel(self, variation) -> ak.Array:
-        self.do_parton_matching(which_bquark=self.which_bquark)
-        # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
-        self.events["nJetGoodHiggsMatched"] = ak.num(
-            self.events.JetGoodHiggsMatched, axis=1
-        )
-        self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
-        self.events["nbQuarkHiggsMatched"] = ak.num(
-            self.events.bQuarkHiggsMatched, axis=1
-        )
-        self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
+        if self._isMC:
+            self.do_parton_matching(which_bquark=self.which_bquark)
+            # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
+            self.events["nJetGoodHiggsMatched"] = ak.num(
+                self.events.JetGoodHiggsMatched, axis=1
+            )
+            self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
+            self.events["nbQuarkHiggsMatched"] = ak.num(
+                self.events.bQuarkHiggsMatched, axis=1
+            )
+            self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
 
-        # collection with the pt regressed without neutrino
-        self.events["JetGoodHiggsRegMatched"] = ak.with_field(
-            self.events.JetGoodHiggsMatched,
-            self.events.JetGoodHiggsMatched.pt
-            * (1 - self.events.JetGoodHiggsMatched.rawFactor)
-            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr,
-            "pt",
-        )
-        # collection with the pt regressed with neutrino
-        self.events["JetGoodHiggsRegNeutrinoMatched"] = ak.with_field(
-            self.events.JetGoodHiggsMatched,
-            self.events.JetGoodHiggsMatched.pt
-            * (1 - self.events.JetGoodHiggsMatched.rawFactor)
-            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr
-            * self.events.JetGoodHiggsMatched.PNetRegPtRawCorrNeutrino,
-            "pt",
-        )
+            # collection with the pt regressed without neutrino
+            self.events["JetGoodHiggsRegMatched"] = ak.with_field(
+                self.events.JetGoodHiggsMatched,
+                self.events.JetGoodHiggsMatched.pt
+                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr,
+                "pt",
+            )
+            # collection with the pt regressed with neutrino
+            self.events["JetGoodHiggsRegNeutrinoMatched"] = ak.with_field(
+                self.events.JetGoodHiggsMatched,
+                self.events.JetGoodHiggsMatched.pt
+                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorrNeutrino,
+                "pt",
+            )
 
-        # reconstruct the higgs candidates
-        self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
-            self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
-        )
+            # reconstruct the higgs candidates
+            self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
+                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
+            )
 
-        # reconstruct the higgs candidates with the pt regressed without neutrino
-        self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = (
-            self.reconstruct_higgs_candidates(self.events.JetGoodHiggsRegMatched)
-        )
+            # reconstruct the higgs candidates with the pt regressed without neutrino
+            self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = (
+                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsRegMatched)
+            )
 
-        # reconstruct the higgs candidates with the pt regressed with neutrino
-        (
-            self.events["PNetRegNeutrinoRecoHiggs1"],
-            self.events["PNetRegNeutrinoRecoHiggs2"],
-        ) = self.reconstruct_higgs_candidates(
-            self.events.JetGoodHiggsRegNeutrinoMatched
-        )
+            # reconstruct the higgs candidates with the pt regressed with neutrino
+            (
+                self.events["PNetRegNeutrinoRecoHiggs1"],
+                self.events["PNetRegNeutrinoRecoHiggs2"],
+            ) = self.reconstruct_higgs_candidates(
+                self.events.JetGoodHiggsRegNeutrinoMatched
+            )
 
-        """matched_jets_higgs = self.events.JetGoodHiggsMatched
-        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
-        mask_num = ak.mask(mask_num, mask_num)
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        self.events["RecoHiggs1"] = ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
-        self.events["RecoHiggs2"] = ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
+            """matched_jets_higgs = self.events.JetGoodHiggsMatched
+            mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+            mask_num = ak.mask(mask_num, mask_num)
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+            self.events["RecoHiggs1"] = ak.with_field(reco_higgs1, reco_higgs1.mass, "mass")
+            self.events["RecoHiggs2"] = ak.with_field(reco_higgs2, reco_higgs2.mass, "mass")
 
-        # collection with the pt regressed without neutrino
-        matched_jets_higgs = self.events.JetGoodHiggsRegMatched
-        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
-        mask_num = ak.mask(mask_num, mask_num)
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        self.events["PNetRegRecoHiggs1"] = ak.with_field(
-            reco_higgs1, reco_higgs1.mass, "mass"
-        )
-        self.events["PNetRegRecoHiggs2"] = ak.with_field(
-            reco_higgs2, reco_higgs2.mass, "mass"
-        )
+            # collection with the pt regressed without neutrino
+            matched_jets_higgs = self.events.JetGoodHiggsRegMatched
+            mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+            mask_num = ak.mask(mask_num, mask_num)
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+            self.events["PNetRegRecoHiggs1"] = ak.with_field(
+                reco_higgs1, reco_higgs1.mass, "mass"
+            )
+            self.events["PNetRegRecoHiggs2"] = ak.with_field(
+                reco_higgs2, reco_higgs2.mass, "mass"
+            )
 
-        # collection with the pt regressed with neutrino
-        matched_jets_higgs = self.events.JetGoodHiggsRegNeutrinoMatched
-        mask_num = ak.count(matched_jets_higgs, axis=1) == 4
-        mask_num = ak.mask(mask_num, mask_num)
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-
-
-        matched_bquarks_higgs = self.events.bQuarkHiggsMatched
-        matched_jets_higgs = self.events.JetGoodHiggsMatched
-
-        #print("\n matched gen")
-        mask_num = ak.num(matched_bquarks_higgs, axis=1) == 4
-        # replasce false with none
-        mask_num = ak.mask(mask_num, mask_num)
-        #print("mask_num", mask_num)
-        #print("matched_bquarks_higgs.provenance == 1", matched_bquarks_higgs.provenance == 1)
-        #print("matched_bquarks_higgs.provenance == 2", matched_bquarks_higgs.provenance == 2)
-        # compute invariant mass of the two b-quarks matched to the Higgs
-        bquark_higgs1 = matched_bquarks_higgs[matched_bquarks_higgs.provenance == 1]
-        bquark_higgs2 = matched_bquarks_higgs[matched_bquarks_higgs.provenance == 2]
-        bquark_higgs1 = bquark_higgs1[mask_num]
-        bquark_higgs2 = bquark_higgs2[mask_num]
-
-        #print(bquark_higgs1[:, 0].provenance)
-        #print(bquark_higgs1[:, 1].provenance)
-        #print(bquark_higgs2[:, 0].provenance)
-        #print(bquark_higgs2[:, 1].provenance)
-        higgs1 = bquark_higgs1[:, 0] + bquark_higgs1[:, 1]
-        higgs2 = bquark_higgs2[:, 0] + bquark_higgs2[:, 1]
+            # collection with the pt regressed with neutrino
+            matched_jets_higgs = self.events.JetGoodHiggsRegNeutrinoMatched
+            mask_num = ak.count(matched_jets_higgs, axis=1) == 4
+            mask_num = ak.mask(mask_num, mask_num)
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
 
 
-        #print("pt", higgs1.pt[:5])
-        #print("pt", higgs2.pt[:5])
-        higgs1_mass = higgs1.mass
-        higgs2_mass = higgs2.mass
-        #print(higgs1_mass)
-        #print(higgs2_mass)
-        self.events["GenHiggs1Mass"] = higgs1_mass
-        self.events["GenHiggs2Mass"] = higgs2_mass
-        self.events["GenHiggs1Pt"] = higgs1.pt
-        self.events["GenHiggs2Pt"] = higgs2.pt
+            matched_bquarks_higgs = self.events.bQuarkHiggsMatched
+            matched_jets_higgs = self.events.JetGoodHiggsMatched
 
-        # compute invariant mass of the two b-jets matched to the Higgs
-        #print("\n jet")
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
-        #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
-        mask_num = ak.num(matched_jets_higgs, axis=1) == 4
-        # replasce false with none
-        mask_num = ak.mask(mask_num, mask_num)
-        #print("mask_num", mask_num)
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        #print(jet_higgs1.px)
-        #print(jet_higgs2.px)
-        #print(jet_higgs1.py)
-        #print(jet_higgs2.py)
-        #print(jet_higgs1.pz)
-        #print(jet_higgs2.pz)
-        #print(jet_higgs1.provenance)
-        #print(jet_higgs2.provenance)
-        #print(jet_higgs1[:, 0].provenance)
-        #print(jet_higgs1[:, 1].provenance)
-        #print(jet_higgs2[:, 0].provenance)
-        #print(jet_higgs2[:, 1].provenance)
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        #print(reco_higgs1.px)
-        #print(reco_higgs2.px)
-        #print(reco_higgs1.py)
-        #print(reco_higgs2.py)
-        #print(reco_higgs1.pz)
-        #print(reco_higgs2.pz)
-        #print(reco_higgs1.energy)
-        #print(reco_higgs2.energy)
+            #print("\n matched gen")
+            mask_num = ak.num(matched_bquarks_higgs, axis=1) == 4
+            # replasce false with none
+            mask_num = ak.mask(mask_num, mask_num)
+            #print("mask_num", mask_num)
+            #print("matched_bquarks_higgs.provenance == 1", matched_bquarks_higgs.provenance == 1)
+            #print("matched_bquarks_higgs.provenance == 2", matched_bquarks_higgs.provenance == 2)
+            # compute invariant mass of the two b-quarks matched to the Higgs
+            bquark_higgs1 = matched_bquarks_higgs[matched_bquarks_higgs.provenance == 1]
+            bquark_higgs2 = matched_bquarks_higgs[matched_bquarks_higgs.provenance == 2]
+            bquark_higgs1 = bquark_higgs1[mask_num]
+            bquark_higgs2 = bquark_higgs2[mask_num]
 
-        reco_higgs1_mass = reco_higgs1.mass
-        reco_higgs2_mass = reco_higgs2.mass
-        #print(reco_higgs1_mass)
-        #print(reco_higgs2_mass)
-        self.events["RecoHiggs1Mass"] = reco_higgs1_mass
-        self.events["RecoHiggs2Mass"] = reco_higgs2_mass
-        self.events["RecoHiggs1Pt"] = reco_higgs1.pt
-        self.events["RecoHiggs2Pt"] = reco_higgs2.pt
-
-        #print("deltaR", matched_bquarks_higgs.dRMatchedJet)
-        #print("deltaR", matched_jets_higgs.dRMatchedJet)
-        #print("deltaEta", matched_bquarks_higgs.eta - matched_jets_higgs.eta)
-        #print("deltaPhi", matched_bquarks_higgs.phi - matched_jets_higgs.phi)
-        #print("deltaPt", matched_bquarks_higgs.pt - matched_jets_higgs.pt)
+            #print(bquark_higgs1[:, 0].provenance)
+            #print(bquark_higgs1[:, 1].provenance)
+            #print(bquark_higgs2[:, 0].provenance)
+            #print(bquark_higgs2[:, 1].provenance)
+            higgs1 = bquark_higgs1[:, 0] + bquark_higgs1[:, 1]
+            higgs2 = bquark_higgs2[:, 0] + bquark_higgs2[:, 1]
 
 
+            #print("pt", higgs1.pt[:5])
+            #print("pt", higgs2.pt[:5])
+            higgs1_mass = higgs1.mass
+            higgs2_mass = higgs2.mass
+            #print(higgs1_mass)
+            #print(higgs2_mass)
+            self.events["GenHiggs1Mass"] = higgs1_mass
+            self.events["GenHiggs2Mass"] = higgs2_mass
+            self.events["GenHiggs1Pt"] = higgs1.pt
+            self.events["GenHiggs2Pt"] = higgs2.pt
 
-        # invaraint mass applying regression to the jets
-        #print("\n reco regressed jet")
-        #print("pt", matched_jets_higgs.pt)
-        #print("px", matched_jets_higgs.px)
-        #print("py", matched_jets_higgs.py)
-        #print("pz", matched_jets_higgs.pz)
-        #print("energy", matched_jets_higgs.energy)
-        matched_jets_higgs = ak.with_field(
-            matched_jets_higgs,
-            matched_jets_higgs.pt
-            * (1 - matched_jets_higgs.rawFactor)
-            * matched_jets_higgs.PNetRegPtRawCorr,
-            "pt",
-        )
+            # compute invariant mass of the two b-jets matched to the Higgs
+            #print("\n jet")
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
+            #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
+            mask_num = ak.num(matched_jets_higgs, axis=1) == 4
+            # replasce false with none
+            mask_num = ak.mask(mask_num, mask_num)
+            #print("mask_num", mask_num)
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            #print(jet_higgs1.px)
+            #print(jet_higgs2.px)
+            #print(jet_higgs1.py)
+            #print(jet_higgs2.py)
+            #print(jet_higgs1.pz)
+            #print(jet_higgs2.pz)
+            #print(jet_higgs1.provenance)
+            #print(jet_higgs2.provenance)
+            #print(jet_higgs1[:, 0].provenance)
+            #print(jet_higgs1[:, 1].provenance)
+            #print(jet_higgs2[:, 0].provenance)
+            #print(jet_higgs2[:, 1].provenance)
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+            #print(reco_higgs1.px)
+            #print(reco_higgs2.px)
+            #print(reco_higgs1.py)
+            #print(reco_higgs2.py)
+            #print(reco_higgs1.pz)
+            #print(reco_higgs2.pz)
+            #print(reco_higgs1.energy)
+            #print(reco_higgs2.energy)
 
-        #print("pt", matched_jets_higgs.pt)
-        #print("px", matched_jets_higgs.px)
-        #print("py", matched_jets_higgs.py)
-        #print("pz", matched_jets_higgs.pz)
-        #print("energy", matched_jets_higgs.energy)
+            reco_higgs1_mass = reco_higgs1.mass
+            reco_higgs2_mass = reco_higgs2.mass
+            #print(reco_higgs1_mass)
+            #print(reco_higgs2_mass)
+            self.events["RecoHiggs1Mass"] = reco_higgs1_mass
+            self.events["RecoHiggs2Mass"] = reco_higgs2_mass
+            self.events["RecoHiggs1Pt"] = reco_higgs1.pt
+            self.events["RecoHiggs2Pt"] = reco_higgs2.pt
 
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
-        #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
-        mask_num = ak.num(matched_jets_higgs, axis=1) == 4
-        # replasce false with none
-        mask_num = ak.mask(mask_num, mask_num)
-        #print("mask_num", mask_num)
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        #print(jet_higgs1.px)
-        #print(jet_higgs2.px)
-        #print(jet_higgs1.py)
-        #print(jet_higgs2.py)
-        #print(jet_higgs1.pz)
-        #print(jet_higgs2.pz)
-        #print(jet_higgs1.provenance)
-        #print(jet_higgs2.provenance)
-        #print(jet_higgs1[:, 0].provenance)
-        #print(jet_higgs1[:, 1].provenance)
-        #print(jet_higgs2[:, 0].provenance)
-        #print(jet_higgs2[:, 1].provenance)
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        #print(reco_higgs1.px)
-        #print(reco_higgs2.px)
-        #print(reco_higgs1.py)
-        #print(reco_higgs2.py)
-        #print(reco_higgs1.pz)
-        #print(reco_higgs2.pz)
-        #print(reco_higgs1.energy)
-        #print(reco_higgs2.energy)
+            #print("deltaR", matched_bquarks_higgs.dRMatchedJet)
+            #print("deltaR", matched_jets_higgs.dRMatchedJet)
+            #print("deltaEta", matched_bquarks_higgs.eta - matched_jets_higgs.eta)
+            #print("deltaPhi", matched_bquarks_higgs.phi - matched_jets_higgs.phi)
+            #print("deltaPt", matched_bquarks_higgs.pt - matched_jets_higgs.pt)
 
-        reco_higgs1_mass = reco_higgs1.mass
-        reco_higgs2_mass = reco_higgs2.mass
-        #print(reco_higgs1_mass)
-        #print(reco_higgs2_mass)
-        self.events["PNetRegRecoHiggs1Mass"] = reco_higgs1_mass
-        self.events["PNetRegRecoHiggs2Mass"] = reco_higgs2_mass
-        self.events["PNetRegRecoHiggs1Pt"] = reco_higgs1.pt
-        self.events["PNetRegRecoHiggs2Pt"] = reco_higgs2.pt
 
-        #print("\n pnet w/ neutrino")
-        matched_jets_higgs = ak.with_field(
-            matched_jets_higgs,
-            matched_jets_higgs.pt*matched_jets_higgs.PNetRegPtRawCorrNeutrino,
-            "pt",
-        )
 
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-        #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
-        #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
-        mask_num = ak.num(matched_jets_higgs, axis=1) == 4
-        # replasce false with none
-        mask_num = ak.mask(mask_num, mask_num)
-        #print("mask_num", mask_num)
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        jet_higgs1 = jet_higgs1[mask_num]
-        jet_higgs2 = jet_higgs2[mask_num]
-        #print("jet_higgs1", jet_higgs1)
-        #print("jet_higgs2", jet_higgs2)
-        #print(jet_higgs1.px)
-        #print(jet_higgs2.px)
-        #print(jet_higgs1.py)
-        #print(jet_higgs2.py)
-        #print(jet_higgs1.pz)
-        #print(jet_higgs2.pz)
-        #print(jet_higgs1.provenance)
-        #print(jet_higgs2.provenance)
-        #print(jet_higgs1[:, 0].provenance)
-        #print(jet_higgs1[:, 1].provenance)
-        #print(jet_higgs2[:, 0].provenance)
-        #print(jet_higgs2[:, 1].provenance)
-        reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-        #print(reco_higgs1.px)
-        #print(reco_higgs2.px)
-        #print(reco_higgs1.py)
-        #print(reco_higgs2.py)
-        #print(reco_higgs1.pz)
-        #print(reco_higgs2.pz)
-        #print(reco_higgs1.energy)
-        #print(reco_higgs2.energy)
+            # invaraint mass applying regression to the jets
+            #print("\n reco regressed jet")
+            #print("pt", matched_jets_higgs.pt)
+            #print("px", matched_jets_higgs.px)
+            #print("py", matched_jets_higgs.py)
+            #print("pz", matched_jets_higgs.pz)
+            #print("energy", matched_jets_higgs.energy)
+            matched_jets_higgs = ak.with_field(
+                matched_jets_higgs,
+                matched_jets_higgs.pt
+                * (1 - matched_jets_higgs.rawFactor)
+                * matched_jets_higgs.PNetRegPtRawCorr,
+                "pt",
+            )
 
-        reco_higgs1_mass = reco_higgs1.mass
-        reco_higgs2_mass = reco_higgs2.mass
-        #print(reco_higgs1_mass)
-        #print(reco_higgs2_mass)
-        self.events["PNetRegNeutrinoRecoHiggs1Mass"] = reco_higgs1_mass
-        self.events["PNetRegNeutrinoRecoHiggs2Mass"] = reco_higgs2_mass
-        self.events["PNetRegNeutrinoRecoHiggs1Pt"] = reco_higgs1.pt
-        self.events["PNetRegNeutrinoRecoHiggs2Pt"] = reco_higgs2.pt"""
+            #print("pt", matched_jets_higgs.pt)
+            #print("px", matched_jets_higgs.px)
+            #print("py", matched_jets_higgs.py)
+            #print("pz", matched_jets_higgs.pz)
+            #print("energy", matched_jets_higgs.energy)
+
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
+            #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
+            mask_num = ak.num(matched_jets_higgs, axis=1) == 4
+            # replasce false with none
+            mask_num = ak.mask(mask_num, mask_num)
+            #print("mask_num", mask_num)
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            #print(jet_higgs1.px)
+            #print(jet_higgs2.px)
+            #print(jet_higgs1.py)
+            #print(jet_higgs2.py)
+            #print(jet_higgs1.pz)
+            #print(jet_higgs2.pz)
+            #print(jet_higgs1.provenance)
+            #print(jet_higgs2.provenance)
+            #print(jet_higgs1[:, 0].provenance)
+            #print(jet_higgs1[:, 1].provenance)
+            #print(jet_higgs2[:, 0].provenance)
+            #print(jet_higgs2[:, 1].provenance)
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+            #print(reco_higgs1.px)
+            #print(reco_higgs2.px)
+            #print(reco_higgs1.py)
+            #print(reco_higgs2.py)
+            #print(reco_higgs1.pz)
+            #print(reco_higgs2.pz)
+            #print(reco_higgs1.energy)
+            #print(reco_higgs2.energy)
+
+            reco_higgs1_mass = reco_higgs1.mass
+            reco_higgs2_mass = reco_higgs2.mass
+            #print(reco_higgs1_mass)
+            #print(reco_higgs2_mass)
+            self.events["PNetRegRecoHiggs1Mass"] = reco_higgs1_mass
+            self.events["PNetRegRecoHiggs2Mass"] = reco_higgs2_mass
+            self.events["PNetRegRecoHiggs1Pt"] = reco_higgs1.pt
+            self.events["PNetRegRecoHiggs2Pt"] = reco_higgs2.pt
+
+            #print("\n pnet w/ neutrino")
+            matched_jets_higgs = ak.with_field(
+                matched_jets_higgs,
+                matched_jets_higgs.pt*matched_jets_higgs.PNetRegPtRawCorrNeutrino,
+                "pt",
+            )
+
+            jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
+            jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
+            #print("matched_jets_higgs.provenance==1", matched_jets_higgs.provenance == 1)
+            #print("matched_jets_higgs.provenance==2", matched_jets_higgs.provenance == 2)
+            mask_num = ak.num(matched_jets_higgs, axis=1) == 4
+            # replasce false with none
+            mask_num = ak.mask(mask_num, mask_num)
+            #print("mask_num", mask_num)
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            jet_higgs1 = jet_higgs1[mask_num]
+            jet_higgs2 = jet_higgs2[mask_num]
+            #print("jet_higgs1", jet_higgs1)
+            #print("jet_higgs2", jet_higgs2)
+            #print(jet_higgs1.px)
+            #print(jet_higgs2.px)
+            #print(jet_higgs1.py)
+            #print(jet_higgs2.py)
+            #print(jet_higgs1.pz)
+            #print(jet_higgs2.pz)
+            #print(jet_higgs1.provenance)
+            #print(jet_higgs2.provenance)
+            #print(jet_higgs1[:, 0].provenance)
+            #print(jet_higgs1[:, 1].provenance)
+            #print(jet_higgs2[:, 0].provenance)
+            #print(jet_higgs2[:, 1].provenance)
+            reco_higgs1 = jet_higgs1[:, 0] + jet_higgs1[:, 1]
+            reco_higgs2 = jet_higgs2[:, 0] + jet_higgs2[:, 1]
+            #print(reco_higgs1.px)
+            #print(reco_higgs2.px)
+            #print(reco_higgs1.py)
+            #print(reco_higgs2.py)
+            #print(reco_higgs1.pz)
+            #print(reco_higgs2.pz)
+            #print(reco_higgs1.energy)
+            #print(reco_higgs2.energy)
+
+            reco_higgs1_mass = reco_higgs1.mass
+            reco_higgs2_mass = reco_higgs2.mass
+            #print(reco_higgs1_mass)
+            #print(reco_higgs2_mass)
+            self.events["PNetRegNeutrinoRecoHiggs1Mass"] = reco_higgs1_mass
+            self.events["PNetRegNeutrinoRecoHiggs2Mass"] = reco_higgs2_mass
+            self.events["PNetRegNeutrinoRecoHiggs1Pt"] = reco_higgs1.pt
+            self.events["PNetRegNeutrinoRecoHiggs2Pt"] = reco_higgs2.pt"""

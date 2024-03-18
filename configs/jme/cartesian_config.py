@@ -70,174 +70,174 @@ common_cats = {
 
 
 variables_dict = {
-    **{
-        f"MatchedJets{flav}_flav": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="partonFlavour",
-                    bins=22,
-                    start=0,
-                    stop=22,
-                    label=f"MatchedJets{flav}_flav",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_JetPtJEC": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="JetPtJEC",
-                    bins=100,
-                    start=0,
-                    stop=50,
-                    label=f"MatchedJets{flav}_JetPtJEC",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_JetPtRaw": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="JetPtRaw",
-                    bins=100,
-                    start=0,
-                    stop=50,
-                    label=f"MatchedJets{flav}_JetPtRaw",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_GenJetPt": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="pt",
-                    bins=100,
-                    start=0,
-                    stop=50,
-                    label=f"MatchedJets{flav}_GenJetPt",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_DeltaEta": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="DeltaEta",
-                    bins=100,
-                    start=-3,
-                    stop=3,
-                    label=f"MatchedJets{flav}_"+r"$\Delta \eta$",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_DeltaPhi": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="DeltaPhi",
-                    bins=100,
-                    start=-3,
-                    stop=3,
-                    label=f"MatchedJets{flav}_"+r"$\Delta \phi$",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_DeltaR": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="DeltaR",
-                    bins=100,
-                    start=0,
-                    stop=3,
-                    label=f"MatchedJets{flav}_"+r"$\Delta R$",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_EtaRecoGen": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="EtaRecoGen",
-                    bins=100,
-                    start=-0.5,
-                    stop=2,
-                    label=f"MatchedJets{flav}_EtaRecoGen",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    # plot eta
-    **{
-        f"MatchedJets{flav}_eta": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="eta",
-                    bins=100,
-                    start=-5,
-                    stop=5,
-                    label=f"MatchedJets{flav}_eta",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_ResponseJEC": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="ResponseJEC",
-                    bins=100,
-                    start=0,
-                    stop=4,
-                    pos=None,
-                    label=f"MatchedJets{flav}_ResponseJEC",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
-    **{
-        f"MatchedJets{flav}_ResponseRaw": HistConf(
-            [
-                Axis(
-                    coll=f"MatchedJets{flav}",
-                    field="ResponseRaw",
-                    bins=100,
-                    start=0,
-                    stop=4,
-                    pos=None,
-                    label=f"MatchedJets{flav}_ResponseRaw",
-                )
-            ]
-        )
-        for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-    },
+    # **{
+    #     f"MatchedJets{flav}_flav": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="partonFlavour",
+    #                 bins=22,
+    #                 start=0,
+    #                 stop=22,
+    #                 label=f"MatchedJets{flav}_flav",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_JetPtJEC": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="JetPtJEC",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=50,
+    #                 label=f"MatchedJets{flav}_JetPtJEC",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_JetPtRaw": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="JetPtRaw",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=50,
+    #                 label=f"MatchedJets{flav}_JetPtRaw",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_GenJetPt": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="pt",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=50,
+    #                 label=f"MatchedJets{flav}_GenJetPt",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_DeltaEta": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="DeltaEta",
+    #                 bins=100,
+    #                 start=-3,
+    #                 stop=3,
+    #                 label=f"MatchedJets{flav}_"+r"$\Delta \eta$",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_DeltaPhi": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="DeltaPhi",
+    #                 bins=100,
+    #                 start=-3,
+    #                 stop=3,
+    #                 label=f"MatchedJets{flav}_"+r"$\Delta \phi$",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_DeltaR": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="DeltaR",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=3,
+    #                 label=f"MatchedJets{flav}_"+r"$\Delta R$",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_EtaRecoGen": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="EtaRecoGen",
+    #                 bins=100,
+    #                 start=-0.5,
+    #                 stop=2,
+    #                 label=f"MatchedJets{flav}_EtaRecoGen",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # # plot eta
+    # **{
+    #     f"MatchedJets{flav}_eta": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="eta",
+    #                 bins=100,
+    #                 start=-5,
+    #                 stop=5,
+    #                 label=f"MatchedJets{flav}_eta",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_ResponseJEC": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="ResponseJEC",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=4,
+    #                 pos=None,
+    #                 label=f"MatchedJets{flav}_ResponseJEC",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
+    # **{
+    #     f"MatchedJets{flav}_ResponseRaw": HistConf(
+    #         [
+    #             Axis(
+    #                 coll=f"MatchedJets{flav}",
+    #                 field="ResponseRaw",
+    #                 bins=100,
+    #                 start=0,
+    #                 stop=4,
+    #                 pos=None,
+    #                 label=f"MatchedJets{flav}_ResponseRaw",
+    #             )
+    #         ]
+    #     )
+    #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+    # },
 
     # # plot variables in eta bins and pt bins
     # **{
@@ -310,38 +310,38 @@ variables_dict = {
 if int(os.environ.get("PNET", 0)) == 1:
     variables_dict.update(
         {
-            **{
-                f"MatchedJets{flav}_ResponsePNetReg": HistConf(
-                    [
-                        Axis(
-                            coll=f"MatchedJets{flav}",
-                            field="ResponsePNetReg",
-                            bins=100,
-                            start=0,
-                            stop=4,
-                            pos=None,
-                            label=f"MatchedJets{flav}_ResponsePNetReg",
-                        )
-                    ]
-                )
-                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-            },
-            **{
-                f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino": HistConf(
-                    [
-                        Axis(
-                            coll=f"MatchedJetsNeutrino{flav}",
-                            field="ResponsePNetRegNeutrino",
-                            bins=100,
-                            start=0,
-                            stop=4,
-                            pos=None,
-                            label=f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino",
-                        )
-                    ]
-                )
-                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-            },
+            # **{
+            #     f"MatchedJets{flav}_ResponsePNetReg": HistConf(
+            #         [
+            #             Axis(
+            #                 coll=f"MatchedJets{flav}",
+            #                 field="ResponsePNetReg",
+            #                 bins=100,
+            #                 start=0,
+            #                 stop=4,
+            #                 pos=None,
+            #                 label=f"MatchedJets{flav}_ResponsePNetReg",
+            #             )
+            #         ]
+            #     )
+            #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            # },
+            # **{
+            #     f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino": HistConf(
+            #         [
+            #             Axis(
+            #                 coll=f"MatchedJetsNeutrino{flav}",
+            #                 field="ResponsePNetRegNeutrino",
+            #                 bins=100,
+            #                 start=0,
+            #                 stop=4,
+            #                 pos=None,
+            #                 label=f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino",
+            #             )
+            #         ]
+            #     )
+            #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            # },
             # **{
             #     f"JetMatched_PNetRegPtRawCorr": HistConf(
             #         [

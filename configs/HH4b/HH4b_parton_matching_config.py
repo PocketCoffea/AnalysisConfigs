@@ -45,17 +45,17 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            # f"{localdir}/datasets/DATA_JetMET.json"
+            f"{localdir}/datasets/DATA_JetMET_redirector.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
             "samples": [
                 # "GluGlutoHHto4B",
-                "GluGlutoHHto4B_kl0_poisson",
-                "GluGlutoHHto4B_kl2p45_poisson",
-                "GluGlutoHHto4B_kl5_poisson",
+                # "GluGlutoHHto4B_kl0_poisson",
+                # "GluGlutoHHto4B_kl2p45_poisson",
+                # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
-                # "DATA_JetMET",
+                "DATA_JetMET",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -76,7 +76,6 @@ cfg = Configurator(
         # four_jet_presel,
         # jet_pt_presel,
         # jet_btag_presel,
-        # hh4b_presel,
         hh4b_presel
     ],
     categories={
@@ -88,7 +87,8 @@ cfg = Configurator(
         # "jet_btag_medium": [jet_btag_medium_presel],
         # "jet_pt_copy2": [jet_pt_presel],
         # "jet_btag_loose": [jet_btag_loose_presel],
-        "baseline": [passthrough],
+        "2b_region": [hh4b_2b_region],
+        "4b_region": [hh4b_4b_region],
         # "full_parton_matching": [
         #     jet_btag_medium,
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),

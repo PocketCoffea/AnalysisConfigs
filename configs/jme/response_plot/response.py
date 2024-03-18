@@ -111,7 +111,7 @@ variables_colors = {
     "ResponseRaw": "green",
     "ResponsePNetReg": "red",
     # "ResponsePNetRegNeutrino": "orange",
-    # "ResponsePNetRegFull": "purple",
+    "ResponsePNetRegFull": "purple",
 }
 
 # set global variables
