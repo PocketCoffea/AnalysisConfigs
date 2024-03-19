@@ -45,17 +45,17 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/DATA_JetMET_redirector.json",
+            f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
             "samples": [
-                # "GluGlutoHHto4B",
+                "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_kl0_poisson",
                 # "GluGlutoHHto4B_kl2p45_poisson",
                 # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
-                "DATA_JetMET",
+                # "DATA_JetMET",
             ],
             "samples_exclude": [],
             "year": [year],
