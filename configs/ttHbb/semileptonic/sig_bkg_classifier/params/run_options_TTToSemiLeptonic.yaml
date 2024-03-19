@@ -1,3 +1,4 @@
+executor: dask@T3_CH_PSI
 scaleout: 300
 chunksize: 400000
 mem-per-worker: "8GB"
