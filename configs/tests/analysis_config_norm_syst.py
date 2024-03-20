@@ -80,9 +80,22 @@ cfg = Configurator(
                 "bycategory" : {
                 }
             },
-        "bysample": {
-        }    
+            "bysample": {}    
         },
+        "shape" : {},
+        "norm": {
+            "common": {
+                "inclusive": {
+                    "lumi": 0.025,
+                    "theory": {"up": 1.05, "down": 0.95},
+                },
+                "bycategory" : {}
+            },
+            "bysample": {
+                "inclusive": {},
+                "bycategory": {}
+            }
+        }
     },
 
     

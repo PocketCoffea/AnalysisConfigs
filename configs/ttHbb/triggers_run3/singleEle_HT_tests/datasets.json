@@ -1,0 +1,19 @@
+{
+    "ttHTobb_Run3":{
+
+        "sample": "ttHTobb",
+        "json_output": "datasets/ttHTobb_Run3.json",
+
+        "files":[
+            { "das_names": 
+                ["/ttHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/Run3Winter24NanoAOD-133X_mcRun3_2024_realistic_v8-v2/NANOAODSIM"],
+
+              "metadata": {
+                  "year":"Run3",
+                  "isMC": true,
+                  "xsec": 0.2953
+              }
+            }
+        ]
+    }
+}

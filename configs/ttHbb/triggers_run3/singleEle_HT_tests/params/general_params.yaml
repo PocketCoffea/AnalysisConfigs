@@ -1,0 +1,13 @@
+event_flags:
+  Run3:
+    - "goodVertices"
+    - "globalSuperTightHalo2016Filter"
+    - "HBHENoiseFilter"
+    - "HBHENoiseIsoFilter"
+    - "EcalDeadCellTriggerPrimitiveFilter"
+    - "BadPFMuonFilter"
+
+lumi:
+  picobarns:
+    Run3:
+      tot: 50000
