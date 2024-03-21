@@ -117,6 +117,22 @@ cfg = Configurator(
         "semilep_recoele30tight_doubleB_tighter": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_tighter"])] ,
         "semilep_recoele30tight_doubleB_looser": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_HLTsel(["Jet4_btag2_looser"])],
 
+
+        "semilep_recoele30tight3b": [get_nObj_min(1, 30., coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.)],
+        "semilep_recoele30tight3b_Ele28" : [ get_nObj_min(1,30., coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Ele28"])],
+        "semilep_recoele30tight3b_Ele30" : [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Ele30"])],
+        "semilep_recoele30tight3b_Ele28_or_Ele30" : [ get_nObj_min(1,30., coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Ele28","Ele30"])],
+        "semilep_recoele30tight3b_Ele32" : [ get_nObj_min(1,30., coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Ele32"])],
+        "semilep_recoele30tight3b_tripleB_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.),
+                                        get_HLTsel(["TripleBTag","Ele30"])] ,
+        "semilep_recoele30tight3b_doubleB_tighter_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.),
+                                            get_HLTsel(["Jet4_btag2_tighter","Ele30"])] ,
+        "semilep_recoele30tight3b_doubleB_looser_Ele30": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.),
+                                             get_HLTsel(["Jet4_btag2_looser","Ele30"])],
+        "semilep_recoele30tight3b_tripleB": [ get_nObj_min(1,30., coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["TripleBTag"])] ,
+        "semilep_recoele30tight3b_doubleB_tighter": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Jet4_btag2_tighter"])] ,
+        "semilep_recoele30tight3b_doubleB_looser": [ get_nObj_min(1, 30.,coll="ElectronGood"), get_nBtagMin(3, coll="Jet", minpt=30.), get_HLTsel(["Jet4_btag2_looser"])],
+        
     },
     
     weights= {
