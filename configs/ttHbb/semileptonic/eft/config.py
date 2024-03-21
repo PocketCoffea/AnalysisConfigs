@@ -1,6 +1,7 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
+import eft_weights
 
 import workflow
 from workflow import BaseProcessorGen
@@ -20,15 +21,12 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
+        "jsons": [f"{localdir}/datasets/signal_ttHTobb_T2.json",
                   ],
         "filter" : {
-            "samples": ["ttHTobb",
-                        ],
+            "samples": ["ttHTobb_SM","ttHTobb_BSM"],
             "samples_exclude" : [],
-            "year": [
-                     "2018"
-                     ]
+            #"year": []
         },
         "subsamples": {}
     },
@@ -44,7 +42,8 @@ cfg = Configurator(
 
     weights= {
         "common": {
-            "inclusive": [],
+            "inclusive": [ "genWeight", "XS",
+                           eft_weights.getSMEFTweight(10),],
             "bycategory": {},
         },
         "bysample": {},
@@ -54,7 +53,7 @@ cfg = Configurator(
     },
     
     variables = {
-        **jet_hists(coll="Jet", pos=0)
+        **jet_hists(coll="GenJet", fields=["pt", "eta", "phi"]),
     },
     columns = {
         "common": {
@@ -68,3 +67,4 @@ cfg = Configurator(
 # Registering custom functions
 import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(eft_weights)
