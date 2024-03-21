@@ -1,6 +1,6 @@
 {
-    "DATA_JetMET": {
-        "sample": "DATA_JetMET",
+    "DATA_JetMET_PromptNanoAOD": {
+        "sample": "DATA_JetMET_PromptNanoAOD",
         "json_output": "datasets/DATA_JetMET.json",
         "files": [
             {
@@ -8,13 +8,33 @@
                     "/JetMET/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": false,
                     "primaryDataset": "JetMET",
                     "era": "F"
                 },
                 "das_parents_names": [
                     "/JetMET/Run2022F-PromptReco-v1/MINIAOD"
+                ]
+            }
+        ]
+    },
+    "DATA_JetMET_JMENano": {
+        "sample": "DATA_JetMET_JMENano",
+        "json_output": "datasets/DATA_JetMET.json",
+        "files": [
+            {
+                "das_names": [
+                    "/JetMET/Run2022E-JMENano12p5-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": false,
+                    "primaryDataset": "JetMET",
+                    "era": "E"
+                },
+                "das_parents_names": [
+                    "/JetMET/Run2022E-22Sep2023-v1/MINIAOD"
                 ]
             }
         ]
@@ -29,7 +49,7 @@
                     "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": true,
                     "xsec": 0.02964,
                     "part": "kl-1p00_kt-1p00_c2-0p00"
@@ -50,7 +70,7 @@
                     "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": true,
                     "xsec": 0.02964,
                     "part": "kl-1p00_kt-1p00_c2-0p00"
@@ -71,7 +91,7 @@
                     "/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": true,
                     "xsec": 0.06648,
                     "part": "kl-0p00_kt-1p00_c2-0p00"
@@ -92,7 +112,7 @@
                     "/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": true,
                     "xsec": 0.01252,
                     "part": "kl-2p45_kt-1p00_c2-0p00"
@@ -113,7 +133,7 @@
                     "/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
                 ],
                 "metadata": {
-                    "year": "2018",
+                    "year": "2022_postEE",
                     "isMC": true,
                     "xsec": 0.08664,
                     "part": "kl-5p00_kt-1p00_c2-0p00"

@@ -1,9 +1,9 @@
 {
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_poisson_kl-1p00_kt-1p00_c2-0p00_2018": {
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_poisson_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B_poisson",
-            "year": "2018",
+            "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.02964",
             "part": "kl-1p00_kt-1p00_c2-0p00",
@@ -16,11 +16,11 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/50000/fc603037-ef65-4bbf-9cef-934ecec40bbe.root"
         ]
     },
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_kl-1p00_kt-1p00_c2-0p00_2018": {
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM']",
             "sample": "GluGlutoHHto4B",
-            "year": "2018",
+            "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.02964",
             "part": "kl-1p00_kt-1p00_c2-0p00",
@@ -83,11 +83,11 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2022_realistic_postEE_v6-v1/80000/7637aff6-285b-4551-a5bb-fd9e3dc418ac.root"
         ]
     },
-    "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson_kl-0p00_kt-1p00_c2-0p00_2018": {
+    "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson_kl-0p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B_kl0_poisson",
-            "year": "2018",
+            "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.06648",
             "part": "kl-0p00_kt-1p00_c2-0p00",
@@ -100,11 +100,11 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/d6fa4680-3295-401b-8043-8663ebbaa606.root"
         ]
     },
-    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson_kl-2p45_kt-1p00_c2-0p00_2018": {
+    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson_kl-2p45_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B_kl2p45_poisson",
-            "year": "2018",
+            "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.01252",
             "part": "kl-2p45_kt-1p00_c2-0p00",
@@ -116,11 +116,11 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/60000/f30782db-d93d-42b7-b4a5-e14d8ee09c56.root"
         ]
     },
-    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson_kl-5p00_kt-1p00_c2-0p00_2018": {
+    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson_kl-5p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
             "sample": "GluGlutoHHto4B_kl5_poisson",
-            "year": "2018",
+            "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.08664",
             "part": "kl-5p00_kt-1p00_c2-0p00",

@@ -25,16 +25,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "ptPnetRegNeutrino",
         )
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
-        self.events["JetGood"] = ak.with_field(
-            self.events.JetGood,
-            np.cos(self.events.JetGood.phi),
-            "cosPhi",
-        )
-        self.events["JetGood"] = ak.with_field(
-            self.events.JetGood,
-            np.sin(self.events.JetGood.phi),
-            "sinPhi",
-        )
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
@@ -59,7 +49,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events.GenPart = ak.with_field(
             self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
         )
-        # print("num_events", len(self.events.GenPart))
         isHiggs = self.events.GenPart.pdgId == 25
         isLast = self.events.GenPart.hasFlags(["isLastCopy"])
         isHard = self.events.GenPart.hasFlags(["fromHardProcess"])
@@ -68,17 +57,13 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         higgs = higgs[ak.num(higgs.childrenIdxG, axis=2) == 2]
 
         higgs = higgs[ak.argsort(higgs.pt, ascending=False)]
-        num_ev = 5
         if which_bquark == "last":
             isB = abs(self.events.GenPart.pdgId) == 5
             bquarks = self.events.GenPart[isB & isLast & isHard]
-            # print("bquarks: ", "pdg", bquarks[:num_ev].pdgId, "mother_idx",bquarks[:num_ev].genPartIdxMother, "pt", bquarks[:num_ev].pt)
             bquarks_first = bquarks
             while True:
-                # print("\nloop")
                 b_mother = self.events.GenPart[bquarks_first.genPartIdxMother]
                 mask_mother = (abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
-                # print("mask_mother", mask_mother)
                 bquarks = bquarks[mask_mother]
                 bquarks_first = bquarks_first[mask_mother]
                 b_mother = b_mother[mask_mother]
@@ -87,11 +72,9 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 bquarks_first = ak.where(
                     abs(b_mother.pdgId) == 5, b_mother, bquarks_first
                 )
-                # print("new: ", "pdg", bquarks_first[:num_ev].pdgId, "mother_idx",bquarks_first[:num_ev].genPartIdxMother, "pt", bquarks_first[:num_ev].pt)
             provenance = ak.where(
                 bquarks_first.genPartIdxMother == higgs.index[:, 0], 1, 2
             )
-            # print("provenance", provenance[:num_ev])
         elif which_bquark == "first":
             bquarks = ak.flatten(higgs.children, axis=2)
             provenance = ak.where(bquarks.genPartIdxMother == higgs.index[:, 0], 1, 2)
@@ -157,9 +140,20 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "pdgId",
         )
 
-        # self.matched_partons_mask = ~ak.is_none(
-        #     self.events.JetGoodMatched, axis=1
-        # )
+    def dummy_provenance(self):
+        self.events["JetGoodHiggs"] = ak.with_field(
+            self.events.JetGoodHiggs,
+            ak.ones_like(self.events.JetGoodHiggs.pt) * -1,
+            "provenance"
+        )
+        self.events["JetGoodHiggsMatched"] = self.events.JetGoodHiggs
+
+        self.events["JetGood"] = ak.with_field(
+            self.events.JetGood,
+            ak.ones_like(self.events.JetGood.pt) * -1,
+            "provenance"
+        )
+        self.events["JetGoodMatched"] = self.events.JetGood
 
     def count_objects(self, variation):
         self.events["nElectronGood"] = ak.num(self.events.ElectronGood, axis=1)
@@ -189,10 +183,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         if self._isMC:
             self.do_parton_matching(which_bquark=self.which_bquark)
             # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
-            self.events["nJetGoodHiggsMatched"] = ak.num(
-                self.events.JetGoodHiggsMatched, axis=1
-            )
-            self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
             self.events["nbQuarkHiggsMatched"] = ak.num(
                 self.events.bQuarkHiggsMatched, axis=1
             )
@@ -233,3 +223,11 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             ) = self.reconstruct_higgs_candidates(
                 self.events.JetGoodHiggsRegNeutrinoMatched
             )
+        else:
+            self.dummy_provenance()
+
+
+        self.events["nJetGoodHiggsMatched"] = ak.num(
+            self.events.JetGoodHiggsMatched, axis=1
+        )
+        self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)

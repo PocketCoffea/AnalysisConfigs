@@ -32,7 +32,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 # adding object preselection
-year = "2018"  # TODO: change year to 2022
+year = "2022_postEE"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -55,7 +55,7 @@ cfg = Configurator(
                 # "GluGlutoHHto4B_kl2p45_poisson",
                 # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
-                "DATA_JetMET",
+                "DATA_JetMET_JMENano",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -69,7 +69,7 @@ cfg = Configurator(
         "which_bquark": "last",  # HERE
     },
     skim=[
-        get_HLTsel(primaryDatasets=["JetMET"]),
+        # get_HLTsel(primaryDatasets=["JetMET"]),
     ],
     preselections=[
         hh4b_presel
@@ -127,6 +127,30 @@ cfg = Configurator(
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
+                    ],
+                ),
+                ColOut(
+                    "JetGoodHiggsMatched",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "provenance",
+                    ],
+                ),
+                ColOut(
+                    "JetGoodMatched",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                        "btagPNetB",
+                        "ptPnetRegNeutrino",
+                        "provenance",
                     ],
                 ),
             ],
