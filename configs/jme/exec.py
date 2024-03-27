@@ -98,7 +98,8 @@ eta_bins = eta_bins if not args.inclusive_eta else None
 
 executor = "--test" if args.test else "-e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml"
 
-sign_dict= {"--": "negneg", "-" : "neg", "+": "pos", "++": "pospos", "all": "all"}
+sign_dict= {"--": "neg1", "-" : "neg2", "+": "pos1", "++": "pos2", "all": "all"}
+# sign_dict= {"--": "negneg", "-" : "neg", "+": "pos", "++": "pospos", "all": "all"}
 dir_prefix = os.environ.get("WORK", "") + "/out_jme/"
 print("dir_prefix", dir_prefix)
 

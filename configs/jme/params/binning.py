@@ -87,18 +87,20 @@ eta_bins = [
     5.191,
 ]
 
+
 if str(os.environ.get("SIGN", None)) == "--":
     eta_bins = [i for i in eta_bins if i <= -1.83]
 if str(os.environ.get("SIGN", None)) == "-":
-    eta_bins = [i for i in eta_bins if i > -1.83 and i < 0.0]
+    eta_bins = [i for i in eta_bins if i >= -1.83 and i <= 0.0]
 elif str(os.environ.get("SIGN", None)) == "+":
-    eta_bins = [i for i in eta_bins if i >= 0.0 and i < 1.83]
+    eta_bins = [i for i in eta_bins if i >= 0.0 and i <= 1.83]
 elif str(os.environ.get("SIGN", None)) == "++":
     eta_bins = [i for i in eta_bins if i >= 1.83]
 
+central_bins=[-5.191, -1.3, 1.3, 5.191]
 if int(os.environ.get("CENTRAL", 0)) == 1:
     # eta_bins=[-1.3, 1.3]
-    eta_bins=[-5.191, -1.3, 1.3, 5.191] #HERE
+    eta_bins=central_bins #HERE
     # eta_bins=[-6., -1.3,-0.5, 0, 0.5, 1.3, 6.] #HERE
 
 pt_bins = [

@@ -423,7 +423,7 @@ if int(os.environ.get("PNET", 0)) == 1:
                             coll=f"MatchedJetsNeutrino{flav}",
                             field="pt",
                             bins=pt_bins,
-                            label=f"MatchedJets{flav}_pt",
+                            label=f"MatchedJetsNeutrino{flav}_pt",
                             type="variable",
                             pos=None,
                         ),
@@ -529,9 +529,11 @@ cfg = Configurator(
     variables=variables_dict,
     columns={
         "common": {
-            # "inclusive": [
-            #     ColOut("MatchedJets", ["Response", "pt", "eta"]),
-            # ]
+            "inclusive": [
+                # ColOut("MatchedJets", ["ResponsePNetReg", "pt", "eta"]),
+                # ColOut("MatchedJetsNeutrino", ["ResponsePNetRegNeutrino", "pt", "eta"]),
+
+            ]
             # + [
             #     ColOut(
             #         f"MatchedJets_pt{pt_bins[j]}to{pt_bins[j+1]}",
