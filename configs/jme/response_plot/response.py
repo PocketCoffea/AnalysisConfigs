@@ -962,10 +962,19 @@ def plot_histos(eta_pt, response_dir):
                 #     label=variable,
                 #     color=variables_colors[variable],
                 # )
+                if args.full:
+                    response_dir = (
+                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_binned"
+                    )
+                    os.makedirs(f"{response_dir}", exist_ok=True)
                 values = histos[index][pt_bin][0]
                 bins = histos[index][pt_bin][1]
                 if len(values)==0:
+                    print("SKIP histo:","flav", flav, "variable", variable, "eta", correct_eta_bins[eta_bin], "pt", pt_bins[pt_bin])
                     continue
+                print("histo:","flav", flav, "variable", variable, "eta", correct_eta_bins[eta_bin], "pt", pt_bins[pt_bin])
                 fig, ax = plt.subplots()
                 max_value = max(max_value, np.nanmax(values))
                 # bins_mid = (bins[1:] + bins[:-1]) / 2
@@ -1022,13 +1031,6 @@ def plot_histos(eta_pt, response_dir):
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
 
-                if args.full:
-                    response_dir = (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/response_plots_binned"
-                    )
-                    os.makedirs(f"{response_dir}", exist_ok=True)
 
                 fig.savefig(
                     f"{response_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
@@ -1046,13 +1048,11 @@ def plot_histos(eta_pt, response_dir):
             #     ax_tot.set_ylim(top=1.3 * max_value)
 
             plt.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
-            # hep.style.use("CMS")
             hep.cms.label(
                 year="2022",
                 com="13.6",
                 label=f"Private Work",
             )
-            # write a string on the plot
 
             ax_tot.text(
                 0.98,
@@ -1196,6 +1196,14 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     plt.close(fig)
 
 
+if args.histograms:
+    print("Plotting histograms...")
+    eta_pt_bins = []
+    for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
+        for pt in range(len(pt_bins) - 1):
+            eta_pt_bins.append((eta, pt))
+    with Pool(args.num_processes) as p:
+        p.map(functools.partial(plot_histos, response_dir=response_dir), eta_pt_bins)
 if args.no_plot:
     sys.exit()
 
@@ -1231,14 +1239,6 @@ with Pool(args.num_processes) as p:
 
 # TODO: fit inverse median
 
-if args.histograms:
-    print("Plotting histograms...")
-    eta_pt_bins = []
-    for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
-        for pt in range(len(pt_bins) - 1):
-            eta_pt_bins.append((eta, pt))
-    with Pool(args.num_processes) as p:
-        p.map(functools.partial(plot_histos, response_dir=response_dir), eta_pt_bins)
 
 # print(median_dir)
 print("Done!")

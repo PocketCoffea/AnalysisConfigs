@@ -70,6 +70,36 @@ common_cats = {
 
 
 variables_dict = {
+
+    **{
+        f"MatchedJets_pt": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJets",
+                    field="pt",
+                    bins=100,
+                    start=0,
+                    stop=500,
+                    label=f"MatchedJets_pt",
+                )
+            ]
+        )
+    },
+    **{
+        f"MatchedJetsNeutrino_pt": HistConf(
+            [
+                Axis(
+                    coll=f"MatchedJetsNeutrino",
+                    field="pt",
+                    bins=100,
+                    start=0,
+                    stop=500,
+                    label=f"MatchedJetsNeutrino_pt",
+                )
+            ]
+        )
+    },
+
     # **{
     #     f"MatchedJets{flav}_flav": HistConf(
     #         [
@@ -530,8 +560,8 @@ cfg = Configurator(
     columns={
         "common": {
             "inclusive": [
-                # ColOut("MatchedJets", ["ResponsePNetReg", "pt", "eta"]),
-                # ColOut("MatchedJetsNeutrino", ["ResponsePNetRegNeutrino", "pt", "eta"]),
+                # ColOut("MatchedJets", [ "pt", "eta"]),
+                # ColOut("MatchedJetsNeutrino_reshape", [ "pt", "eta"]),
 
             ]
             # + [
