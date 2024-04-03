@@ -134,10 +134,10 @@ pt_bins = [
     5000.0,
 ]
 
-# pt_bins=[8, 13, 15, 30] #HERE
-
 
 # response_bins = [0, 0.8] + list(np.arange(0.9, 1.2, 0.1)) + [1.2, 8.0]
 # response_bins = [0, 0.8] + list(np.arange(0.8004, 1.2, 4e-4)) + [1.2, 8.0]
 # response_bins = [0, 0.6] + list(np.arange(0.6008, 1.4, 8e-4)) + [1.4, 8.0]
 response_bins = list(np.linspace(0, 8, 16000))
+
+jet_pt_bins=list(np.linspace(0, 6000, 16000))

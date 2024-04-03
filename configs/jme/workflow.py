@@ -92,6 +92,10 @@ class QCDBaseProcessor(BaseProcessorABC):
         # recompute the matched jets quadrivector summing the 4-vecs of the genjets and the gen neutrinos
         genjets_with_neutrinos = genjets + neutrinos_matched_sum
 
+        # print(genjets_with_neutrinos.pt[neutrinos_matched_sum.pt > 0])
+        # print(neutrinos_matched_sum.pt[neutrinos_matched_sum.pt > 0])
+        # print(genjets.pt[neutrinos_matched_sum.pt > 0])
+
         genjets_with_neutrinos = ak.with_field(
             genjets,
             genjets_with_neutrinos.pt,
@@ -186,9 +190,9 @@ class QCDBaseProcessor(BaseProcessorABC):
                     self.events["GenJetNeutrino"], self.events["Jet"], 0.2  # 0.4
                 )
 
-            print(self.events["GenJetNeutrino"].pt)
-            print(self.events["GenJet"].pt)
-            print(neutrinos.pt)
+            # print("GenJetNeutrino", self.events["GenJetNeutrino"].pt[-7])
+            # print("GenJet", self.events["GenJet"].pt[-7])
+            # print(neutrinos.pt[-7])
 
             # breakpoint()
             self.events["GenJetMatched"] = self.events.GenJetMatched[
@@ -214,17 +218,23 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.JetMatched.pt / self.events.GenJetMatched.pt,
                 "ResponseJEC",
             )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.MatchedJets.ResponseJEC
+                * (1 - self.events.JetMatched.rawFactor),
+                "ResponseRaw",
+            )
 
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     self.events.JetMatched.pt,
-            #     "JetPtJEC",
-            # )
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     self.events.JetMatched.pt * (1 - self.events.JetMatched.rawFactor),
-            #     "JetPtRaw",
-            # )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.pt,
+                "JetPtJEC",
+            )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.pt * (1 - self.events.JetMatched.rawFactor),
+                "JetPtRaw",
+            )
             # self.events[f"MatchedJets"] = ak.with_field(
             #     self.events.MatchedJets,
             #     self.events.JetMatched.eta - self.events.MatchedJets.eta,
@@ -247,13 +257,6 @@ class QCDBaseProcessor(BaseProcessorABC):
             #     "EtaRecoGen",
             # )
 
-            self.events[f"MatchedJets"] = ak.with_field(
-                self.events.MatchedJets,
-                self.events.MatchedJets.ResponseJEC
-                * (1 - self.events.JetMatched.rawFactor),
-                "ResponseRaw",
-            )
-
             if int(os.environ.get("PNET", 0)) == 1:
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
@@ -261,6 +264,13 @@ class QCDBaseProcessor(BaseProcessorABC):
                     * self.events.JetMatched.PNetRegPtRawCorr,
                     "ResponsePNetReg",
                 )
+                self.events[f"MatchedJets"] = ak.with_field(
+                    self.events.MatchedJets,
+                    self.events.MatchedJets.JetPtRaw
+                    * self.events.JetMatched.PNetRegPtRawCorr,
+                    "JetPtPNetReg",
+                )
+
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.GenJetNeutrinoMatched,
                     self.events.JetNeutrinoMatched.pt
@@ -270,43 +280,41 @@ class QCDBaseProcessor(BaseProcessorABC):
                     * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
                     "ResponsePNetRegNeutrino",
                 )
-
-                print(self.events.MatchedJetsNeutrino.pt)
-                print(self.events.MatchedJets.pt)
-
-
-                #HERE
-                self.events[f"MatchedJets"] = ak.with_field(
-                    self.events.MatchedJets,
-                    self.events.MatchedJets.ResponsePNetReg,
-                    "ResponsePNetRegNeutrino",
-                )
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
-                    self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
-                    "ResponsePNetReg",
-                )
-                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
-                    self.events.MatchedJetsNeutrino,
-                    self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
-                    "ResponseRaw",
-                )
-                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
-                    self.events.MatchedJetsNeutrino,
-                    self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
-                    "ResponseJEC",
+                    self.events.MatchedJetsNeutrino.pt
+                    * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                    * self.events.JetNeutrinoMatched.PNetRegPtRawCorr
+                    * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
+                    "JetPtPNetRegNeutrino",
                 )
 
-                # reshape MatchedJetsNeutrino to be the same shape as MatchedJets
-                self.events[f"MatchedJetsNeutrino_reshape"] = ak.broadcast_arrays(
-                    self.events.MatchedJetsNeutrino, self.events.MatchedJets
-                )[0]
+                # HERE
+                # self.events[f"MatchedJets"] = ak.with_field(
+                #     self.events.MatchedJets,
+                #     self.events.MatchedJets.ResponsePNetReg,
+                #     "ResponsePNetRegNeutrino",
+                # )
+                # self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                #     self.events.MatchedJetsNeutrino,
+                #     self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
+                #     "ResponsePNetReg",
+                # )
+                # self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                #     self.events.MatchedJetsNeutrino,
+                #     self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
+                #     "ResponseRaw",
+                # )
+                # self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                #     self.events.MatchedJetsNeutrino,
+                #     self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
+                #     "ResponseJEC",
+                # )
 
-                print(len(self.events.MatchedJetsNeutrino_reshape))
-                print(len(self.events.MatchedJetsNeutrino))
-                print(len(self.events.MatchedJets))
-
-
+                # # reshape MatchedJetsNeutrino to be the same shape as MatchedJets
+                # self.events[f"MatchedJetsNeutrino_reshape"] = ak.broadcast_arrays(
+                #     self.events.MatchedJetsNeutrino, self.events.MatchedJets
+                # )[0]
 
             # gen jet flavour splitting
             if flavour != "inclusive":

@@ -11,7 +11,10 @@ from functools import partial
 from hist import Hist
 import hist
 import functools
+import math
 
+from scipy.optimize import curve_fit
+import scipy.stats as stats
 
 sys.path.append("../")
 from params.binning import *
@@ -88,6 +91,12 @@ parser.add_argument(
     type=str,
     default="inclusive",
 )
+parser.add_argument(
+    "--jet-pt",
+    help="Consider reco jet pt",
+    type=bool,
+    default=True,
+)
 
 args = parser.parse_args()
 
@@ -111,6 +120,12 @@ variables_colors = {
     "ResponsePNetReg": "red",
     "ResponsePNetRegNeutrino": "purple",
 }
+
+jet_pt_variables = (
+    ["JetPtJEC", "JetPtRaw", "JetPtPNetReg", "JetPtPNetRegNeutrino"]
+    if args.jet_pt
+    else []
+)
 
 # run bash command
 os.system("export SIGN=''")
@@ -197,7 +212,7 @@ if args.load:
                 if args.histograms:
                     response_dict[eta_sign][flav_group][flav] = dict()
                 print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav)
-                for variable in variables_colors.keys():
+                for variable in list(variables_colors.keys()) + jet_pt_variables:
                     if args.full:
                         median_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
@@ -327,7 +342,7 @@ else:
                         )
                         variables = o["variables"].keys()
                     for variable in variables:
-                        if "Response" not in variable or "VSpt" not in variable:
+                        if "VSpt" not in variable:
                             continue
                         histos_dict = o["variables"][variable]
                         # remove MatchedJets and VSpt from the name of the variable if present
@@ -432,107 +447,125 @@ else:
                                                         (np.array([]), np.array([]))
                                                     )
                                                 break
+                                            if "Response" in variable:
+                                                if args.histograms:
+                                                    #     h_rebin = Hist(hist.axis.Regular(100, 0.0, 2., name=variable))
+                                                    #     new_num_bins = 100
+                                                    #     # rebin the histo1d
+                                                    #     new_bin_width = (bins[-1] - bins[0]) / new_num_bins
+                                                    #     new_bins = np.arange(bins[0], bins[-1] + new_bin_width, new_bin_width)
+                                                    #     values, bins = np.histogram(bins_mid, bins=new_bins, weights=values)
+                                                    rebin_factor = 20
+                                                    # get index where bins is > 2
+                                                    index_2 = np.where(bins > 2)[0][0]
 
-                                            if args.histograms:
-                                                #     h_rebin = Hist(hist.axis.Regular(100, 0.0, 2., name=variable))
-                                                #     new_num_bins = 100
-                                                #     # rebin the histo1d
-                                                #     new_bin_width = (bins[-1] - bins[0]) / new_num_bins
-                                                #     new_bins = np.arange(bins[0], bins[-1] + new_bin_width, new_bin_width)
-                                                #     values, bins = np.histogram(bins_mid, bins=new_bins, weights=values)
-                                                rebin_factor = 20
-                                                # get index where bins is > 2
-                                                index_2 = np.where(bins > 2)[0][0]
+                                                    rebinned_bins = np.array(
+                                                        bins[:index_2][::rebin_factor]
+                                                    )
+                                                    rebinned_values = np.add.reduceat(
+                                                        values[:index_2],
+                                                        range(
+                                                            0,
+                                                            len(values[:index_2]),
+                                                            rebin_factor,
+                                                        ),
+                                                    )
+                                                    # print("bins", len(bins), "values", len(values))
+                                                    # print("rebinned_bins", len(rebinned_bins), "rebinned_values", len(rebinned_values))
+                                                    # h1d_rebinned = np.histogram(bins_mid, bins=rebinned_bins, weights=rebinned_values)
 
-                                                rebinned_bins = np.array(
-                                                    bins[:index_2][::rebin_factor]
+                                                    response_dict[eta_sign][flav_group][
+                                                        flav
+                                                    ][variable][i].append(
+                                                        (rebinned_values, rebinned_bins)
+                                                    )
+                                                # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable, "eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
+                                                # print("values", values)
+                                                # print(variable)
+                                                # print("bins_mid", bins_mid)
+                                                # print("values", values)
+
+                                                # bins_mid = bins_mid[values != 0.]
+                                                # values = values[values != 0.]
+                                                # get the bins of the histo1d
+                                                # find the bin which is the median of the histogram
+                                                cdf = np.cumsum(values)
+                                                # # print("cdf", cdf)
+                                                cdf_normalized = cdf / cdf[-1]
+                                                # # print("cdf_normalized", cdf_normalized)
+                                                median_bin_index = np.argmax(
+                                                    cdf_normalized >= 0.5
                                                 )
-                                                rebinned_values = np.add.reduceat(
-                                                    values[:index_2],
-                                                    range(
-                                                        0,
-                                                        len(values[:index_2]),
-                                                        rebin_factor,
-                                                    ),
-                                                )
-                                                # print("bins", len(bins), "values", len(values))
-                                                # print("rebinned_bins", len(rebinned_bins), "rebinned_values", len(rebinned_values))
-                                                # h1d_rebinned = np.histogram(bins_mid, bins=rebinned_bins, weights=rebinned_values)
-
-                                                response_dict[eta_sign][flav_group][
+                                                # # print("median_bin_index", median_bin_index)
+                                                median = bins_mid[median_bin_index]
+                                                # print("median:\n", median)
+                                                medians_dict[eta_sign][flav_group][
                                                     flav
-                                                ][variable][i].append(
-                                                    (rebinned_values, rebinned_bins)
+                                                ][variable][i].append(median)
+
+                                                # print("bins_mid", bins_mid)
+                                                mean = np.average(
+                                                    bins_mid, weights=values
                                                 )
-                                            # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable, "eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
-                                            # print("values", values)
-                                            # print(variable)
-                                            # print("bins_mid", bins_mid)
-                                            # print("values", values)
-
-                                            # bins_mid = bins_mid[values != 0.]
-                                            # values = values[values != 0.]
-                                            # get the bins of the histo1d
-                                            # find the bin which is the median of the histogram
-                                            cdf = np.cumsum(values)
-                                            # # print("cdf", cdf)
-                                            cdf_normalized = cdf / cdf[-1]
-                                            # # print("cdf_normalized", cdf_normalized)
-                                            median_bin_index = np.argmax(
-                                                cdf_normalized >= 0.5
-                                            )
-                                            # # print("median_bin_index", median_bin_index)
-                                            median = bins_mid[median_bin_index]
-                                            # print("median:\n", median)
-                                            medians_dict[eta_sign][flav_group][flav][
-                                                variable
-                                            ][i].append(median)
-
-                                            # print("bins_mid", bins_mid)
-                                            mean = np.average(bins_mid, weights=values)
-                                            # print("mean", mean)
-                                            rms = np.sqrt(
-                                                np.average(
-                                                    (bins_mid - mean) ** 2,
-                                                    weights=values,
+                                                # print("mean", mean)
+                                                rms = np.sqrt(
+                                                    np.average(
+                                                        (bins_mid - mean) ** 2,
+                                                        weights=values,
+                                                    )
                                                 )
-                                            )
-                                            # print("rms", rms)
-                                            err_median = (
-                                                1.253 * rms / np.sqrt(np.sum(values))
-                                            )
-                                            # print("sum", np.sum(values))
-                                            # print("err_median:\n", err_median)
-                                            err_medians_dict[eta_sign][flav_group][
-                                                flav
-                                            ][variable][i].append(err_median)
+                                                # print("rms", rms)
+                                                err_median = (
+                                                    1.253
+                                                    * rms
+                                                    / np.sqrt(np.sum(values))
+                                                )
+                                                # print("sum", np.sum(values))
+                                                # print("err_median:\n", err_median)
+                                                err_medians_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(err_median)
 
-                                            # define the resolution as the difference between the 84th and 16th percentile
-                                            # find the bin which is the 84th percentile of the histogram
-                                            percentile_84_bin_index = np.argmax(
-                                                cdf_normalized >= 0.84
-                                            )
-                                            # print("percentile_84_bin_index", percentile_84_bin_index)
-                                            percentile_84 = bins_mid[
-                                                percentile_84_bin_index
-                                            ]
-                                            # print("percentile_84", percentile_84)
-                                            # find the bin which is the 16th percentile of the histogram
-                                            percentile_16_bin_index = np.argmax(
-                                                cdf_normalized >= 0.16
-                                            )
-                                            # print("percentile_16_bin_index", percentile_16_bin_index)
-                                            percentile_16 = bins_mid[
-                                                percentile_16_bin_index
-                                            ]
-                                            # print("percentile_16", percentile_16)
-                                            resolution = (
-                                                percentile_84 - percentile_16
-                                            ) / 2
-                                            # print("resolution", resolution)
-                                            resolutions_dict[eta_sign][flav_group][
-                                                flav
-                                            ][variable][i].append(resolution)
+                                                # define the resolution as the difference between the 84th and 16th percentile
+                                                # find the bin which is the 84th percentile of the histogram
+                                                percentile_84_bin_index = np.argmax(
+                                                    cdf_normalized >= 0.84
+                                                )
+                                                # print("percentile_84_bin_index", percentile_84_bin_index)
+                                                percentile_84 = bins_mid[
+                                                    percentile_84_bin_index
+                                                ]
+                                                # print("percentile_84", percentile_84)
+                                                # find the bin which is the 16th percentile of the histogram
+                                                percentile_16_bin_index = np.argmax(
+                                                    cdf_normalized >= 0.16
+                                                )
+                                                # print("percentile_16_bin_index", percentile_16_bin_index)
+                                                percentile_16 = bins_mid[
+                                                    percentile_16_bin_index
+                                                ]
+                                                # print("percentile_16", percentile_16)
+                                                resolution = (
+                                                    percentile_84 - percentile_16
+                                                ) / 2
+                                                # print("resolution", resolution)
+                                                resolutions_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(resolution)
+                                            elif "JetPt" in variable:
+                                                # compute the mean of the distribution
+                                                mean = np.average(
+                                                    bins_mid, weights=values
+                                                )
+                                                medians_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(mean)
+                                                err_medians_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(np.nan)
+                                                resolutions_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(np.nan)
 
                         medians_dict[eta_sign][flav_group][flav][variable] = np.array(
                             medians_dict[eta_sign][flav_group][flav][variable]
@@ -628,6 +661,12 @@ if args.central:
 correct_eta_bins = np.array(correct_eta_bins)
 print("correct_eta_bins", correct_eta_bins, len(correct_eta_bins))
 
+print(
+    "medians_dict[eta_sign][flav_group][flav].keys()",
+    medians_dict[eta_sign][flav_group][flav].keys(),
+)
+print(medians_dict["central"][("inclusive",)]["inclusive"]["JetPtJEC"])
+
 
 def compute_index_eta(eta_bin):
     # if eta_sections == ["negneg", "neg", "pos", "pospos"]:
@@ -665,6 +704,55 @@ def compute_index_eta(eta_bin):
     #     correct_eta_bins[eta_bin],
     # )
     return index, eta_sign
+
+
+def fit_inv_median(ax, x, y, yerr, variable, y_pos):
+    # define the function to fit with 9 parameters
+    def func(x, p0, p1, p2, p3, p4, p5, p6, p7, p8):
+        return (
+            p0
+            + p1 / (np.log10(x) ** 2 + p2)
+            + p3 * np.exp(-p4 * (np.log10(x) - p5) ** 2)
+            + p6 * np.exp(-p7 * (np.log10(x) - p8) ** 2)
+        )
+
+    p_initial = [
+        9.14823123e-01,
+        1.59850801e00,
+        1.08444406e01,
+        -1.65510940e00,
+        5.75460089e00,
+        -4.40873200e-01,
+        -4.04888813e-02,
+        1.09142869e02,
+        1.43155927e00,
+    ]
+    # do the fit
+    # popt, pcov = curve_fit(func, x, y, p0=p_initial, sigma=yerr, absolute_sigma=True)
+    popt, pcov = p_initial, None
+
+    # plot the fit
+    x_fit = np.linspace(x[0], x[-1], 1000)
+    y_fit = func(x_fit, *popt)
+    ax.plot(x_fit, y_fit, color="black", linestyle="--", label=f"Fit standard+Gaussian")
+
+    # print chi2 and p-value on the plot
+    chi2 = np.sum(((y - func(x, *popt)) / yerr) ** 2)
+    ndof = len(x) - len(popt)
+    p_value = 1 - stats.chi2.cdf(chi2, ndof)
+    ax.text(
+        0.98,
+        0.2 + y_pos,
+        f"$\chi^2$ / ndof = {chi2:.2f} / {ndof}" + f"p-value = {p_value:.2f}",
+        horizontalalignment="right",
+        verticalalignment="top",
+        transform=ax.transAxes,
+        # reduce dimension of the text
+        bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+    )
+
+    print("popt", popt)
+    print("pcov", pcov)
 
 
 def plot_median_resolution(eta_bin, plot_type):
@@ -740,10 +828,18 @@ def plot_median_resolution(eta_bin, plot_type):
         max_value = 0
         for flav in plot_dict[eta_sign][flav_group].keys():
             for variable in plot_dict[eta_sign][flav_group][flav].keys():
+                if "Response" not in variable:
+                    continue
                 plot_array = plot_dict[eta_sign][flav_group][flav][variable][index, :]
+                err_plot_array = (
+                    err_plot_dict[eta_sign][flav_group][flav][variable][index, :]
+                    if err_plot_dict is not None
+                    else None
+                )
 
                 if "inverse" in plot_type:
                     plot_array = 1 / plot_array
+                    err_plot_array = err_plot_array * plot_array**2
                 if "weighted" in plot_type:
                     plot_array = (
                         plot_array
@@ -755,11 +851,6 @@ def plot_median_resolution(eta_bin, plot_type):
                     max(max_value, np.nanmax(plot_array))
                     if not np.all(np.isnan(plot_array))
                     else max_value
-                )
-                err_plot_array = (
-                    err_plot_dict[eta_sign][flav_group][flav][variable][index, :]
-                    if err_plot_dict is not None
-                    else None
                 )
 
                 if variable not in variables_colors.keys():
@@ -777,7 +868,13 @@ def plot_median_resolution(eta_bin, plot_type):
                 # )
                 plot = True
                 ax.errorbar(
-                    pt_bins[1:],
+                    (
+                        pt_bins[1:]
+                        if "inverse" not in plot_type
+                        else plot_dict[eta_sign][flav_group][flav][
+                            variable.replace("Response", "JetPt")
+                        ][index, :]
+                    ),
                     plot_array,
                     yerr=(err_plot_array),
                     label=f"{variable.replace('Response','')} ({flav.replace('_','') if flav != '' else 'inclusive'})",
@@ -785,6 +882,49 @@ def plot_median_resolution(eta_bin, plot_type):
                     color=variables_colors[variable],
                     linestyle="None",
                 )
+                y_pos=0
+                if "inverse" in plot_type and "PNet" in variable:
+                    mask_nan = (
+                        ~np.isnan(plot_array)
+                        & ~np.isnan(err_plot_array)
+                        & (
+                            ~np.isnan(
+                                plot_dict[eta_sign][flav_group][flav][
+                                    variable.replace("Response", "JetPt")
+                                ][index, :]
+                            )
+                        )
+                    )
+                    x = plot_dict[eta_sign][flav_group][flav][
+                        variable.replace("Response", "JetPt")
+                    ][index, :]
+                    mask_clip = x > 20
+                    mask_tot = mask_nan & mask_clip
+                    x = x[mask_tot]
+                    y = plot_array[mask_tot]
+                    y_err = err_plot_array[mask_tot]
+                    print(
+                        "x",
+                        x,
+                        "y",
+                        y,
+                        "y_err",
+                        y_err,
+                        variable,
+                        eta_sign,
+                        flav_group,
+                        flav,
+                        index,
+                    )
+                    fit_inv_median(
+                        ax,
+                        x,
+                        y,
+                        y_err,
+                        variable,
+                        y_pos,
+                    )
+                    y_pos += -0.1
                 if "ResponsePNetReg" in variable and "resolution" in plot_type:
                     # plot ratio pnreg / jec
                     jec = (
@@ -815,7 +955,9 @@ def plot_median_resolution(eta_bin, plot_type):
         # check if plot_array is only nan or 0
         if not np.all(np.isnan(plot_array)) and not np.all(plot_array == 0):
             ax.set_ylim(top=1.1 * max_value)
-        if "median" in plot_type:
+        if "inverse" in plot_type:
+            ax.set_xlabel(r"$p_{T}^{Reco}$ [GeV]")
+        elif "median" in plot_type:
             ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
         else:
             ax_ratio.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
@@ -971,10 +1113,30 @@ def plot_histos(eta_pt, response_dir):
                     os.makedirs(f"{response_dir}", exist_ok=True)
                 values = histos[index][pt_bin][0]
                 bins = histos[index][pt_bin][1]
-                if len(values)==0:
-                    print("SKIP histo:","flav", flav, "variable", variable, "eta", correct_eta_bins[eta_bin], "pt", pt_bins[pt_bin])
+                if len(values) == 0:
+                    print(
+                        "SKIP histo:",
+                        "flav",
+                        flav,
+                        "variable",
+                        variable,
+                        "eta",
+                        correct_eta_bins[eta_bin],
+                        "pt",
+                        pt_bins[pt_bin],
+                    )
                     continue
-                print("histo:","flav", flav, "variable", variable, "eta", correct_eta_bins[eta_bin], "pt", pt_bins[pt_bin])
+                print(
+                    "histo:",
+                    "flav",
+                    flav,
+                    "variable",
+                    variable,
+                    "eta",
+                    correct_eta_bins[eta_bin],
+                    "pt",
+                    pt_bins[pt_bin],
+                )
                 fig, ax = plt.subplots()
                 max_value = max(max_value, np.nanmax(values))
                 # bins_mid = (bins[1:] + bins[:-1]) / 2
@@ -1030,7 +1192,6 @@ def plot_histos(eta_pt, response_dir):
                     # put frame
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
-
 
                 fig.savefig(
                     f"{response_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
