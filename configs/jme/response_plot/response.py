@@ -102,17 +102,17 @@ args = parser.parse_args()
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
-flavs = (
-    {
+if args.full and args.central:
+    flavs = {
         ("inclusive",): ["."],
         ("b", "c"): [".", "x"],
         ("uds", "g"): [".", "x"],
     }
-    if args.full
-    else {(args.flav,): ["."]}
-)
+elif args.full:
+    flavs = {("inclusive",): ["."]}
+else:
+    flavs = {(args.flav,): ["."]}
 
-flavs_not_inclusive = ["", "_b_", "_c_", "_uds_", "_g_"]
 
 variables_colors = {
     "ResponseJEC": "blue",
@@ -182,9 +182,7 @@ print("plot_2d_dir", plot_2d_dir)
 
 correct_eta_bins = eta_bins
 
-# eta_sections = ["negneg", "neg", "pos", "pospos"]
-eta_sections = ["neg1", "neg2", "pos1", "pos2"]
-# eta_sections=["neg", "pos"]
+eta_sections = list(eta_sign_dict.keys())
 
 if args.load:
     print("loading response from file")
@@ -661,39 +659,39 @@ if args.central:
 correct_eta_bins = np.array(correct_eta_bins)
 print("correct_eta_bins", correct_eta_bins, len(correct_eta_bins))
 
-print(
-    "medians_dict[eta_sign][flav_group][flav].keys()",
-    medians_dict[eta_sign][flav_group][flav].keys(),
-)
-print(medians_dict["central"][("inclusive",)]["inclusive"]["JetPtJEC"])
-
 
 def compute_index_eta(eta_bin):
     # if eta_sections == ["negneg", "neg", "pos", "pospos"]:
-    if eta_sections == ["neg1", "neg2", "pos1", "pos2"]:
-        if eta_bin < len(correct_eta_bins[correct_eta_bins < -1.83]):  # 19:
-            index = eta_bin
-            eta_sign = "neg1"
-            # print("np.sum(correct_eta_bins< -1.83)",    np.sum(correct_eta_bins< -1.83))
-        elif eta_bin < len(correct_eta_bins[correct_eta_bins < 0.0]):  # 38:
-            index = eta_bin - len(correct_eta_bins[correct_eta_bins < -1.83])  # 20
-            eta_sign = "neg2"
-            # print("np.sum(correct_eta_bins>= -1.83 and correct_eta_bins< -0.087)",    np.sum((correct_eta_bins>= -1.83) & (correct_eta_bins< -0.087)))
-        elif eta_bin < len(correct_eta_bins[correct_eta_bins < 1.83]):  # 58:
-            index = eta_bin - len(correct_eta_bins[correct_eta_bins < 0.0])  # 39
-            eta_sign = "pos1"
-            # print("np.sum(correct_eta_bins>= -0.087 and correct_eta_bins< 1.74)",    np.sum((correct_eta_bins>= -0.087) & (correct_eta_bins< 1.74)))
-        elif eta_bin < len(correct_eta_bins):  # 81
-            index = eta_bin - len(correct_eta_bins[correct_eta_bins < 1.83])  # 59
-            eta_sign = "pos2"
-            # print("np.sum(correct_eta_bins>= 1.74)",    np.sum(correct_eta_bins>= 1.74))
-    elif eta_sections == ["neg", "pos"]:
-        if correct_eta_bins[eta_bin] < 0.0:
-            index = eta_bin
-            eta_sign = "neg"
-        elif correct_eta_bins[eta_bin] >= 0.0:
-            index = eta_bin - np.sum(correct_eta_bins <= 0.0)
-            eta_sign = "pos"
+    # if eta_sections == ["neg1", "neg2", "neg3", "pos1", "pos2", "pos3"]:
+    for eta_sign, eta_interval in eta_sign_dict.items():
+        if eta_bin < len(correct_eta_bins[correct_eta_bins < eta_interval[1]]):
+            index = eta_bin- len(correct_eta_bins[correct_eta_bins < eta_interval[0]])
+            eta_sign = eta_sign
+            break
+
+    #     if eta_bin < len(correct_eta_bins[correct_eta_bins < -1.83]):  # 19:
+    #         index = eta_bin
+    #         eta_sign = "neg1"
+    #         # print("np.sum(correct_eta_bins< -1.83)",    np.sum(correct_eta_bins< -1.83))
+    #     elif eta_bin < len(correct_eta_bins[correct_eta_bins < 0.0]):  # 38:
+    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < -1.83])  # 20
+    #         eta_sign = "neg2"
+    #         # print("np.sum(correct_eta_bins>= -1.83 and correct_eta_bins< -0.087)",    np.sum((correct_eta_bins>= -1.83) & (correct_eta_bins< -0.087)))
+    #     elif eta_bin < len(correct_eta_bins[correct_eta_bins < 1.83]):  # 58:
+    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < 0.0])  # 39
+    #         eta_sign = "pos1"
+    #         # print("np.sum(correct_eta_bins>= -0.087 and correct_eta_bins< 1.74)",    np.sum((correct_eta_bins>= -0.087) & (correct_eta_bins< 1.74)))
+    #     elif eta_bin < len(correct_eta_bins):  # 81
+    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < 1.83])  # 59
+    #         eta_sign = "pos2"
+    #         # print("np.sum(correct_eta_bins>= 1.74)",    np.sum(correct_eta_bins>= 1.74))
+    # elif eta_sections == ["neg", "pos"]:
+    #     if correct_eta_bins[eta_bin] < 0.0:
+    #         index = eta_bin
+    #         eta_sign = "neg"
+    #     elif correct_eta_bins[eta_bin] >= 0.0:
+    #         index = eta_bin - np.sum(correct_eta_bins <= 0.0)
+    #         eta_sign = "pos"
     # print(
     #     "eta_bin",
     #     eta_bin,
@@ -753,6 +751,7 @@ def fit_inv_median(ax, x, y, yerr, variable, y_pos):
 
     print("popt", popt)
     print("pcov", pcov)
+    print("y_pos", y_pos)
 
 
 def plot_median_resolution(eta_bin, plot_type):
@@ -827,6 +826,7 @@ def plot_median_resolution(eta_bin, plot_type):
         plot = False
         max_value = 0
         for flav in plot_dict[eta_sign][flav_group].keys():
+            y_pos = 0
             for variable in plot_dict[eta_sign][flav_group][flav].keys():
                 if "Response" not in variable:
                     continue
@@ -882,7 +882,6 @@ def plot_median_resolution(eta_bin, plot_type):
                     color=variables_colors[variable],
                     linestyle="None",
                 )
-                y_pos=0
                 if "inverse" in plot_type and "PNet" in variable:
                     mask_nan = (
                         ~np.isnan(plot_array)
@@ -916,15 +915,16 @@ def plot_median_resolution(eta_bin, plot_type):
                         flav,
                         index,
                     )
-                    fit_inv_median(
-                        ax,
-                        x,
-                        y,
-                        y_err,
-                        variable,
-                        y_pos,
-                    )
-                    y_pos += -0.1
+                    if len(x) != 0:
+                        fit_inv_median(
+                            ax,
+                            x,
+                            y,
+                            y_err,
+                            variable,
+                            y_pos,
+                        )
+                        y_pos += - 0.1
                 if "ResponsePNetReg" in variable and "resolution" in plot_type:
                     # plot ratio pnreg / jec
                     jec = (

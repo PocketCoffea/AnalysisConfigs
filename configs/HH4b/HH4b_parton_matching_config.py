@@ -32,7 +32,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 # adding object preselection
-year = "2022_postEE" 
+year = "2022_postEE"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -50,12 +50,16 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                "GluGlutoHHto4B",
+                # "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_kl0_poisson",
                 # "GluGlutoHHto4B_kl2p45_poisson",
                 # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
+                "GluGlutoHHto4B_private",
+                "GluGlutoHHto4B_kl0_private",
+                "GluGlutoHHto4B_kl2p45_private",
+                "GluGlutoHHto4B_kl5_private",
             ],
             "samples_exclude": [],
             "year": [year],

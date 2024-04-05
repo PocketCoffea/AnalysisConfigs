@@ -1,8 +1,8 @@
-# python exec.py --full -pnet  --test
+# python exec.py --full -pnet
 
 import subprocess
 import argparse
-from params.binning import eta_bins
+from params.binning import eta_bins, eta_sign_dict
 import os
 from time import sleep
 
@@ -30,9 +30,9 @@ parser.add_argument(
 parser.add_argument(
     "-s",
     "--sign",
-    help="Sign of eta bins (--, -, +, ++, all)",
+    help="Sign of eta bins" ,
     type=str,
-    default="-",
+    default="neg3",
 )
 parser.add_argument(
     "-fs",
@@ -98,8 +98,7 @@ eta_bins = eta_bins if not args.inclusive_eta else None
 
 executor = "--test" if args.test else "-e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml"
 
-sign_dict= {"--": "neg1", "-" : "neg2", "+": "pos1", "++": "pos2", "all": "all"}
-# sign_dict= {"--": "negneg", "-" : "neg", "+": "pos", "++": "pospos", "all": "all"}
+eta_sign_list=list(eta_sign_dict.keys())
 dir_prefix = os.environ.get("WORK", "") + "/out_jme/"
 print("dir_prefix", dir_prefix)
 
@@ -120,12 +119,12 @@ if args.cartesian or args.full:
     sign = args.sign
     flav= args.flav
 
-    flavs_list = ["inclusive", "b", "c", "g", "uds"] if args.full else []
+    flavs_list = ["inclusive", "b", "c", "g", "uds"] if (args.full and args.central) else ["inclusive"]
 
     tmux_session = (
         "full_cartesian"
         if args.full
-        else f"{sign_dict[sign]}_cartesian"
+        else f"{sign}_cartesian"
     )
     command0 = f"tmux kill-session -t {tmux_session}"
     subprocess.run(command0, shell=True)
@@ -135,20 +134,19 @@ if args.cartesian or args.full:
         subprocess.run(command1, shell=True)
 
     if args.full:
-        for sign in list(sign_dict.keys()) if not args.central else [""]:
+        for sign in eta_sign_list if not args.central else [""]:
             if sign == "all":
                 continue
             for flav in flavs_list:
                 dir_name = (
-                    f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}{args.dir}/{(sign_dict[sign])if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
+                    f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}{args.dir}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
                 )
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
-        # TODO: combine the output files for the positive and negative eta bins
     else:
         dir_name = (
-            f"{dir_prefix}out_cartesian_{(sign_dict[sign]) if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )

@@ -87,21 +87,40 @@ eta_bins = [
     5.191,
 ]
 
+eta_sign_dict={
+    "neg1": [-5.191, -3.314],
+    "neg2": [-3.314, -1.83],
+    "neg3": [-1.83, -0.957],
+    "neg4": [-0.957, 0.0],
+    "pos1": [0.0, 0.957],
+    "pos2": [0.957, 1.83],
+    "pos3": [1.83, 3.314],
+    "pos4": [3.314, 5.191],
+    # "all": [-5.191, 5.191],
+}
 
-if str(os.environ.get("SIGN", None)) == "--":
-    eta_bins = [i for i in eta_bins if i <= -1.83]
-if str(os.environ.get("SIGN", None)) == "-":
-    eta_bins = [i for i in eta_bins if i >= -1.83 and i <= 0.0]
-elif str(os.environ.get("SIGN", None)) == "+":
-    eta_bins = [i for i in eta_bins if i >= 0.0 and i <= 1.83]
-elif str(os.environ.get("SIGN", None)) == "++":
-    eta_bins = [i for i in eta_bins if i >= 1.83]
+# eta_sign_dict={
+#     "neg": [-5.191, 0.0],
+#     "pos": [0.0, 5.191],
+# }
+
+for eta_sign, eta_interval in eta_sign_dict.items():
+    if str(os.environ.get("SIGN", None)) == eta_sign:
+        eta_bins = [i for i in eta_bins if i >= eta_interval[0] and i <= eta_interval[1]]
+        break
+
+# if str(os.environ.get("SIGN", None)) == "neg1":
+#     eta_bins = [i for i in eta_bins if i <= -1.83]
+# if str(os.environ.get("SIGN", None)) == "-":
+#     eta_bins = [i for i in eta_bins if i >= -1.83 and i <= 0.0]
+# elif str(os.environ.get("SIGN", None)) == "+":
+#     eta_bins = [i for i in eta_bins if i >= 0.0 and i <= 1.83]
+# elif str(os.environ.get("SIGN", None)) == "++":
+#     eta_bins = [i for i in eta_bins if i >= 1.83]
 
 central_bins=[-5.191, -1.3, 1.3, 5.191]
 if int(os.environ.get("CENTRAL", 0)) == 1:
-    # eta_bins=[-1.3, 1.3]
-    eta_bins=central_bins #HERE
-    # eta_bins=[-6., -1.3,-0.5, 0, 0.5, 1.3, 6.] #HERE
+    eta_bins=central_bins
 
 pt_bins = [
     15.0,
