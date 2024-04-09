@@ -47,6 +47,7 @@ cfg = Configurator(
         "jsons": [
             f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_private_redirector.json",
         ],
         "filter": {
             "samples": [
@@ -57,9 +58,6 @@ cfg = Configurator(
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
                 "GluGlutoHHto4B_private",
-                "GluGlutoHHto4B_kl0_private",
-                "GluGlutoHHto4B_kl2p45_private",
-                "GluGlutoHHto4B_kl5_private",
             ],
             "samples_exclude": [],
             "year": [year],

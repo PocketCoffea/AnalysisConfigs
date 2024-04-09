@@ -1,21 +1,4 @@
 {
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_poisson_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
-        "metadata": {
-            "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
-            "sample": "GluGlutoHHto4B_poisson",
-            "year": "2022_postEE",
-            "isMC": "True",
-            "xsec": "0.02964",
-            "part": "kl-1p00_kt-1p00_c2-0p00",
-            "nevents": "100000",
-            "size": "224369283"
-        },
-        "files": [
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/2540000/00d98799-ada3-4a26-8558-5052891a8d23.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/30000/70a2f3a2-1cac-4633-bb22-9bb48ea4114c.root",
-            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/50000/fc603037-ef65-4bbf-9cef-934ecec40bbe.root"
-        ]
-    },
     "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM']",
@@ -83,10 +66,27 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2022_realistic_postEE_v6-v1/80000/7637aff6-285b-4551-a5bb-fd9e3dc418ac.root"
         ]
     },
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_poisson_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
+        "metadata": {
+            "das_names": "['/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+            "sample": "GluGlutoHHto4B_poisson",
+            "year": "2022_postEE",
+            "isMC": "True",
+            "xsec": "0.02964",
+            "part": "kl-1p00_kt-1p00_c2-0p00",
+            "nevents": "100000",
+            "size": "224369283"
+        },
+        "files": [
+            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/2540000/00d98799-ada3-4a26-8558-5052891a8d23.root",
+            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/30000/70a2f3a2-1cac-4633-bb22-9bb48ea4114c.root",
+            "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/50000/fc603037-ef65-4bbf-9cef-934ecec40bbe.root"
+        ]
+    },
     "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_poisson_kl-0p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
-            "sample": "GluGlutoHHto4B_kl0_poisson",
+            "sample": "GluGlutoHHto4B_poisson",
             "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.06648",
@@ -103,7 +103,7 @@
     "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_poisson_kl-2p45_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
-            "sample": "GluGlutoHHto4B_kl2p45_poisson",
+            "sample": "GluGlutoHHto4B_poisson",
             "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.01252",
@@ -119,7 +119,7 @@
     "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_poisson_kl-5p00_kt-1p00_c2-0p00_2022_postEE": {
         "metadata": {
             "das_names": "['/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
-            "sample": "GluGlutoHHto4B_kl5_poisson",
+            "sample": "GluGlutoHHto4B_poisson",
             "year": "2022_postEE",
             "isMC": "True",
             "xsec": "0.08664",
@@ -131,186 +131,6 @@
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/30000/a59b19b9-8d64-4cb0-99f8-4a1a146cd6aa.root",
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/0298fd49-3a5b-498b-9678-0a0f92d9d017.root",
             "root://cmsdcadisk.fnal.gov//dcache/uscmsdisk/store/mc/Run3Summer22EENanoAODv12/GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/Poisson60KeepRAW_130X_mcRun3_2022_realistic_postEE_v6-v2/40000/8e6d78d6-63a8-41bf-afb9-e5d6a93e6303.root"
-        ]
-    },
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_private_kl-1p00_kt-1p00_c2-0p00_2022_postEE": {
-        "metadata": {
-            "das_names": "['/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER']",
-            "dbs_instance": "prod/phys03",
-            "sample": "GluGlutoHHto4B_private",
-            "year": "2022_postEE",
-            "isMC": "True",
-            "xsec": "0.02964",
-            "part": "kl-1p00_kt-1p00_c2-0p00",
-            "nevents": "1496000",
-            "size": "3364401910"
-        },
-        "files": [
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_28.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_4.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_6.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_24.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_17.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_21.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_1.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_11.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_16.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_20.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_2.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_19.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_26.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_9.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_27.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_25.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_12.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_18.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_22.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_29.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_15.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_7.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_23.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_10.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_3.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_13.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_30.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_5.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_14.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133344/0000/nanoaodStep_8.root"
-        ]
-    },
-    "GluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_private_kl-0p00_kt-1p00_c2-0p00_2022_postEE": {
-        "metadata": {
-            "das_names": "['/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER']",
-            "dbs_instance": "prod/phys03",
-            "sample": "GluGlutoHHto4B_kl0_private",
-            "year": "2022_postEE",
-            "isMC": "True",
-            "xsec": "0.06648",
-            "part": "kl-0p00_kt-1p00_c2-0p00",
-            "nevents": "1494015",
-            "size": "3256779111"
-        },
-        "files": [
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_15.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_25.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_21.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_13.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_11.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_7.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_4.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_8.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_18.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_2.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_29.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_6.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_3.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_10.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_9.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_12.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_24.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_23.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_28.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_27.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_5.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_22.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_14.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_1.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_16.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_17.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_19.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_30.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_26.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133354/0000/nanoaodStep_20.root"
-        ]
-    },
-    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_private_kl-2p45_kt-1p00_c2-0p00_2022_postEE": {
-        "metadata": {
-            "das_names": "['/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER']",
-            "dbs_instance": "prod/phys03",
-            "sample": "GluGlutoHHto4B_kl2p45_private",
-            "year": "2022_postEE",
-            "isMC": "True",
-            "xsec": "0.01252",
-            "part": "kl-2p45_kt-1p00_c2-0p00",
-            "nevents": "1489001",
-            "size": "3380760258"
-        },
-        "files": [
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_6.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_20.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_26.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_21.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_9.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_24.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_4.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_30.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_8.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_28.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_2.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_5.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_3.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_11.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_13.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_1.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_12.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_7.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_29.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_23.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_25.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_10.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_19.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_22.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_18.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_15.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_16.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_17.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_14.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133403/0000/nanoaodStep_27.root"
-        ]
-    },
-    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_private_kl-5p00_kt-1p00_c2-0p00_2022_postEE": {
-        "metadata": {
-            "das_names": "['/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER']",
-            "dbs_instance": "prod/phys03",
-            "sample": "GluGlutoHHto4B_kl5_private",
-            "year": "2022_postEE",
-            "isMC": "True",
-            "xsec": "0.08664",
-            "part": "kl-5p00_kt-1p00_c2-0p00",
-            "nevents": "1496012",
-            "size": "3017751413"
-        },
-        "files": [
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_20.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_29.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_28.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_18.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_23.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_17.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_6.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_2.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_24.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_10.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_27.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_15.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_8.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_5.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_13.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_3.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_26.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_19.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_21.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_4.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_16.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_11.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_1.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_9.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_14.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_22.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_25.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_30.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_12.root",
-            "root://redirector.t2.ucsd.edu:1095///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240404_133413/0000/nanoaodStep_7.root"
         ]
     }
 }

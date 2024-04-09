@@ -12,6 +12,11 @@ from hist import Hist
 import hist
 import functools
 import math
+import json
+
+
+import ROOT
+ROOT.gROOT.SetBatch(True)
 
 from scipy.optimize import curve_fit
 import scipy.stats as stats
@@ -120,12 +125,16 @@ variables_colors = {
     "ResponsePNetReg": "red",
     "ResponsePNetRegNeutrino": "purple",
 }
+if args.jet_pt:
+    variables_colors.update(
+        {
+            "JetPtJEC": "blue",
+            "JetPtRaw": "green",
+            "JetPtPNetReg": "red",
+            "JetPtPNetRegNeutrino": "purple",
+        }
+    )
 
-jet_pt_variables = (
-    ["JetPtJEC", "JetPtRaw", "JetPtPNetReg", "JetPtPNetRegNeutrino"]
-    if args.jet_pt
-    else []
-)
 
 # run bash command
 os.system("export SIGN=''")
@@ -210,7 +219,7 @@ if args.load:
                 if args.histograms:
                     response_dict[eta_sign][flav_group][flav] = dict()
                 print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav)
-                for variable in list(variables_colors.keys()) + jet_pt_variables:
+                for variable in list(variables_colors.keys()) :
                     if args.full:
                         median_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
@@ -424,7 +433,7 @@ else:
                                             bins = h1d.axes[0].edges
                                             bins_mid = (bins[1:] + bins[:-1]) / 2
 
-                                            # HERE: uncomment HERE
+                                            #remove the first bin which is a peak to zero in the response
                                             bins_mid = bins_mid[1:]
                                             values = values[1:]
                                             if all([v <= 1 for v in values]):
@@ -445,38 +454,38 @@ else:
                                                         (np.array([]), np.array([]))
                                                     )
                                                 break
+                                            if args.histograms:
+                                                # rebin the histogram
+                                                max_value=(2 if "Response" in variable else pt_bins[j+1]*1.5)
+                                                min_value=(1e-3 if "Response" in variable else pt_bins[j]*0.5)
+                                                try:
+                                                    max_index = np.where(bins > max_value)[0][0]
+                                                except IndexError:
+                                                    max_index = len(bins) - 1
+                                                min_index = np.where(bins < min_value)[0][-1]
+
+                                                rebin_factor = 20 if "Response" in variable else max(len(bins[min_index:max_index])//50, 1)
+                                                rebinned_bins = np.array(
+                                                    bins[min_index:max_index][::rebin_factor]
+                                                )
+                                                rebinned_values = np.add.reduceat(
+                                                    values[min_index:max_index],
+                                                    range(
+                                                        0,
+                                                        len(values[min_index:max_index]),
+                                                        rebin_factor,
+                                                    ),
+                                                )
+                                                if "Response" not in variable:
+                                                    print("bins", bins[min_index:max_index], "values", values[min_index:max_index])
+                                                    print("rebinned_bins", rebinned_bins, "rebinned_values", rebinned_values)
+
+                                                response_dict[eta_sign][flav_group][
+                                                    flav
+                                                ][variable][i].append(
+                                                    (rebinned_values, rebinned_bins)
+                                                )
                                             if "Response" in variable:
-                                                if args.histograms:
-                                                    #     h_rebin = Hist(hist.axis.Regular(100, 0.0, 2., name=variable))
-                                                    #     new_num_bins = 100
-                                                    #     # rebin the histo1d
-                                                    #     new_bin_width = (bins[-1] - bins[0]) / new_num_bins
-                                                    #     new_bins = np.arange(bins[0], bins[-1] + new_bin_width, new_bin_width)
-                                                    #     values, bins = np.histogram(bins_mid, bins=new_bins, weights=values)
-                                                    rebin_factor = 20
-                                                    # get index where bins is > 2
-                                                    index_2 = np.where(bins > 2)[0][0]
-
-                                                    rebinned_bins = np.array(
-                                                        bins[:index_2][::rebin_factor]
-                                                    )
-                                                    rebinned_values = np.add.reduceat(
-                                                        values[:index_2],
-                                                        range(
-                                                            0,
-                                                            len(values[:index_2]),
-                                                            rebin_factor,
-                                                        ),
-                                                    )
-                                                    # print("bins", len(bins), "values", len(values))
-                                                    # print("rebinned_bins", len(rebinned_bins), "rebinned_values", len(rebinned_values))
-                                                    # h1d_rebinned = np.histogram(bins_mid, bins=rebinned_bins, weights=rebinned_values)
-
-                                                    response_dict[eta_sign][flav_group][
-                                                        flav
-                                                    ][variable][i].append(
-                                                        (rebinned_values, rebinned_bins)
-                                                    )
                                                 # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable, "eta", categories[i], "pt", h.axes["MatchedJets.pt"][j])
                                                 # print("values", values)
                                                 # print(variable)
@@ -665,7 +674,7 @@ def compute_index_eta(eta_bin):
     # if eta_sections == ["neg1", "neg2", "neg3", "pos1", "pos2", "pos3"]:
     for eta_sign, eta_interval in eta_sign_dict.items():
         if eta_bin < len(correct_eta_bins[correct_eta_bins < eta_interval[1]]):
-            index = eta_bin- len(correct_eta_bins[correct_eta_bins < eta_interval[0]])
+            index = eta_bin - len(correct_eta_bins[correct_eta_bins < eta_interval[0]])
             eta_sign = eta_sign
             break
 
@@ -704,16 +713,17 @@ def compute_index_eta(eta_bin):
     return index, eta_sign
 
 
-def fit_inv_median(ax, x, y, yerr, variable, y_pos):
-    # define the function to fit with 9 parameters
-    def func(x, p0, p1, p2, p3, p4, p5, p6, p7, p8):
-        return (
-            p0
-            + p1 / (np.log10(x) ** 2 + p2)
-            + p3 * np.exp(-p4 * (np.log10(x) - p5) ** 2)
-            + p6 * np.exp(-p7 * (np.log10(x) - p8) ** 2)
-        )
+# define the function to fit with 9 parameters
+def std_gaus(x, p0, p1, p2, p3, p4, p5, p6, p7, p8):
+    return (
+        p0
+        + p1 / (np.log10(x) ** 2 + p2)
+        + p3 * np.exp(-p4 * (np.log10(x) - p5) ** 2)
+        + p6 * np.exp(-p7 * (np.log10(x) - p8) ** 2)
+    )
 
+def fit_inv_median(ax, x, y, yerr, variable, y_pos, name_plot):
+    print("fit_inv_median")
     p_initial = [
         9.14823123e-01,
         1.59850801e00,
@@ -725,33 +735,154 @@ def fit_inv_median(ax, x, y, yerr, variable, y_pos):
         1.09142869e02,
         1.43155927e00,
     ]
+    p_initial = [
+        9.14823123e-01,
+        1.59850801e00,
+        1.08444406e01,
+        -1.65510940e00,
+        2.35460089e00,
+        1.1,
+        -4.04888813e-02,
+        1.09142869e02,
+        -1.43155927e00,
+    ]
     # do the fit
-    # popt, pcov = curve_fit(func, x, y, p0=p_initial, sigma=yerr, absolute_sigma=True)
-    popt, pcov = p_initial, None
+    popt, pcov = curve_fit(std_gaus, x, y, p0=p_initial, sigma=yerr, absolute_sigma=True)
+    # popt, pcov = p_initial, None
 
     # plot the fit
     x_fit = np.linspace(x[0], x[-1], 1000)
-    y_fit = func(x_fit, *popt)
-    ax.plot(x_fit, y_fit, color="black", linestyle="--", label=f"Fit standard+Gaussian")
+    y_fit = std_gaus(x_fit, *popt)
+    ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
 
     # print chi2 and p-value on the plot
-    chi2 = np.sum(((y - func(x, *popt)) / yerr) ** 2)
+    chi2 = np.sum(((y - std_gaus(x, *popt)) / yerr) ** 2)
     ndof = len(x) - len(popt)
     p_value = 1 - stats.chi2.cdf(chi2, ndof)
     ax.text(
         0.98,
         0.2 + y_pos,
-        f"$\chi^2$ / ndof = {chi2:.2f} / {ndof}" + f"p-value = {p_value:.2f}",
+        f"$\chi^2$ / ndof = {chi2:.2f} / {ndof}" + f", p-value = {p_value:.2f}",
         horizontalalignment="right",
         verticalalignment="top",
         transform=ax.transAxes,
-        # reduce dimension of the text
-        bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+        color=variables_colors[variable],
+        fontsize=8,
     )
 
-    print("popt", popt)
-    print("pcov", pcov)
-    print("y_pos", y_pos)
+    print(
+        "\n",
+        name_plot,
+        "\nx",
+        x,
+        "\ny",
+        y,
+        "\nyerr",
+        yerr,
+        "\npopt",
+        popt,
+        "\npcov",
+        pcov,
+        "\nchi2/ndof",
+        chi2,
+        "/",
+        ndof,
+        "p_value",
+        p_value,
+    )
+    fit_results= {
+        "x": x,
+        "y": y,
+        "yerr": yerr,
+        "parameters": popt,
+        "errors":   np.sqrt(np.diag(pcov)),
+        "chi2": chi2,
+        "ndof": ndof,
+        "p_value": p_value
+    }
+
+    return fit_results
+
+def fit_inv_median_root(ax, x, y, yerr, variable, y_pos, name_plot):
+    print("fit_inv_median_root")
+    # define the function to fit with 9 parameters
+    func_string="[0] + [1] / (TMath::Log10(x) * TMath::Log10(x) + [2]) + [3] * TMath::Exp(-[4] * (TMath::Log10(x) - [5]) * (TMath::Log10(x) - [5])) + [6] * TMath::Exp(-[7] * (TMath::Log10(x) - [8]) * (TMath::Log10(x) - [8]))"
+    func_root = ROOT.TF1("func_root", func_string, x[0], x[-1])
+    func_root.SetParameters(
+        9.14823123e-01,
+        1.59850801e00,
+        1.08444406e01,
+        -1.65510940e00,
+        2.35460089e00,
+        1.1,
+        -4.04888813e-02,
+        1.09142869e02,
+        -1.43155927e00,
+    )
+
+    graph = ROOT.TGraphErrors(len(x), x, y, np.zeros(len(x)), yerr)
+    graph.Fit("func_root", "S E N")
+
+
+    param_fit = [func_root.GetParameter(i) for i in range(9)]
+    param_err_fit = [func_root.GetParError(i) for i in range(9)]
+
+    # delete graph
+    del graph
+
+    # plot the fit
+    x_fit = np.linspace(x[0], x[-1], 1000)
+    y_fit = std_gaus(x_fit, *param_fit)
+    ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
+
+    # print chi2 and p-value on the plot
+    chi2 = np.sum(((y - std_gaus(x, *param_fit)) / yerr) ** 2)
+    ndof = len(x) - len(param_fit)
+    p_value = 1 - stats.chi2.cdf(chi2, ndof)
+    ax.text(
+        0.98,
+        0.2 + y_pos,
+        f"$\chi^2$ / ndof = {chi2:.2f} / {ndof}" + f", p-value = {p_value:.2f}",
+        horizontalalignment="right",
+        verticalalignment="top",
+        transform=ax.transAxes,
+        color=variables_colors[variable],
+        fontsize=8,
+    )
+
+    print(
+        "\n",
+        name_plot,
+        "\nx",
+        x,
+        "\ny",
+        y,
+        "\nyerr",
+        yerr,
+        "\npars",
+        param_fit,
+        "\nerr_pars",
+        param_err_fit,
+        "\nchi2/ndof",
+        chi2,
+        "/",
+        ndof,
+        "p_value",
+        p_value,
+    )
+
+    fit_results= {
+        "x": list(x),
+        "y": list(y),
+        "yerr": list(yerr),
+        "parameters": param_fit,
+        "errors":   param_err_fit,
+        "chi2": chi2,
+        "ndof": ndof,
+        "p_value": p_value
+    }
+
+    return fit_results
 
 
 def plot_median_resolution(eta_bin, plot_type):
@@ -789,6 +920,8 @@ def plot_median_resolution(eta_bin, plot_type):
 
     # for eta_sign in medians_dict.keys():
     for flav_group in plot_dict[eta_sign].keys():
+        # create a file to save a dictionary with the fit results
+        tot_fit_results = dict()
         # print("plotting median", flav_group, "eta", eta_sign)
         if "median" in plot_type:
             fig, ax = plt.subplots()
@@ -838,8 +971,8 @@ def plot_median_resolution(eta_bin, plot_type):
                 )
 
                 if "inverse" in plot_type:
+                    err_plot_array = err_plot_array /( plot_array**2)
                     plot_array = 1 / plot_array
-                    err_plot_array = err_plot_array * plot_array**2
                 if "weighted" in plot_type:
                     plot_array = (
                         plot_array
@@ -853,7 +986,7 @@ def plot_median_resolution(eta_bin, plot_type):
                     else max_value
                 )
 
-                if variable not in variables_colors.keys():
+                if variable not in list(variables_colors.keys()):
                     continue
                 # print(
                 #     "plotting median",
@@ -897,34 +1030,38 @@ def plot_median_resolution(eta_bin, plot_type):
                     x = plot_dict[eta_sign][flav_group][flav][
                         variable.replace("Response", "JetPt")
                     ][index, :]
-                    mask_clip = x > 20
+                    mask_clip = x > 10
                     mask_tot = mask_nan & mask_clip
                     x = x[mask_tot]
                     y = plot_array[mask_tot]
                     y_err = err_plot_array[mask_tot]
-                    print(
-                        "x",
-                        x,
-                        "y",
-                        y,
-                        "y_err",
-                        y_err,
-                        variable,
-                        eta_sign,
-                        flav_group,
-                        flav,
-                        index,
-                    )
+                    # print(
+                    #     "x",
+                    #     x,
+                    #     "y",
+                    #     y,
+                    #     "y_err",
+                    #     y_err,
+                    #     variable,
+                    #     eta_sign,
+                    #     flav_group,
+                    #     flav,
+                    #     index,
+                    #     correct_eta_bins[eta_bin],
+                    # )
                     if len(x) != 0:
-                        fit_inv_median(
+                        fit_results=fit_inv_median_root(
                             ax,
                             x,
                             y,
                             y_err,
                             variable,
                             y_pos,
+                            f"{eta_sign} {flav} {correct_eta_bins[eta_bin]} ({index}) {variable}",
                         )
-                        y_pos += - 0.1
+                        y_pos += -0.1
+                        tot_fit_results[f"{flav}_{variable}"] = fit_results
+
                 if "ResponsePNetReg" in variable and "resolution" in plot_type:
                     # plot ratio pnreg / jec
                     jec = (
@@ -947,6 +1084,9 @@ def plot_median_resolution(eta_bin, plot_type):
                         color=variables_colors[variable],
                         linestyle="None",
                     )
+                if "median" in plot_type:
+                    # plot line at 1 for the whole figure
+                    ax.axhline(y=1, color="black", linestyle="-", linewidth=0.7)
 
             j += 1
         # if no variable is plotted, skip
@@ -976,7 +1116,23 @@ def plot_median_resolution(eta_bin, plot_type):
         # log x scale
         ax.set_xscale("log")
 
-        ax.legend(frameon=False, ncol=2, loc="upper right")
+        handles, labels = ax.get_legend_handles_labels()
+        handles_dict = dict(zip(labels, handles))
+        unique_labels = list(set(handles_dict.keys()))
+        unique_dict = {label: handles_dict[label] for label in unique_labels}
+        # add elemtns to the legend by hand
+        unique_dict["Fit standard+Gaussian"] = plt.Line2D(
+            [0], [0], color="black", linestyle="--", label="Fit standard+Gaussian"
+        )
+
+        ax.legend(
+            unique_dict.values(),
+            unique_dict.keys(),
+            frameon=False,
+            ncol=2,
+            loc="upper right",
+        )
+        # ax.legend(frameon=False, ncol=2, loc="upper right")
 
         ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
         if "resolution" in plot_type:
@@ -1044,6 +1200,14 @@ def plot_median_resolution(eta_bin, plot_type):
                     bbox_inches="tight",
                     dpi=300,
                 )
+                if tot_fit_results:
+                    # save the fit results dictionary to a file
+                    with open(
+                        f"{plot_dir}/fit_results_{plot_type}_Response_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.json",
+                        "w",
+                    ) as f:
+                        json.dump(tot_fit_results, f, indent=4)
+
 
         else:
             fig.savefig(
@@ -1051,6 +1215,13 @@ def plot_median_resolution(eta_bin, plot_type):
                 bbox_inches="tight",
                 dpi=300,
             )
+            if tot_fit_results:
+                # save the fit results dictionary to a file
+                with open(
+                    f"{plots_dir}/fit_results_{plot_type}_Response_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.json",
+                    "w",
+                ) as f:
+                    json.dump(tot_fit_results, f)
         plt.close(fig)
 
 
@@ -1072,11 +1243,13 @@ def plot_histos(eta_pt, response_dir):
     for flav_group in response_dict[eta_sign].keys():
         # print("plotting histos", flav_group, "eta", eta_sign    )
         for flav in response_dict[eta_sign][flav_group].keys():
-            fig_tot, ax_tot = plt.subplots()
+            fig_tot_response, ax_tot_response = plt.subplots()
+            fig_tot_jetpt, ax_tot_jetpt = plt.subplots()
+
             max_value = 0
             for variable in response_dict[eta_sign][flav_group][flav].keys():
                 histos = response_dict[eta_sign][flav_group][flav][variable]
-                if variable not in variables_colors.keys() or index >= len(histos):
+                if variable not in list(variables_colors.keys()) or index >= len(histos):
                     print(
                         "skipping", variable, "index", index, "len(histos)", len(histos)
                     )
@@ -1126,17 +1299,17 @@ def plot_histos(eta_pt, response_dir):
                         pt_bins[pt_bin],
                     )
                     continue
-                print(
-                    "histo:",
-                    "flav",
-                    flav,
-                    "variable",
-                    variable,
-                    "eta",
-                    correct_eta_bins[eta_bin],
-                    "pt",
-                    pt_bins[pt_bin],
-                )
+                # print(
+                #     "histo:",
+                #     "flav",
+                #     flav,
+                #     "variable",
+                #     variable,
+                #     "eta",
+                #     correct_eta_bins[eta_bin],
+                #     "pt",
+                #     pt_bins[pt_bin],
+                # )
                 fig, ax = plt.subplots()
                 max_value = max(max_value, np.nanmax(values))
                 # bins_mid = (bins[1:] + bins[:-1]) / 2
@@ -1146,23 +1319,33 @@ def plot_histos(eta_pt, response_dir):
                     bins=bins,
                     weights=values,
                     histtype="step",
-                    label=f'{variable.replace("Response", "")} ({flav})',
+                    label=f'{variable.replace("Response", "").replace("JetPt", "")} ({flav})',
                     color=variables_colors[variable],
                     density=True,
                 )
-
-                ax_tot.hist(
-                    bins,
-                    bins=bins,
-                    weights=values,
-                    histtype="step",
-                    label=f'{variable.replace("Response", "")} ({flav})',
-                    color=variables_colors[variable],
-                    density=True,
-                )
+                if "Response" in variable:
+                    ax_tot_response.hist(
+                        bins,
+                        bins=bins,
+                        weights=values,
+                        histtype="step",
+                        label=f'{variable.replace("Response", "")} ({flav})',
+                        color=variables_colors[variable],
+                        density=True,
+                    )
+                if "JetPt" in variable:
+                    ax_tot_jetpt.hist(
+                        bins,
+                        bins=bins,
+                        weights=values,
+                        histtype="step",
+                        label=f'{variable.replace("JetPt", "")} ({flav})',
+                        color=variables_colors[variable],
+                        density=True,
+                    )
 
                 # write axis name in latex
-                ax.set_xlabel(f"Response")
+                ax.set_xlabel("Response" if "Response" in variable else r"$p_{T}^{Reco}$")
                 ax.set_ylabel(f"Normalized events")
                 # if np.any(values != np.nan) and np.any(values != 0):
                 #     ax.set_ylim(top=1.3 * np.nanmax(values))
@@ -1201,10 +1384,14 @@ def plot_histos(eta_pt, response_dir):
                 plt.close(fig)
 
             # write axis name in latex
-            ax_tot.set_xlabel(f"Response")
-            ax_tot.set_ylabel(f"Events")
+            ax_tot_response.set_xlabel(f"Response")
+            ax_tot_response.set_ylabel(f"Normalized events")
 
-            ax_tot.legend(frameon=False, loc="upper right")
+            ax_tot_jetpt.set_xlabel(r"$p_{T}^{Reco}$")
+            ax_tot_jetpt.set_ylabel(f"Normalized events")
+
+            ax_tot_response.legend(frameon=False, loc="upper right")
+            ax_tot_jetpt.legend(frameon=False, loc="upper right")
             # if np.any(values != np.nan) and np.any(values != 0):
             #     ax_tot.set_ylim(top=1.3 * max_value)
 
@@ -1215,7 +1402,7 @@ def plot_histos(eta_pt, response_dir):
                 label=f"Private Work",
             )
 
-            ax_tot.text(
+            ax_tot_response.text(
                 0.98,
                 0.7,
                 f"{correct_eta_bins[eta_bin]} <"
@@ -1226,15 +1413,36 @@ def plot_histos(eta_pt, response_dir):
                 + f"< {int(pt_bins[pt_bin+1])}",
                 horizontalalignment="right",
                 verticalalignment="top",
-                transform=ax_tot.transAxes,
+                transform=ax_tot_response.transAxes,
                 # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
             )
-            fig_tot.savefig(
+
+            ax_tot_jetpt.text(
+                0.98,
+                0.7,
+                f"{correct_eta_bins[eta_bin]} <"
+                + r"$\eta^{Gen}$"
+                + f"< {correct_eta_bins[eta_bin+1]}\n"
+                + f" {int(pt_bins[pt_bin])} <"
+                + r"$p_{T}^{Gen}$"
+                + f"< {int(pt_bins[pt_bin+1])}",
+                horizontalalignment="right",
+                verticalalignment="top",
+                transform=ax_tot_jetpt.transAxes,
+                # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+            )
+            fig_tot_response.savefig(
                 f"{response_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
                 bbox_inches="tight",
                 dpi=300,
             )
-            plt.close(fig_tot)
+            fig_tot_jetpt.savefig(
+                f"{response_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
+                bbox_inches="tight",
+                dpi=300,
+            )
+            plt.close(fig_tot_response)
+            plt.close(fig_tot_jetpt)
 
 
 def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
@@ -1264,7 +1472,7 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
             for flav in plot_dict[eta_sign][flav_group].keys():
                 for variable in plot_dict[eta_sign][flav_group][flav].keys():
-                    if variable not in variables_colors.keys():
+                    if variable not in list(variables_colors.keys()):
                         continue
                     median_2d = plot_dict[eta_sign][flav_group][flav][variable]
                     median_2d = np.array(median_2d)  # -1
@@ -1356,6 +1564,14 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
                     plt.close(fig)
 
+if args.no_plot:
+    sys.exit()
+print("Plotting inverse medians...")
+with Pool(args.num_processes) as p:
+    p.map(
+        functools.partial(plot_median_resolution, plot_type="inverse_median"),
+        range(len(correct_eta_bins) - 1 if not args.test else 1),
+    )
 
 if args.histograms:
     print("Plotting histograms...")
@@ -1365,8 +1581,6 @@ if args.histograms:
             eta_pt_bins.append((eta, pt))
     with Pool(args.num_processes) as p:
         p.map(functools.partial(plot_histos, response_dir=response_dir), eta_pt_bins)
-if args.no_plot:
-    sys.exit()
 
 # print("Plotting 2d median...")
 # plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
@@ -1375,12 +1589,6 @@ print("Plotting medians...")
 with Pool(args.num_processes) as p:
     p.map(
         functools.partial(plot_median_resolution, plot_type="median"),
-        range(len(correct_eta_bins) - 1 if not args.test else 1),
-    )
-print("Plotting inverse medians...")
-with Pool(args.num_processes) as p:
-    p.map(
-        functools.partial(plot_median_resolution, plot_type="inverse_median"),
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
@@ -1397,8 +1605,6 @@ with Pool(args.num_processes) as p:
         functools.partial(plot_median_resolution, plot_type="weighted_resolution"),
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
-
-# TODO: fit inverse median
 
 
 # print(median_dir)
