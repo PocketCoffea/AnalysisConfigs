@@ -47,17 +47,14 @@ cfg = Configurator(
         "jsons": [
             f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_private_redirector.json",
         ],
         "filter": {
             "samples": [
                 # "GluGlutoHHto4B",
-                # "GluGlutoHHto4B_kl0_poisson",
-                # "GluGlutoHHto4B_kl2p45_poisson",
-                # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
-                "GluGlutoHHto4B_private",
+                # "GluGlutoHHto4B_private",
+                "GluGlutoHHto4B_spanet",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -89,12 +86,13 @@ cfg = Configurator(
         # "jet_btag_medium": [jet_btag_medium_presel],
         # "jet_pt_copy2": [jet_pt_presel],
         # "jet_btag_loose": [jet_btag_loose_presel],
-        "2b_region": [hh4b_2b_region],
-        "4b_region": [hh4b_4b_region],
         # "full_parton_matching": [
         #     jet_btag_medium,
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
+
+        "4b_region": [hh4b_4b_region],
+        # "2b_region": [hh4b_2b_region],
     },
     weights={
         "common": {
@@ -273,44 +271,44 @@ cfg = Configurator(
     columns={
         "common": {
             "inclusive": [
-                ColOut(
-                    "bQuarkHiggsMatched",
-                    [
-                        "provenance",
-                        "dRMatchedJet",
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "bQuarkMatched",
-                    [
-                        "provenance",
-                        "dRMatchedJet",
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "bQuark",
-                    [
-                        "provenance",
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
+                # ColOut(
+                #     "bQuarkHiggsMatched",
+                #     [
+                #         "provenance",
+                #         "dRMatchedJet",
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "bQuarkMatched",
+                #     [
+                #         "provenance",
+                #         "dRMatchedJet",
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "bQuark",
+                #     [
+                #         "provenance",
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
                 ColOut(
                     "JetGoodHiggsMatched",
                     [
                         "provenance",
-                        "pdgId",
-                        "dRMatchedJet",
+                        # "pdgId",
+                        # "dRMatchedJet",
                         "pt",
                         "eta",
                         "phi",
@@ -326,8 +324,8 @@ cfg = Configurator(
                     "JetGoodMatched",
                     [
                         "provenance",
-                        "pdgId",
-                        "dRMatchedJet",
+                        # "pdgId",
+                        # "dRMatchedJet",
                         "pt",
                         "eta",
                         "phi",
@@ -367,60 +365,60 @@ cfg = Configurator(
                         "hadronFlavour",
                     ],
                 ),
-                ColOut(
-                    "RecoHiggs1",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "RecoHiggs2",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "PNetRegRecoHiggs1",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "PNetRegRecoHiggs2",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "PNetRegNeutrinoRecoHiggs1",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
-                ColOut(
-                    "PNetRegNeutrinoRecoHiggs2",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                    ],
-                ),
+                # ColOut(
+                #     "RecoHiggs1",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "RecoHiggs2",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "PNetRegRecoHiggs1",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "PNetRegRecoHiggs2",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "PNetRegNeutrinoRecoHiggs1",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
+                # ColOut(
+                #     "PNetRegNeutrinoRecoHiggs2",
+                #     [
+                #         "pt",
+                #         "eta",
+                #         "phi",
+                #         "mass",
+                #     ],
+                # ),
             ],
         },
         "bysample": {},
