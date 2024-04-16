@@ -36,15 +36,18 @@ cfg = Configurator(
     skim = [],
     
     preselections = [passthrough],
+    
     categories = {
-        "baseline": [passthrough],
+        "inclusive": [passthrough],
+        "weight10": [passthrough]
     },
 
     weights= {
         "common": {
-            "inclusive": [ "genWeight", "XS",
-                           eft_weights.getSMEFTweight(10),],
-            "bycategory": {},
+            "inclusive": [ "genWeight", "XS"],
+            "bycategory": {
+                "weight10": [ eft_weights.getSMEFTweight(10)]
+            },
         },
         "bysample": {},
     },
@@ -53,6 +56,10 @@ cfg = Configurator(
     },
     
     variables = {
+        "LHE_HT": HistConf(axes = [
+            Axis(field="HT", coll="LHE", name="LHE_HT", bins=50, start=0, stop=5000, label="LHE_HT [GeV]") ]),
+
+        
         **jet_hists(coll="GenJet", fields=["pt", "eta", "phi"]),
     },
     columns = {
