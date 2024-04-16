@@ -21,5 +21,4 @@ object_preselection:
       value: 4
       maxpt: 50.0
     btag:
-      wp:
-        M
+      wp: M
