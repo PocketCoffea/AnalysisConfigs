@@ -48,7 +48,7 @@ class ZmumuBaseProcessor(BaseProcessorABC):
             self.events, "Jet", self.params, "LeptonGood"
         )
         self.events["BJetGood"] = btagging(
-            self.events["JetGood"], self.params.btagging.working_point[self._year], wp=self.params.object_preselection.Jet["btag"]["wp"])
+            self.events["JetGood"], self.params.btagging.working_point[self._year], wp=self.params.object_preselection.Jet.btag.wp)
 
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
