@@ -128,12 +128,7 @@ def lepton_selection(events, lepton_flavour, params):
         passes_iso = leptons.pfRelIso03_all < cuts["iso"]
         passes_id = leptons[cuts["id"]] == True
         good_leptons = (
-            passes_eta
-            & passes_pt
-            & passes_iso
-            & passes_dxy
-            & passes_dz
-            & passes_id
+            passes_eta & passes_pt & passes_iso & passes_dxy & passes_dz & passes_id
         )
         # & passes_SC
 
