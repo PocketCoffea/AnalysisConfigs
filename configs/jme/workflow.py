@@ -190,11 +190,17 @@ class QCDBaseProcessor(BaseProcessorABC):
                     self.events["GenJetNeutrino"], self.events["Jet"], 0.2  # 0.4
                 )
 
-            # print("GenJetNeutrino", self.events["GenJetNeutrino"].pt[-7])
-            # print("GenJet", self.events["GenJet"].pt[-7])
-            # print(neutrinos.pt[-7])
+            print("GenJet", self.events["GenJet"].pt[-7])
+            print("GenJetNeutrino", self.events["GenJetNeutrino"].pt[-7])
+            print(neutrinos.pt[-7])
 
             # breakpoint()
+            print("GenJetNeutrino", len(self.events["GenJetNeutrino"].pt))
+            print("GenJet", len(self.events["GenJet"].pt))
+            print("GenJetNeutrinoMatched", len(self.events["GenJetNeutrinoMatched"].pt))
+            print("GenJetMatched", len(self.events["GenJetMatched"].pt))
+
+            # remove the None values
             self.events["GenJetMatched"] = self.events.GenJetMatched[
                 ~ak.is_none(self.events.GenJetMatched, axis=1)
             ]
@@ -207,6 +213,8 @@ class QCDBaseProcessor(BaseProcessorABC):
             self.events["JetNeutrinoMatched"] = self.events.JetNeutrinoMatched[
                 ~ak.is_none(self.events.JetNeutrinoMatched, axis=1)
             ]
+            print("GenJetNeutrinoMatched", len(self.events["GenJetNeutrinoMatched"].pt))
+            print("GenJetMatched", len(self.events["GenJetMatched"].pt))
 
             deltaR_matched = deltaR_matched[~ak.is_none(deltaR_matched, axis=1)]
             deltaR_Neutrino_matched = deltaR_Neutrino_matched[
@@ -266,6 +274,25 @@ class QCDBaseProcessor(BaseProcessorABC):
                 )
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
+                    ak.where(
+                        self.events.MatchedJets.ResponsePNetReg > 0,
+                        self.events.MatchedJets.ResponseRaw,
+                        0,
+                    ),
+                    "ResponseRaw",
+                )
+                self.events[f"MatchedJets"] = ak.with_field(
+                    self.events.MatchedJets,
+                    ak.where(
+                        self.events.MatchedJets.ResponsePNetReg > 0,
+                        self.events.MatchedJets.ResponseJEC,
+                        0,
+                    ),
+                    "ResponseJEC",
+                )
+
+                self.events[f"MatchedJets"] = ak.with_field(
+                    self.events.MatchedJets,
                     self.events.MatchedJets.JetPtRaw
                     * self.events.JetMatched.PNetRegPtRawCorr,
                     "JetPtPNetReg",
@@ -289,7 +316,6 @@ class QCDBaseProcessor(BaseProcessorABC):
                     "JetPtPNetRegNeutrino",
                 )
 
-                # HERE
                 # self.events[f"MatchedJets"] = ak.with_field(
                 #     self.events.MatchedJets,
                 #     self.events.MatchedJets.ResponsePNetReg,

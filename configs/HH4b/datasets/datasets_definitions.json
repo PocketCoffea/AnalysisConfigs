@@ -39,27 +39,6 @@
             }
         ]
     },
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00": {
-        "sample": "GluGlutoHHto4B_spanet",
-        "json_output": "datasets/signal_ggF_HH4b.json",
-        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
-        "files": [
-            {
-                "das_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
-                ],
-                "metadata": {
-                    "year": "2022_postEE",
-                    "isMC": true,
-                    "xsec": 0.02964,
-                    "part": ""
-                },
-                "das_parents_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
-                ]
-            }
-        ]
-    },
     "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_poisson": {
         "sample": "GluGlutoHHto4B_poisson",
         "json_output": "datasets/signal_ggF_HH4b.json",
@@ -167,7 +146,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-0p00_kt-0p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8 (WARNING: the xsec is with kt-1p00)",
         "files": [
@@ -189,7 +168,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
         "files": [
@@ -211,7 +190,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
         "files": [
@@ -233,7 +212,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-m2p00_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -255,7 +234,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-m1p00_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -277,7 +256,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-0p50_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -299,7 +278,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-1p50_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -321,7 +300,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-2p00_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -343,7 +322,7 @@
         ]
     },
     "GluGlutoHHto4B_kl-3p00_kt-1p00_c2-0p00_private": {
-        "sample": "GluGlutoHHto4B_spanet",
+        "sample": "GluGlutoHHto4B_private",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
         "files": [
@@ -365,6 +344,247 @@
         ]
     },
     "GluGlutoHHto4B_kl-4p00_kt-1p00_c2-0p00_private": {
+        "sample": "GluGlutoHHto4B_private",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-4p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-4p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
+                ]
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-0p00_kt-0p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-0p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8 (WARNING: the xsec is with kt-1p00)",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.06648,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-0p00_kt-0p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.01252,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-2p45_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.08664,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-m2p00_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-m1p00_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-m1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-m1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-0p50_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-1p50_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-1p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-1p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-2p00_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-3p00_kt-1p00_c2-0p00_private_spanet": {
+        "sample": "GluGlutoHHto4B_spanet",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "WARNING: the xsec is WRONG",
+        "files": [
+            {
+                "das_names": [
+                    "/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2-00000000000000000000000000000000/USER"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/rgerosa-Run3Summer22EEMiniAODv4_124X_mcRun3_2022_realistic_postEE_MINIAODSIM-8d987a117c9c64189fa569ace8eb11af/USER"
+                ],
+                "dbs_instance": "prod/phys03"
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-4p00_kt-1p00_c2-0p00_private_spanet": {
         "sample": "GluGlutoHHto4B_spanet",
         "json_output": "datasets/signal_ggF_HH4b.json",
         "description": "WARNING: the xsec is WRONG",
