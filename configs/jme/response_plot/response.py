@@ -677,46 +677,13 @@ print("correct_eta_bins", correct_eta_bins, len(correct_eta_bins))
 
 
 def compute_index_eta(eta_bin):
-    # if eta_sections == ["negneg", "neg", "pos", "pospos"]:
-    # if eta_sections == ["neg1", "neg2", "neg3", "pos1", "pos2", "pos3"]:
+
     for eta_sign, eta_interval in eta_sign_dict.items():
         if eta_bin < len(correct_eta_bins[correct_eta_bins < eta_interval[1]]):
             index = eta_bin - len(correct_eta_bins[correct_eta_bins < eta_interval[0]])
             eta_sign = eta_sign
             break
 
-    #     if eta_bin < len(correct_eta_bins[correct_eta_bins < -1.83]):  # 19:
-    #         index = eta_bin
-    #         eta_sign = "neg1"
-    #         # print("np.sum(correct_eta_bins< -1.83)",    np.sum(correct_eta_bins< -1.83))
-    #     elif eta_bin < len(correct_eta_bins[correct_eta_bins < 0.0]):  # 38:
-    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < -1.83])  # 20
-    #         eta_sign = "neg2"
-    #         # print("np.sum(correct_eta_bins>= -1.83 and correct_eta_bins< -0.087)",    np.sum((correct_eta_bins>= -1.83) & (correct_eta_bins< -0.087)))
-    #     elif eta_bin < len(correct_eta_bins[correct_eta_bins < 1.83]):  # 58:
-    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < 0.0])  # 39
-    #         eta_sign = "pos1"
-    #         # print("np.sum(correct_eta_bins>= -0.087 and correct_eta_bins< 1.74)",    np.sum((correct_eta_bins>= -0.087) & (correct_eta_bins< 1.74)))
-    #     elif eta_bin < len(correct_eta_bins):  # 81
-    #         index = eta_bin - len(correct_eta_bins[correct_eta_bins < 1.83])  # 59
-    #         eta_sign = "pos2"
-    #         # print("np.sum(correct_eta_bins>= 1.74)",    np.sum(correct_eta_bins>= 1.74))
-    # elif eta_sections == ["neg", "pos"]:
-    #     if correct_eta_bins[eta_bin] < 0.0:
-    #         index = eta_bin
-    #         eta_sign = "neg"
-    #     elif correct_eta_bins[eta_bin] >= 0.0:
-    #         index = eta_bin - np.sum(correct_eta_bins <= 0.0)
-    #         eta_sign = "pos"
-    # print(
-    #     "eta_bin",
-    #     eta_bin,
-    #     "index",
-    #     index,
-    #     "eta_sign",
-    #     eta_sign,
-    #     correct_eta_bins[eta_bin],
-    # )
     return index, eta_sign
 
 
@@ -828,7 +795,7 @@ def fit_inv_median_root(ax, x, y, yerr, variable, y_pos, name_plot):
     )
 
     graph = ROOT.TGraphErrors(len(x), x, y, np.zeros(len(x)), yerr)
-    graph.Fit("func_root", "S E N")
+    fit_info=str(graph.Fit("func_root", "S E N"))
 
 
     param_fit = [func_root.GetParameter(i) for i in range(9)]
@@ -878,6 +845,8 @@ def fit_inv_median_root(ax, x, y, yerr, variable, y_pos, name_plot):
         p_value,
     )
 
+    print("fit_info", fit_info)
+
     fit_results= {
         "x": list(x),
         "y": list(y),
@@ -886,31 +855,17 @@ def fit_inv_median_root(ax, x, y, yerr, variable, y_pos, name_plot):
         "errors":   param_err_fit,
         "chi2": chi2,
         "ndof": ndof,
-        "p_value": p_value
+        "p_value": p_value,
+        "fit_info": fit_info
     }
 
     return fit_results
 
 
 def plot_median_resolution(eta_bin, plot_type):
-    # if not args.central:
-    #     index = int(eta_bin % ((len(correct_eta_bins) - 1) / 2))
-    #     if eta_bin >= (len(correct_eta_bins) - 1) / 2:
-    #         eta_sign = "pos"
-    #     else:
-    #         eta_sign = "neg"
-    # else:
-    #     index = eta_bin
-    #     eta_sign = "central"
+
     if not args.central:
         index, eta_sign = compute_index_eta(eta_bin)
-        # eta_factor=(len(correct_eta_bins) - 1) / len(eta_sections)
-        # index = int(eta_bin % eta_factor)
-        # for i in range(len(eta_sections)):
-        #     if eta_bin >= eta_factor*i and eta_bin < eta_factor*(i+1):
-        #         eta_sign = eta_sections[i]
-        #         break
-        # print("eta_bin", eta_bin, "index", index, "eta_sign", eta_sign)
     else:
         index = eta_bin
         eta_sign = "central"
@@ -1238,11 +1193,6 @@ def plot_histos(eta_pt, histogram_dir):
     pt_bin = eta_pt[1]
     if not args.central:
         index, eta_sign = compute_index_eta(eta_bin)
-        # eta_factor=(len(correct_eta_bins) - 1) / len(eta_sections)
-        # index = int(eta_bin % eta_factor)
-        # for i in range(len(eta_sections)):
-        #     if eta_bin >= eta_factor*i and eta_bin < eta_factor*(i+1):
-        #         eta_sign = eta_sections[i]
     else:
         index = eta_bin
         eta_sign = "central"
@@ -1308,18 +1258,7 @@ def plot_histos(eta_pt, histogram_dir):
                         pt_bins[pt_bin],
                     )
                     break
-                    continue
-                # print(
-                #     "histo:",
-                #     "flav",
-                #     flav,
-                #     "variable",
-                #     variable,
-                #     "eta",
-                #     correct_eta_bins[eta_bin],
-                #     "pt",
-                #     pt_bins[pt_bin],
-                # )
+
                 plot=True
                 fig, ax = plt.subplots()
                 max_value = max(max_value, np.nanmax(values))
