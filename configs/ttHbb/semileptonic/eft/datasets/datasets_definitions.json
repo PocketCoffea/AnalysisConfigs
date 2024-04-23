@@ -1,0 +1,43 @@
+{
+    "ttHTobb_p1j_EFTcenter_w5w10":
+    {
+	"sample": "ttHTobb_p1j_EFTcenter",
+	"json_output": "datasets/ttHTobb_EFTcenter.json",
+	"files": [
+	    {
+		"das_names": [
+		    "/ttHbb_p1j_EFT_signal_EFTcenter/dvalsecc-SMEFTsim_topU3l_EFT_reweight10p0_v2-00000000000000000000000000000000/USER"
+		],
+		"metadata": {
+		    "year": "2018",
+		    "isMC": true,
+		    "xsec": 0.34
+		},
+		"dbs_instance": "prod/phys03"
+	    }
+	]
+	
+    },
+
+    "ttHTobb_p1j_SMcenter_w5w10":
+    {
+	"sample": "ttHTobb_p1j_SMcenter",
+	"json_output": "datasets/ttHTobb_SMcenter.json",
+	"files": [
+	    {
+		"das_names": [
+		    "/ttHbb_p1j_EFT_signal_SMcenter/dvalsecc-SMEFTsim_topU3l_SM_reweight10p0_v2-00000000000000000000000000000000/USER"
+		],
+		"metadata": {
+		    "year": "2018",
+		    "isMC": true,
+		    "xsec": 0.38
+		},
+		"dbs_instance": "prod/phys03"
+	    }
+	]
+	
+    }
+    
+    
+}
