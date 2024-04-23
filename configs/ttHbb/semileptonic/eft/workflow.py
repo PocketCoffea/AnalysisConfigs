@@ -2,6 +2,7 @@ import numpy as np
 import awkward as ak
 
 from coffea.analysis_tools import PackedSelection
+from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi, metric_pt
 
 from pocket_coffea.workflows.base import BaseProcessorABC
 
@@ -20,7 +21,7 @@ class BaseProcessorGen(BaseProcessorABC):
             mask = skim_func.get_mask(
                 self.events,
                 processor_params=self.params,
-                year=self._year,
+                year=self._year, 
                 sample=self._sample,
                 isMC=self._isMC,
             )
@@ -47,3 +48,96 @@ class BaseProcessorGen(BaseProcessorABC):
         defined in the object preselection.
         '''
         pass
+
+
+
+
+    def particle_selection(self):
+
+        is_higgs_mask = self.events.GenPart.pdgId == 25
+        is_top_mask = self.events.GenPart.pdgId == 6
+        is_antitop_mask = self.events.GenPart.pdgId == -6
+
+        #Optimized mask to identifiy the correct particles from GenPart
+        #In GenPart the last copy of the particle is the correct one (the one with children)
+
+        mask_flags = self.events.GenPart.hasFlags(['isPrompt', 'fromHardProcess', 'isHardProcess'])
+
+        #mask_children = ak.num(self.events.GenPart[is_higgs_mask].childrenIdxG, axis=2) == 2 
+
+        higgs = ak.flatten(self.events.GenPart[is_higgs_mask & mask_flags])
+        top = self.events.GenPart[is_top_mask & mask_flags]
+        antitop = self.events.GenPart[is_antitop_mask & mask_flags]
+
+
+        #self.events.HiggsParton cointains Higgs particles at GenPart level
+        #self.events.TopParton cointains top particles at GenPart level
+        #self.events.AntiTopParton cointains antitop particles at GenPart level
+        #self.events.nGenJet cointains the number of GenJets
+
+
+        self.events["HiggsParton"] = higgs 
+        self.events["TopParton"] = top 
+        self.events["AntiTopParton"] = antitop 
+
+
+        #deltaR between higgs and top
+
+        deltaR_ht = higgs.delta_r(top)
+
+        #deltaR between higgs and antitop
+
+        deltaR_hat = higgs.delta_r(antitop)
+
+        #self.events["deltaR_ht_min"] = ak.min(deltaR_ht, axis=1)
+        #self.events["deltaR_hat_min"] = ak.min(deltaR_hat, axis=1)
+
+        self.events["deltaR_ht"] = deltaR_ht
+        self.events["deltaR_hat"] = deltaR_ht
+
+
+
+        #Number of GenJet
+
+        nGenJet = ak.num(self.events.GenJet.mass)  #I just need to count the number of masses (or also other variables) in GenJet
+
+        self.events["nGenJet"] = nGenJet
+
+        
+        #delta_phi between the two top
+
+        deltaPhi = top.delta_phi(antitop)
+
+        self.events["deltaPhi_tt"] = deltaPhi
+
+
+        #delta_pt and sum_pt between the two top
+
+        deltaPt = abs(top.pt-antitop.pt)
+
+        self.events["deltaPt_tt"] = deltaPt
+
+        sumPt = (top+antitop).pt 
+ 
+        self.events["sumPt_tt"] = sumPt
+
+
+        #Weights 
+
+        self.events["LHE_w1"] = self.events.LHEReweightingWeight[:,1]
+        self.events["LHE_w2"] = self.events.LHEReweightingWeight[:,3]
+        self.events["LHE_w3"] = self.events.LHEReweightingWeight[:,5]
+        self.events["LHE_w4"] = self.events.LHEReweightingWeight[:,7]
+        self.events["LHE_w5"] = self.events.LHEReweightingWeight[:,9]
+        self.events["LHE_w6"] = self.events.LHEReweightingWeight[:,11]
+        self.events["LHE_w7"] = self.events.LHEReweightingWeight[:,13]
+        self.events["LHE_w8"] = self.events.LHEReweightingWeight[:,15] 
+        self.events["LHE_w9"] = self.events.LHEReweightingWeight[:,17]
+
+        
+
+
+    def process_extra_after_presel(self, variation) -> ak.Array:
+        self.particle_selection()
+
+
