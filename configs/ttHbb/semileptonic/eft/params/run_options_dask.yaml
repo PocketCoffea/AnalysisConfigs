@@ -4,4 +4,3 @@ chunksize: 400000
 mem-per-worker: "4GB"
 disk-per-worker: "2GB"
 queue: "microcentury"
-walltime: "6:00:00"
