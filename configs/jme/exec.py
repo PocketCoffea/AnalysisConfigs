@@ -127,7 +127,9 @@ def run_command(sign, flav, dir_name):
         subprocess.run(command4, shell=True)
 
     if args.neutrino == 1:
-        command5 = f'tmux send-keys "mv {dir_name}/output_all.coffea {dir_name}/output_all_neutrino.coffea" "C-m"'
+        dir_name_no_neutrino = dir_name.replace("_neutrino", "")
+        os.makedirs(dir_name_no_neutrino, exist_ok=True)
+        command5 = f'tmux send-keys "cp {dir_name}/output_all.coffea {dir_name_no_neutrino}/output_all_neutrino.coffea" "C-m"'
         subprocess.run(command5, shell=True)
 
 if args.cartesian or args.full:
@@ -162,13 +164,13 @@ if args.cartesian or args.full:
             if sign == "all":
                 continue
             for flav in flavs_list:
-                dir_name = f"{dir_prefix}out_cartesian_full{'_test' if args.test else ''}{args.dir}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}"
+                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}{'_test' if args.test else ''}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )
