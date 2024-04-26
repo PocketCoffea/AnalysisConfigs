@@ -131,6 +131,8 @@ def run_command(sign, flav, dir_name):
         os.makedirs(dir_name_no_neutrino, exist_ok=True)
         command5 = f'tmux send-keys "cp {dir_name}/output_all.coffea {dir_name_no_neutrino}/output_all_neutrino.coffea" "C-m"'
         subprocess.run(command5, shell=True)
+        # send twice to make sure it is copied
+        subprocess.run(command5, shell=True)
 
 if args.cartesian or args.full:
     print(
