@@ -71,7 +71,7 @@ cfg = Configurator(
 #The sm is eft_weights.getSMEFTweight(0)
 #In fact if you check the bsm LHEReweightingWeight are 45, while the sm LHEReweightingWeight are 44
 
-    weights= {
+    weights= { 
         "common": {
             "inclusive": [ "genWeight", "XS",], #weights applied to all category
             "bycategory": {
