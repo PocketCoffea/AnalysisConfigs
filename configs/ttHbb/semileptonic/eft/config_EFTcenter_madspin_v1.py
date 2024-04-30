@@ -25,6 +25,46 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/eft_params.yaml",
                                                   update=True)
 
+my_weights={}
+my_categories={}
+
+my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
+my_categories.update({'sm':[custom_cuts.cut_events]})
+
+for i in [5.,10.]:
+
+    name='weight1'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([i,0.,0.,0.,0.,0.,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight2'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,i,0.,0.,0.,0.,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight3'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,i,0.,0.,0.,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight4'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,i,0.,0.,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight5'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,i,0.,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight6'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,i,0.,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight7'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,i,0.])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
+    name='weight8'+'_'+str(int(i))
+    my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,i])]})
+    my_categories.update({name:[custom_cuts.cut_events]})
+
 
 
 cfg = Configurator(
@@ -44,9 +84,11 @@ cfg = Configurator(
     skim = [],
     
     preselections = [passthrough],
-    categories = {
-        "sm": [passthrough], #SM only inclusive, no weights
-        "weight1": [passthrough],
+    categories = my_categories,
+
+
+        # "sm": [passthrough], #SM only inclusive, no weights
+        # "weight1": [passthrough],
         # "weight1_10": [passthrough],
         # "weight2_5": [passthrough],
         # "weight2_10": [passthrough],
@@ -63,7 +105,6 @@ cfg = Configurator(
         # "weight8_5": [passthrough],
         # "weight8_10": [passthrough],
         
-    },
 
 #The first weight for events generated BSM is actually eft_weights.getSMEFTweight(1) and not eft_weights.getSMEFTweight(0)
 #The sm is eft_weights.getSMEFTweight(0)
@@ -72,9 +113,11 @@ cfg = Configurator(
     weights= { 
         "common": {
             "inclusive": [ "genWeight", "XS",], #weights applied to all category
-            "bycategory": {
-                "sm": [eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])],
-                "weight1": [eft_weights.getSMEFTweight([4.,0.,0.,0.,0.,0.,0.,0.])],#cthre 5
+            "bycategory": my_weights,
+            
+            
+                # "sm": [eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])],
+                # "weight1": [eft_weights.getSMEFTweight([4.,0.,0.,0.,0.,0.,0.,0.])],#cthre 5
                 # "weight1_10": [eft_weights.getSMEFTweight(2)],#cthre 10
                 # "weight2_5": [eft_weights.getSMEFTweight(3)],#ctwre 5
                 # "weight2_10": [eft_weights.getSMEFTweight(4)],#ctwre 10
@@ -91,7 +134,7 @@ cfg = Configurator(
                 # "weight8_5": [eft_weights.getSMEFTweight(15)],#chtbre 5
                 # "weight8_10": [eft_weights.getSMEFTweight(16)],#chtbre 10 
                 
-            }, #I can specify categories to whom I apply only one weight
+             #I can specify categories to whom I apply only one weight
         },
         "bysample": {},
     },
