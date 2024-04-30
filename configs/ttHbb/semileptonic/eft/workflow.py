@@ -6,9 +6,13 @@ from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi, metric_pt
 
 from pocket_coffea.workflows.base import BaseProcessorABC
 
+from eft_weights import EFTStructure
+
 class BaseProcessorGen(BaseProcessorABC):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
+
+        self.eft_structure = EFTStructure(self.params.eft.reweight_card)
 
     def skim_events(self):
         '''
@@ -48,9 +52,6 @@ class BaseProcessorGen(BaseProcessorABC):
         defined in the object preselection.
         '''
         pass
-
-
-
 
     def particle_selection(self):
 
@@ -96,7 +97,6 @@ class BaseProcessorGen(BaseProcessorABC):
         self.events["deltaR_hat"] = deltaR_ht
 
 
-
         #Number of GenJet
 
         nGenJet = ak.num(self.events.GenJet.mass)  #I just need to count the number of masses (or also other variables) in GenJet
@@ -111,6 +111,12 @@ class BaseProcessorGen(BaseProcessorABC):
         self.events["deltaPhi_tt"] = deltaPhi
 
 
+        #delta_eta between the two top
+
+        deltaEta = abs(top.eta-antitop.eta)
+
+        self.events["deltaEta_tt"] = deltaEta
+
         #delta_pt and sum_pt between the two top
 
         deltaPt = abs(top.pt-antitop.pt)
@@ -122,22 +128,12 @@ class BaseProcessorGen(BaseProcessorABC):
         self.events["sumPt_tt"] = sumPt
 
 
-        #Weights 
-
-        self.events["LHE_w1"] = self.events.LHEReweightingWeight[:,1]
-        self.events["LHE_w2"] = self.events.LHEReweightingWeight[:,3]
-        self.events["LHE_w3"] = self.events.LHEReweightingWeight[:,5]
-        self.events["LHE_w4"] = self.events.LHEReweightingWeight[:,7]
-        self.events["LHE_w5"] = self.events.LHEReweightingWeight[:,9]
-        self.events["LHE_w6"] = self.events.LHEReweightingWeight[:,11]
-        self.events["LHE_w7"] = self.events.LHEReweightingWeight[:,13]
-        self.events["LHE_w8"] = self.events.LHEReweightingWeight[:,15] 
-        self.events["LHE_w9"] = self.events.LHEReweightingWeight[:,17]
-
-        
-
 
     def process_extra_after_presel(self, variation) -> ak.Array:
+        # Compute the structure of the EFT weights for all the events
+        self.events["EFT_struct"] = ak.from_numpy(self.eft_structure.get_structure_constants(ak.to_numpy(self.events["LHEReweightingWeight"])))
+
         self.particle_selection()
 
 
+        
