@@ -111,7 +111,7 @@ cfg = Configurator(
 #In fact if you check the bsm LHEReweightingWeight are 45, while the sm LHEReweightingWeight are 44
 
     weights= { 
-        "common": {
+        "common": { 
             "inclusive": [ "genWeight", "XS",], #weights applied to all category
             "bycategory": my_weights,
             

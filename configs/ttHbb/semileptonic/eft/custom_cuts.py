@@ -66,10 +66,10 @@ cut_ctbre = Cut(
 cut_events = Cut(
      name= "",
      params = {
-        "j_pt_min":15.,
+        "j_pt_min":1000.,
         "j_eta_max":4.5,
         "l_pt_min":15.,
-        "l_eta_max":3,
+        "l_eta_max":3.,
      },
 
      function=cut_ev
