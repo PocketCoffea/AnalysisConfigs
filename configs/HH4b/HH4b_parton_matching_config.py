@@ -51,10 +51,10 @@ cfg = Configurator(
         "filter": {
             "samples": [
                 # "GluGlutoHHto4B",
-                "GluGlutoHHto4B_poisson",
+                # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET",
-                "GluGlutoHHto4B_private",
-                # "GluGlutoHHto4B_spanet",
+                # "GluGlutoHHto4B_private",
+                "GluGlutoHHto4B_spanet",
             ],
             "samples_exclude": [],
             "year": [year],
