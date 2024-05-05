@@ -11,6 +11,7 @@ import workflow
 from workflow import BaseProcessorGen
 
 import custom_cuts
+import numpy as np
 
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -31,7 +32,9 @@ my_categories={}
 my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
 my_categories.update({'sm':[custom_cuts.cut_events]})
 
-for i in [5.,10.]:
+weights_value=np.linspace(-20.,20.,31)
+
+for i in weights_value:
 
     name='weight1'+'_'+str(int(i))
     my_weights.update({name:[eft_weights.getSMEFTweight([i,0.,0.,0.,0.,0.,0.,0.])]})
@@ -70,10 +73,10 @@ for i in [5.,10.]:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter.json",
+        "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_madspin_reweightall"],
+            "samples": ["ttHTobb_p1j_EFTcenter_5F"],
             "samples_exclude" : [],
             #"year": []
         },
@@ -84,57 +87,14 @@ cfg = Configurator(
     skim = [],
     
     preselections = [passthrough],
+    
     categories = my_categories,
-
-
-        # "sm": [passthrough], #SM only inclusive, no weights
-        # "weight1": [passthrough],
-        # "weight1_10": [passthrough],
-        # "weight2_5": [passthrough],
-        # "weight2_10": [passthrough],
-        # "weight3_5": [passthrough],
-        # "weight3_10": [passthrough],
-        # "weight4_5": [passthrough],
-        # "weight4_10": [passthrough],
-        # "weight5_5": [passthrough],
-        # "weight5_10": [passthrough],
-        # "weight6_5": [passthrough],
-        # "weight6_10": [passthrough],
-        # "weight7_5": [passthrough],
-        # "weight7_10": [passthrough],
-        # "weight8_5": [passthrough],
-        # "weight8_10": [passthrough],
-        
-
-#The first weight for events generated BSM is actually eft_weights.getSMEFTweight(1) and not eft_weights.getSMEFTweight(0)
-#The sm is eft_weights.getSMEFTweight(0)
-#In fact if you check the bsm LHEReweightingWeight are 45, while the sm LHEReweightingWeight are 44
 
     weights= { 
         "common": { 
             "inclusive": [ "genWeight", "XS",], #weights applied to all category
             "bycategory": my_weights,
             
-            
-                # "sm": [eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])],
-                # "weight1": [eft_weights.getSMEFTweight([4.,0.,0.,0.,0.,0.,0.,0.])],#cthre 5
-                # "weight1_10": [eft_weights.getSMEFTweight(2)],#cthre 10
-                # "weight2_5": [eft_weights.getSMEFTweight(3)],#ctwre 5
-                # "weight2_10": [eft_weights.getSMEFTweight(4)],#ctwre 10
-                # "weight3_5": [eft_weights.getSMEFTweight(5)],#ctbre 5
-                # "weight3_10": [eft_weights.getSMEFTweight(6)],#ctbre 10
-                # "weight4_5": [eft_weights.getSMEFTweight(7)],#cbwre 5
-                # "weight4_10": [eft_weights.getSMEFTweight(8)],#cbwre 10
-                # "weight5_5": [eft_weights.getSMEFTweight(9)],#chq1 5
-                # "weight5_10": [eft_weights.getSMEFTweight(10)],#chq1 10
-                # "weight6_5": [eft_weights.getSMEFTweight(11)],#chq3 5
-                # "weight6_10": [eft_weights.getSMEFTweight(12)],#chq3 10 
-                # "weight7_5": [eft_weights.getSMEFTweight(13)],#cht 5 
-                # "weight7_10": [eft_weights.getSMEFTweight(14)],#cht 10 
-                # "weight8_5": [eft_weights.getSMEFTweight(15)],#chtbre 5
-                # "weight8_10": [eft_weights.getSMEFTweight(16)],#chtbre 10 
-                
-             #I can specify categories to whom I apply only one weight
         },
         "bysample": {},
     },

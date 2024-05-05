@@ -32,7 +32,7 @@ def cut_ev(events, params, year, sample, **kwargs):
     mask_ev_jets = ak.sum((mask_j_pt | mask_j_eta), axis=1) == 0
     mask_ev_lep = ak.sum((mask_l_pt | mask_l_eta), axis=1) == 0
 
-    return mask_ev_jets | mask_ev_lep
+    return mask_ev_jets & mask_ev_lep
 
 cut_ctwre = Cut(
     name = "",
@@ -66,8 +66,8 @@ cut_ctbre = Cut(
 cut_events = Cut(
      name= "",
      params = {
-        "j_pt_min":1000.,
-        "j_eta_max":4.5,
+        "j_pt_min":15.,
+        "j_eta_max":5.,
         "l_pt_min":15.,
         "l_eta_max":3.,
      },
