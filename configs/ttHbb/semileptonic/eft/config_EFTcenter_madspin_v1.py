@@ -32,7 +32,7 @@ my_categories={}
 my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
 my_categories.update({'sm':[custom_cuts.cut_events]})
 
-weights_value=np.linspace(-20.,20.,31)
+weights_value=np.linspace(-20.,20.,41)
 
 for i in weights_value:
 
