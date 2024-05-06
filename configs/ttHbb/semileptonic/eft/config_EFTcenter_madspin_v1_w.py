@@ -15,7 +15,7 @@ from workflow import BaseProcessorGen
 
 import custom_cuts
 
-import os
+import os 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
@@ -34,7 +34,7 @@ my_categories={}
 my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
 my_categories.update({'sm':[custom_cuts.cut_events]})
 
-weights_value=np.linspace(-20.,20.,31)
+weights_value=np.linspace(-20.,20.,21)
 
 for i in weights_value:
 
@@ -75,10 +75,10 @@ for i in weights_value:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter.json",
+        "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_5F"],
+            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarqqtlnu"],
             "samples_exclude" : [],
             #"year": []
         },
