@@ -76,7 +76,7 @@ cfg = Configurator(
         "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_5F"],
+            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarqqtlnu"],
             "samples_exclude" : [],
             #"year": []
         },
@@ -188,7 +188,7 @@ cfg = Configurator(
 
         # "LHE_w8" : HistConf(
         #     [Axis(coll="events", field="chtbre_BSMc", bins=300, start=0, stop=10, label="$w_8$")], only_categories=['sm'],
-        # ),
+        # ), 
 
 
         # "LHE_w1_2d" : HistConf(
