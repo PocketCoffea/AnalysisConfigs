@@ -115,7 +115,7 @@ def hh4b_presel_cuts(events, params, **kwargs):
 
     # convert false to None
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
-    jets_btag_order = events[mask_4jet_nolep_none].JetGood  # HERE JetGoodHiggs
+    jets_btag_order = events[mask_4jet_nolep_none].JetGood  # HERE_OLD_CUTS JetGoodHiggs
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)

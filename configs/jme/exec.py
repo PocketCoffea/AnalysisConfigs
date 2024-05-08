@@ -1,4 +1,4 @@
-# python exec.py --full -pnet
+# python exec.py --full -pnet --central --dir _correctNeutrinosSeparation_jetpt_ZerosPtResponse --neutrino 1
 
 import subprocess
 import argparse

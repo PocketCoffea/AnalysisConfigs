@@ -53,8 +53,7 @@ parser.add_argument(
     default=False,
 )
 parser.add_argument(
-    "-histo",
-    "--histograms",
+    "--histo",
     action="store_true",
     help="Plot the histograms",
     default=False,
@@ -109,6 +108,8 @@ GOOD_FIT = 0
 BAD_FIT = 0
 VALID_FIT = 0
 TOTAL_FIT = 0
+
+FIT = True
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -176,7 +177,7 @@ if not args.full:
     os.makedirs(f"{weighted_resolution_dir}", exist_ok=True)
     print("weighted_resolution_dir", weighted_resolution_dir)
 
-    if args.histograms:
+    if args.histo:
         histogram_dir = (
             f"{main_dir}/histogram_plots_unbinned"
             if args.unbinned
@@ -202,25 +203,25 @@ if args.load:
     medians_dict = dict()
     err_medians_dict = dict()
     resolutions_dict = dict()
-    if args.histograms:
+    if args.histo:
         histogram_dict = dict()
     for eta_sign in eta_sections if not args.central else ["central"]:
         medians_dict[eta_sign] = dict()
         err_medians_dict[eta_sign] = dict()
         resolutions_dict[eta_sign] = dict()
-        if args.histograms:
+        if args.histo:
             histogram_dict[eta_sign] = dict()
         for flav_group in flavs:
             medians_dict[eta_sign][flav_group] = dict()
             err_medians_dict[eta_sign][flav_group] = dict()
             resolutions_dict[eta_sign][flav_group] = dict()
-            if args.histograms:
+            if args.histo:
                 histogram_dict[eta_sign][flav_group] = dict()
             for flav in flav_group:
                 medians_dict[eta_sign][flav_group][flav] = dict()
                 err_medians_dict[eta_sign][flav_group][flav] = dict()
                 resolutions_dict[eta_sign][flav_group][flav] = dict()
-                if args.histograms:
+                if args.histo:
                     histogram_dict[eta_sign][flav_group][flav] = dict()
                 print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav)
                 for variable in list(variables_colors.keys()):
@@ -245,7 +246,7 @@ if args.load:
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
                         )
-                        if args.histograms:
+                        if args.histo:
                             histogram_dir = (
                                 f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_unbinned"
                                 if args.unbinned
@@ -261,7 +262,7 @@ if args.load:
                         f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy"
                     )
                     # TODO: load inverse median and weighted resolution
-                    if args.histograms:
+                    if args.histo:
                         # histogram_dict[eta_sign][flav_group][flav][variable] = np.load(
                         #     f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}.npy",
                         #     allow_pickle=True,
@@ -491,7 +492,7 @@ else:
                                                     )
                                                     continue
                                                     # break
-                                                if args.histograms:
+                                                if args.histo:
 
                                                     if REBIN:
                                                         # rebin the histogram
@@ -694,7 +695,7 @@ else:
                             #     medians_dict[eta_sign][flav_group][flav][variable],
                             # )
 
-                            # if args.histograms:
+                            # if args.histo:
                             # for i in range(len(histogram_dict[eta_sign][flav_group][flav][variable])):
                             #     for j in range(len(histogram_dict[eta_sign][flav_group][flav][variable][i])):
                             #         histogram_dict[eta_sign][flav_group][flav][variable][i][j] = (
@@ -759,7 +760,7 @@ else:
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
                     )
                     os.makedirs(f"{weighted_resolution_dir}", exist_ok=True)
-                    if args.histograms:
+                    if args.histo:
                         histogram_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_unbinned"
                             if args.unbinned
@@ -780,7 +781,7 @@ else:
                         resolutions_dict[eta_sign][flav_group][flav][variable],
                     )
                     # TODO: save inverse median and weighted resolution
-                    if args.histograms:
+                    if args.histo:
                         # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable)
                         # print(histogram_dict[eta_sign][flav_group][flav][variable])
                         # TODO: save the histograms correctly
@@ -936,8 +937,10 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
 
     # define the function to fit with 9 parameters
     # func_string = "[0] + [1] / (TMath::Log10(x) * TMath::Log10(x) + [2]) + [3] * TMath::Exp(-[4] * (TMath::Log10(x) - [5]) * (TMath::Log10(x) - [5])) + [6] * TMath::Exp(-[7] * (TMath::Log10(x) - [8]) * (TMath::Log10(x) - [8]))"
-    func_string = "[0]+([1]/(pow(log10(x),2)+[2]))+([3]*exp(-([4]*((log10(x)-[5])*(log10(x)-[5])))))+([6]*exp(-([7]*((log10(x)-[8])*(log10(x)-[8])))))"
-    func_root = ROOT.TF1("func_root", func_string, x[0], x[-1])
+    func_string1 = "[0]+([1]/(pow(log10(x),2)+[2]))"
+    func_string2 = "[0]+([1]/(pow(log10(x),2)+[2]))+([3]*exp(-([4]*((log10(x)-[5])*(log10(x)-[5])))))"
+    func_string3 = "[0]+([1]/(pow(log10(x),2)+[2]))+([3]*exp(-([4]*((log10(x)-[5])*(log10(x)-[5])))))+([6]*exp(-([7]*((log10(x)-[8])*(log10(x)-[8])))))"
+    func_root = ROOT.TF1("func_root", func_string2, x[0], x[-1])
 
     # func_root.SetParameters(
     #     9.14823123e-01,
@@ -1015,33 +1018,34 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         -0.48,
         5,
         0.8277,
-        -0.54,
-        0.249482,
-        0.9277,
+        # -0.54,
+        # 0.249482,
+        # 0.9277,
     )
-    func_root.SetParLimits(0, -2, 50)
-    func_root.SetParLimits(1, 0, 250)
-    func_root.SetParLimits(2, 0, 200)
-    func_root.SetParLimits(3, -15, 15)
-    func_root.SetParLimits(4, 0, 10)
-    func_root.SetParLimits(5, 0, 50)
-    func_root.SetParLimits(6, -20, 10)
-    func_root.SetParLimits(7, 0, 100)
-    func_root.SetParLimits(8, -50, 50)
+    # func_root.SetParLimits(0, -2, 50)
+    # func_root.SetParLimits(1, 0, 250)
+    # func_root.SetParLimits(2, 0, 200)
+    # func_root.SetParLimits(3, -15, 15)
+    # func_root.SetParLimits(4, 0, 10)
+    # func_root.SetParLimits(5, 0, 50)
+    # func_root.SetParLimits(6, -20, 10)
+    # func_root.SetParLimits(7, 0, 100)
+    # func_root.SetParLimits(8, -50, 50)
+
 
     # ROOT.TFitter.SetPrecision(10.)
 
     graph = ROOT.TGraphErrors(len(x), x, y, xerr, yerr)
 
-    fit_info = str(graph.Fit("func_root", "S N Q R E"))  # M E
+    fit_info = str(graph.Fit("func_root", "S N Q R"))  # M E
 
     # "EX0" 	When fitting a TGraphErrors or TGraphAsymErrors do not consider errors in the X coordinates
     # “E” Perform better errors estimation using the Minos technique
-
     # “M” Improve fit results, by using the IMPROVE algorithm of TMinuit. (problematic?)
 
-    param_fit = [func_root.GetParameter(i) for i in range(9)]
-    param_err_fit = [func_root.GetParError(i) for i in range(9)]
+    num_pars = func_root.GetNpar()
+    param_fit = [func_root.GetParameter(i) for i in range(num_pars)] + [0]*(9-num_pars)
+    param_err_fit = [func_root.GetParError(i) for i in range(num_pars)] + [0]*(9-num_pars)
 
     # delete graph
     del graph
@@ -1058,7 +1062,7 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         (y - std_gaus(x, *param_fit)) ** 2 / (yerr**2 + (xerr * derivatives) ** 2)
     )
 
-    ndof = len(x) - len(param_fit)
+    ndof = len(x) - num_pars
     p_value = 1 - stats.chi2.cdf(chi2, ndof)
     ax.text(
         0.98,
@@ -1071,7 +1075,7 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         fontsize=8,
     )
 
-    if "Invalid FitResult" not in str(fit_info):
+    if True: #"Invalid FitResult" not in str(fit_info):
         print(
             "\n",
             name_plot,
@@ -1273,7 +1277,7 @@ def plot_median_resolution(eta_bin, plot_type):
                         variable.replace("Response", "JetPt")
                     ][index, :]
                     # pt-clipping
-                    mask_clip = x > 35  # HERE
+                    mask_clip = x > 35  # HERE 35
                     mask_tot = mask_nan & mask_clip
                     x = x[mask_tot]
                     xerr = xerr[mask_tot]
@@ -1294,7 +1298,7 @@ def plot_median_resolution(eta_bin, plot_type):
                     #     index,
                     #     correct_eta_bins[eta_bin],
                     # )
-                    if len(x) > 9:
+                    if len(x) > 9 and FIT:
                         fit_results = fit_inv_median_root(
                             ax,
                             x,
@@ -1379,10 +1383,10 @@ def plot_median_resolution(eta_bin, plot_type):
 
         handles, labels = ax.get_legend_handles_labels()
         handles_dict = dict(zip(labels, handles))
-        unique_labels = list(set(handles_dict.keys()))
+        unique_labels = list((handles_dict.keys()))
         unique_dict = {label: handles_dict[label] for label in unique_labels}
         # add elemtns to the legend by hand
-        if plot_type == "inverse_median":
+        if plot_type == "inverse_median" and FIT:
             unique_dict["Fit standard+Gaussian"] = plt.Line2D(
                 [0], [0], color="black", linestyle="--", label="Fit standard+Gaussian"
             )
@@ -1393,9 +1397,8 @@ def plot_median_resolution(eta_bin, plot_type):
             frameon=False,
             ncol=2,
             loc="upper right",
-            fontsize=8,
+            fontsize=10,
         )
-        # ax.legend(frameon=False, ncol=2, loc="upper right")
 
         ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
         if "resolution" in plot_type:
@@ -1504,7 +1507,8 @@ def plot_histos(eta_pt, histogram_dir):
             fig_tot_response, ax_tot_response = plt.subplots()
             fig_tot_jetpt, ax_tot_jetpt = plt.subplots()
 
-            max_value = 0
+            max_value_response = 0
+            max_value_jetpt = 0
             for variable in histogram_dict[eta_sign][flav_group][flav].keys():
                 histos = histogram_dict[eta_sign][flav_group][flav][variable]
                 if variable not in list(variables_colors.keys()):
@@ -1572,6 +1576,9 @@ def plot_histos(eta_pt, histogram_dir):
                         color=variables_colors[variable],
                         density=True,
                     )
+                    max_value_response = max(
+                        max_value_response, np.nanmax(values) / (np.sum(values)*np.diff(bins)[0])
+                    )
                 if "JetPt" in variable:
                     ax_tot_jetpt.hist(
                         bins,
@@ -1582,10 +1589,12 @@ def plot_histos(eta_pt, histogram_dir):
                         color=variables_colors[variable],
                         density=True,
                     )
+                    max_value_jetpt = max(
+                        max_value_jetpt, np.nanmax(values) / (np.sum(values)*np.diff(bins)[0])
+                    )
 
                 if PLOT_SINGLE_HISTO:
                     fig, ax = plt.subplots()
-                    max_value = max(max_value, np.nanmax(values))
                     # bins_mid = (bins[1:] + bins[:-1]) / 2
                     # print("values", len(values), "bins", len(bins), "bins_mid", len(bins_mid))
                     ax.hist(
@@ -1604,7 +1613,7 @@ def plot_histos(eta_pt, histogram_dir):
                     )
                     ax.set_ylabel(f"Normalized events")
                     # if np.any(values != np.nan) and np.any(values != 0):
-                    #     ax.set_ylim(top=1.3 * np.nanmax(values))
+                    #     ax.set_ylim(top=1.2 * np.nanmax(values))
 
                     ax.legend(frameon=False, loc="upper right")
 
@@ -1647,7 +1656,9 @@ def plot_histos(eta_pt, histogram_dir):
                 # write axis name in latex
                 ax_tot_response.set_xlabel(f"Response")
                 ax_tot_response.set_ylabel(f"Normalized events")
-                ax_tot_response.legend(frameon=False, loc="upper right")
+                ax_tot_response.legend(frameon=False, loc="upper right", ncol=2)
+
+                ax_tot_response.set_ylim(top=1.2 * max_value_response)
                 hep.cms.label(
                     year="2022",
                     com="13.6",
@@ -1680,10 +1691,9 @@ def plot_histos(eta_pt, histogram_dir):
                 )
                 ax_tot_jetpt.set_xlabel(r"$p_{T}^{Reco}$")
                 ax_tot_jetpt.set_ylabel(f"Normalized events")
-                ax_tot_jetpt.legend(frameon=False, loc="upper right")
+                ax_tot_jetpt.legend(frameon=False, loc="upper right", ncol=2)
 
-                # if np.any(values != np.nan) and np.any(values != 0):
-                #     ax_tot.set_ylim(top=1.3 * max_value)
+                ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
 
                 hep.cms.label(
                     year="2022", com="13.6", label=f"Private Work", ax=ax_tot_jetpt
@@ -1844,10 +1854,19 @@ with Pool(args.num_processes) as p:
     )
 # for eta_bin in range(len(correct_eta_bins) - 1 if not args.test else 1):
 #     plot_median_resolution(eta_bin, "inverse_median")
-print("TOTAL_FIT",TOTAL_FIT, "GOOD_FIT", GOOD_FIT, "BAD_FIT", BAD_FIT, "VALID_FIT", VALID_FIT)
+print(
+    "TOTAL_FIT",
+    TOTAL_FIT,
+    "GOOD_FIT",
+    GOOD_FIT,
+    "BAD_FIT",
+    BAD_FIT,
+    "VALID_FIT",
+    VALID_FIT,
+)
 sys.exit()
 
-if args.histograms:
+if args.histo:
     print("Plotting histograms...")
     eta_pt_bins = []
     for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
