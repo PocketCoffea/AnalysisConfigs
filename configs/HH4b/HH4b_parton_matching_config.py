@@ -52,9 +52,9 @@ cfg = Configurator(
             "samples": [
                 # "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_poisson",
-                # "DATA_JetMET",
+                "DATA_JetMET_JMENano",
                 # "GluGlutoHHto4B_private",
-                "GluGlutoHHto4B_spanet",
+                # "GluGlutoHHto4B_spanet",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -91,8 +91,8 @@ cfg = Configurator(
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
 
-        "4b_region": [hh4b_4b_region],
-        # "2b_region": [hh4b_2b_region],
+        # "4b_region": [hh4b_4b_region],
+        "2b_region": [hh4b_2b_region],
     },
     weights={
         "common": {
@@ -317,7 +317,7 @@ cfg = Configurator(
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
-                        "hadronFlavour",
+                        # "hadronFlavour",
                     ],
                 ),
                 ColOut(
@@ -334,7 +334,7 @@ cfg = Configurator(
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
-                        "hadronFlavour",
+                        # "hadronFlavour",
                     ],
                 ),
                 ColOut(
@@ -348,7 +348,7 @@ cfg = Configurator(
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
-                        "hadronFlavour",
+                        # "hadronFlavour",
                     ],
                 ),
                 ColOut(
@@ -362,7 +362,7 @@ cfg = Configurator(
                         "mass",
                         "btagPNetB",
                         "ptPnetRegNeutrino",
-                        "hadronFlavour",
+                        # "hadronFlavour",
                     ],
                 ),
                 # ColOut(
