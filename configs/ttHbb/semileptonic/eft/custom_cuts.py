@@ -68,7 +68,7 @@ cut_events = Cut(
      params = {
         "j_pt_min":15.,
         "j_eta_max":5.,
-        "l_pt_min":15.,
+        "l_pt_min":[15.,5.],
         "l_eta_max":3.,
      },
 

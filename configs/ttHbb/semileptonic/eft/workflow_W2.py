@@ -116,7 +116,7 @@ class BaseProcessorGen(BaseProcessorABC):
 
         #delta_eta between the two top
 
-        deltaEta = top.eta-antitop.eta
+        deltaEta = abs(top.eta-antitop.eta)
 
         self.events["deltaEta_tt"] = deltaEta
 
