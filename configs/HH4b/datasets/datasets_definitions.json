@@ -670,5 +670,124 @@
                 "dbs_instance": "prod/phys03"
             }
         ]
+    },
+    "QCD-4Jets": {
+        "sample": "QCD-4Jets",
+        "json_output": "datasets/QCD.json",
+        "description": "",
+        "files": [
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1.968e+06,
+                    "part": "HT-200to400"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1.000e+05,
+                    "part": "HT-400to600"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1.337e+04,
+                    "part": "HT-600to800"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 3.191e+03,
+                    "part": "HT-800to1000"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 8.997e+02,
+                    "part": "HT-1000to1200"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 3.695e+02,
+                    "part": "HT-1200to1500"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1.272e+02,
+                    "part": "HT-1500to2000"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            },
+            {
+                "das_names": [
+                    "/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 2.514e+01,
+                    "part": "HT-2000"
+                },
+                "das_parents_names": [
+                    "/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
+                ]
+            }
+        ]
     }
 }

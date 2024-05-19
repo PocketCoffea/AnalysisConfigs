@@ -46,13 +46,15 @@ cfg = Configurator(
     datasets={
         "jsons": [
             f"{localdir}/datasets/DATA_JetMET.json",
+            f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
             "samples": [
                 # "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_poisson",
-                "DATA_JetMET_JMENano",
+                # "DATA_JetMET_JMENano",
+                "QCD-4Jets",
                 # "GluGlutoHHto4B_private",
                 # "GluGlutoHHto4B_spanet",
             ],
@@ -66,6 +68,7 @@ cfg = Configurator(
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 4,
         "which_bquark": "last",  # HERE
+        "provenance": False,  # HERE
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),

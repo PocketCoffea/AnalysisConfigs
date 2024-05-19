@@ -13,6 +13,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
+        self.provenance = self.workflow_options["provenance"]
 
     def apply_object_preselection(self, variation):
         # super().apply_object_preselection(variation=variation)
@@ -180,7 +181,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         return reco_higgs1, reco_higgs2
 
     def process_extra_after_presel(self, variation) -> ak.Array:
-        if self._isMC:
+        if self._isMC and self.provenance:
             self.do_parton_matching(which_bquark=self.which_bquark)
             # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
             self.events["nbQuarkHiggsMatched"] = ak.num(
