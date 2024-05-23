@@ -7,14 +7,12 @@ from coffea.analysis_tools import PackedSelection
 from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi, metric_pt
 
 from pocket_coffea.workflows.base import BaseProcessorABC
-import eft_weights
-from eft_weights import EFTStructure
+#import eft_weights
 
 class BaseProcessorGen(BaseProcessorABC):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
 
-        self.eft_structure = EFTStructure(self.params.eft.reweight_card)
 
 
     def skim_events(self):
@@ -114,8 +112,10 @@ class BaseProcessorGen(BaseProcessorABC):
         #delta_phi between the two top
 
         deltaPhi = top.delta_phi(antitop)
+        deltaPhi_abs = abs(top.phi-antitop.phi)
 
         self.events["deltaPhi_tt"] = deltaPhi
+        self.events["deltaPhi_tt_abs"] = deltaPhi_abs
 
 
         #delta_eta between the two top
@@ -164,7 +164,6 @@ class BaseProcessorGen(BaseProcessorABC):
 
     def process_extra_after_presel(self, variation) -> ak.Array:
         # Compute the structure of the EFT weights for all the events
-        self.events["EFT_struct"] = ak.from_numpy(self.eft_structure.get_structure_constants(ak.to_numpy(self.events["LHEReweightingWeight"])))
 
         self.particle_selection()
 
