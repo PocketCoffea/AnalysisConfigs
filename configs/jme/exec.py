@@ -1,4 +1,4 @@
-# python exec.py --full -pnet --central --dir _correctNeutrinosSeparation_jetpt_ZerosPtResponse --neutrino 1
+# python exec.py --full -pnet --central --dir _correctNeutrinosSeparation_jetpt_ZerosPtResponse --neutrino 1 / 0
 
 import subprocess
 import argparse
@@ -63,6 +63,19 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
+    "--suffix",
+    help="Suffix",
+    type=str,
+    default="",
+)
+parser.add_argument(
+    "-y",
+    "--year",
+    help="Year",
+    type=str,
+    default="2018",
+)
+parser.add_argument(
     "-f",
     "--flav",
     help="Flavour",
@@ -115,11 +128,12 @@ print("dir_prefix", dir_prefix)
 
 
 def run_command(sign, flav, dir_name):
-    neutrino_string = f"&& export NEUTRINO={args.neutrino}" if args.neutrino!=-1 else ""
-    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} {neutrino_string}" "C-m"'
+    neutrino_string = (
+        f"&& export NEUTRINO={args.neutrino}" if args.neutrino != -1 else ""
+    )
+    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} {neutrino_string} && export YEAR={args.year}" "C-m"'
     command3 = f'tmux send-keys "time pocket-coffea run --cfg cartesian_config.py {executor} --full -o {dir_name}" "C-m"'
     command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 64" "C-m"'
-
 
     subprocess.run(command2, shell=True)
     subprocess.run(command3, shell=True)
@@ -134,6 +148,7 @@ def run_command(sign, flav, dir_name):
         # send twice to make sure it is copied
         subprocess.run(command5, shell=True)
 
+
 if args.cartesian or args.full:
     print(
         f"Running cartesian multicuts {'in full configuration sequentially' if args.full else ''}"
@@ -147,12 +162,12 @@ if args.cartesian or args.full:
         else ["inclusive"]
     )
 
-    if  args.full and args.neutrino != 1:
-        tmux_session = "full_cartesian"
+    if args.full and args.neutrino != 1:
+        tmux_session = "full_cartesian" + args.suffix
     elif args.full and args.neutrino == 1:
-        tmux_session = "full_cartesian_neutrino"
+        tmux_session = "full_cartesian_neutrino" + args.suffix
     else:
-        tmux_session = f"{sign}_cartesian"
+        tmux_session = f"{sign}_cartesian" + args.suffix
 
     command0 = f"tmux kill-session -t {tmux_session}"
     subprocess.run(command0, shell=True)

@@ -232,6 +232,11 @@ class QCDBaseProcessor(BaseProcessorABC):
                 * (1 - self.events.JetMatched.rawFactor),
                 "ResponseRaw",
             )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.eta,
+                "RecoEta",
+            )
 
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.MatchedJets,
@@ -266,59 +271,57 @@ class QCDBaseProcessor(BaseProcessorABC):
             # )
 
             if int(os.environ.get("PNET", 0)) == 1:
+                # PNetReg
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
                     self.events.MatchedJets.ResponseRaw
                     * self.events.JetMatched.PNetRegPtRawCorr,
                     "ResponsePNetReg",
                 )
-                # set the response to 0 if the PNetReg is not valid
-                self.events[f"MatchedJets"] = ak.with_field(
-                    self.events.MatchedJets,
-                    ak.where(
-                        self.events.MatchedJets.ResponsePNetReg > 0,
-                        self.events.MatchedJets.ResponseRaw,
-                        0,
-                    ),
-                    "ResponseRaw",
-                )
-                self.events[f"MatchedJets"] = ak.with_field(
-                    self.events.MatchedJets,
-                    ak.where(
-                        self.events.MatchedJets.ResponsePNetReg > 0,
-                        self.events.MatchedJets.ResponseJEC,
-                        0,
-                    ),
-                    "ResponseJEC",
-                )
-
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
                     self.events.MatchedJets.JetPtRaw
                     * self.events.JetMatched.PNetRegPtRawCorr,
                     "JetPtPNetReg",
                 )
-                # set the jet pt to 0 if the PNetReg is not valid
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
                     ak.where(
-                        self.events.MatchedJets.JetPtPNetReg > 0,
+                        abs(self.events.MatchedJets.RecoEta) > 4.7,
+                        self.events.MatchedJets.ResponseRaw,
+                        self.events.MatchedJets.ResponsePNetReg,
+                    ),
+                    "ResponsePNetReg",
+                )
+                self.events[f"MatchedJets"] = ak.with_field(
+                    self.events.MatchedJets,
+                    ak.where(
+                        abs(self.events.MatchedJets.RecoEta) > 4.7,
                         self.events.MatchedJets.JetPtRaw,
-                        0,
+                        self.events.MatchedJets.JetPtPNetReg,
                     ),
-                    "JetPtRaw",
+                    "JetPtPNetReg",
                 )
                 self.events[f"MatchedJets"] = ak.with_field(
                     self.events.MatchedJets,
                     ak.where(
-                        self.events.MatchedJets.JetPtPNetReg > 0,
-                        self.events.MatchedJets.JetPtJEC,
-                        0,
+                        self.events.MatchedJets.JetPtRaw < 15,
+                        ak.where(self.events.MatchedJets.ResponseRaw < 1, 0, 2),
+                        self.events.MatchedJets.ResponsePNetReg,
                     ),
-                    "JetPtJEC",
+                    "ResponsePNetReg",
+                )
+                self.events[f"MatchedJets"] = ak.with_field(
+                    self.events.MatchedJets,
+                    ak.where(
+                        self.events.MatchedJets.JetPtRaw < 15,
+                        self.events.MatchedJets.JetPtRaw,
+                        self.events.MatchedJets.JetPtPNetReg,
+                    ),
+                    "JetPtPNetReg",
                 )
 
-
+                # PNetRegNeutrino
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.GenJetNeutrinoMatched,
                     self.events.JetNeutrinoMatched.pt
@@ -336,6 +339,105 @@ class QCDBaseProcessor(BaseProcessorABC):
                     * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
                     "JetPtPNetRegNeutrino",
                 )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    self.events.JetNeutrinoMatched.eta,
+                    "RecoEta",
+                )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    ak.where(
+                        abs(self.events.MatchedJetsNeutrino.RecoEta) > 4.7,
+                        self.events.JetNeutrinoMatched.pt
+                        / self.events.GenJetMatched.pt
+                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
+                    ),
+                    "ResponsePNetRegNeutrino",
+                )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    ak.where(
+                        abs(self.events.MatchedJetsNeutrino.RecoEta) > 4.7,
+                        self.events.JetNeutrinoMatched.pt
+                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
+                    ),
+                    "JetPtPNetRegNeutrino",
+                )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    ak.where(
+                        self.events.JetNeutrinoMatched.pt
+                        * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                        < 15,
+                        ak.where(
+                            self.events.JetNeutrinoMatched.pt
+                            / self.events.GenJetMatched.pt
+                            * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                            < 1,
+                            0,
+                            2,
+                        ),
+                        self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
+                    ),
+                    "ResponsePNetRegNeutrino",
+                )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    ak.where(
+                        self.events.JetNeutrinoMatched.pt
+                        * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                        < 15,
+                        self.events.JetNeutrinoMatched.pt
+                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
+                    ),
+                    "JetPtPNetRegNeutrino",
+                )
+                # jet pet when <15?
+
+                # # set the response to 0 if the PNetReg is not valid
+                # #Raw
+                # self.events[f"MatchedJets"] = ak.with_field(
+                #     self.events.MatchedJets,
+                #     ak.where(
+                #         self.events.MatchedJets.ResponsePNetReg > 0,
+                #         self.events.MatchedJets.ResponseRaw,
+                #         0,
+                #     ),
+                #     "ResponseRaw",
+                # )
+                # # set the jet pt to 0 if the PNetReg is not valid
+                # self.events[f"MatchedJets"] = ak.with_field(
+                #     self.events.MatchedJets,
+                #     ak.where(
+                #         self.events.MatchedJets.JetPtPNetReg > 0,
+                #         self.events.MatchedJets.JetPtRaw,
+                #         0,
+                #     ),
+                #     "JetPtRaw",
+                # )
+
+                # #JEC
+                # self.events[f"MatchedJets"] = ak.with_field(
+                #     self.events.MatchedJets,
+                #     ak.where(
+                #         self.events.MatchedJets.ResponsePNetReg > 0,
+                #         self.events.MatchedJets.ResponseJEC,
+                #         0,
+                #     ),
+                #     "ResponseJEC",
+                # )
+                # self.events[f"MatchedJets"] = ak.with_field(
+                #     self.events.MatchedJets,
+                #     ak.where(
+                #         self.events.MatchedJets.JetPtPNetReg > 0,
+                #         self.events.MatchedJets.JetPtJEC,
+                #         0,
+                #     ),
+                #     "JetPtJEC",
+                # )
 
                 # self.events[f"MatchedJets"] = ak.with_field(
                 #     self.events.MatchedJets,

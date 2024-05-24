@@ -47,6 +47,7 @@ cfg = Configurator(
         "jsons": [
             f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/QCD.json",
+            f"{localdir}/datasets/SPANet_classification.json",
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
@@ -54,7 +55,8 @@ cfg = Configurator(
                 # "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET_JMENano",
-                "QCD-4Jets",
+                # "QCD-4Jets",
+                "SPANet_classification",
                 # "GluGlutoHHto4B_private",
                 # "GluGlutoHHto4B_spanet",
             ],
@@ -67,7 +69,7 @@ cfg = Configurator(
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 4,
-        "which_bquark": "last",  # HERE
+        "which_bquark": "last",
         "provenance": False,  # HERE
     },
     skim=[
@@ -94,8 +96,8 @@ cfg = Configurator(
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
 
-        # "4b_region": [hh4b_4b_region],
-        "2b_region": [hh4b_2b_region],
+        "4b_region": [hh4b_4b_region], #HERE
+        # "2b_region": [hh4b_2b_region],
     },
     weights={
         "common": {

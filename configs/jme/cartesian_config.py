@@ -34,7 +34,8 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 
 # adding object preselection
-year = "2018"
+year=os.environ.get("YEAR", "2018")
+# year = "2023_preBPix"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -51,28 +52,34 @@ parameters = defaults.merge_parameters_from_files(
 
 cuts_eta = []
 cuts_names_eta = []
-if int(os.environ.get("NEUTRINO", 0)) == 0:
+cuts_eta_neutrino = []
+cuts_names_eta_neutrino = []
+cuts_reco_eta = []
+cuts_names_reco_eta = []
+if int(os.environ.get("NEUTRINO", 1)) == 0:
     print("NEUTRINO==0")
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
         cuts_eta.append(get_etabin(eta_low, eta_high))
         cuts_names_eta.append(f"MatchedJets_eta{eta_low}to{eta_high}")
-
-cuts_eta_neutrino = []
-cuts_names_eta_neutrino = []
-if int(os.environ.get("NEUTRINO", 1)) == 1:
+elif int(os.environ.get("NEUTRINO", 0)) == 1:
     print("NEUTRINO==1")
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
         cuts_eta_neutrino.append(get_etabin_neutrino(eta_low, eta_high))
         cuts_names_eta_neutrino.append(f"MatchedJetsNeutrino_eta{eta_low}to{eta_high}")
-
+else:
+    print("RECO JET ETA CUTS")
+    for i in range(len(eta_bins) - 1):
+        eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
+        cuts_reco_eta.append(get_reco_etabin(eta_low, eta_high))
+        cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_eta{eta_low}to{eta_high}")
 
 multicuts = [
     MultiCut(
         name="eta",
-        cuts=cuts_eta + cuts_eta_neutrino,
-        cuts_names=cuts_names_eta + cuts_names_eta_neutrino,
+        cuts=cuts_eta + cuts_eta_neutrino + cuts_reco_eta,
+        cuts_names=cuts_names_eta + cuts_names_eta_neutrino + cuts_names_reco_eta,
     ),
     # MultiCut(name="pt", #HERE
     #          cuts=cuts_pt,
@@ -496,7 +503,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 0)) ==
                             pos=None,
                         ),
                     ],
-                    only_categories=cuts_names_eta,
+                    only_categories=cuts_names_eta + cuts_names_reco_eta,
                 )
                 for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
             },
@@ -519,7 +526,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 0)) ==
                             pos=None,
                         ),
                     ],
-                    only_categories=cuts_names_eta,
+                    only_categories=cuts_names_eta + cuts_names_reco_eta,
                 )
                 for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
             },
@@ -547,7 +554,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
                             pos=None,
                         ),
                     ],
-                    only_categories=cuts_names_eta_neutrino,
+                    only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
                 )
                 for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
             },
@@ -570,7 +577,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
                             pos=None,
                         ),
                     ],
-                    only_categories=cuts_names_eta_neutrino,
+                    only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
                 )
                 for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
             },
@@ -582,11 +589,16 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/QCD.json",
+            # f"{localdir}/datasets/QCD.json",
+            f"{localdir}/datasets/QCD_redirector.json",
         ],
         "filter": {
             "samples": [
-                "QCD_PT-15to7000_JMENano"
+                "QCD_PT-15to7000_JMENano" if year=="2018" else (
+                    "QCD_PT-15to7000_JMENano_Summer23"
+                    if year=="2023_preBPix"
+                    else "QCD_PT-15to7000_JMENano_Summer23BPix"
+                )
                 # "QCD_PT-15to7000_FlatPU"
                 # if int(os.environ.get("PNET", 0)) == 1
                 # else "QCD_PT-15to7000",

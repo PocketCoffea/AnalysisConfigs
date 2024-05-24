@@ -8,10 +8,7 @@ import mplhep as hep
 from multiprocessing import Pool
 import multiprocessing as mpr
 from functools import partial
-from hist import Hist
-import hist
 import functools
-import math
 import json
 
 import ROOT
@@ -21,8 +18,12 @@ ROOT.gROOT.SetBatch(True)
 from scipy.optimize import curve_fit
 import scipy.stats as stats
 
+from pol_functions import *
+from write_l2rel import write_l2rel_txt
+
 sys.path.append("../")
 from params.binning import *
+
 
 parser = argparse.ArgumentParser(description="Run the jme analysis")
 parser.add_argument(
@@ -99,6 +100,14 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+year="Run3Summer22"
+if "preBPix" in args.dir or ("2023" and "BPix" not in args.dir):
+    year="Run3Summer23"
+elif "postBPix" in args.dir or ("2023" and "BPix" in args.dir):
+    year="Run3Summer23BPix"
+
+# save the log also in a file
+sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
 
 # set global variables
 REBIN = True
@@ -147,7 +156,7 @@ os.system("export SIGN=''")
 
 main_dir = args.dir
 
-if not args.full:
+if True:
     median_dir = (
         f"{main_dir}/median_plots_unbinned"
         if args.unbinned
@@ -231,26 +240,51 @@ if args.load:
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
                         )
+                        median_dir = (
+                            f"{main_dir}/median_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/median_plots_binned"
+                        )
                         resolution_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                        )
+                        resolution_dir = (
+                            f"{main_dir}/resolution_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/resolution_plots_binned"
                         )
                         inv_median_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_unbinned"
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_binned"
                         )
+                        inv_median_dir = (
+                            f"{main_dir}/inv_median_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/inv_median_plots_binned"
+                        )
                         weighted_resolution_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_unbinned"
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
+                        )
+                        weighted_resolution_dir = (
+                            f"{main_dir}/weighted_resolution_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/weighted_resolution_plots_binned"
                         )
                         if args.histo:
                             histogram_dir = (
                                 f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_unbinned"
                                 if args.unbinned
                                 else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_binned"
+                            )
+                            histogram_dir = (
+                                f"{main_dir}/histogram_plots_unbinned"
+                                if args.unbinned
+                                else f"{main_dir}/histogram_plots_binned"
                             )
                     medians_dict[eta_sign][flav_group][flav][variable] = np.load(
                         f"{median_dir}/medians_{eta_sign}_{flav}_{variable}.npy"
@@ -460,9 +494,11 @@ else:
                                                 # get the values of the histo1d
                                                 values = h1d.values()
                                                 bins = h1d.axes[0].edges
+
+                                                #HERE
                                                 # remove the first bin which is a peak to zero in the response
-                                                bins = bins[1:]
-                                                values = values[1:]
+                                                # bins = bins[3:]
+                                                # values = values[3:]
 
                                                 bins_mid = (bins[1:] + bins[:-1]) / 2
 
@@ -470,7 +506,13 @@ else:
                                                 # print("bins_mid", bins_mid, categories[i], j, variable)
                                                 # print("values", values, categories[i], j, variable)
 
-                                                if np.sum(values) == 0:
+                                                cdf = np.cumsum(values)
+                                                cdf_normalized = cdf / cdf[-1]
+                                                median_bin_index = np.argmax(
+                                                    cdf_normalized >= 0.5
+                                                )
+
+                                                if np.sum(values) < 10: # or median_bin_index <=3:
                                                     # for k in range(
                                                     #     j, len(h.axes[jet_pt])
                                                     # ):
@@ -502,7 +544,8 @@ else:
                                                             else pt_bins[j + 1] * 2
                                                         )
                                                         min_value = (
-                                                            1e-3
+                                                            #1e-3
+                                                            0
                                                             if "Response" in variable
                                                             else pt_bins[j] * 0.5
                                                         )
@@ -512,9 +555,11 @@ else:
                                                             )[0][0]
                                                         except IndexError:
                                                             max_index = len(bins) - 1
-                                                        min_index = np.where(
-                                                            bins < min_value
-                                                        )[0][-1]
+                                                        #HERE
+                                                        # min_index = np.where(
+                                                        #     bins < min_value
+                                                        # )[0][-1]
+                                                        # min_index=0
 
                                                         rebin_factor = (
                                                             30
@@ -522,7 +567,8 @@ else:
                                                             else max(
                                                                 len(
                                                                     bins[
-                                                                        min_index:max_index
+                                                                        :max_index
+                                                                        # min_index:max_index
                                                                     ]
                                                                 )
                                                                 // 50,
@@ -530,17 +576,20 @@ else:
                                                             )
                                                         )
                                                         rebinned_bins = np.array(
-                                                            bins[min_index:max_index][
+                                                            bins[:max_index][
+                                                            # bins[min_index:max_index][
                                                                 ::rebin_factor
                                                             ]
                                                         )
                                                         rebinned_values = np.add.reduceat(
-                                                            values[min_index:max_index],
+                                                            values[:max_index],
+                                                            # values[min_index:max_index],
                                                             range(
                                                                 0,
                                                                 len(
                                                                     values[
-                                                                        min_index:max_index
+                                                                        :max_index
+                                                                        # min_index:max_index
                                                                     ]
                                                                 ),
                                                                 rebin_factor,
@@ -741,11 +790,21 @@ else:
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
                     )
+                    median_dir = (
+                        f"{main_dir}/median_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/median_plots_binned"
+                    )
                     os.makedirs(f"{median_dir}", exist_ok=True)
                     resolution_dir = (
                         f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
+                    )
+                    resolution_dir = (
+                        f"{main_dir}/resolution_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/resolution_plots_binned"
                     )
                     os.makedirs(f"{resolution_dir}", exist_ok=True)
                     inv_median_dir = (
@@ -753,11 +812,21 @@ else:
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_binned"
                     )
+                    inv_median_dir = (
+                        f"{main_dir}/inv_median_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/inv_median_plots_binned"
+                    )
                     os.makedirs(f"{inv_median_dir}", exist_ok=True)
                     weighted_resolution_dir = (
                         f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_unbinned"
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
+                    )
+                    weighted_resolution_dir = (
+                        f"{main_dir}/weighted_resolution_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/weighted_resolution_plots_binned"
                     )
                     os.makedirs(f"{weighted_resolution_dir}", exist_ok=True)
                     if args.histo:
@@ -765,6 +834,11 @@ else:
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_unbinned"
                             if args.unbinned
                             else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_binned"
+                        )
+                        histogram_dir = (
+                            f"{main_dir}/histogram_plots_unbinned"
+                            if args.unbinned
+                            else f"{main_dir}/histogram_plots_binned"
                         )
                         os.makedirs(f"{histogram_dir}", exist_ok=True)
                 for variable in medians_dict[eta_sign][flav_group][flav].keys():
@@ -932,6 +1006,141 @@ def fit_inv_median(ax, x, y, yerr, variable, y_pos, name_plot):
     return fit_results
 
 
+def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
+    # print("fit_inv_median pol", variable)
+
+    # fit iteartively with a polynomial of increasing order
+    # until the p-value is greater than 0.05
+    max_p_value = -1
+    popt_list=[]
+    pcov_list=[]
+    chi2_list=[]
+    ndof_list=[]
+    p_value_list=[]
+
+    for i, pol in pol_functions_dict.items():
+        p_initial = [1.] * (i + 1)
+        func = pol
+
+        if i+1 >= len(x):
+            # return {}#CHANGE
+            break
+        param_bounds=([-1000.0]*len(p_initial), [1000.0]*len(p_initial))
+        popt, pcov = curve_fit(
+            func, x, y, p0=p_initial, sigma=yerr, absolute_sigma=True#, bounds=param_bounds
+        )
+
+        # print chi2 and p-value on the plot
+        chi2 = np.sum(((y - func(x, *popt)) / yerr) ** 2)
+        ndof = len(x) - len(popt)
+        p_value = 1 - stats.chi2.cdf(chi2, ndof)
+
+        print(
+            "\n",
+            name_plot,
+            "\nx",
+            x,
+            "\ny",
+            y,
+            "\nyerr",
+            yerr,
+            "\npopt",
+            popt,
+            "\npcov",
+            pcov,
+            "\nchi2/ndof",
+            chi2,
+            "/",
+            ndof,
+            "p_value",
+            p_value,
+            "\npol",
+            i
+        )
+
+        if p_value > max_p_value or np.isnan(p_value):
+            max_p_value = p_value
+
+        popt_list.append(popt)
+        pcov_list.append(pcov)
+        chi2_list.append(chi2)
+        ndof_list.append(ndof)
+        p_value_list.append(p_value)
+
+        if p_value > 0.05:
+            break
+
+        # if not np.isnan(p_value) and p_value < 0.05: #CHANGE
+        #     # if last element of the dict, return empty dict
+        #     if i == list(pol_functions_dict.keys())[-1]:
+        #         return {}
+        #     continue
+    if max_p_value==-1:
+        print("\n", name_plot, "max_p_value=-1", p_value_list)
+    index=p_value_list.index(max_p_value)
+    # plot the fit
+    x_fit = np.linspace(x[0], x[-1], 1000)
+    y_fit = pol_functions_dict[list(pol_functions_dict.keys())[index]](x_fit, *popt_list[index])
+
+    ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
+    ax.text(
+        0.98,
+        0.7 + y_pos,
+        f"pol{index}, $\chi^2$ / ndof = {chi2_list[index]:.1f} / {ndof_list[index]}"
+        + f", p-value = {max_p_value:.3f}",
+        horizontalalignment="right",
+        verticalalignment="top",
+        transform=ax.transAxes,
+        color=variables_colors[variable],
+        fontsize=10,
+    )
+
+
+    fit_results = {
+        "x": list(x),
+        "y": list(y),
+        "yerr": list(yerr),
+        "jet_pt": [x[0], x[-1]],
+        "parameters": list(popt_list[index]),
+        "pol": index,
+        "errors": list(np.sqrt(np.diag(pcov_list[index]))),
+        "chi2": chi2_list[index],
+        "ndof": ndof_list[index],
+        "p_value": p_value_list[index],
+    }
+        # # plot the fit
+        # x_fit = np.linspace(x[0], x[-1], 1000)
+        # y_fit = func(x_fit, *popt)
+
+        # ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
+        # ax.text(
+        #     0.98,
+        #     0.25 + y_pos,
+        #     f"pol{i}, $\chi^2$ / ndof = {chi2:.2f} / {ndof}"
+        #     + f", p-value = {p_value:.2f}",
+        #     horizontalalignment="right",
+        #     verticalalignment="top",
+        #     transform=ax.transAxes,
+        #     color=variables_colors[variable],
+        #     fontsize=6,
+        # )
+
+        # fit_results = {
+        #     "x": list(x),
+        #     "y": list(y),
+        #     "yerr": list(yerr),
+        #     "jet_pt": [x[0], x[-1]],
+        #     "parameters": list(popt),
+        #     "pol": i,
+        #     "errors": list(np.sqrt(np.diag(pcov))),
+        #     "chi2": chi2,
+        #     "ndof": ndof,
+        #     "p_value": p_value,
+        # }
+
+    return fit_results #CHANGE
+
+
 def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
     print("fit_inv_median_root", variable)
 
@@ -1032,20 +1241,23 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
     # func_root.SetParLimits(7, 0, 100)
     # func_root.SetParLimits(8, -50, 50)
 
-
     # ROOT.TFitter.SetPrecision(10.)
 
     graph = ROOT.TGraphErrors(len(x), x, y, xerr, yerr)
 
-    fit_info = str(graph.Fit("func_root", "S N Q R"))  # M E
+    fit_info = str(graph.Fit("func_root", "S N Q R EX0"))  # M E
 
     # "EX0" 	When fitting a TGraphErrors or TGraphAsymErrors do not consider errors in the X coordinates
     # “E” Perform better errors estimation using the Minos technique
     # “M” Improve fit results, by using the IMPROVE algorithm of TMinuit. (problematic?)
 
     num_pars = func_root.GetNpar()
-    param_fit = [func_root.GetParameter(i) for i in range(num_pars)] + [0]*(9-num_pars)
-    param_err_fit = [func_root.GetParError(i) for i in range(num_pars)] + [0]*(9-num_pars)
+    param_fit = [func_root.GetParameter(i) for i in range(num_pars)] + [0] * (
+        9 - num_pars
+    )
+    param_err_fit = [func_root.GetParError(i) for i in range(num_pars)] + [0] * (
+        9 - num_pars
+    )
 
     # delete graph
     del graph
@@ -1075,7 +1287,7 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         fontsize=8,
     )
 
-    if True: #"Invalid FitResult" not in str(fit_info):
+    if True:  # "Invalid FitResult" not in str(fit_info):
         print(
             "\n",
             name_plot,
@@ -1161,11 +1373,8 @@ def plot_median_resolution(eta_bin, plot_type):
             ax_ratio
 
         hep.cms.label(
-            year="2022",
+            year=year,
             com="13.6",
-            # label=f"Private Work ({correct_eta_bins[i]} <"
-            # + r"$\eta^{Gen}$"
-            # + f"< {correct_eta_bins[i+1]})",
             label=f"Private Work",
             ax=ax,
         )
@@ -1173,9 +1382,9 @@ def plot_median_resolution(eta_bin, plot_type):
         # write a string on the plot
         ax.text(
             0.98,
-            0.7,
+            0.8,
             f"{correct_eta_bins[eta_bin]} <"
-            + r"$\eta^{Gen}$"
+            + r"$\eta^{Reco}$"
             + f"< {correct_eta_bins[eta_bin+1]}",
             horizontalalignment="right",
             verticalalignment="top",
@@ -1257,8 +1466,8 @@ def plot_median_resolution(eta_bin, plot_type):
                     linestyle="None",
                 )
                 if (
-                    "inverse" in plot_type and "PNet" in variable
-                ):  # and "Neutrino" not in variable:
+                    "inverse" in plot_type and "PNet" in variable and "Neutrino" in variable
+                ):  # and "Neutrino" in variable:
                     mask_nan = (
                         ~np.isnan(plot_array)
                         & ~np.isnan(err_plot_array)
@@ -1277,7 +1486,7 @@ def plot_median_resolution(eta_bin, plot_type):
                         variable.replace("Response", "JetPt")
                     ][index, :]
                     # pt-clipping
-                    mask_clip = x > 35  # HERE 35
+                    mask_clip = x > 10  # HERE 35
                     mask_tot = mask_nan & mask_clip
                     x = x[mask_tot]
                     xerr = xerr[mask_tot]
@@ -1298,8 +1507,19 @@ def plot_median_resolution(eta_bin, plot_type):
                     #     index,
                     #     correct_eta_bins[eta_bin],
                     # )
-                    if len(x) > 9 and FIT:
-                        fit_results = fit_inv_median_root(
+                    if FIT:
+                        # fit_results = fit_inv_median_root(
+                        #     ax,
+                        #     x,
+                        #     y,
+                        #     # xerr,
+                        #     np.zeros(len(x)),
+                        #     y_err,
+                        #     variable,
+                        #     y_pos,
+                        #     f"{eta_sign} {flav} {correct_eta_bins[eta_bin]} ({index}) {variable}",
+                        # )
+                        fit_results = fit_inv_median_pol(
                             ax,
                             x,
                             y,
@@ -1310,8 +1530,11 @@ def plot_median_resolution(eta_bin, plot_type):
                             y_pos,
                             f"{eta_sign} {flav} {correct_eta_bins[eta_bin]} ({index}) {variable}",
                         )
-                        y_pos += -0.1
+                        y_pos += -0.05
                         tot_fit_results[f"{flav}_{variable}"] = fit_results
+                        if fit_results == {}:
+                            print(f"fit failed {flav} {variable} {eta_sign} {correct_eta_bins[eta_bin]}")
+
 
                 if "ResponsePNetReg" in variable and "resolution" in plot_type:
                     # plot ratio pnreg / jec
@@ -1345,7 +1568,7 @@ def plot_median_resolution(eta_bin, plot_type):
             continue
         # check if plot_array is only nan or 0
         if not np.all(np.isnan(plot_array)) and not np.all(plot_array == 0):
-            ax.set_ylim(top=1.1 * max_value)
+            ax.set_ylim(top=1.2 * max_value)
         if "inverse" in plot_type:
             ax.set_xlabel(r"$p_{T}^{Reco}$ [GeV]")
         elif "median" in plot_type or "jet_pt" in plot_type:
@@ -1356,7 +1579,7 @@ def plot_median_resolution(eta_bin, plot_type):
         if plot_type == "median":
             label_y = f"Median (Response)"
         elif plot_type == "inverse_median":
-            label_y = r"[Median (Response)]$^{-1}$"
+            label_y = r"$C_{L2L3}$=[Median (Response)]$^{-1}$"
         elif plot_type == "resolution":
             label_y = r"$\frac{q_{84}-q_{16}}{2}$"
         elif plot_type == "weighted_resolution":
@@ -1386,10 +1609,11 @@ def plot_median_resolution(eta_bin, plot_type):
         unique_labels = list((handles_dict.keys()))
         unique_dict = {label: handles_dict[label] for label in unique_labels}
         # add elemtns to the legend by hand
-        if plot_type == "inverse_median" and FIT:
-            unique_dict["Fit standard+Gaussian"] = plt.Line2D(
-                [0], [0], color="black", linestyle="--", label="Fit standard+Gaussian"
-            )
+
+        # if plot_type == "inverse_median" and FIT:
+        #     unique_dict["Fit standard+Gaussian"] = plt.Line2D(
+        #         [0], [0], color="black", linestyle="--", label="Fit standard+Gaussian"
+        #     )
 
         ax.legend(
             unique_dict.values(),
@@ -1430,12 +1654,28 @@ def plot_median_resolution(eta_bin, plot_type):
                     )
                     for flav in flav_group
                 ]
+                plots_dir = [
+                    (
+                        f"{main_dir}/median_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/median_plots_binned"
+                    )
+                    for flav in flav_group
+                ]
             elif plot_type == "inverse_median":
                 plots_dir = [
                     (
                         f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_unbinned"
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_binned"
+                    )
+                    for flav in flav_group
+                ]
+                plots_dir = [
+                    (
+                        f"{main_dir}/inv_median_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/inv_median_plots_binned"
                     )
                     for flav in flav_group
                 ]
@@ -1448,6 +1688,14 @@ def plot_median_resolution(eta_bin, plot_type):
                     )
                     for flav in flav_group
                 ]
+                plots_dir = [
+                    (
+                        f"{main_dir}/resolution_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/resolution_plots_binned"
+                    )
+                    for flav in flav_group
+                ]
 
             elif plot_type == "weighted_resolution":
                 plots_dir = [
@@ -1455,6 +1703,15 @@ def plot_median_resolution(eta_bin, plot_type):
                         f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_unbinned"
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
+                    )
+                    for flav in flav_group
+                ]
+
+                plots_dir= [
+                    (
+                        f"{main_dir}/weighted_resolution_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/weighted_resolution_plots_binned"
                     )
                     for flav in flav_group
                 ]
@@ -1545,6 +1802,11 @@ def plot_histos(eta_pt, histogram_dir):
                         if args.unbinned
                         else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/histogram_plots_binned"
                     )
+                    histogram_dir = (
+                        f"{main_dir}/histogram_plots_unbinned"
+                        if args.unbinned
+                        else f"{main_dir}/histogram_plots_binned"
+                    )
                     os.makedirs(f"{histogram_dir}", exist_ok=True)
                 values = histos[index][pt_bin][0]
                 bins = histos[index][pt_bin][1]
@@ -1577,7 +1839,8 @@ def plot_histos(eta_pt, histogram_dir):
                         density=True,
                     )
                     max_value_response = max(
-                        max_value_response, np.nanmax(values) / (np.sum(values)*np.diff(bins)[0])
+                        max_value_response,
+                        np.nanmax(values) / (np.sum(values) * np.diff(bins)[0]),
                     )
                 if "JetPt" in variable:
                     ax_tot_jetpt.hist(
@@ -1590,7 +1853,8 @@ def plot_histos(eta_pt, histogram_dir):
                         density=True,
                     )
                     max_value_jetpt = max(
-                        max_value_jetpt, np.nanmax(values) / (np.sum(values)*np.diff(bins)[0])
+                        max_value_jetpt,
+                        np.nanmax(values) / (np.sum(values) * np.diff(bins)[0]),
                     )
 
                 if PLOT_SINGLE_HISTO:
@@ -1620,7 +1884,7 @@ def plot_histos(eta_pt, histogram_dir):
                     ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
                     # hep.style.use("CMS")
                     hep.cms.label(
-                        year="2022",
+                        year=year,
                         com="13.6",
                         label=f"Private Work",
                     )
@@ -1629,7 +1893,7 @@ def plot_histos(eta_pt, histogram_dir):
                         0.98,
                         0.7,
                         f"{correct_eta_bins[eta_bin]} <"
-                        + r"$\eta^{Gen}$"
+                        + r"$\eta^{Reco}$"
                         + f"< {correct_eta_bins[eta_bin+1]}\n"
                         + f" {int(pt_bins[pt_bin])} <"
                         + r"$p_{T}^{Gen}$"
@@ -1660,7 +1924,7 @@ def plot_histos(eta_pt, histogram_dir):
 
                 ax_tot_response.set_ylim(top=1.2 * max_value_response)
                 hep.cms.label(
-                    year="2022",
+                    year=year,
                     com="13.6",
                     label=f"Private Work",
                     ax=ax_tot_response,
@@ -1670,7 +1934,7 @@ def plot_histos(eta_pt, histogram_dir):
                     0.98,
                     0.7,
                     f"{correct_eta_bins[eta_bin]} <"
-                    + r"$\eta^{Gen}$"
+                    + r"$\eta^{Reco}$"
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
                     + f" {int(pt_bins[pt_bin])} <"
                     + r"$p_{T}^{Gen}$"
@@ -1680,6 +1944,7 @@ def plot_histos(eta_pt, histogram_dir):
                     transform=ax_tot_response.transAxes,
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
+                ax_tot_response.set_yscale("log")
                 fig_tot_response.savefig(
                     f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
                     bbox_inches="tight",
@@ -1696,14 +1961,14 @@ def plot_histos(eta_pt, histogram_dir):
                 ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
 
                 hep.cms.label(
-                    year="2022", com="13.6", label=f"Private Work", ax=ax_tot_jetpt
+                    year=year, com="13.6", label=f"Private Work", ax=ax_tot_jetpt
                 )
 
                 ax_tot_jetpt.text(
                     0.98,
                     0.7,
                     f"{correct_eta_bins[eta_bin]} <"
-                    + r"$\eta^{Gen}$"
+                    + r"$\eta^{Reco}$"
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
                     + f" {int(pt_bins[pt_bin])} <"
                     + r"$p_{T}^{Gen}$"
@@ -1713,6 +1978,7 @@ def plot_histos(eta_pt, histogram_dir):
                     transform=ax_tot_jetpt.transAxes,
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
+                ax_tot_jetpt.set_yscale("log")
                 fig_tot_jetpt.savefig(
                     f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
                     bbox_inches="tight",
@@ -1756,7 +2022,7 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
                     fig, ax = plt.subplots()
                     hep.cms.label(
-                        year="2022",
+                        year=year,
                         com="13.6",
                         label=f"Private Work",
                         ax=ax,
@@ -1828,7 +2094,7 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     )
 
                     ax.set_xlabel(r"$p_{T}^{Gen}$ [GeV]")
-                    ax.set_ylabel(r"$\eta^{Gen}$")
+                    ax.set_ylabel(r"$\eta^{Reco}$")
                     ax.grid(color="gray", linestyle="--", linewidth=0.5, which="both")
 
                     # ax.legend(frameon=False, ncol=2, loc="upper right")
@@ -1864,7 +2130,7 @@ print(
     "VALID_FIT",
     VALID_FIT,
 )
-sys.exit()
+# sys.exit()
 
 if args.histo:
     print("Plotting histograms...")
@@ -1905,6 +2171,11 @@ with Pool(args.num_processes) as p:
         functools.partial(plot_median_resolution, plot_type="weighted_resolution"),
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
+
+#read the fit results
+print("Reading fit results...")
+write_l2rel_txt(main_dir,correct_eta_bins)
+
 
 
 # print(median_dir)
