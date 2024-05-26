@@ -1,3 +1,7 @@
+# execute on slurm
+# sbatch -p short --account=t3 --mem 5gb --cpus-per-task=32 --wrap="python response.py --full -d /work/mmalucch/out_jme/out_cartesian_full_recoEtaBins_CorrectJetPt_correctNeutrinosSeparation_jetpt_ZerosPtResponse_2023postBPix/  --histo -n 32"
+
+
 from coffea.util import load
 import numpy as np
 import matplotlib.pyplot as plt
@@ -82,7 +86,7 @@ parser.add_argument(
     "--num-processes",
     type=int,
     help="Number of processes",
-    default=32,
+    default=16,
 )
 parser.add_argument(
     "--no-plot",
@@ -100,11 +104,11 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-year="Run3Summer22"
+year = "Run3Summer22"
 if "preBPix" in args.dir or ("2023" and "BPix" not in args.dir):
-    year="Run3Summer23"
+    year = "Run3Summer23"
 elif "postBPix" in args.dir or ("2023" and "BPix" in args.dir):
-    year="Run3Summer23BPix"
+    year = "Run3Summer23BPix"
 
 # save the log also in a file
 sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
@@ -495,7 +499,7 @@ else:
                                                 values = h1d.values()
                                                 bins = h1d.axes[0].edges
 
-                                                #HERE
+                                                # HERE
                                                 # remove the first bin which is a peak to zero in the response
                                                 # bins = bins[3:]
                                                 # values = values[3:]
@@ -512,7 +516,10 @@ else:
                                                     cdf_normalized >= 0.5
                                                 )
 
-                                                if np.sum(values) < 10: # or median_bin_index <=3:
+                                                if (
+                                                    np.sum(values) < 10
+                                                    or median_bin_index <= 3
+                                                ):
                                                     # for k in range(
                                                     #     j, len(h.axes[jet_pt])
                                                     # ):
@@ -544,7 +551,7 @@ else:
                                                             else pt_bins[j + 1] * 2
                                                         )
                                                         min_value = (
-                                                            #1e-3
+                                                            # 1e-3
                                                             0
                                                             if "Response" in variable
                                                             else pt_bins[j] * 0.5
@@ -555,7 +562,7 @@ else:
                                                             )[0][0]
                                                         except IndexError:
                                                             max_index = len(bins) - 1
-                                                        #HERE
+                                                        # HERE
                                                         # min_index = np.where(
                                                         #     bins < min_value
                                                         # )[0][-1]
@@ -577,7 +584,7 @@ else:
                                                         )
                                                         rebinned_bins = np.array(
                                                             bins[:max_index][
-                                                            # bins[min_index:max_index][
+                                                                # bins[min_index:max_index][
                                                                 ::rebin_factor
                                                             ]
                                                         )
@@ -662,11 +669,21 @@ else:
                                                     ][flav][variable][i].append(
                                                         err_median
                                                     )
+                                                    # get the index of the bin for which bins>=0.5
+                                                    index_05 = np.argmax(
+                                                        bins_mid >= 0.5
+                                                    )
+                                                    cdf_noZero = np.cumsum(
+                                                        values[index_05:]
+                                                    )
+                                                    cdf_normalized_noZero = (
+                                                        cdf_noZero / cdf_noZero[-1]
+                                                    )
 
                                                     # define the resolution as the difference between the 84th and 16th percentile
                                                     # find the bin which is the 84th percentile of the histogram
                                                     percentile_84_bin_index = np.argmax(
-                                                        cdf_normalized >= 0.84
+                                                        cdf_normalized_noZero >= 0.84
                                                     )
                                                     # print("percentile_84_bin_index", percentile_84_bin_index)
                                                     percentile_84 = bins_mid[
@@ -675,7 +692,7 @@ else:
                                                     # print("percentile_84", percentile_84)
                                                     # find the bin which is the 16th percentile of the histogram
                                                     percentile_16_bin_index = np.argmax(
-                                                        cdf_normalized >= 0.16
+                                                        cdf_normalized_noZero >= 0.16
                                                     )
                                                     # print("percentile_16_bin_index", percentile_16_bin_index)
                                                     percentile_16 = bins_mid[
@@ -1012,22 +1029,27 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
     # fit iteartively with a polynomial of increasing order
     # until the p-value is greater than 0.05
     max_p_value = -1
-    popt_list=[]
-    pcov_list=[]
-    chi2_list=[]
-    ndof_list=[]
-    p_value_list=[]
+    popt_list = []
+    pcov_list = []
+    chi2_list = []
+    ndof_list = []
+    p_value_list = []
 
     for i, pol in pol_functions_dict.items():
-        p_initial = [1.] * (i + 1)
+        p_initial = [1.0] * (i + 1)
         func = pol
 
-        if i+1 >= len(x):
+        if i + 1 >= len(x):
             # return {}#CHANGE
             break
-        param_bounds=([-1000.0]*len(p_initial), [1000.0]*len(p_initial))
+        param_bounds = ([-1000.0] * len(p_initial), [1000.0] * len(p_initial))
         popt, pcov = curve_fit(
-            func, x, y, p0=p_initial, sigma=yerr, absolute_sigma=True#, bounds=param_bounds
+            func,
+            x,
+            y,
+            p0=p_initial,
+            sigma=yerr,
+            absolute_sigma=True,  # , bounds=param_bounds
         )
 
         # print chi2 and p-value on the plot
@@ -1055,7 +1077,7 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
             "p_value",
             p_value,
             "\npol",
-            i
+            i,
         )
 
         if p_value > max_p_value or np.isnan(p_value):
@@ -1075,12 +1097,14 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         #     if i == list(pol_functions_dict.keys())[-1]:
         #         return {}
         #     continue
-    if max_p_value==-1:
+    if max_p_value == -1:
         print("\n", name_plot, "max_p_value=-1", p_value_list)
-    index=p_value_list.index(max_p_value)
+    index = p_value_list.index(max_p_value)
     # plot the fit
     x_fit = np.linspace(x[0], x[-1], 1000)
-    y_fit = pol_functions_dict[list(pol_functions_dict.keys())[index]](x_fit, *popt_list[index])
+    y_fit = pol_functions_dict[list(pol_functions_dict.keys())[index]](
+        x_fit, *popt_list[index]
+    )
 
     ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
     ax.text(
@@ -1095,7 +1119,6 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         fontsize=10,
     )
 
-
     fit_results = {
         "x": list(x),
         "y": list(y),
@@ -1108,37 +1131,37 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         "ndof": ndof_list[index],
         "p_value": p_value_list[index],
     }
-        # # plot the fit
-        # x_fit = np.linspace(x[0], x[-1], 1000)
-        # y_fit = func(x_fit, *popt)
+    # # plot the fit
+    # x_fit = np.linspace(x[0], x[-1], 1000)
+    # y_fit = func(x_fit, *popt)
 
-        # ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
-        # ax.text(
-        #     0.98,
-        #     0.25 + y_pos,
-        #     f"pol{i}, $\chi^2$ / ndof = {chi2:.2f} / {ndof}"
-        #     + f", p-value = {p_value:.2f}",
-        #     horizontalalignment="right",
-        #     verticalalignment="top",
-        #     transform=ax.transAxes,
-        #     color=variables_colors[variable],
-        #     fontsize=6,
-        # )
+    # ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
+    # ax.text(
+    #     0.98,
+    #     0.25 + y_pos,
+    #     f"pol{i}, $\chi^2$ / ndof = {chi2:.2f} / {ndof}"
+    #     + f", p-value = {p_value:.2f}",
+    #     horizontalalignment="right",
+    #     verticalalignment="top",
+    #     transform=ax.transAxes,
+    #     color=variables_colors[variable],
+    #     fontsize=6,
+    # )
 
-        # fit_results = {
-        #     "x": list(x),
-        #     "y": list(y),
-        #     "yerr": list(yerr),
-        #     "jet_pt": [x[0], x[-1]],
-        #     "parameters": list(popt),
-        #     "pol": i,
-        #     "errors": list(np.sqrt(np.diag(pcov))),
-        #     "chi2": chi2,
-        #     "ndof": ndof,
-        #     "p_value": p_value,
-        # }
+    # fit_results = {
+    #     "x": list(x),
+    #     "y": list(y),
+    #     "yerr": list(yerr),
+    #     "jet_pt": [x[0], x[-1]],
+    #     "parameters": list(popt),
+    #     "pol": i,
+    #     "errors": list(np.sqrt(np.diag(pcov))),
+    #     "chi2": chi2,
+    #     "ndof": ndof,
+    #     "p_value": p_value,
+    # }
 
-    return fit_results #CHANGE
+    return fit_results  # CHANGE
 
 
 def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
@@ -1466,7 +1489,9 @@ def plot_median_resolution(eta_bin, plot_type):
                     linestyle="None",
                 )
                 if (
-                    "inverse" in plot_type and "PNet" in variable and "Neutrino" in variable
+                    "inverse" in plot_type
+                    and "PNet" in variable
+                    and "Neutrino" in variable
                 ):  # and "Neutrino" in variable:
                     mask_nan = (
                         ~np.isnan(plot_array)
@@ -1533,8 +1558,9 @@ def plot_median_resolution(eta_bin, plot_type):
                         y_pos += -0.05
                         tot_fit_results[f"{flav}_{variable}"] = fit_results
                         if fit_results == {}:
-                            print(f"fit failed {flav} {variable} {eta_sign} {correct_eta_bins[eta_bin]}")
-
+                            print(
+                                f"fit failed {flav} {variable} {eta_sign} {correct_eta_bins[eta_bin]}"
+                            )
 
                 if "ResponsePNetReg" in variable and "resolution" in plot_type:
                     # plot ratio pnreg / jec
@@ -1707,7 +1733,7 @@ def plot_median_resolution(eta_bin, plot_type):
                     for flav in flav_group
                 ]
 
-                plots_dir= [
+                plots_dir = [
                     (
                         f"{main_dir}/weighted_resolution_plots_unbinned"
                         if args.unbinned
@@ -1944,7 +1970,7 @@ def plot_histos(eta_pt, histogram_dir):
                     transform=ax_tot_response.transAxes,
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
-                ax_tot_response.set_yscale("log")
+                # ax_tot_response.set_yscale("log")
                 fig_tot_response.savefig(
                     f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
                     bbox_inches="tight",
@@ -1978,7 +2004,7 @@ def plot_histos(eta_pt, histogram_dir):
                     transform=ax_tot_jetpt.transAxes,
                     # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                 )
-                ax_tot_jetpt.set_yscale("log")
+                # ax_tot_jetpt.set_yscale("log")
                 fig_tot_jetpt.savefig(
                     f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
                     bbox_inches="tight",
@@ -2172,10 +2198,9 @@ with Pool(args.num_processes) as p:
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
-#read the fit results
+# read the fit results
 print("Reading fit results...")
-write_l2rel_txt(main_dir,correct_eta_bins)
-
+write_l2rel_txt(main_dir, correct_eta_bins)
 
 
 # print(median_dir)
