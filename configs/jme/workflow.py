@@ -6,6 +6,7 @@ from pocket_coffea.lib.hist_manager import Axis
 
 from pocket_coffea.lib.deltaR_matching import object_matching, deltaR_matching_nonunique
 from custom_cut_functions import *
+from custom_functions import *
 
 from params.binning import *
 
@@ -45,6 +46,7 @@ print(f"\n flavour: {flavour}")
 class QCDBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
         super().__init__(cfg)
+        self.closure_function_dict = self.workflow_options["closure_function_dict"]
 
     def add_neutrinos_to_genjets(self, genjets, neutrinos):
         neutrinos_matched = deltaR_matching_nonunique(genjets, neutrinos, 0.4)
@@ -118,6 +120,40 @@ class QCDBaseProcessor(BaseProcessorABC):
         )
 
         return genjets_with_neutrinos
+
+    def closure_function(self, eta, pt):
+        corr = ak.ones_like(eta)
+
+        function_string = self.closure_function_dict["function_string"]
+        corrections_eta_bins = self.closure_function_dict["corrections_eta_bins"]
+        num_params = self.closure_function_dict["num_params"]
+        jet_pt = self.closure_function_dict["jet_pt"]
+        params = self.closure_function_dict["params"]
+
+        function = string_to_pol_function(function_string)
+
+        for i in range(len(corrections_eta_bins[0])):
+            mask_eta = (corrections_eta_bins[0][i] <= eta) & (
+                eta < corrections_eta_bins[1][i]
+            )
+            # print(mask_eta)
+            mask_pt = (jet_pt[0][i] <= pt) & (pt < jet_pt[1][i])
+            # print(mask_pt)
+            corr = ak.where(
+                mask_eta,
+                ak.where(
+                    mask_pt,
+                    function(pt, *params[i]),
+                    ak.where(
+                        pt < jet_pt[0][i],
+                        function(jet_pt[0][i], *params[i]),
+                        function(jet_pt[1][i], *params[i]),
+                    ),
+                ),
+                corr,
+            )
+            # print(corr)
+        return corr
 
     def apply_object_preselection(self, variation):
 
@@ -324,12 +360,8 @@ class QCDBaseProcessor(BaseProcessorABC):
                 # PNetRegNeutrino
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.GenJetNeutrinoMatched,
-                    self.events.JetNeutrinoMatched.pt
-                    / self.events.GenJetNeutrinoMatched.pt
-                    * (1 - self.events.JetNeutrinoMatched.rawFactor)
-                    * self.events.JetNeutrinoMatched.PNetRegPtRawCorr
-                    * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
-                    "ResponsePNetRegNeutrino",
+                    self.events.JetNeutrinoMatched.eta,
+                    "RecoEta",
                 )
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
@@ -339,11 +371,15 @@ class QCDBaseProcessor(BaseProcessorABC):
                     * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
                     "JetPtPNetRegNeutrino",
                 )
+
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
-                    self.events.JetNeutrinoMatched.eta,
-                    "RecoEta",
+                    self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino
+                    / self.events.GenJetNeutrinoMatched.pt,
+                    "ResponsePNetRegNeutrino",
                 )
+
+                # when regression is not valid
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
                     ak.where(
@@ -395,8 +431,27 @@ class QCDBaseProcessor(BaseProcessorABC):
                     ),
                     "JetPtPNetRegNeutrino",
                 )
-                # jet pet when <15?
 
+                # TODO: apply the closure function even when the regression is not valid
+                if self.closure_function_dict:
+                    closure_factor = self.closure_function(
+                        self.events.MatchedJetsNeutrino.RecoEta,
+                        self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
+                    )
+                    self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                        self.events.MatchedJetsNeutrino,
+                        self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino
+                        * closure_factor,
+                        "JetPtPNetRegNeutrino",
+                    )
+                    self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                        self.events.MatchedJetsNeutrino,
+                        self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino
+                        * closure_factor,
+                        "ResponsePNetRegNeutrino",
+                    )
+
+                # jet pet when <15?
                 # # set the response to 0 if the PNetReg is not valid
                 # #Raw
                 # self.events[f"MatchedJets"] = ak.with_field(

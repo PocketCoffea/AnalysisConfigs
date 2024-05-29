@@ -73,7 +73,7 @@ parser.add_argument(
     "--year",
     help="Year",
     type=str,
-    default="2018",
+    default="2022",
 )
 parser.add_argument(
     "-f",
@@ -101,6 +101,12 @@ parser.add_argument(
     default=False,
 )
 parser.add_argument(
+    "--closure",
+    action="store_true",
+    help="Produce closure test",
+    default=False,
+)
+parser.add_argument(
     "--neutrino",
     help="Sum neutrino pT to GenJet pT",
     default=-1,
@@ -111,6 +117,7 @@ args = parser.parse_args()
 args.flavsplit = int(args.flavsplit)
 args.pnet = int(args.pnet)
 args.central = int(args.central)
+args.closure = int(args.closure)
 args.neutrino = int(args.neutrino)
 
 # Define a list of eta bins
@@ -131,9 +138,9 @@ def run_command(sign, flav, dir_name):
     neutrino_string = (
         f"&& export NEUTRINO={args.neutrino}" if args.neutrino != -1 else ""
     )
-    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} {neutrino_string} && export YEAR={args.year}" "C-m"'
+    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} && export CLOSURE={args.closure} {neutrino_string} && export YEAR={args.year}" "C-m"'
     command3 = f'tmux send-keys "time pocket-coffea run --cfg cartesian_config.py {executor} --full -o {dir_name}" "C-m"'
-    command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 64" "C-m"'
+    command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 16" "C-m"'
 
     subprocess.run(command2, shell=True)
     subprocess.run(command3, shell=True)
@@ -163,11 +170,11 @@ if args.cartesian or args.full:
     )
 
     if args.full and args.neutrino != 1:
-        tmux_session = "full_cartesian" + args.suffix
+        tmux_session = "full_cartesian" + args.suffix + f"_{args.year}"
     elif args.full and args.neutrino == 1:
-        tmux_session = "full_cartesian_neutrino" + args.suffix
+        tmux_session = "full_cartesian_neutrino" + args.suffix + f"_{args.year}"
     else:
-        tmux_session = f"{sign}_cartesian" + args.suffix
+        tmux_session = f"{sign}_cartesian" + args.suffix + f"_{args.year}"
 
     command0 = f"tmux kill-session -t {tmux_session}"
     subprocess.run(command0, shell=True)
@@ -181,13 +188,13 @@ if args.cartesian or args.full:
             if sign == "all":
                 continue
             for flav in flavs_list:
-                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}{'_test' if args.test else ''}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
+                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )
@@ -234,7 +241,7 @@ else:
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
                 dir_name = (
-                    f"{dir_prefix}out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
+                    f"{dir_prefix}out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
                     if not args.dir
                     else args.dir
                 )

@@ -18,6 +18,7 @@ from workflow import *
 
 import custom_cut_functions
 from cuts import *
+from custom_functions import *
 
 from custom_cut_functions import *
 from params.binning import *
@@ -34,13 +35,22 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 
 # adding object preselection
-year=os.environ.get("YEAR", "2018")
+year = os.environ.get("YEAR", "2022")
 # year = "2023_preBPix"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
     update=True,
 )
+
+closure_function_dict = None
+corr_files={
+    "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
+    "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
+}
+if int(os.environ.get("CLOSURE", 0)) == 1:
+    print(f"Performing closure test with {corr_files[year]}")
+    closure_function_dict = get_closure_function(corr_files[year])
 
 
 # cuts_pt = []
@@ -594,10 +604,14 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                "QCD_PT-15to7000_JMENano" if year=="2018" else (
-                    "QCD_PT-15to7000_JMENano_Summer23"
-                    if year=="2023_preBPix"
-                    else "QCD_PT-15to7000_JMENano_Summer23BPix"
+                (
+                    "QCD_PT-15to7000_JMENano"
+                    if year == "2022"
+                    else (
+                        "QCD_PT-15to7000_JMENano_Summer23"
+                        if year == "2023_preBPix"
+                        else "QCD_PT-15to7000_JMENano_Summer23BPix"
+                    )
                 )
                 # "QCD_PT-15to7000_FlatPU"
                 # if int(os.environ.get("PNET", 0)) == 1
@@ -609,7 +623,7 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=QCDBaseProcessor,
-    workflow_options={"donotscale_sumgenweights": True},
+    workflow_options={"donotscale_sumgenweights": True, "closure_function_dict": closure_function_dict},
     skim=[],
     preselections=[],
     categories=CartesianSelection(multicuts=multicuts, common_cats=common_cats),
