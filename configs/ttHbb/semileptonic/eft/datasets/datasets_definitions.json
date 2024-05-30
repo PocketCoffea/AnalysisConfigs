@@ -133,8 +133,26 @@
 		"dbs_instance": "prod/phys03"
 	    }
 	]
-    }
+    },
 
+     "ttHTobb_EFTcenter_madspin_reweightall_5F_tbarlnutqq_fixedscale":
+    {
+	"sample": "ttHTobb_EFTcenter_5F_tbarlnutqq_fixscale",
+	"json_output": "datasets/ttHTobb_EFTcenter.json",
+	"files": [
+	    {
+		"das_names": [
+		    "/ttHbb_EFT_signal_EFTcenter/dvalsecc-SMEFTsim_topU3l_EFT_5F_tbarlnutqq_madspin_fixedscale_reweightall_v3-00000000000000000000000000000000/USER"
+		],
+		"metadata": {
+		    "year": "2016",
+		    "isMC": true,
+		    "xsec": 0.075
+		},
+		"dbs_instance": "prod/phys03"
+	    }
+	]
+    }
 
 
     
