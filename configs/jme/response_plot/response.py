@@ -1180,7 +1180,8 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
 
     index = p_value_list.index(max_p_value)
     # plot the fit
-    x_fit = np.linspace(x[0], x[-1], 1000)
+    # x_fit = np.linspace(x[0], x[-1], 1000)
+    x_fit = np.logspace(np.log10(x[0]), np.log10(x[-1]), 1000)
     y_fit = pol_functions_dict[list(pol_functions_dict.keys())[index]](
         x_fit, *popt_list[index]
     )
@@ -1504,6 +1505,7 @@ def plot_median_resolution(eta_bin, plot_type):
         j = 0
         plot = False
         max_value = 0
+        min_value = 1000
         for flav in plot_dict[eta_sign][flav_group].keys():
             y_pos = 0
             for variable in plot_dict[eta_sign][flav_group][flav].keys():
@@ -1582,7 +1584,7 @@ def plot_median_resolution(eta_bin, plot_type):
                 if (
                     "inverse" in plot_type
                     and "PNet" in variable
-                    and "Neutrino" in variable
+                    # and "Neutrino" in variable
                 ):  # and "Neutrino" in variable:
                     mask_nan = (
                         ~np.isnan(plot_array)
@@ -2112,6 +2114,8 @@ def plot_histos(eta_pt, histogram_dir):
                 ax_tot_jetpt.legend(frameon=False, loc="upper right", ncol=2)
 
                 ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
+                ax_tot_jetpt.set_xlim(top= 2*pt_bins[pt_bin+1], bottom=0.5*pt_bins[pt_bin])
+
 
                 hep.cms.label(
                     year=year, com="13.6", label=f"Private Work", ax=ax_tot_jetpt

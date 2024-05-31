@@ -149,3 +149,4 @@ output
 *.pkl.gz
 *.code-workspace
 test*
+*onnx

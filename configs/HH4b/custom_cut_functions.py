@@ -35,10 +35,10 @@ def jet_pt(events, params, **kwargs):
     ]
 
     mask = (
-        (jets_pt_order.ptPnetRegNeutrino[:, 0] > params["pt_jet0"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 1] > params["pt_jet1"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 2] > params["pt_jet2"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 3] > params["pt_jet3"])
+        (jets_pt_order.pt[:, 0] > params["pt_jet0"])
+        & (jets_pt_order.pt[:, 1] > params["pt_jet1"])
+        & (jets_pt_order.pt[:, 2] > params["pt_jet2"])
+        & (jets_pt_order.pt[:, 3] > params["pt_jet3"])
     )
     return ak.where(ak.is_none(mask), False, mask)
 
@@ -57,10 +57,10 @@ def jet_btag_lead(events, params, **kwargs):
     ]
 
     mask_pt = (
-        (jets_pt_order.ptPnetRegNeutrino[:, 0] > params["pt_jet0"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 1] > params["pt_jet1"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 2] > params["pt_jet2"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 3] > params["pt_jet3"])
+        (jets_pt_order.pt[:, 0] > params["pt_jet0"])
+        & (jets_pt_order.pt[:, 1] > params["pt_jet1"])
+        & (jets_pt_order.pt[:, 2] > params["pt_jet2"])
+        & (jets_pt_order.pt[:, 3] > params["pt_jet3"])
     )
 
     mask_btag = (
@@ -86,10 +86,10 @@ def jet_btag_all(events, params, **kwargs):
     ]
 
     mask_pt = (
-        (jets_pt_order.ptPnetRegNeutrino[:, 0] > params["pt_jet0"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 1] > params["pt_jet1"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 2] > params["pt_jet2"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 3] > params["pt_jet3"])
+        (jets_pt_order.pt[:, 0] > params["pt_jet0"])
+        & (jets_pt_order.pt[:, 1] > params["pt_jet1"])
+        & (jets_pt_order.pt[:, 2] > params["pt_jet2"])
+        & (jets_pt_order.pt[:, 3] > params["pt_jet3"])
     )
 
     mask_btag = (
@@ -122,10 +122,10 @@ def hh4b_presel_cuts(events, params, **kwargs):
     ]
 
     mask_pt_none = (
-        (jets_pt_order.ptPnetRegNeutrino[:, 0] > params["pt_jet0"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 1] > params["pt_jet1"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 2] > params["pt_jet2"])
-        & (jets_pt_order.ptPnetRegNeutrino[:, 3] > params["pt_jet3"])
+        (jets_pt_order.pt[:, 0] > params["pt_jet0"])
+        & (jets_pt_order.pt[:, 1] > params["pt_jet1"])
+        & (jets_pt_order.pt[:, 2] > params["pt_jet2"])
+        & (jets_pt_order.pt[:, 3] > params["pt_jet3"])
     )
     # convert none to false
     mask_pt = ak.where(ak.is_none(mask_pt_none), False, mask_pt_none)

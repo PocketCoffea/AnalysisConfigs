@@ -20,13 +20,15 @@ import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 
-# from params.binning import bins
+
 import os
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
+
+CLASSIFICATION = True
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -41,6 +43,9 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
+# spanet_model="params/spanet_5jets_ptreg_ATLAS.onnx"
+spanet_model="params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+
 cfg = Configurator(
     parameters=parameters,
     datasets={
@@ -52,11 +57,11 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                # "GluGlutoHHto4B",
+                "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_poisson",
                 # "DATA_JetMET_JMENano",
                 # "QCD-4Jets",
-                "SPANet_classification",
+                # "SPANet_classification",
                 # "GluGlutoHHto4B_private",
                 # "GluGlutoHHto4B_spanet",
             ],
@@ -68,9 +73,10 @@ cfg = Configurator(
     workflow=HH4bbQuarkMatchingProcessor,
     workflow_options={
         "parton_jet_min_dR": 0.4,
-        "max_num_jets": 4,
+        "max_num_jets": 5,
         "which_bquark": "last",
-        "provenance": False,  # HERE
+        "classification": CLASSIFICATION,  # HERE
+        "spanet_model": spanet_model,
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -321,7 +327,6 @@ cfg = Configurator(
                         # "sinPhi",
                         "mass",
                         "btagPNetB",
-                        "ptPnetRegNeutrino",
                         # "hadronFlavour",
                     ],
                 ),
@@ -338,7 +343,6 @@ cfg = Configurator(
                         # "sinPhi",
                         "mass",
                         "btagPNetB",
-                        "ptPnetRegNeutrino",
                         # "hadronFlavour",
                     ],
                 ),
@@ -352,7 +356,6 @@ cfg = Configurator(
                         # "sinPhi",
                         "mass",
                         "btagPNetB",
-                        "ptPnetRegNeutrino",
                         # "hadronFlavour",
                     ],
                 ),
@@ -366,64 +369,54 @@ cfg = Configurator(
                         # "sinPhi",
                         "mass",
                         "btagPNetB",
-                        "ptPnetRegNeutrino",
                         # "hadronFlavour",
                     ],
                 ),
-                # ColOut(
-                #     "RecoHiggs1",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "RecoHiggs2",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "PNetRegRecoHiggs1",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "PNetRegRecoHiggs2",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "PNetRegNeutrinoRecoHiggs1",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "PNetRegNeutrinoRecoHiggs2",
-                #     [
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
+                ColOut(
+                    "HiggsLeading",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                        "dR",
+                        "cos_theta",
+                    ],
+                ),
+                ColOut(
+                    "HiggsSubLeading",
+                    [
+                        "pt",
+                        "eta",
+                        "phi",
+                        "mass",
+                        "dR",
+                        "cos_theta",
+                    ],
+                ),
+                ColOut(
+                    "HH",
+                    [
+                        "pt",
+                        "eta",
+                        # "phi",
+                        "mass",
+                        "cos_theta_star",
+                        "dR",
+                        "dPhi",
+                        "dEta",
+                    ],
+                ),
+
+                ColOut(
+                    "events",
+                    [
+                        "HT",
+                        "dR_min",
+                        "dR_max",
+                    ],
+                ),
+
             ],
         },
         "bysample": {},

@@ -150,7 +150,7 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
     mask_presel = (
-        (jets.ptPnetRegNeutrino > cuts["pt"])
+        (jets.pt > cuts["pt"])
         & (np.abs(jets.eta) < cuts["eta"])
         & (jets.jetId >= cuts["jetId"])
         & (jets.btagPNetB > cuts["btagPNetB"])
