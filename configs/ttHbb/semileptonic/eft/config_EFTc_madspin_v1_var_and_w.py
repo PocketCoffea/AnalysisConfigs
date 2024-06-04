@@ -78,7 +78,7 @@ cfg = Configurator(
         "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_fixscale"],
+            "samples": ["ttHTobb_EFTcenter_5F_tbarlnutqq_fixscale"],
             "samples_exclude" : [],
             #"year": []
         },

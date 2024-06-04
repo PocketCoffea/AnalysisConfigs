@@ -34,7 +34,7 @@ my_categories={}
 my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
 my_categories.update({'sm':[custom_cuts.cut_events]})
 
-weights_value=np.linspace(-20.,20.,21)
+weights_value=np.linspace(-20.,20.,41)
 
 for i in weights_value:
 
@@ -78,7 +78,7 @@ cfg = Configurator(
         "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarqqtlnu"],
+            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_fixscale"],
             "samples_exclude" : [],
             #"year": []
         },
@@ -122,6 +122,6 @@ cfg = Configurator(
 
 # Registering custom functions
 import cloudpickle
-cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(workflow_W2)
 cloudpickle.register_pickle_by_value(eft_weights)
 cloudpickle.register_pickle_by_value(custom_cuts)
