@@ -44,7 +44,9 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 # spanet_model="params/spanet_5jets_ptreg_ATLAS.onnx"
-spanet_model="params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+spanet_model = (
+    "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+)
 
 cfg = Configurator(
     parameters=parameters,
@@ -56,15 +58,19 @@ cfg = Configurator(
             f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
         ],
         "filter": {
-            "samples": [
-                "GluGlutoHHto4B",
-                # "GluGlutoHHto4B_poisson",
-                # "DATA_JetMET_JMENano",
-                # "QCD-4Jets",
-                # "SPANet_classification",
-                # "GluGlutoHHto4B_private",
-                # "GluGlutoHHto4B_spanet",
-            ],
+            "samples": (
+                [
+                    # "GluGlutoHHto4B",
+                    # "GluGlutoHHto4B_poisson",
+                    # "DATA_JetMET_JMENano",
+                    # "QCD-4Jets",
+                    "SPANet_classification",
+                    # "GluGlutoHHto4B_private",
+                    # "GluGlutoHHto4B_spanet",
+                ]
+                if CLASSIFICATION
+                else ["GluGlutoHHto4B_spanet"]
+            ),
             "samples_exclude": [],
             "year": [year],
         },
@@ -101,8 +107,7 @@ cfg = Configurator(
         #     jet_btag_medium,
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
-
-        "4b_region": [hh4b_4b_region], #HERE
+        "4b_region": [hh4b_4b_region],  # HERE
         # "2b_region": [hh4b_2b_region],
     },
     weights={
@@ -281,143 +286,152 @@ cfg = Configurator(
     },
     columns={
         "common": {
-            "inclusive": [
-                # ColOut(
-                #     "bQuarkHiggsMatched",
-                #     [
-                #         "provenance",
-                #         "dRMatchedJet",
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "bQuarkMatched",
-                #     [
-                #         "provenance",
-                #         "dRMatchedJet",
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                # ColOut(
-                #     "bQuark",
-                #     [
-                #         "provenance",
-                #         "pt",
-                #         "eta",
-                #         "phi",
-                #         "mass",
-                #     ],
-                # ),
-                ColOut(
-                    "JetGoodHiggsMatched",
+            "inclusive": (
+                [
+                    # ColOut(
+                    #     "bQuarkHiggsMatched",
+                    #     [
+                    #         "provenance",
+                    #         "dRMatchedJet",
+                    #         "pt",
+                    #         "eta",
+                    #         "phi",
+                    #         "mass",
+                    #     ],
+                    # ),
+                    # ColOut(
+                    #     "bQuarkMatched",
+                    #     [
+                    #         "provenance",
+                    #         "dRMatchedJet",
+                    #         "pt",
+                    #         "eta",
+                    #         "phi",
+                    #         "mass",
+                    #     ],
+                    # ),
+                    # ColOut(
+                    #     "bQuark",
+                    #     [
+                    #         "provenance",
+                    #         "pt",
+                    #         "eta",
+                    #         "phi",
+                    #         "mass",
+                    #     ],
+                    # ),
+                    ColOut(
+                        "JetGoodHiggsMatched",
+                        [
+                            "provenance",
+                            # "pdgId",
+                            # "dRMatchedJet",
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
+                    ColOut(
+                        "JetGoodMatched",
+                        [
+                            "provenance",
+                            # "pdgId",
+                            # "dRMatchedJet",
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
+                    ColOut(
+                        "JetGoodHiggs",
+                        [
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
+                    ColOut(
+                        "JetGood",
+                        [
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
+                ]
+                + (
                     [
-                        "provenance",
-                        # "pdgId",
-                        # "dRMatchedJet",
-                        "pt",
-                        "eta",
-                        "phi",
-                        # "cosPhi",
-                        # "sinPhi",
-                        "mass",
-                        "btagPNetB",
-                        # "hadronFlavour",
-                    ],
-                ),
-                ColOut(
-                    "JetGoodMatched",
-                    [
-                        "provenance",
-                        # "pdgId",
-                        # "dRMatchedJet",
-                        "pt",
-                        "eta",
-                        "phi",
-                        # "cosPhi",
-                        # "sinPhi",
-                        "mass",
-                        "btagPNetB",
-                        # "hadronFlavour",
-                    ],
-                ),
-                ColOut(
-                    "JetGoodHiggs",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        # "cosPhi",
-                        # "sinPhi",
-                        "mass",
-                        "btagPNetB",
-                        # "hadronFlavour",
-                    ],
-                ),
-                ColOut(
-                    "JetGood",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        # "cosPhi",
-                        # "sinPhi",
-                        "mass",
-                        "btagPNetB",
-                        # "hadronFlavour",
-                    ],
-                ),
-                ColOut(
-                    "HiggsLeading",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                        "dR",
-                        "cos_theta",
-                    ],
-                ),
-                ColOut(
-                    "HiggsSubLeading",
-                    [
-                        "pt",
-                        "eta",
-                        "phi",
-                        "mass",
-                        "dR",
-                        "cos_theta",
-                    ],
-                ),
-                ColOut(
-                    "HH",
-                    [
-                        "pt",
-                        "eta",
-                        # "phi",
-                        "mass",
-                        "cos_theta_star",
-                        "dR",
-                        "dPhi",
-                        "dEta",
-                    ],
-                ),
-
-                ColOut(
-                    "events",
-                    [
-                        "HT",
-                        "dR_min",
-                        "dR_max",
-                    ],
-                ),
-
-            ],
+                        ColOut(
+                            "HiggsLeading",
+                            [
+                                "pt",
+                                "eta",
+                                "phi",
+                                "mass",
+                                "dR",
+                                "cos_theta",
+                            ],
+                        ),
+                        ColOut(
+                            "HiggsSubLeading",
+                            [
+                                "pt",
+                                "eta",
+                                "phi",
+                                "mass",
+                                "dR",
+                                "cos_theta",
+                            ],
+                        ),
+                        ColOut(
+                            "HH",
+                            [
+                                "pt",
+                                "eta",
+                                # "phi",
+                                "mass",
+                                "cos_theta_star",
+                                "dR",
+                                "dPhi",
+                                "dEta",
+                            ],
+                        ),
+                        ColOut(
+                            "events",
+                            [
+                                "best_pairing_probability",
+                                "second_best_pairing_probability",
+                                "Delta_pairing_probabilities",
+                                "HT",
+                                "dR_min",
+                                "dR_max",
+                            ],
+                        ),
+                    ]
+                    if not CLASSIFICATION
+                    else []
+                )
+            ),
         },
         "bysample": {},
     },
