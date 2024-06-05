@@ -43,14 +43,25 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-closure_function_dict = None
-corr_files={
+mc_truth_corr_pnetreg = None
+corr_files_pnetreg = {
     "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
 }
 if int(os.environ.get("CLOSURE", 0)) == 1:
-    print(f"Performing closure test with {corr_files[year]}")
-    closure_function_dict = get_closure_function(corr_files[year])
+    print(f"Performing closure test with {corr_files_pnetreg[year]}")
+    mc_truth_corr_pnetreg = get_closure_function(corr_files_pnetreg[year])
+
+mc_truth_corr_pnetreg_neutrino = None
+corr_files_pnetreg_neutrino = {
+    "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
+    "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
+}
+if int(os.environ.get("CLOSURE", 0)) == 1:
+    print(f"Performing closure test with {corr_files_pnetreg_neutrino[year]}")
+    mc_truth_corr_pnetreg_neutrino = get_closure_function(
+        corr_files_pnetreg_neutrino[year]
+    )
 
 
 # cuts_pt = []
@@ -594,6 +605,59 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
         }
     )
 
+# if int(os.environ.get("CLOSURE", 0)) == 1:
+if False:
+    variables_dict.update(
+        {
+            **{
+                f"MatchedJets{flav}_MCTruthCorrPNetRegVSJetPtPNetReg": HistConf(
+                    [
+                        Axis(
+                            coll=f"MatchedJets{flav}",
+                            field="MCTruthCorrPNetReg",
+                            bins=list(np.linspace(0, 2, 1000)),
+                            pos=None,
+                            label=f"MatchedJets{flav}_MCTruthCorrPNetReg",
+                        ),
+                        Axis(
+                            coll=f"MatchedJets{flav}",
+                            field="JetPtPNetReg",
+                            bins=pt_bins,
+                            label=f"MatchedJets{flav}_JetPtPNetReg",
+                            type="variable",
+                            pos=None,
+                        ),
+                    ],
+                    only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
+                )
+                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            },
+            **{
+                f"MatchedJets{flav}_MCTruthCorrPNetRegNeutrinoVSJetPtPNetRegNeutrino": HistConf(
+                    [
+                        Axis(
+                            coll=f"MatchedJetsNeutrino{flav}",
+                            field="MCTruthCorrPNetRegNeutrino",
+                            bins=list(np.linspace(0, 2, 1000)),
+                            pos=None,
+                            label=f"MatchedJets{flav}_MCTruthCorrPNetRegNeutrino",
+                        ),
+                        Axis(
+                            coll=f"MatchedJetsNeutrino{flav}",
+                            field="JetPtPNetRegNeutrino",
+                            bins=pt_bins,
+                            label=f"MatchedJetsNeutrino{flav}_JetPtPNetRegNeutrino",
+                            type="variable",
+                            pos=None,
+                        ),
+                    ],
+                    only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
+                )
+                for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+            },
+        }
+    )
+
 
 cfg = Configurator(
     parameters=parameters,
@@ -623,7 +687,11 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=QCDBaseProcessor,
-    workflow_options={"donotscale_sumgenweights": True, "closure_function_dict": closure_function_dict},
+    workflow_options={
+        "donotscale_sumgenweights": True,
+        "mc_truth_corr_pnetreg": mc_truth_corr_pnetreg,
+        "mc_truth_corr_pnetreg_neutrino": mc_truth_corr_pnetreg_neutrino,
+    },
     skim=[],
     preselections=[],
     categories=CartesianSelection(multicuts=multicuts, common_cats=common_cats),

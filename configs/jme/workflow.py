@@ -24,7 +24,6 @@ flav_dict = (
     else {}
 )
 
-
 flav_def = {
     "b": 5,
     "c": 4,
@@ -43,10 +42,30 @@ print(f"\n flav_dict: {flav_dict}")
 print(f"\n flavour: {flavour}")
 
 
+# def test_function(x, j, k):
+#     try:
+#         print(x[j][k])
+#     except:
+#         print(x)
+#     return x
+
+
+# def test_function2(x, j, k):
+#     try:
+#         print(x[j][k])
+#     except:
+#         print(x)
+#     x2 = x**2
+#     return x2
+
+
 class QCDBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
         super().__init__(cfg)
-        self.closure_function_dict = self.workflow_options["closure_function_dict"]
+        self.mc_truth_corr_pnetreg = self.workflow_options["mc_truth_corr_pnetreg"]
+        self.mc_truth_corr_pnetreg_neutrino = self.workflow_options[
+            "mc_truth_corr_pnetreg_neutrino"
+        ]
 
     def add_neutrinos_to_genjets(self, genjets, neutrinos):
         neutrinos_matched = deltaR_matching_nonunique(genjets, neutrinos, 0.4)
@@ -121,38 +140,140 @@ class QCDBaseProcessor(BaseProcessorABC):
 
         return genjets_with_neutrinos
 
-    def closure_function(self, eta, pt):
+    def get_mc_truth_corr(self, corr_dict, eta, pt):
         corr = ak.ones_like(eta)
 
-        function_string = self.closure_function_dict["function_string"]
-        corrections_eta_bins = self.closure_function_dict["corrections_eta_bins"]
-        num_params = self.closure_function_dict["num_params"]
-        jet_pt = self.closure_function_dict["jet_pt"]
-        params = self.closure_function_dict["params"]
+        function_string = corr_dict["function_string"]
+        corrections_eta_bins = corr_dict["corrections_eta_bins"]
+        num_params = corr_dict["num_params"]
+        jet_pt = corr_dict["jet_pt"]
+        params = corr_dict["params"]
 
-        function = string_to_pol_function(function_string)
+        pol_function = string_to_pol_function(function_string)
+
+        pt=ak.values_astype(pt, "float64")
 
         for i in range(len(corrections_eta_bins[0])):
             mask_eta = (corrections_eta_bins[0][i] <= eta) & (
                 eta < corrections_eta_bins[1][i]
             )
-            # print(mask_eta)
             mask_pt = (jet_pt[0][i] <= pt) & (pt < jet_pt[1][i])
-            # print(mask_pt)
             corr = ak.where(
                 mask_eta,
                 ak.where(
                     mask_pt,
-                    function(pt, *params[i]),
+                    pol_function(pt, *params[i]),
                     ak.where(
                         pt < jet_pt[0][i],
-                        function(jet_pt[0][i], *params[i]),
-                        function(jet_pt[1][i], *params[i]),
+                        pol_function(jet_pt[0][i], *params[i]),
+                        pol_function(jet_pt[1][i], *params[i]),
                     ),
                 ),
                 corr,
             )
-            # print(corr)
+
+            # PRINTS
+
+            # print(type(pol_function(pt, *params[i])))
+            # print(type(corr))
+            # print(corr.type)
+
+            # eval_1 = pol_function(pt, *params[i])
+            # # print("\n\n\n", "\neval_1", eval_1)
+
+            # part_1 = ak.where(
+            #     mask_pt,
+            #     pol_function(pt, *params[i]),
+            #     ak.where(
+            #         pt < jet_pt[0][i],
+            #         pol_function(jet_pt[0][i], *params[i]),
+            #         pol_function(jet_pt[1][i], *params[i]),
+            #     ),
+            # )
+            # part_2 = ak.where(
+            #     pt < jet_pt[0][i],
+            #     pol_function(jet_pt[0][i], *params[i]),
+            #     pol_function(jet_pt[1][i], *params[i]),
+            # )
+
+            # print_num = 0
+            # max_ev = 10
+            # # for j in range(len(pt)):
+            # #     for k in range(len(pt[j])):
+            # #         print(
+            # #             pt[j][k],
+            # #             test_function(pt[j][k], j, k),
+            # #             test_function(pt, j, k)[j][k],
+            # #             "           ",
+            # #             test_function2(pt[j][k], j, k),
+            # #             test_function2(pt, j, k)[j][k],
+            # #             (pt**2)[j][k],
+            # #             (pt[j][k])**2,
+            # #             # pol_function(pt[j][k], *params[i]),
+            # #             # pol_function(pt, *params[i])[j][k],
+            # #         )
+            # if (
+            #     corrections_eta_bins[0][i] == -0.879
+            #     and corrections_eta_bins[1][i] == -0.783
+            # ):
+            #     for j in range(len(pt)):
+            #         for k in range(len(pt[j])):
+            #             if print_num > max_ev:
+            #                 break
+            #             if (
+            #                 mask_eta[j][k]
+            #                 and (pt[j][k] > 2000 or pt[j][k] < 1.7)
+            #                 and eta[j][k] > -0.879
+            #                 and eta[j][k] < -0.783
+            #             ):
+            #                 # if (
+            #                 #     mask_eta[j][k]
+            #                 #     and corr[j][k] != function(pt[j][k], *params[i])
+            #                 #     and corr[j][k] != function(jet_pt[0][i], *params[i])
+            #                 #     and corr[j][k] != function(jet_pt[1][i], *params[i])
+            #                 # ):
+
+            #                 # if eta[j][k] > -0.957 and eta[j][k] < -0.783:
+            #                 print(
+            #                     "\n\n\n",
+            #                     "\nj",
+            #                     j,
+            #                     "\nk",
+            #                     k,
+            #                     "\ncorrections_eta_bins",
+            #                     corrections_eta_bins[0][i],
+            #                     corrections_eta_bins[1][i],
+            #                     "\njet_pt",
+            #                     jet_pt[0][i],
+            #                     jet_pt[1][i],
+            #                     "\nmask_eta",
+            #                     mask_eta[j][k],
+            #                     "\nmask_pt",
+            #                     mask_pt[j][k],
+            #                     "\nfunction",
+            #                     pol_function(pt[j][k], *params[i]),
+            #                     pol_function(pt, *params[i])[j][k],
+            #                     eval_1[j][k],
+            #                     "\nfunction jet_pt[0]",
+            #                     pol_function(jet_pt[0][i], *params[i]),
+            #                     "\nfunction jet_pt[1]",
+            #                     pol_function(jet_pt[1][i], *params[i]),
+            #                     "\npt",
+            #                     pt[j][k],
+            #                     "\neta",
+            #                     eta[j][k],
+            #                     "\ncorr",
+            #                     corr[j][k],
+            #                     "\npart_1",
+            #                     part_1[j][k],
+            #                     "\npart_2",
+            #                     part_2[j][k],
+            #                 )
+
+            #                 print_num += 1
+            #         if print_num > max_ev:
+            #             break
+
         return corr
 
     def apply_object_preselection(self, variation):
@@ -249,16 +370,25 @@ class QCDBaseProcessor(BaseProcessorABC):
             self.events["JetNeutrinoMatched"] = self.events.JetNeutrinoMatched[
                 ~ak.is_none(self.events.JetNeutrinoMatched, axis=1)
             ]
-            # print("GenJetNeutrinoMatched", len(self.events["GenJetNeutrinoMatched"].pt))
-            # print("GenJetMatched", len(self.events["GenJetMatched"].pt))
-
-            deltaR_matched = deltaR_matched[~ak.is_none(deltaR_matched, axis=1)]
-            deltaR_Neutrino_matched = deltaR_Neutrino_matched[
-                ~ak.is_none(deltaR_Neutrino_matched, axis=1)
-            ]
 
             self.events[f"MatchedJets"] = ak.with_field(
                 self.events.GenJetMatched,
+                self.events.JetMatched.eta,
+                "RecoEta",
+            )
+
+            self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                self.events.GenJetNeutrinoMatched,
+                self.events.JetNeutrinoMatched.eta,
+                "RecoEta",
+            )
+
+    def process_extra_after_presel(self, variation) -> ak.Array:
+
+        if self._isMC:
+
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
                 self.events.JetMatched.pt / self.events.GenJetMatched.pt,
                 "ResponseJEC",
             )
@@ -267,11 +397,6 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.MatchedJets.ResponseJEC
                 * (1 - self.events.JetMatched.rawFactor),
                 "ResponseRaw",
-            )
-            self.events[f"MatchedJets"] = ak.with_field(
-                self.events.MatchedJets,
-                self.events.JetMatched.eta,
-                "RecoEta",
             )
 
             self.events[f"MatchedJets"] = ak.with_field(
@@ -284,27 +409,6 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.JetMatched.pt * (1 - self.events.JetMatched.rawFactor),
                 "JetPtRaw",
             )
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     self.events.JetMatched.eta - self.events.MatchedJets.eta,
-            #     "DeltaEta",
-            # )
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     self.events.JetMatched.phi - self.events.MatchedJets.phi,
-            #     "DeltaPhi",
-            # )
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     deltaR_matched,
-            #     "DeltaR",
-            # )
-
-            # self.events[f"MatchedJets"] = ak.with_field(
-            #     self.events.MatchedJets,
-            #     self.events.JetMatched.eta / self.events.MatchedJets.eta,
-            #     "EtaRecoGen",
-            # )
 
             if int(os.environ.get("PNET", 0)) == 1:
                 # PNetReg
@@ -356,17 +460,17 @@ class QCDBaseProcessor(BaseProcessorABC):
                     ),
                     "JetPtPNetReg",
                 )
+                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    self.events.MatchedJetsNeutrino,
+                    self.events.JetNeutrinoMatched.pt
+                    * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                    "JetPtRaw",
+                )
 
                 # PNetRegNeutrino
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
-                    self.events.GenJetNeutrinoMatched,
-                    self.events.JetNeutrinoMatched.eta,
-                    "RecoEta",
-                )
-                self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
-                    self.events.MatchedJetsNeutrino.pt
-                    * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                    self.events.MatchedJetsNeutrino.JetPtRaw
                     * self.events.JetNeutrinoMatched.PNetRegPtRawCorr
                     * self.events.JetNeutrinoMatched.PNetRegPtRawCorrNeutrino,
                     "JetPtPNetRegNeutrino",
@@ -384,9 +488,8 @@ class QCDBaseProcessor(BaseProcessorABC):
                     self.events.MatchedJetsNeutrino,
                     ak.where(
                         abs(self.events.MatchedJetsNeutrino.RecoEta) > 4.7,
-                        self.events.JetNeutrinoMatched.pt
-                        / self.events.GenJetMatched.pt
-                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.JetPtRaw
+                        / self.events.GenJetNeutrinoMatched.pt,
                         self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino,
                     ),
                     "ResponsePNetRegNeutrino",
@@ -395,8 +498,7 @@ class QCDBaseProcessor(BaseProcessorABC):
                     self.events.MatchedJetsNeutrino,
                     ak.where(
                         abs(self.events.MatchedJetsNeutrino.RecoEta) > 4.7,
-                        self.events.JetNeutrinoMatched.pt
-                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.JetPtRaw,
                         self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
                     ),
                     "JetPtPNetRegNeutrino",
@@ -404,13 +506,10 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
                     ak.where(
-                        self.events.JetNeutrinoMatched.pt
-                        * (1 - self.events.JetNeutrinoMatched.rawFactor)
-                        < 15,
+                        self.events.MatchedJetsNeutrino.JetPtRaw < 15,
                         ak.where(
-                            self.events.JetNeutrinoMatched.pt
-                            / self.events.GenJetMatched.pt
-                            * (1 - self.events.JetNeutrinoMatched.rawFactor)
+                            self.events.MatchedJetsNeutrino.JetPtRaw
+                            / self.events.GenJetNeutrinoMatched.pt
                             < 1,
                             0,
                             2,
@@ -422,34 +521,60 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                     self.events.MatchedJetsNeutrino,
                     ak.where(
-                        self.events.JetNeutrinoMatched.pt
-                        * (1 - self.events.JetNeutrinoMatched.rawFactor)
-                        < 15,
-                        self.events.JetNeutrinoMatched.pt
-                        * (1 - self.events.JetNeutrinoMatched.rawFactor),
+                        self.events.MatchedJetsNeutrino.JetPtRaw < 15,
+                        self.events.MatchedJetsNeutrino.JetPtRaw,
                         self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
                     ),
                     "JetPtPNetRegNeutrino",
                 )
 
-                # TODO: apply the closure function even when the regression is not valid
-                if self.closure_function_dict:
-                    closure_factor = self.closure_function(
+                if self.mc_truth_corr_pnetreg:
+                    mc_truth_corr_factor_pnetreg = self.get_mc_truth_corr(
+                        self.mc_truth_corr_pnetreg,
+                        self.events.MatchedJets.RecoEta,
+                        self.events.MatchedJets.JetPtPNetReg,
+                    )
+                    self.events[f"MatchedJets"] = ak.with_field(
+                        self.events.MatchedJets,
+                        self.events.MatchedJets.JetPtPNetReg
+                        * mc_truth_corr_factor_pnetreg,
+                        "JetPtPNetReg",
+                    )
+                    self.events[f"MatchedJets"] = ak.with_field(
+                        self.events.MatchedJets,
+                        self.events.MatchedJets.ResponsePNetReg
+                        * mc_truth_corr_factor_pnetreg,
+                        "ResponsePNetReg",
+                    )
+                    # self.events[f"MatchedJets"] = ak.with_field(
+                    #     self.events.MatchedJets,
+                    #     mc_truth_corr_factor_pnetreg,
+                    #     "MCTruthCorrPNetReg",
+                    # )
+
+                if self.mc_truth_corr_pnetreg_neutrino:
+                    mc_truth_corr_factor_pnetreg_neutrino = self.get_mc_truth_corr(
+                        self.mc_truth_corr_pnetreg_neutrino,
                         self.events.MatchedJetsNeutrino.RecoEta,
                         self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
                     )
                     self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                         self.events.MatchedJetsNeutrino,
                         self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino
-                        * closure_factor,
+                        * mc_truth_corr_factor_pnetreg_neutrino,
                         "JetPtPNetRegNeutrino",
                     )
                     self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                         self.events.MatchedJetsNeutrino,
                         self.events.MatchedJetsNeutrino.ResponsePNetRegNeutrino
-                        * closure_factor,
+                        * mc_truth_corr_factor_pnetreg_neutrino,
                         "ResponsePNetRegNeutrino",
                     )
+                    # self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                    #     self.events.MatchedJetsNeutrino,
+                    #     mc_truth_corr_factor_pnetreg_neutrino,
+                    #     "MCTruthCorrPNetRegNeutrino",
+                    # )
 
                 # jet pet when <15?
                 # # set the response to 0 if the PNetReg is not valid

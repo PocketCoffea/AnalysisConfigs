@@ -6,13 +6,13 @@ from params.binning import *
 
 
 pol_string = {
-    23: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15)+[16]*pow(log10(x),16)+[17]*pow(log10(x),17)+[18]*pow(log10(x),18)+[19]*pow(log10(x),19)+[20]*pow(log10(x),20) ",
-    18: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15) ",
+    23: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15)+[16]*pow(log10(x),16)+[17]*pow(log10(x),17)+[18]*pow(log10(x),18)+[19]*pow(log10(x),19)+[20]*pow(log10(x),20)",
+    18: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15)",
 }
 
 def write_l2rel_txt(main_dir, correct_eta_bins, year, num_params):
 
-    # create txt"""  """
+    # create txt file for L2Relative
     flav = "inclusive"
     file_names=[f"{year}_PNETREG_MC_L2Relative_AK4PUPPI.txt",f"{year}_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt"]
     for file_name in file_names:

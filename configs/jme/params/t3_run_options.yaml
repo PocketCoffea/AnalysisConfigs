@@ -2,6 +2,6 @@ scaleout: 50
 cores-per-worker: 1
 mem-per-worker: "10GB"
 disk-per-worker: "1GB"
-queue: "standard"
-walltime: "02:00:00"
+queue: "short"
+walltime: "00:40:00"
 chunk: 400000

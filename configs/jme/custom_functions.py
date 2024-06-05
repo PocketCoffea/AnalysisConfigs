@@ -139,6 +139,10 @@ def get_closure_function(coor_file, use_function=False):
             # eta and pt are awkward arrays
             # find the right bin
             corr = ak.ones_like(eta)
+            print(type(pt))
+            print(pt.type)
+            pt=ak.values_astype(pt, "float32")
+            print(pt.type)
             for i in range(len(corrections_eta_bins[0])):
                 mask_eta = (corrections_eta_bins[0][i] <= eta) & (
                     eta < corrections_eta_bins[1][i]
@@ -160,6 +164,11 @@ def get_closure_function(coor_file, use_function=False):
                     corr,
                 )
                 # print(corr)
+                # for j in range(len(corr)):
+                #     for k in range(len(corr[j])):
+                #         print(corrections_eta_bins[0][i], eta[j][k], pt[j][k], corr[j][k], function(pt, *params[i])[j][k], function(pt[j][k], *params[i]))
+            print(type(corr))
+            print(corr.type)
             return corr
 
         return def_closure_function_awkard
@@ -178,20 +187,27 @@ if __name__ == "__main__":
     # print(test_closure_function(6, 15.1))
     # print(test_closure_function(-5, 20))
 
-    # a = ak.Array([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 6, -5])
-    # b = ak.Array([15.19084472, 15.1, 4587.0, 4587.10368490, 500000, 15.1, 15.1, 20])
+    a = ak.highlevel.Array([[-0.8, -0.8], [-0.8, -0.8, -0.8]])
+    b =  ak.highlevel.Array([[15.1, 2091.427001953125], [15.1, 2000, 5000]])
 
-    num = 10000
-    a = ak.Array([-5] * num)
-    b = ak.Array(list(np.linspace(10, 5000, num)))
+    # num = 10000
+    # a = ak.Array([-5] * num)
+    # b = ak.Array(list(np.linspace(10, 5000, num)))
 
     out = test_closure_function(a, b)
 
-    # for i in range(len(out)):
-    #     print(b[i],out[i])
+    # print(out)
 
-    fig, ax = plt.subplots()
-    ax.plot(b, out, label="Closure function")
-    # log scale
-    ax.set_xscale("log")
-    fig.savefig("closure_function.png")
+    for i in range(len(out)):
+        for j in range(len(out[i])):
+            print(a[i][j], b[i][j], out[i][j])
+
+            print((b**2)[i][j], b[i][j]**2)
+
+
+
+    # fig, ax = plt.subplots()
+    # ax.plot(b, out, label="Closure function")
+    # # log scale
+    # ax.set_xscale("log")
+    # fig.savefig("closure_function.png")

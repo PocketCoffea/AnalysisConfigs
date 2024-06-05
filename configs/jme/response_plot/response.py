@@ -1,26 +1,28 @@
 # execute on slurm
 # sbatch -p short --account=t3 --mem 10gb --cpus-per-task=16 --wrap="python response.py --full -d /work/mmalucch/out_jme/out_cartesian_full_recoEtaBins_CorrectJetPt_correctNeutrinosSeparation_jetpt_ZerosPtResponse_2023postBPix/  --histo -n 10"
+# sbatch -p short --account=t3 --time=00:10:00 --mem 15gb --cpus-per-task=32 --wrap="python response.py --full -d /work/mmalucch/out_jme/out_cartesian_full_recoEtaBins_CorrectJetPt_correctNeutrinosSeparation_jetpt_ZerosPtResponse_newCorr_noReg_solved_numPrecision_allFits_2023_postBPix_closure/  --histo -n 32"
 
+import os
 
+os.environ["SIGN"] = ""
+
+import sys
 from coffea.util import load
 import numpy as np
 import matplotlib.pyplot as plt
-import os
 import argparse
-import sys
 import mplhep as hep
 from multiprocessing import Pool
 import multiprocessing as mpr
 from functools import partial
 import functools
 import json
-
+from scipy.optimize import curve_fit
+import scipy.stats as stats
 import ROOT
 
 ROOT.gROOT.SetBatch(True)
 
-from scipy.optimize import curve_fit
-import scipy.stats as stats
 
 from pol_functions import *
 from write_l2rel import write_l2rel_txt
@@ -105,15 +107,16 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+# save the log also in a file
+sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
+sys.stderr = open(file=f"{args.dir}/response_plot.err", mode="w")
+
 year = "Summer22Run3"
 if "preBPix" in args.dir or ("2023" and "BPix" not in args.dir):
     year = "Summer23Run3"
 elif "postBPix" in args.dir or ("2023" and "BPix" in args.dir):
     year = "Summer23BPixRun3"
 
-# save the log also in a file
-sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
-sys.stderr = open(file=f"{args.dir}/response_plot.err", mode="w")
 
 # set global variables
 REBIN = True
@@ -163,9 +166,6 @@ if JET_PT:
     )
 
 
-# run bash command
-os.system("export SIGN=''")
-
 main_dir = args.dir
 
 if True:
@@ -214,7 +214,7 @@ os.makedirs(
     exist_ok=True,
 )
 
-
+print("eta_bins", eta_bins)
 correct_eta_bins = eta_bins
 
 eta_sections = list(eta_sign_dict.keys())
@@ -550,11 +550,21 @@ else:
                                                 median_bin_index = np.argmax(
                                                     cdf_normalized >= 0.5
                                                 )
-
+                                                median = bins_mid[median_bin_index]
                                                 if (
-                                                    np.sum(values) < 10
-                                                    or median_bin_index <= 3
+                                                    "PNetReg" in variable
+                                                    and "4.889" not in categories[i]
                                                 ):
+                                                    condition = median < 0.8
+                                                elif (
+                                                    "PNetReg" in variable
+                                                    and "4.889" in categories[i]
+                                                ):
+                                                    condition = median < 0.1
+                                                else:
+                                                    condition = False
+
+                                                if np.sum(values) < 20 or (condition):
                                                     # for k in range(
                                                     #     j, len(h.axes[jet_pt])
                                                     # ):
@@ -616,7 +626,7 @@ else:
                                                                         # min_index:max_index
                                                                     ]
                                                                 )
-                                                                // 50,
+                                                                // 60,
                                                                 1,
                                                             )
                                                         )
@@ -1120,7 +1130,6 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         func = pol
 
         if i + 1 >= len(x) or i + 3 > NUM_PARAMS:
-            # return {}#CHANGE
             break
         param_bounds = ([-1000.0] * len(p_initial), [1000.0] * len(p_initial))
         popt, pcov = curve_fit(
@@ -1129,7 +1138,8 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
             y,
             p0=p_initial,
             sigma=yerr,
-            absolute_sigma=True,  # , bounds=param_bounds
+            absolute_sigma=True,
+            # bounds=param_bounds
         )
 
         # print chi2 and p-value on the plot
@@ -1160,7 +1170,7 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         #     i,
         # )
 
-        if p_value > max_p_value or np.isnan(p_value):
+        if p_value > max_p_value:
             max_p_value = p_value
 
         popt_list.append(popt)
@@ -1177,8 +1187,12 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         #     if i == list(pol_functions_dict.keys())[-1]:
         #         return {}
         #     continue
+    if max_p_value > 1e-7:
+        index = p_value_list.index(max_p_value)
+    else:
+        # get the element with the least chi2
+        index = chi2_list.index(min(chi2_list))
 
-    index = p_value_list.index(max_p_value)
     # plot the fit
     # x_fit = np.linspace(x[0], x[-1], 1000)
     x_fit = np.logspace(np.log10(x[0]), np.log10(x[-1]), 1000)
@@ -1186,7 +1200,9 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         x_fit, *popt_list[index]
     )
 
-    ax.plot(x_fit, y_fit, color=variables_colors[variable], linestyle="--")
+    ax.plot(
+        x_fit, y_fit, color=variables_colors[variable], linestyle="-", linewidth=0.5
+    )
     # ax.axhline(y_fit[0], color=variables_colors[variable], linestyle="--", xmax=x[0])
     # ax.axhline(y_fit[-1], color=variables_colors[variable], linestyle="--", xmin=x[-1])
 
@@ -1215,6 +1231,30 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
         "p_value": p_value_list[index],
     }
     print("\n", name_plot, variable, "fit_results", fit_results)
+    if index == 0:
+        for i in range(len(popt_list)):
+            print(
+                "\n",
+                name_plot,
+                "\nx",
+                x,
+                "\ny",
+                y,
+                "\nyerr",
+                yerr,
+                "\npopt",
+                popt_list[i],
+                "\npcov",
+                pcov_list[i],
+                "\nchi2/ndof",
+                chi2_list[i],
+                "/",
+                ndof_list[i],
+                "p_value {:.20f}".format(p_value_list[i]),
+                "\npol",
+                i,
+            )
+
     # # plot the fit
     # x_fit = np.linspace(x[0], x[-1], 1000)
     # y_fit = func(x_fit, *popt)
@@ -1245,7 +1285,7 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
     #     "p_value": p_value,
     # }
 
-    return fit_results  # CHANGE
+    return fit_results
 
 
 def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
@@ -1689,7 +1729,7 @@ def plot_median_resolution(eta_bin, plot_type):
             continue
         # check if plot_array is only nan or 0
         if not np.all(np.isnan(plot_array)) and not np.all(plot_array == 0):
-            ax.set_ylim(top=1.1 * max_value, bottom= min_value/1.1)
+            ax.set_ylim(top=1.1 * max_value, bottom=min_value / 1.1)
         if "inverse" in plot_type:
             ax.set_xlabel(r"$p_{T}^{Reco}$ [GeV]", fontsize=12)
         elif "median" in plot_type or "jet_pt" in plot_type:
@@ -2114,8 +2154,9 @@ def plot_histos(eta_pt, histogram_dir):
                 ax_tot_jetpt.legend(frameon=False, loc="upper right", ncol=2)
 
                 ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
-                ax_tot_jetpt.set_xlim(top= 2*pt_bins[pt_bin+1], bottom=0.5*pt_bins[pt_bin])
-
+                ax_tot_jetpt.set_xlim(
+                    left=2 * pt_bins[pt_bin + 1], right=0.5 * pt_bins[pt_bin]
+                )
 
                 hep.cms.label(
                     year=year, com="13.6", label=f"Private Work", ax=ax_tot_jetpt
@@ -2265,16 +2306,6 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     plt.close(fig)
 
 
-print("Plotting width...")
-with Pool(args.num_processes) as p:
-    p.map(
-        functools.partial(plot_median_resolution, plot_type="width"),
-        range(len(correct_eta_bins) - 1 if not args.test else 1),
-    )
-
-if args.no_plot:
-    sys.exit()
-
 print("Plotting inverse medians...")
 with Pool(args.num_processes) as p:
     p.map(
@@ -2287,6 +2318,8 @@ with Pool(args.num_processes) as p:
 print("Saving fit results...")
 write_l2rel_txt(main_dir, correct_eta_bins, year, NUM_PARAMS)
 
+if args.no_plot:
+    sys.exit()
 # for eta_bin in range(len(correct_eta_bins) - 1 if not args.test else 1):
 #     plot_median_resolution(eta_bin, "inverse_median")
 
@@ -2342,6 +2375,12 @@ with Pool(args.num_processes) as p:
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
+print("Plotting width...")
+with Pool(args.num_processes) as p:
+    p.map(
+        functools.partial(plot_median_resolution, plot_type="width"),
+        range(len(correct_eta_bins) - 1 if not args.test else 1),
+    )
 
 # print(median_dir)
 print("Done!")
