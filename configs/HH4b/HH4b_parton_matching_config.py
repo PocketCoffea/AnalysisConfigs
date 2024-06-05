@@ -428,7 +428,7 @@ cfg = Configurator(
                             ],
                         ),
                     ]
-                    if not CLASSIFICATION
+                    if CLASSIFICATION
                     else []
                 )
             ),
