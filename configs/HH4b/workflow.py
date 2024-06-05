@@ -17,13 +17,8 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
         self.classification = self.workflow_options["classification"]
-
-        # load spanet model
-        self.spanet_model = onnxruntime.InferenceSession(
-            self.workflow_options["spanet_model"], providers=onnxruntime.get_available_providers()
-        )
-        self.input_name = [input.name for input in self.spanet_model.get_inputs()]
-        self.output_name = [output.name for output in self.spanet_model.get_outputs()]
+        self.spanet_model = self.workflow_options["spanet_model"]
+        self.session = None
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -51,7 +46,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             ak.argsort(self.events.JetGoodHiggs.pt, axis=1, ascending=False)
         ]
 
-    def get_pairing_information(self):
+    def get_pairing_information(self, session, input_name, output_name):
 
         pt = np.array(
             np.log(
@@ -120,16 +115,18 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         )
 
         inputs = np.stack((pt, eta, phi, btag), axis=-1)
-        inputs_complete = {self.input_name[0]: inputs, self.input_name[1]: mask}
+        inputs_complete = {input_name[0]: inputs, input_name[1]: mask}
 
-        outputs = self.spanet_model.run(self.output_name, inputs_complete)
+        outputs = session.run(output_name, inputs_complete)
 
         # extract the best jet assignment from
         # the predicted probabilities
         assignment_probability = np.stack((outputs[0], outputs[1]), axis=0)
         # print("\nassignment_probability", assignment_probability)
         # swap axis
-        predictions_best = np.swapaxes(extract_predictions(assignment_probability), 0, 1)
+        predictions_best = np.swapaxes(
+            extract_predictions(assignment_probability), 0, 1
+        )
 
         # get the probabilities of the best jet assignment
         num_events = assignment_probability.shape[1]
@@ -165,7 +162,9 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # extract the second best jet assignment from
         # the predicted probabilities
         # swap axis
-        predictions_second_best = np.swapaxes(extract_predictions(assignment_probability), 0, 1)
+        predictions_second_best = np.swapaxes(
+            extract_predictions(assignment_probability), 0, 1
+        )
 
         # get the probabilities of the second best jet assignment
         second_best_pairing_probabilities = np.ndarray((2, num_events))
@@ -349,7 +348,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         return reco_higgs1, reco_higgs2
 
-    def process_extra_after_presel(self, variation) -> ak.Array:
+    def process_extra_after_presel(self, variation):# -> ak.Array:
         if self._isMC and not self.classification:
             self.do_parton_matching(which_bquark=self.which_bquark)
             # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
@@ -397,11 +396,22 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         elif self.classification:
             self.dummy_provenance()
+            print("self.session 1", self.session)
+            if self.session == None:
+                print("none")
+                # load spanet model
+                self.session = onnxruntime.InferenceSession(
+                    self.spanet_model#, providers=onnxruntime.get_available_providers()
+                )
+                self.input_name = [input.name for input in self.session.get_inputs()]
+                self.output_name = [output.name for output in self.session.get_outputs()]
+            print("self.session 2", self.session)
+
             (
                 pairing_predictions,
                 self.events["best_pairing_probability"],
                 self.events["second_best_pairing_probability"],
-            ) = self.get_pairing_information()
+            ) = self.get_pairing_information(self.session, self.input_name, self.output_name)
 
             # get the probabilities difference between the best and second best jet assignment
             self.events["Delta_pairing_probabilities"] = (

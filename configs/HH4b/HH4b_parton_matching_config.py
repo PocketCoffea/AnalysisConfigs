@@ -60,11 +60,11 @@ cfg = Configurator(
         "filter": {
             "samples": (
                 [
-                    # "GluGlutoHHto4B",
+                    # "SPANet_classification",
+                    "GluGlutoHHto4B",
                     # "GluGlutoHHto4B_poisson",
                     # "DATA_JetMET_JMENano",
                     # "QCD-4Jets",
-                    "SPANet_classification",
                     # "GluGlutoHHto4B_private",
                     # "GluGlutoHHto4B_spanet",
                 ]
