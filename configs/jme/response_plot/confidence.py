@@ -11,7 +11,14 @@ import numpy as np
 # 68% confidence is [-sigma,+sigma] so divide by 2*0.9945
 
 
-# redo the function but do not use ROOT.TH1F but a numpy array
+sigma_to_conv = {
+    0.99: 2.576,
+    0.98: 2.326,
+    0.95: 1.960,
+    0.87: 1.514,
+    0.68: 0.9945,
+}
+
 def Confidence_numpy(hist, bins_mid, bin_width, confLevel = 0.87):
     ix = np.argmax(bins_mid>np.average(bins_mid, weights=hist))
     # print(ix, np.average(bins_mid, weights=hist))
@@ -43,7 +50,7 @@ def Confidence_numpy(hist, bins_mid, bin_width, confLevel = 0.87):
                 width +=  bin_width * (confLevel * ntot - nsum) / nhigh
             nsum = ntot
     # print(width)
-    return width/(2* confLevel)
+    return width/(2* sigma_to_conv[confLevel])
 
 
 

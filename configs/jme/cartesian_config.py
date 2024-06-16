@@ -50,7 +50,7 @@ corr_files_pnetreg = {
 }
 if int(os.environ.get("CLOSURE", 0)) == 1:
     print(f"Performing closure test with {corr_files_pnetreg[year]}")
-    mc_truth_corr_pnetreg = get_closure_function(corr_files_pnetreg[year])
+    mc_truth_corr_pnetreg = get_closure_function_information(corr_files_pnetreg[year])
 
 mc_truth_corr_pnetreg_neutrino = None
 corr_files_pnetreg_neutrino = {
@@ -59,10 +59,20 @@ corr_files_pnetreg_neutrino = {
 }
 if int(os.environ.get("CLOSURE", 0)) == 1:
     print(f"Performing closure test with {corr_files_pnetreg_neutrino[year]}")
-    mc_truth_corr_pnetreg_neutrino = get_closure_function(
+    mc_truth_corr_pnetreg_neutrino = get_closure_function_information(
         corr_files_pnetreg_neutrino[year]
     )
 
+mc_truth_corr=None
+corr_files = {
+    "2023_preBPix": f"{localdir}/params/Summer23Run3_V1_MC_L2Relative_AK4PUPPI.txt",
+    "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_V3_MC_L2Relative_AK4PUPPI.txt",
+}
+if int(os.environ.get("CLOSURE", 0)) == 1:
+    print(f"Reapplying correctios {corr_files[year]}")
+    mc_truth_corr = get_closure_function_information(
+        corr_files[year]
+    )
 
 # cuts_pt = []
 # cuts_names_pt = []
@@ -691,6 +701,7 @@ cfg = Configurator(
         "donotscale_sumgenweights": True,
         "mc_truth_corr_pnetreg": mc_truth_corr_pnetreg,
         "mc_truth_corr_pnetreg_neutrino": mc_truth_corr_pnetreg_neutrino,
+        "mc_truth_corr": mc_truth_corr,
     },
     skim=[],
     preselections=[],

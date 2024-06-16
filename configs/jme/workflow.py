@@ -66,6 +66,7 @@ class QCDBaseProcessor(BaseProcessorABC):
         self.mc_truth_corr_pnetreg_neutrino = self.workflow_options[
             "mc_truth_corr_pnetreg_neutrino"
         ]
+        self.mc_truth_corr = self.workflow_options["mc_truth_corr"]
 
     def add_neutrinos_to_genjets(self, genjets, neutrinos):
         neutrinos_matched = deltaR_matching_nonunique(genjets, neutrinos, 0.4)
@@ -140,139 +141,45 @@ class QCDBaseProcessor(BaseProcessorABC):
 
         return genjets_with_neutrinos
 
-    def get_mc_truth_corr(self, corr_dict, eta, pt):
+    def get_mc_truth_corr(self, corr_dict, eta, phi, pt, pnetreg=True):
         corr = ak.ones_like(eta)
 
         function_string = corr_dict["function_string"]
         corrections_eta_bins = corr_dict["corrections_eta_bins"]
+        corrections_phi_bins = corr_dict["corrections_phi_bins"]
         num_params = corr_dict["num_params"]
         jet_pt = corr_dict["jet_pt"]
         params = corr_dict["params"]
 
-        pol_function = string_to_pol_function(function_string)
+        if pnetreg:
+            corr_function = string_to_pol_function(function_string)
+        else:
+            corr_function = standard_gaus_function
 
         pt=ak.values_astype(pt, "float64")
 
         for i in range(len(corrections_eta_bins[0])):
-            mask_eta = (corrections_eta_bins[0][i] <= eta) & (
+            mask_bins = (corrections_eta_bins[0][i] <= eta) & (
                 eta < corrections_eta_bins[1][i]
             )
+            if corrections_phi_bins:
+                mask_bins = mask_bins & (
+                    corrections_phi_bins[0][i] <= phi) & (phi < corrections_phi_bins[1][i]
+                )
             mask_pt = (jet_pt[0][i] <= pt) & (pt < jet_pt[1][i])
             corr = ak.where(
-                mask_eta,
+                mask_bins,
                 ak.where(
                     mask_pt,
-                    pol_function(pt, *params[i]),
+                    corr_function(pt, *params[i]),
                     ak.where(
                         pt < jet_pt[0][i],
-                        pol_function(jet_pt[0][i], *params[i]),
-                        pol_function(jet_pt[1][i], *params[i]),
+                        corr_function(jet_pt[0][i], *params[i]),
+                        corr_function(jet_pt[1][i], *params[i]),
                     ),
                 ),
                 corr,
             )
-
-            # PRINTS
-
-            # print(type(pol_function(pt, *params[i])))
-            # print(type(corr))
-            # print(corr.type)
-
-            # eval_1 = pol_function(pt, *params[i])
-            # # print("\n\n\n", "\neval_1", eval_1)
-
-            # part_1 = ak.where(
-            #     mask_pt,
-            #     pol_function(pt, *params[i]),
-            #     ak.where(
-            #         pt < jet_pt[0][i],
-            #         pol_function(jet_pt[0][i], *params[i]),
-            #         pol_function(jet_pt[1][i], *params[i]),
-            #     ),
-            # )
-            # part_2 = ak.where(
-            #     pt < jet_pt[0][i],
-            #     pol_function(jet_pt[0][i], *params[i]),
-            #     pol_function(jet_pt[1][i], *params[i]),
-            # )
-
-            # print_num = 0
-            # max_ev = 10
-            # # for j in range(len(pt)):
-            # #     for k in range(len(pt[j])):
-            # #         print(
-            # #             pt[j][k],
-            # #             test_function(pt[j][k], j, k),
-            # #             test_function(pt, j, k)[j][k],
-            # #             "           ",
-            # #             test_function2(pt[j][k], j, k),
-            # #             test_function2(pt, j, k)[j][k],
-            # #             (pt**2)[j][k],
-            # #             (pt[j][k])**2,
-            # #             # pol_function(pt[j][k], *params[i]),
-            # #             # pol_function(pt, *params[i])[j][k],
-            # #         )
-            # if (
-            #     corrections_eta_bins[0][i] == -0.879
-            #     and corrections_eta_bins[1][i] == -0.783
-            # ):
-            #     for j in range(len(pt)):
-            #         for k in range(len(pt[j])):
-            #             if print_num > max_ev:
-            #                 break
-            #             if (
-            #                 mask_eta[j][k]
-            #                 and (pt[j][k] > 2000 or pt[j][k] < 1.7)
-            #                 and eta[j][k] > -0.879
-            #                 and eta[j][k] < -0.783
-            #             ):
-            #                 # if (
-            #                 #     mask_eta[j][k]
-            #                 #     and corr[j][k] != function(pt[j][k], *params[i])
-            #                 #     and corr[j][k] != function(jet_pt[0][i], *params[i])
-            #                 #     and corr[j][k] != function(jet_pt[1][i], *params[i])
-            #                 # ):
-
-            #                 # if eta[j][k] > -0.957 and eta[j][k] < -0.783:
-            #                 print(
-            #                     "\n\n\n",
-            #                     "\nj",
-            #                     j,
-            #                     "\nk",
-            #                     k,
-            #                     "\ncorrections_eta_bins",
-            #                     corrections_eta_bins[0][i],
-            #                     corrections_eta_bins[1][i],
-            #                     "\njet_pt",
-            #                     jet_pt[0][i],
-            #                     jet_pt[1][i],
-            #                     "\nmask_eta",
-            #                     mask_eta[j][k],
-            #                     "\nmask_pt",
-            #                     mask_pt[j][k],
-            #                     "\nfunction",
-            #                     pol_function(pt[j][k], *params[i]),
-            #                     pol_function(pt, *params[i])[j][k],
-            #                     eval_1[j][k],
-            #                     "\nfunction jet_pt[0]",
-            #                     pol_function(jet_pt[0][i], *params[i]),
-            #                     "\nfunction jet_pt[1]",
-            #                     pol_function(jet_pt[1][i], *params[i]),
-            #                     "\npt",
-            #                     pt[j][k],
-            #                     "\neta",
-            #                     eta[j][k],
-            #                     "\ncorr",
-            #                     corr[j][k],
-            #                     "\npart_1",
-            #                     part_1[j][k],
-            #                     "\npart_2",
-            #                     part_2[j][k],
-            #                 )
-
-            #                 print_num += 1
-            #         if print_num > max_ev:
-            #             break
 
         return corr
 
@@ -376,11 +283,21 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.JetMatched.eta,
                 "RecoEta",
             )
+            self.events[f"MatchedJets"] = ak.with_field(
+                self.events.MatchedJets,
+                self.events.JetMatched.phi,
+                "RecoPhi",
+            )
 
             self.events[f"MatchedJetsNeutrino"] = ak.with_field(
                 self.events.GenJetNeutrinoMatched,
                 self.events.JetNeutrinoMatched.eta,
                 "RecoEta",
+            )
+            self.events[f"MatchedJetsNeutrino"] = ak.with_field(
+                self.events.MatchedJetsNeutrino,
+                self.events.JetNeutrinoMatched.phi,
+                "RecoPhi",
             )
 
     def process_extra_after_presel(self, variation) -> ak.Array:
@@ -532,6 +449,7 @@ class QCDBaseProcessor(BaseProcessorABC):
                     mc_truth_corr_factor_pnetreg = self.get_mc_truth_corr(
                         self.mc_truth_corr_pnetreg,
                         self.events.MatchedJets.RecoEta,
+                        self.events.MatchedJets.RecoPhi,
                         self.events.MatchedJets.JetPtPNetReg,
                     )
                     self.events[f"MatchedJets"] = ak.with_field(
@@ -556,6 +474,7 @@ class QCDBaseProcessor(BaseProcessorABC):
                     mc_truth_corr_factor_pnetreg_neutrino = self.get_mc_truth_corr(
                         self.mc_truth_corr_pnetreg_neutrino,
                         self.events.MatchedJetsNeutrino.RecoEta,
+                        self.events.MatchedJetsNeutrino.RecoPhi,
                         self.events.MatchedJetsNeutrino.JetPtPNetRegNeutrino,
                     )
                     self.events[f"MatchedJetsNeutrino"] = ak.with_field(
@@ -574,6 +493,32 @@ class QCDBaseProcessor(BaseProcessorABC):
                     #     self.events.MatchedJetsNeutrino,
                     #     mc_truth_corr_factor_pnetreg_neutrino,
                     #     "MCTruthCorrPNetRegNeutrino",
+                    # )
+
+                if self.mc_truth_corr:
+                    mc_truth_corr_factor = self.get_mc_truth_corr(
+                        self.mc_truth_corr,
+                        self.events.MatchedJets.RecoEta,
+                        self.events.MatchedJets.RecoPhi,
+                        self.events.MatchedJets.JetPtRaw,
+                        pnetreg=False,
+                    )
+                    self.events[f"MatchedJets"] = ak.with_field(
+                        self.events.MatchedJets,
+                        self.events.MatchedJets.JetPtRaw
+                        * mc_truth_corr_factor,
+                        "JetPtJEC",
+                    )
+                    self.events[f"MatchedJets"] = ak.with_field(
+                        self.events.MatchedJets,
+                        self.events.MatchedJets.ResponseRaw
+                        * mc_truth_corr_factor,
+                        "ResponseJEC",
+                    )
+                    # self.events[f"MatchedJets"] = ak.with_field(
+                    #     self.events.MatchedJets,
+                    #     mc_truth_corr_factor,
+                    #     "MCTruthCorrPNetReg",
                     # )
 
                 # jet pet when <15?

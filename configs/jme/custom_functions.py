@@ -14,15 +14,56 @@ def string_to_pol_function(string):
     return pol
 
 
-def get_closure_function(coor_file, use_function=False):
+def standard_gaus_partial(x, *params):
+    return ((x < params[10]) * (params[9])) + (
+        (x >= params[10])
+        * (
+            params[0]
+            + (params[1] / (pow(np.log10(x), 2) + params[2]))
+            + (
+                params[3]
+                * np.exp(
+                    -params[4] * ((np.log10(x) - params[5]) * (np.log10(x) - params[5]))
+                )
+                + (
+                    params[6]
+                    * np.exp(
+                        -params[7]
+                        * ((np.log10(x) - params[8]) * (np.log10(x) - params[8]))
+                    )
+                )
+            )
+        )
+    )
+
+
+# TODO: implement correctly even for 23BPix
+def standard_gaus_function(x, *params):
+    # max(0.0001,((x<[10])*([9]))+((x>=[10])*([0]+([1]/(pow(log10(x),2)+[2]))+([3]*exp(-([4]*((log10(x)-[5])*(log10(x)-[5])))))+([6]*exp(-([7]*((log10(x)-[8])*(log10(x)-[8]))))))))
+
+    if type(x) == ak.highlevel.Array:
+        return ak.where(
+            standard_gaus_partial(x, *params) < 0.0001,
+            0.0001,
+            standard_gaus_partial(x, *params),
+        )
+    elif type(x) == float:
+        return (
+            0.0001
+            if standard_gaus_partial(x, *params) < 0.0001
+            else standard_gaus_partial(x, *params)
+        )
+    else:
+        raise ValueError("x should be either a float or an awkward array")
+
+
+def get_closure_function_information(coor_file, use_function=False):
     # open file
     with open(coor_file, "r") as f:
         lines = f.readlines()
         # in the first line the function string is stored after "JetPt" and before "Correction"
         function_string = lines[0].split("JetPt ")[1].split(" Correction")[0].strip()
-
-        # convert the string to one of the pol functions
-        function = string_to_pol_function(function_string)
+        phi_bin = True if "JetPhi" in lines[0] else False
 
         # separate each line in columns
         columns = [line.split() for line in lines[1:]]
@@ -32,18 +73,27 @@ def get_closure_function(coor_file, use_function=False):
             [float(column[0]) for column in columns],
             [float(column[1]) for column in columns],
         ]
+        k=0
+        corrections_phi_bins = []
+        if phi_bin:
+            corrections_phi_bins = [
+                [float(column[2]) for column in columns],
+                [float(column[3]) for column in columns],
+            ]
+            k=2
+
 
         # get the number of parameters
-        num_params = [int(column[2]) for column in columns]
+        num_params = [int(column[k+2]) for column in columns]
         # get the jet pt range
         jet_pt = [
-            [float(column[3]) for column in columns],
-            [float(column[4]) for column in columns],
+            [float(column[k+3]) for column in columns],
+            [float(column[k+4]) for column in columns],
         ]
         # get the parameters
-        # params = [[float(column[5+i]) for column in columns] for i in range(max(num_params)-2)]
+        # params = [[float(column[k+5+i]) for column in columns] for i in range(max(num_params)-2)]
         params = [
-            [float(column[5 + i]) for i in range(num_params[j] - 2)]
+            [float(column[k+5 + i]) for i in range(num_params[j] - 2)]
             for j, column in enumerate(columns)
         ]
 
@@ -90,6 +140,19 @@ def get_closure_function(coor_file, use_function=False):
                 if mask_eta_bins[i]
             ],
         ]
+        if phi_bin:
+            corrections_phi_bins = [
+                [
+                    corrections_phi_bins[0][i]
+                    for i in range(len(corrections_phi_bins[0]))
+                    if mask_eta_bins[i]
+                ],
+                [
+                    corrections_phi_bins[1][i]
+                    for i in range(len(corrections_phi_bins[1]))
+                    if mask_eta_bins[i]
+                ],
+            ]
         num_params = [num_params[i] for i in range(len(num_params)) if mask_eta_bins[i]]
         jet_pt = [
             [jet_pt[0][i] for i in range(len(jet_pt[0])) if mask_eta_bins[i]],
@@ -114,6 +177,7 @@ def get_closure_function(coor_file, use_function=False):
         function_dict = {
             "function_string": function_string,
             "corrections_eta_bins": corrections_eta_bins,
+            "corrections_phi_bins": corrections_phi_bins,
             "num_params": num_params,
             "jet_pt": jet_pt,
             "params": params,
@@ -121,6 +185,9 @@ def get_closure_function(coor_file, use_function=False):
 
         if not use_function:
             return function_dict
+
+        # convert the string to one of the pol functions
+        function = string_to_pol_function(function_string)
 
         def def_closure_function(eta, pt):
             # find the right bin
@@ -141,7 +208,7 @@ def get_closure_function(coor_file, use_function=False):
             corr = ak.ones_like(eta)
             print(type(pt))
             print(pt.type)
-            pt=ak.values_astype(pt, "float32")
+            pt = ak.values_astype(pt, "float32")
             print(pt.type)
             for i in range(len(corrections_eta_bins[0])):
                 mask_eta = (corrections_eta_bins[0][i] <= eta) & (
@@ -175,7 +242,7 @@ def get_closure_function(coor_file, use_function=False):
 
 
 if __name__ == "__main__":
-    test_closure_function = get_closure_function(
+    test_closure_function = get_closure_function_information(
         "params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt", use_function=True
     )
 
@@ -188,7 +255,7 @@ if __name__ == "__main__":
     # print(test_closure_function(-5, 20))
 
     a = ak.highlevel.Array([[-0.8, -0.8], [-0.8, -0.8, -0.8]])
-    b =  ak.highlevel.Array([[15.1, 2091.427001953125], [15.1, 2000, 5000]])
+    b = ak.highlevel.Array([[15.1, 2091.427001953125], [15.1, 2000, 5000]])
 
     # num = 10000
     # a = ak.Array([-5] * num)
@@ -202,9 +269,7 @@ if __name__ == "__main__":
         for j in range(len(out[i])):
             print(a[i][j], b[i][j], out[i][j])
 
-            print((b**2)[i][j], b[i][j]**2)
-
-
+            print((b**2)[i][j], b[i][j] ** 2)
 
     # fig, ax = plt.subplots()
     # ax.plot(b, out, label="Closure function")
