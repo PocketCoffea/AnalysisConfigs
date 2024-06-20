@@ -46,7 +46,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = partonMatchingProcessorWithFSR,
+    workflow = PartonMatchingProcessorWithFSR,
     workflow_options = {"parton_jet_min_dR": 0.3,
                         "parton_jet_min_dR_postfsr": 1.0},
     
