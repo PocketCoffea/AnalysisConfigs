@@ -88,18 +88,38 @@ cfg = Configurator(
                         ColOut("PartonLastCopyMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"], flatten=False
+                            [
+                                "pt",
+                                "eta",
+                                "phi",
+                                "hadronFlavour",
+                                "btagDeepFlavB",
+                                "btag_L",
+                                "btag_M",
+                                "btag_H"
+                            ], flatten=False
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet", "provenance"], flatten=False
+                            [
+                                "pt",
+                                "eta",
+                                "phi",
+                                "hadronFlavour",
+                                "btagDeepFlavB",
+                                "btag_L",
+                                "btag_M",
+                                "btag_H",
+                                "dRMatchedJet",
+                                "provenance"
+                            ], flatten=False
                         ),
                         ColOut("LeptonGood",
-                               ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
+                               ["pt","eta","phi", "pdgId", "charge", "mvaTTH"], flatten=False,
                                pos_end=1, store_size=False),
-                        ColOut("MET", ["phi","pt","significance"]),
-                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
+                        ColOut("MET", ["phi","pt","significance"], flatten=False),
+                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"], flatten=False),
+                        ColOut("LeptonGenLevel",["pt","eta","phi","mass","pdgId"], flatten=False),
                     ]
             }
         },
