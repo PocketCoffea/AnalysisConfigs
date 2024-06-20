@@ -160,7 +160,7 @@ class BaseProcessorGen(BaseProcessorABC):
 
 
 
-        #select jets and leptons
+        #jets and leptons LHEPart
 
         mask_status = self.events.LHEPart.status==1
 
@@ -192,9 +192,36 @@ class BaseProcessorGen(BaseProcessorABC):
         self.events["e_part"] = e_part
         self.events["mu_part"] = mu_part
         self.events["tau_part"] = tau_part
-       
 
-        
+
+
+        #jets and leptons GenPart
+
+        #leptons and quarks from t decays
+
+        mask_hard_process = self.events.GenPart.hasFlags(['fromHardProcess','isPrompt','isHardProcess', 'isFirstCopy']) 
+
+        genparts = self.events.GenPart[mask_hard_process]
+        from_W_decay = genparts[:,-4:] #I can use this only for the quark decay since with MadGraph it doesn't work with the leptons
+
+        is_q_mask_fromW = abs(from_W_decay.pdgId) < 11 
+
+        is_e_mask_fromW = abs(genparts.pdgId) == 11
+        is_mu_mask_fromW = abs(genparts.pdgId) == 13
+        is_tau_mask_fromW = abs(genparts.pdgId) == 15
+
+        lep_fromW = ak.flatten(genparts[is_e_mask_fromW | is_mu_mask_fromW | is_tau_mask_fromW])
+
+        quarks_fromW = from_W_decay[is_q_mask_fromW]
+        q_fromW = quarks_fromW[ak.argsort(quarks_fromW.pt, axis=1, ascending=False)][:,-0]
+
+
+        self.events["lep_decay"] = lep_fromW
+        self.events["q_fromW_decay"] = q_fromW
+       
+        self.events["delta_phi_ql"] = q_fromW.delta_phi(lep_fromW)
+
+
 
 
     def process_extra_after_presel(self, variation) -> ak.Array:

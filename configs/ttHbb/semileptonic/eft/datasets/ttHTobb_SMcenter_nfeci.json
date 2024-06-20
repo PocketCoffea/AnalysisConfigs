@@ -221,7 +221,7 @@
             "sample": "ttHTobb_p1j_SMcenter_5F_tbarlnutqq_fixscale",
             "year": "2016",
             "isMC": "True",
-            "xsec": "3",
+            "xsec": "0.1",
             "nevents": "624978",
             "size": "10480968072"
         },

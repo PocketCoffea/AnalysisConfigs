@@ -154,90 +154,90 @@ cfg = Configurator(
         
 
         "LHE_w1" : HistConf(
-            [Axis(coll="events", field="cthre_SMc", bins=300, start=0, stop=10, label="$w_1$")], only_categories=['sm'],
-        ),
+             [Axis(coll="events", field="cthre_SMc", bins=80, start=0, stop=3, label="$w_1$")], only_categories=['sm'],
+         ),
 
-        "LHE_w2" : HistConf(
-            [Axis(coll="events", field="ctwre_SMc", bins=300, start=0, stop=10, label="$w_2$")], only_categories=['sm'],
-        ),
+         "LHE_w2" : HistConf(
+             [Axis(coll="events", field="ctwre_SMc", bins=80, start=0, stop=35, label="$w_2$")], only_categories=['sm'],
+         ),
 
-        "LHE_w3" : HistConf(
-            [Axis(coll="events", field="ctbre_SMc", bins=300, start=0, stop=10, label="$w_3$")], only_categories=['sm'],
-        ),
+         "LHE_w3" : HistConf(
+             [Axis(coll="events", field="ctbre_SMc", bins=80, start=0, stop=20, label="$w_3$")], only_categories=['sm'],
+         ),
 
-        "LHE_w4" : HistConf(
-            [Axis(coll="events", field="cbwre_SMc", bins=300, start=0, stop=10, label="$w_4$")], only_categories=['sm'],
-        ),
+         "LHE_w4" : HistConf(
+             [Axis(coll="events", field="cbwre_SMc", bins=80, start=0, stop=20, label="$w_4$")], only_categories=['sm'],
+         ),
 
-        "LHE_w5" : HistConf(
-            [Axis(coll="events", field="chq1_SMc", bins=300, start=0, stop=10, label="$w_5$")], only_categories=['sm'],
-        ),
+         "LHE_w5" : HistConf(
+             [Axis(coll="events", field="chq1_SMc", bins=80, start=0, stop=15, label="$w_5$")], only_categories=['sm'],
+         ),
 
-        "LHE_w6" : HistConf(
-            [Axis(coll="events", field="chq3_SMc", bins=300, start=0, stop=10, label="$w_6$")], only_categories=['sm'],
-        ),
+         "LHE_w6" : HistConf(
+             [Axis(coll="events", field="chq3_SMc", bins=80, start=0, stop=20, label="$w_6$")], only_categories=['sm'],
+         ),
 
-        "LHE_w7" : HistConf(
-            [Axis(coll="events", field="cht_SMc", bins=300, start=0, stop=10, label="$w_7$")], only_categories=['sm'],
-        ),
+         "LHE_w7" : HistConf(
+             [Axis(coll="events", field="cht_SMc", bins=80, start=0, stop=12, label="$w_7$")], only_categories=['sm'],
+         ),
 
-        "LHE_w8" : HistConf(
-            [Axis(coll="events", field="chtbre_SMc", bins=300, start=0, stop=10, label="$w_8$")], only_categories=['sm'],
-        ),
+         "LHE_w8" : HistConf(
+             [Axis(coll="events", field="chtbre_SMc", bins=80, start=0, stop=10, label="$w_8$")], only_categories=['sm'],
+         ), 
 
 
         "LHE_w1_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="cthre_SMc", bins=200, start=0, stop=100, label="$w_1$"),
             ], only_categories=['sm'],
         ),
         
          "LHE_w2_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="ctwre_SMc", bins=200, start=0, stop=100, label="$w_2$"),
             ],only_categories=['sm'],
         ),
 
          "LHE_w3_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="ctbre_SMc", bins=200, start=0, stop=100, label="$w_3$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w4_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="cbwre_SMc", bins=200, start=0, stop=100, label="$w_4$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w5_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="chq1_SMc", bins=200, start=0, stop=100, label="$w_5$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w6_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="chq3_SMc", bins=200, start=0, stop=100, label="$w_6$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w7_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
-                Axis(coll="events", field="cht_SMc", bins=200, start=0, stop=120, label="$w_7$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="cht_SMc", bins=200, start=0, stop=100, label="$w_7$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w8_2d" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=900, label="$H_{p_T}$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
                 Axis(coll="events", field="chtbre_SMc", bins=200, start=0, stop=100, label="$w_8$"),
             ],only_categories=['sm'],
         ),
@@ -247,57 +247,57 @@ cfg = Configurator(
 
          "LHE_w1_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=100, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="cthre_SMc", bins=100, start=0, stop=10, label="$w_1$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="cthre_SMc", bins=200, start=0, stop=4, label="$w_1$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w2_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="ctwre_SMc", bins=300, start=0, stop=100, label="$w_2$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="ctwre_SMc", bins=200, start=0, stop=60, label="$w_2$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w3_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="ctbre_SMc", bins=300, start=0, stop=100, label="$w_3$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="ctbre_SMc", bins=200, start=0, stop=20, label="$w_3$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w4_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="cbwre_SMc", bins=300, start=0, stop=100, label="$w_4$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="cbwre_SMc", bins=200, start=0, stop=40, label="$w_4$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w5_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="chq1_SMc", bins=300, start=0, stop=60, label="$w_5$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="chq1_SMc", bins=200, start=0, stop=10, label="$w_5$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w6_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="chq3_SMc", bins=300, start=0, stop=100, label="$w_6$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="chq3_SMc", bins=200, start=0, stop=40, label="$w_6$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w7_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="cht_SMc", bins=300, start=0, stop=60, label="$w_7$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="cht_SMc", bins=200, start=0, stop=8, label="$w_7$"),
             ], only_categories=['sm'],
         ),
 
          "LHE_w8_2d_zoom" : HistConf(
             [
-                Axis(coll="HiggsParton", field="pt", bins=300, start=0, stop=700, label="$H_{p_T}$"),
-                Axis(coll="events", field="chtbre_SMc", bins=300, start=0, stop=40, label="$w_8$"),
+                Axis(coll="HiggsParton", field="pt", bins=200, start=0, stop=700, label="$H_{p_T}$"),
+                Axis(coll="events", field="chtbre_SMc", bins=200, start=0, stop=10, label="$w_8$"),
             ], only_categories=['sm'],
         ),
 
