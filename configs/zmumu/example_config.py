@@ -6,6 +6,7 @@ from pocket_coffea.parameters.histograms import *
 import workflow
 from workflow import ZmumuBaseProcessor
 
+# Register custom modules in cloudpickle to propagate them to dask workers
 import cloudpickle
 import custom_cut_functions 
 cloudpickle.register_pickle_by_value(workflow)
@@ -93,23 +94,3 @@ cfg = Configurator(
     }
 )
 
-
-
-
-run_options = {
-        "executor"       : "dask/lxplus",
-        "env"            : "singularity",
-        "workers"        : 1,
-        "scaleout"       : 50,
-        "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
-        "walltime"       : "00:40:00",
-        "mem_per_worker" : "4GB", # GB
-        "disk_per_worker" : "1GB", # GB
-        "exclusive"      : False,
-        "chunk"          : 400000,
-        "retries"        : 50,
-        "treereduction"  : 20,
-        "adapt"          : False
-    }
-   
