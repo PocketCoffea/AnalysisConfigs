@@ -34,12 +34,20 @@ cfg = Configurator(
                   f"{localdir}/datasets/backgrounds_MC_ttbar_local.json"
                   ],
         "filter" : {
-            "samples": ["TTToSemiLeptonic"],
+            "samples": [
+                        "TTToSemiLeptonic"
+                        ],
             "samples_exclude" : [],
-            "year": [#"2017",
-                     "2018"]
+            "year": [
+                     "2018"
+                     ]
         },
         "subsamples": {
+            'TTbbSemiLeptonic' : {
+                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+            },
             'TTToSemiLeptonic' : {
                 'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
                 'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
@@ -49,10 +57,11 @@ cfg = Configurator(
     },
 
     workflow = ttbarBackgroundProcessor,
-    workflow_options = {"parton_jet_min_dR": 0.3},
+    workflow_options = {"parton_jet_min_dR": 0.3,
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
-            get_nBtagMin(3, 15., coll="Jet"),
+            get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [semileptonic_presel],
@@ -87,26 +96,45 @@ cfg = Configurator(
                     "semilep_LHE": [
                         ColOut(
                             "Parton",
-                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"]
+                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"],
+                            flatten=False
                         ),
                         ColOut(
                             "PartonMatched",
                             ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "dRMatchedJet"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                            flatten=False
                         ),
-                        ColOut("LeptonGood",
-                               ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
-                               pos_end=1, store_size=False),
-                        ColOut("MET", ["phi","pt","significance"]),
-                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
+                        ColOut(
+                            "LeptonGood",
+                            ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
+                            pos_end=1,
+                            flatten=False
+                        ),
+                        ColOut(
+                            "MET",
+                            ["phi","pt","significance"],
+                            flatten=False
+                        ),
+                        ColOut(
+                            "Generator",
+                            ["x1","x2","id1","id2","xpdf1","xpdf2"],
+                            flatten=False
+                        ),
+                        ColOut(
+                            "LeptonParton",
+                            ["pt","eta","phi","mass","pdgId"],
+                            flatten=False
+                        ),
                     ]
             }
         },

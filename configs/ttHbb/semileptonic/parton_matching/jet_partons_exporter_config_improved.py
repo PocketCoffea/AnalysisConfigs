@@ -6,7 +6,7 @@ from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
 import workflow
-from workflow import PartonMatchingProcessor
+from workflow_improved import PartonMatchingProcessorWithFSR 
 
 import custom_cut_functions
 import custom_cuts
@@ -43,9 +43,10 @@ cfg = Configurator(
         }
     },
 
-    workflow = PartonMatchingProcessor,
+    workflow = PartonMatchingProcessorWithFSR,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/dvalsecc/ttHbb/output_columns_parton_matching/sig_bkg_30_08_2023_v2/"},
+                        "parton_jet_min_dR_postfsr": 1.0,
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/dvalsecc/ttHbb/output_columns_parton_matching/parton_matching_14_06_24_v4/"},
     
     skim = [get_nObj_min(4, 15., coll="Jet"),
             get_nBtagMin(3, 15., coll="Jet"),
@@ -79,11 +80,9 @@ cfg = Configurator(
         "common": {
             "bycategory": {
                     "semilep_LHE": [
-                        ColOut("Parton", ["pt", "eta", "phi", "mass", "pdgId", "provenance"], flatten=False),
-                        ColOut(
-                            "PartonMatched",
-                            ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet",], flatten=False
-                        ),
+                        ColOut("PartonInitial", ["pt", "eta", "phi", "mass", "pdgId", "provenance"], flatten=False),
+                        ColOut("PartonLastCopy",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
+                        ColOut("PartonLastCopyMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
                         ColOut(
                             "JetGood",
                             ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB"], flatten=False
@@ -97,6 +96,7 @@ cfg = Configurator(
                                 "hadronFlavour",
                                 "btagDeepFlavB",
                                 "dRMatchedJet",
+                                "provenance"
                             ], flatten=False
                         ),
                         
@@ -105,15 +105,23 @@ cfg = Configurator(
                                pos_end=1, store_size=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
                         ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"], flatten=False),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"], flatten=False)
+                        ColOut("LeptonGenLevel",["pt","eta","phi","mass","pdgId"], flatten=False)
                     ]
                 }
         },
         "bysample":{
             "ttHTobb":{
                 "bycategory": {
-                    "semilep_LHE": [ColOut("HiggsParton",
-                                           ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False)]
+                    "semilep_LHE": [ColOut("HiggsGen",
+                                           ["pt","eta","phi","mass","pdgId"],
+                                           pos_end=1, store_size=False, flatten=False),
+                                    ColOut("TopGen",
+                                           ["pt","eta","phi","mass","pdgId"],
+                                           pos_end=1, store_size=False, flatten=False),
+                                    ColOut("AntiTopGen",
+                                           ["pt","eta","phi","mass","pdgId"],
+                                          pos_end=1, store_size=False, flatten=False)
+                                    ]
                 }
             }
         }
@@ -122,29 +130,7 @@ cfg = Configurator(
 
 
 
-
-run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "conda",
-        "workers"        : 1,
-        "scaleout"       : 100,
-        "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-lat   est",
-        "queue"          : "standard",
-        "walltime"       : "03:00:00",
-        "mem_per_worker" : "5GB", # GB
-        "disk_per_worker" : "1GB", # GB
-        "exclusive"      : False,
-        "chunk"          : 400000,
-        "retries"        : 50,
-        "treereduction"  : 20,
-        "adapt"          : False,
-        
-    }
-   
-
-
-if "dask"  in run_options["executor"]:
-    import cloudpickle
-    cloudpickle.register_pickle_by_value(workflow)
-    cloudpickle.register_pickle_by_value(custom_cut_functions)
-    cloudpickle.register_pickle_by_value(custom_cuts)
+import cloudpickle
+cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(custom_cut_functions)
+cloudpickle.register_pickle_by_value(custom_cuts)

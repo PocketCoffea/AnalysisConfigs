@@ -36,13 +36,15 @@ cfg = Configurator(
                   f"{localdir}/datasets/backgrounds_MC_ttbar_local.json"
                   ],
         "filter" : {
-            "samples": [#"ttHTobb",
+            "samples": ["ttHTobb",
                         "ttHTobb_ttToSemiLep",
-                        #"TTbbSemiLeptonic",
-                        #"TTToSemiLeptonic"
+                        "TTbbSemiLeptonic",
+                        "TTToSemiLeptonic"
                         ],
             "samples_exclude" : [],
-            "year": ["2018"]
+            "year": [
+                     "2018"
+                     ] #All the years
         },
         "subsamples": {
             'TTbbSemiLeptonic' : {
@@ -62,7 +64,7 @@ cfg = Configurator(
     workflow_options = {"parton_jet_min_dR": 0.3},
     
     skim = [get_nObj_min(4, 15., "Jet"),
-            get_nBtagMin(3, 15., coll="Jet"),
+            get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [semileptonic_presel],
@@ -105,11 +107,11 @@ cfg = Configurator(
                         ),
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "dRMatchedJet"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
                         ),
                         ColOut("LeptonGood",
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
@@ -121,14 +123,14 @@ cfg = Configurator(
             }
         },
         "bysample": {
-            #"ttHTobb": {
-            #    "bycategory": {
-            #        "semilep_LHE": [
-            #            ColOut("HiggsParton",
-            #                   ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
-            #        ]
-            #    }
-            #},
+            "ttHTobb": {
+                "bycategory": {
+                    "semilep_LHE": [
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                    ]
+                }
+            },
             "ttHTobb_ttToSemiLep": {
                 "bycategory": {
                     "semilep_LHE": [
