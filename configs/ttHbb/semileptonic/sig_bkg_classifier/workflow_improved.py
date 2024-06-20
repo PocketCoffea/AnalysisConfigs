@@ -195,6 +195,6 @@ class PartonMatchingProcessorWithFSR(ttHbbBaseProcessor):
 
     def process_extra_after_presel(self, variation) -> ak.Array:
 
-        if self._sample == "ttHTobb":
+        if self._sample in ["ttHTobb", "ttHTobb_ttToSemiLep"]:
             self.do_parton_matching_ttHbb()
         self.count_partons()
