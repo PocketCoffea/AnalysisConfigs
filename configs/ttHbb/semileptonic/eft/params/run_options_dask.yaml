@@ -1,6 +1,7 @@
 ignore-grid-certificate: true
-scaleout: 200
+scaleout: 50
 chunksize: 400000
 mem-per-worker: "4GB"
 disk-per-worker: "2GB"
 queue: "microcentury"
+worker-image: /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-6aac1688
