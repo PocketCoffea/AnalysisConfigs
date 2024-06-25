@@ -27,9 +27,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar.json",
                   f"{localdir}/datasets/DATA_SingleEle.json",
                     ],
         "filter" : {
@@ -101,6 +99,7 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=0),
         **jet_hists(coll="JetGood", pos=1),
         **jet_hists(coll="JetGood", pos=2),
+       **processing_metadata_hists(["baseline"], 200000)
     },
 
     columns = {
