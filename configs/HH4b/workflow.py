@@ -396,162 +396,163 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         elif self.classification:
             self.dummy_provenance()
-            print("self.session 1", self.session)
-            if self.session == None:
-                print("none")
-                # load spanet model
-                self.session = onnxruntime.InferenceSession(
-                    self.spanet_model#, providers=onnxruntime.get_available_providers()
+            if False:
+                print("self.session 1", self.session)
+                if self.session == None:
+                    print("none")
+                    # load spanet model
+                    self.session = onnxruntime.InferenceSession(
+                        self.spanet_model#, providers=onnxruntime.get_available_providers()
+                    )
+                    self.input_name = [input.name for input in self.session.get_inputs()]
+                    self.output_name = [output.name for output in self.session.get_outputs()]
+                print("self.session 2", self.session)
+
+                (
+                    pairing_predictions,
+                    self.events["best_pairing_probability"],
+                    self.events["second_best_pairing_probability"],
+                ) = self.get_pairing_information(self.session, self.input_name, self.output_name)
+
+                # get the probabilities difference between the best and second best jet assignment
+                self.events["Delta_pairing_probabilities"] = (
+                    self.events.best_pairing_probability
+                    - self.events.second_best_pairing_probability
                 )
-                self.input_name = [input.name for input in self.session.get_inputs()]
-                self.output_name = [output.name for output in self.session.get_outputs()]
-            print("self.session 2", self.session)
+                # print("\nDelta_pairing_probabilities", self.events["Delta_pairing_probabilities"])
 
-            (
-                pairing_predictions,
-                self.events["best_pairing_probability"],
-                self.events["second_best_pairing_probability"],
-            ) = self.get_pairing_information(self.session, self.input_name, self.output_name)
+                # ADDITIONAL VARIABLES
 
-            # get the probabilities difference between the best and second best jet assignment
-            self.events["Delta_pairing_probabilities"] = (
-                self.events.best_pairing_probability
-                - self.events.second_best_pairing_probability
-            )
-            # print("\nDelta_pairing_probabilities", self.events["Delta_pairing_probabilities"])
+                # HT : scalar sum of all jets with pT > 25 GeV inside | η | < 2.5
+                self.events["HT"] = ak.sum(self.events.JetGood.pt, axis=1)
 
-            # ADDITIONAL VARIABLES
-
-            # HT : scalar sum of all jets with pT > 25 GeV inside | η | < 2.5
-            self.events["HT"] = ak.sum(self.events.JetGood.pt, axis=1)
-
-            # Minimum ∆R ( jj ) among all possible pairings of the leading b-tagged jets
-            # Maximum ∆R( jj ) among all possible pairings of the leading b-tagged jets
-            _, JetGood2 = ak.unzip(
-                ak.cartesian(
-                    [
-                        self.events.JetGood[:, : self.max_num_jets],
-                        self.events.JetGood[:, : self.max_num_jets],
-                    ],
-                    nested=True,
+                # Minimum ∆R ( jj ) among all possible pairings of the leading b-tagged jets
+                # Maximum ∆R( jj ) among all possible pairings of the leading b-tagged jets
+                _, JetGood2 = ak.unzip(
+                    ak.cartesian(
+                        [
+                            self.events.JetGood[:, : self.max_num_jets],
+                            self.events.JetGood[:, : self.max_num_jets],
+                        ],
+                        nested=True,
+                    )
                 )
-            )
-            dR = self.events.JetGood[:, : self.max_num_jets].delta_r(JetGood2)
-            # remove dR between the same jets
-            dR = ak.mask(dR, dR > 0)
-            # flatten the last 2 dimension of the dR array  to get an array for each event
-            dR = ak.flatten(dR, axis=2)
-            self.events["dR_min"] = ak.min(dR, axis=1)
-            self.events["dR_max"] = ak.max(dR, axis=1)
+                dR = self.events.JetGood[:, : self.max_num_jets].delta_r(JetGood2)
+                # remove dR between the same jets
+                dR = ak.mask(dR, dR > 0)
+                # flatten the last 2 dimension of the dR array  to get an array for each event
+                dR = ak.flatten(dR, axis=2)
+                self.events["dR_min"] = ak.min(dR, axis=1)
+                self.events["dR_max"] = ak.max(dR, axis=1)
 
-            # print("\ndR", dR[0])
-            # print("\ndR_min", self.events["dR_min"][0])
-            # print("\ndR_max", self.events["dR_max"][0])
+                # print("\ndR", dR[0])
+                # print("\ndR_min", self.events["dR_min"][0])
+                # print("\ndR_max", self.events["dR_max"][0])
 
-            # Leading-pT H candidate pT , η, φ, and mass
-            # Subleading-pT H candidate pT , η, φ, and mass
-            (
-                self.events["HiggsLeading"],
-                self.events["HiggsSubLeading"],
-                pairing_predictions_ordered,
-            ) = self.reconstruct_higgs(self.events.JetGood, pairing_predictions)
+                # Leading-pT H candidate pT , η, φ, and mass
+                # Subleading-pT H candidate pT , η, φ, and mass
+                (
+                    self.events["HiggsLeading"],
+                    self.events["HiggsSubLeading"],
+                    pairing_predictions_ordered,
+                ) = self.reconstruct_higgs(self.events.JetGood, pairing_predictions)
 
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading, self.events.HiggsLeading.pt, "pt"
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading, self.events.HiggsSubLeading.pt, "pt"
-            )
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading, self.events.HiggsLeading.eta, "eta"
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading, self.events.HiggsSubLeading.eta, "eta"
-            )
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading, self.events.HiggsLeading.phi, "phi"
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading, self.events.HiggsSubLeading.phi, "phi"
-            )
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading, self.events.HiggsLeading.mass, "mass"
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading, self.events.HiggsSubLeading.mass, "mass"
-            )
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading, self.events.HiggsLeading.pt, "pt"
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading, self.events.HiggsSubLeading.pt, "pt"
+                )
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading, self.events.HiggsLeading.eta, "eta"
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading, self.events.HiggsSubLeading.eta, "eta"
+                )
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading, self.events.HiggsLeading.phi, "phi"
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading, self.events.HiggsSubLeading.phi, "phi"
+                )
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading, self.events.HiggsLeading.mass, "mass"
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading, self.events.HiggsSubLeading.mass, "mass"
+                )
 
-            # Angular separation (∆R) between b jets for each H candidate
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading,
-                self.events.JetGood[
-                    np.arange(len(pairing_predictions_ordered)),
-                    pairing_predictions_ordered[:, 0, 0],
-                ].delta_r(
+                # Angular separation (∆R) between b jets for each H candidate
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading,
                     self.events.JetGood[
                         np.arange(len(pairing_predictions_ordered)),
-                        pairing_predictions_ordered[:, 0, 1],
-                    ]
-                ),
-                "dR",
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading,
-                self.events.JetGood[
-                    np.arange(len(pairing_predictions_ordered)),
-                    pairing_predictions_ordered[:, 1, 0],
-                ].delta_r(
+                        pairing_predictions_ordered[:, 0, 0],
+                    ].delta_r(
+                        self.events.JetGood[
+                            np.arange(len(pairing_predictions_ordered)),
+                            pairing_predictions_ordered[:, 0, 1],
+                        ]
+                    ),
+                    "dR",
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading,
                     self.events.JetGood[
                         np.arange(len(pairing_predictions_ordered)),
-                        pairing_predictions_ordered[:, 1, 1],
-                    ]
-                ),
-                "dR",
-            )
+                        pairing_predictions_ordered[:, 1, 0],
+                    ].delta_r(
+                        self.events.JetGood[
+                            np.arange(len(pairing_predictions_ordered)),
+                            pairing_predictions_ordered[:, 1, 1],
+                        ]
+                    ),
+                    "dR",
+                )
 
-            # helicity | cos θ | for each H candidate
-            self.events["HiggsLeading"] = ak.with_field(
-                self.events.HiggsLeading,
-                abs(np.cos(self.events.HiggsLeading.theta)),
-                "cos_theta",
-            )
-            self.events["HiggsSubLeading"] = ak.with_field(
-                self.events.HiggsSubLeading,
-                abs(np.cos(self.events.HiggsSubLeading.theta)),
-                "cos_theta",
-            )
+                # helicity | cos θ | for each H candidate
+                self.events["HiggsLeading"] = ak.with_field(
+                    self.events.HiggsLeading,
+                    abs(np.cos(self.events.HiggsLeading.theta)),
+                    "cos_theta",
+                )
+                self.events["HiggsSubLeading"] = ak.with_field(
+                    self.events.HiggsSubLeading,
+                    abs(np.cos(self.events.HiggsSubLeading.theta)),
+                    "cos_theta",
+                )
 
-            # di-Higgs system
-            # pT , η, and mass of HH system
-            self.events["HH"] = self.events.HiggsLeading + self.events.HiggsSubLeading
+                # di-Higgs system
+                # pT , η, and mass of HH system
+                self.events["HH"] = self.events.HiggsLeading + self.events.HiggsSubLeading
 
-            self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.pt, "pt")
-            self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.eta, "eta")
-            self.events["HH"] = ak.with_field(
-                self.events.HH, self.events.HH.mass, "mass"
-            )
+                self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.pt, "pt")
+                self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.eta, "eta")
+                self.events["HH"] = ak.with_field(
+                    self.events.HH, self.events.HH.mass, "mass"
+                )
 
-            # | cos θ ∗ | of HH system
-            self.events["HH"] = ak.with_field(
-                self.events.HH, abs(np.cos(self.events.HH.theta)), "cos_theta_star"
-            )
+                # | cos θ ∗ | of HH system
+                self.events["HH"] = ak.with_field(
+                    self.events.HH, abs(np.cos(self.events.HH.theta)), "cos_theta_star"
+                )
 
-            # Angular separation (∆R, ∆η, ∆φ) between H candidates
-            self.events["HH"] = ak.with_field(
-                self.events.HH,
-                self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading),
-                "dR",
-            )
-            self.events["HH"] = ak.with_field(
-                self.events.HH,
-                abs(self.events.HiggsLeading.eta - self.events.HiggsSubLeading.eta),
-                "dEta",
-            )
-            self.events["HH"] = ak.with_field(
-                self.events.HH,
-                self.events.HiggsLeading.delta_phi(self.events.HiggsSubLeading),
-                "dPhi",
-            )
+                # Angular separation (∆R, ∆η, ∆φ) between H candidates
+                self.events["HH"] = ak.with_field(
+                    self.events.HH,
+                    self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading),
+                    "dR",
+                )
+                self.events["HH"] = ak.with_field(
+                    self.events.HH,
+                    abs(self.events.HiggsLeading.eta - self.events.HiggsSubLeading.eta),
+                    "dEta",
+                )
+                self.events["HH"] = ak.with_field(
+                    self.events.HH,
+                    self.events.HiggsLeading.delta_phi(self.events.HiggsSubLeading),
+                    "dPhi",
+                )
 
         else:
             self.dummy_provenance()

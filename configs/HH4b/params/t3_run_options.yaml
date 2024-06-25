@@ -3,5 +3,5 @@ cores-per-worker: 1
 mem-per-worker: "10GB"
 disk-per-worker: "1GB"
 queue: "short"
-walltime: "01:00:00"
+walltime: "00:45:00"
 chunk: 100000

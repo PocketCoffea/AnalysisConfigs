@@ -35,7 +35,7 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 
 # adding object preselection
-year = os.environ.get("YEAR", "2022")
+year = os.environ.get("YEAR", "2022_preEE")
 # year = "2023_preBPix"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
@@ -87,23 +87,35 @@ cuts_eta_neutrino = []
 cuts_names_eta_neutrino = []
 cuts_reco_eta = []
 cuts_names_reco_eta = []
+# if int(os.environ.get("NEUTRINO", 1)) == 0:
+#     print("NEUTRINO==0")
+#     for i in range(len(eta_bins) - 1):
+#         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
+#         cuts_eta.append(get_etabin(eta_low, eta_high))
+#         cuts_names_eta.append(f"MatchedJets_eta{eta_low}to{eta_high}")
+# elif int(os.environ.get("NEUTRINO", 0)) == 1:
+#     print("NEUTRINO==1")
+#     for i in range(len(eta_bins) - 1):
+#         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
+#         cuts_eta_neutrino.append(get_etabin_neutrino(eta_low, eta_high))
+#         cuts_names_eta_neutrino.append(f"MatchedJetsNeutrino_eta{eta_low}to{eta_high}")
 if int(os.environ.get("NEUTRINO", 1)) == 0:
-    print("NEUTRINO==0")
+    print("RECO JET ETA CUTS NEUTRINO==0")
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
-        cuts_eta.append(get_etabin(eta_low, eta_high))
-        cuts_names_eta.append(f"MatchedJets_eta{eta_low}to{eta_high}")
+        cuts_reco_eta.append(get_reco_etabin(eta_low, eta_high))
+        cuts_names_reco_eta.append(f"MatchedJets_reco_eta{eta_low}to{eta_high}")
 elif int(os.environ.get("NEUTRINO", 0)) == 1:
-    print("NEUTRINO==1")
+    print("RECO JET ETA CUTS NEUTRINO==1")
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
-        cuts_eta_neutrino.append(get_etabin_neutrino(eta_low, eta_high))
-        cuts_names_eta_neutrino.append(f"MatchedJetsNeutrino_eta{eta_low}to{eta_high}")
+        cuts_reco_eta.append(get_reco_neutrino_etabin(eta_low, eta_high))
+        cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_eta{eta_low}to{eta_high}")
 else:
     print("RECO JET ETA CUTS")
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
-        cuts_reco_eta.append(get_reco_etabin(eta_low, eta_high))
+        cuts_reco_eta.append(get_reco_neutrino_etabin(eta_low, eta_high))
         cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_eta{eta_low}to{eta_high}")
 
 multicuts = [
@@ -563,6 +575,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 0)) ==
             },
         }
     )
+
 if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) == 1:
     variables_dict.update(
         {
@@ -680,7 +693,7 @@ cfg = Configurator(
             "samples": [
                 (
                     "QCD_PT-15to7000_JMENano"
-                    if year == "2022"
+                    if year == "2022_preEE"
                     else (
                         "QCD_PT-15to7000_JMENano_Summer23"
                         if year == "2023_preBPix"

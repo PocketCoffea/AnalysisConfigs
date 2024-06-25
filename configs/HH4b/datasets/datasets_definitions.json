@@ -922,5 +922,40 @@
                 ]
             }
         ]
+    },
+    "SPANet_classification_data": {
+        "sample": "SPANet_classification_data",
+        "json_output": "datasets/SPANet_classification.json",
+        "description": "Data and MC inputs for SPANet classification",
+        "files": [
+            {
+                "das_names": [
+                    "/JetMET/Run2022E-JMENano12p5-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": false,
+                    "primaryDataset": "JetMET",
+                    "era": "E"
+                },
+                "das_parents_names": [
+                    "/JetMET/Run2022E-22Sep2023-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": "GluGlutoHHto4B_kl-1p00"
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
+                ]
+            }
+        ]
     }
 }

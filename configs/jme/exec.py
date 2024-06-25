@@ -73,7 +73,7 @@ parser.add_argument(
     "--year",
     help="Year",
     type=str,
-    default="2022",
+    default="2022_preEE",
 )
 parser.add_argument(
     "-f",

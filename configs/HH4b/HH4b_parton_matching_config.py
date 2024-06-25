@@ -61,10 +61,11 @@ cfg = Configurator(
             "samples": (
                 [
                     # "SPANet_classification",
+                    # "SPANet_classification_data",
                     "GluGlutoHHto4B",
                     # "GluGlutoHHto4B_poisson",
-                    # "DATA_JetMET_JMENano",
-                    # "QCD-4Jets",
+                    "DATA_JetMET_JMENano",
+                    "QCD-4Jets",
                     # "GluGlutoHHto4B_private",
                     # "GluGlutoHHto4B_spanet",
                 ]
@@ -108,7 +109,7 @@ cfg = Configurator(
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
         "4b_region": [hh4b_4b_region],  # HERE
-        # "2b_region": [hh4b_2b_region],
+        "2b_region": [hh4b_2b_region],
     },
     weights={
         "common": {
