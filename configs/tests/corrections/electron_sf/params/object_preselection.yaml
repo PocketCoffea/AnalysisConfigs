@@ -1,0 +1,5 @@
+object_preselection:
+
+  Electron:
+    pt: 10
+    id: mvaFall17V2Iso_WP80   # we may need to fix this by era    

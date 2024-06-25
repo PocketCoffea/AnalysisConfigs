@@ -1,0 +1,15 @@
+{
+    "TT_DL_2017": {
+	"metadata": {
+	    "sample": "TT_DL",
+	    "year": "2017",
+	    "isMC": "True",
+	    "nevents": 10000,
+	    "size": 35076079,
+	    "xsec": 1.0
+	},
+	"files": [
+	    "tt_dl_10k_17.root"
+	]
+    }
+}
