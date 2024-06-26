@@ -1,6 +1,7 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.parameters.cuts import passthrough
+from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.parameters.histograms import *
 import workflow
 from workflow import ElectronProcessor
@@ -36,7 +37,7 @@ cfg = Configurator(
 
     workflow = ElectronProcessor,
     
-    skim = [passthrough], 
+    skim = [], 
     preselections = [passthrough],
     categories = {
         "inclusive": [passthrough],
@@ -65,8 +66,14 @@ cfg = Configurator(
     },
 
     
-   variables = {
+   variables= {
         **ele_hists(coll="ElectronGood"),
+       },
+
+   columns= {
+       "common":{
+           "inclusive": [ColOut(collection="events", columns=["event", "run", "luminosityBlock"])]
        }
+   }
 )
 
