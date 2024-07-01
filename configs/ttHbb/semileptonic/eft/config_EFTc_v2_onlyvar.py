@@ -1,21 +1,20 @@
 
-#This config.py studies the data EFT centered with the list of Wilson coefficient 2
-#This config is used to plot the XS as a function of the weight value
-#This config doesn't calculate all other variables
+#This config.py studies the data BSM centered with the list of Wilson coefficient 2, in all the points of the Wilson space
+#Here you study both the variables and the weights
 
 
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 import eft_weights
-import numpy as np
 
-import workflow
-from workflow import BaseProcessorGen
+import workflow_W2
+from workflow_W2 import BaseProcessorGen
 
 import custom_cuts
+import numpy as np
 
-import os 
+import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
@@ -34,7 +33,8 @@ my_categories={}
 my_weights.update({'sm':[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.])]})
 my_categories.update({'sm':[custom_cuts.cut_events]})
 
-weights_value=np.linspace(-20.,20.,21)
+#weights_value=np.linspace(-20.,20.,41)
+weights_value=[-10.,-5.,5.,10.]
 
 for i in weights_value:
 
@@ -62,7 +62,7 @@ for i in weights_value:
     my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,i,0.,0.])]})
     my_categories.update({name:[custom_cuts.cut_events]})
 
-    name='weight7'+'_'+str(int(i)) 
+    name='weight7'+'_'+str(int(i))
     my_weights.update({name:[eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,i,0.])]})
     my_categories.update({name:[custom_cuts.cut_events]})
 
@@ -78,11 +78,11 @@ cfg = Configurator(
         "jsons": [f"{localdir}/datasets/ttHTobb_EFTcenter_nfeci.json",
                   ],
         "filter" : {   
-            "samples": ["ttHTobb_p1j_EFTcenter_5F_tbarqqtlnu"],
+            "samples": ["ttHTobb_EFTcenter_5F_tbarlnutqq_fixscale"],
             "samples_exclude" : [],
             #"year": []
         },
-        "subsamples": {}
+        "subsamples": {} 
     },
 
     workflow = BaseProcessorGen,
@@ -106,7 +106,81 @@ cfg = Configurator(
     
     variables = {
 
-         
+        "nGenJet" : HistConf(
+            [Axis(coll="events", field="nGenJet", bins=40, start=0, stop=40,
+                  label="$N_{j}$")],
+        ),
+       
+        "higgs_pt" : HistConf( 
+            [Axis(coll="HiggsParton", field="pt", bins=50, start=0, stop=500,
+                  label="$H_{pT}$")],
+        ),
+
+        "higgs_eta" : HistConf(
+            [Axis(coll="HiggsParton", field="eta", bins=50, start=-3.14, stop=3.14,
+                  label="$H_{\eta}$")],
+        ),
+
+        "higgs_phi" : HistConf(
+            [Axis(coll="HiggsParton", field="phi", bins=50, start=-3.14, stop=3.14,
+                  label="$H_{\phi}$")],
+        ),
+
+        "deltaR_ht" : HistConf(
+            [Axis(coll="events", field="deltaR_ht", bins=50, start=0, stop=5,
+                  label="$\Delta R_{ht}$")],
+        ),
+
+        "deltaR_hat" : HistConf(
+            [Axis(coll="events", field="deltaR_hat", bins=50, start=0, stop=5,
+                  label="$\Delta R_{hat}$")],
+        ),
+
+        "deltaPhi_tt" : HistConf(
+            [Axis(coll="events", field="deltaPhi_tt", bins=50, start=-3.14, stop=3.14,
+                  label="$\Delta \phi_{tt}$")],
+        ),
+
+        "deltaEta_tt" : HistConf(
+            [Axis(coll="events", field="deltaEta_tt", bins=50, start=0, stop=5,
+                  label="$\Delta \eta_{tt}$")],
+        ),
+
+        "deltaPt_tt" : HistConf(
+            [Axis(coll="events", field="deltaPt_tt", bins=50, start=0, stop=600,
+                  label="$\Delta pT_{tt}$")],
+        ),
+
+        "sumPt_tt" : HistConf(
+            [Axis(coll="events", field="sumPt_tt", bins=50, start=0, stop=500,
+                  label="$pT_{t}+pT_{at}$")],
+        ),
+
+        "lep_decay_pt" : HistConf(
+            [Axis(coll="lep_decay", field="pt", bins=50, start=0, stop=400,
+                  label="$l^-_{p_T}$")],
+        ),
+
+        "q_decay_pt" : HistConf(
+            [Axis(coll="q_fromW_decay", field="pt", bins=50, start=0, stop=400,
+                  label="$q_{p_T}$")],
+        ),
+
+        "lep_decay_eta" : HistConf(
+            [Axis(coll="lep_decay", field="eta", bins=50, start=0, stop=5,
+                  label="$q_{\eta}$")],
+        ),
+
+        "q_decay_eta" : HistConf(
+            [Axis(coll="q_fromW_decay", field="eta", bins=50, start=0, stop=5,
+                  label="$q_{\eta}$")],
+        ),
+
+        "delta_phi_ql_decay" : HistConf(
+            [Axis(coll="events", field="delta_phi_ql", bins=50, start=-3.14, stop=3.14,
+                  label="$\Delta \phiq_{q-l}$")],
+        ),
+     
  }, 
     
  
@@ -122,6 +196,6 @@ cfg = Configurator(
 
 # Registering custom functions
 import cloudpickle
-cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(workflow_W2)
 cloudpickle.register_pickle_by_value(eft_weights)
 cloudpickle.register_pickle_by_value(custom_cuts)

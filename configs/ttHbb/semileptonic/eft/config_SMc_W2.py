@@ -8,8 +8,8 @@ from pocket_coffea.parameters.histograms import *
 import eft_weights_oldv
 #import eft_weights
 
-import workflow_W2_SMc
-from workflow_W2_SMc import BaseProcessorGen
+import workflow_W2
+from workflow_W2 import BaseProcessorGen
 
 import custom_cuts
 
@@ -317,6 +317,6 @@ cfg = Configurator(
 
 # Registering custom functions
 import cloudpickle
-cloudpickle.register_pickle_by_value(workflow_W2_SMc)
+cloudpickle.register_pickle_by_value(workflow_W2)
 cloudpickle.register_pickle_by_value(eft_weights_oldv)
 cloudpickle.register_pickle_by_value(custom_cuts)
