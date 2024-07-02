@@ -45,6 +45,8 @@ parameters = defaults.merge_parameters_from_files(
 
 mc_truth_corr_pnetreg = None
 corr_files_pnetreg = {
+    "2022_preEE": f"{localdir}/params/Summer22Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
+    "2022_postEE": f"{localdir}/params/Summer22EERun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
     "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
 }
@@ -54,6 +56,8 @@ if int(os.environ.get("CLOSURE", 0)) == 1:
 
 mc_truth_corr_pnetreg_neutrino = None
 corr_files_pnetreg_neutrino = {
+    "2022_preEE": f"{localdir}/params/Summer22Run3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
+    "2022_postEE": f"{localdir}/params/Summer22EERun3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
     "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
 }
@@ -63,23 +67,15 @@ if int(os.environ.get("CLOSURE", 0)) == 1:
         corr_files_pnetreg_neutrino[year]
     )
 
-mc_truth_corr=None
+mc_truth_corr = None
 corr_files = {
+    "2022_preEE": f"{localdir}/params/Summer22Run3_V1_MC_L2Relative_AK4PUPPI.txt",
+    "2022_postEE": f"{localdir}/params/Summer22EEVetoRun3_V1_MC_L2Relative_AK4PUPPI.txt",
     "2023_preBPix": f"{localdir}/params/Summer23Run3_V1_MC_L2Relative_AK4PUPPI.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_V3_MC_L2Relative_AK4PUPPI.txt",
 }
-if int(os.environ.get("CLOSURE", 0)) == 1:
-    print(f"Reapplying correctios {corr_files[year]}")
-    mc_truth_corr = get_closure_function_information(
-        corr_files[year]
-    )
-
-# cuts_pt = []
-# cuts_names_pt = []
-# for j in range(len(pt_bins) - 1):
-#     pt_low, pt_high = pt_bins[j], pt_bins[j + 1]
-#     cuts_pt.append(get_ptbin(pt_low, pt_high))
-#     cuts_names_pt.append(f'pt{pt_low}to{pt_high}')
+print(f"Reapplying correctios {corr_files[year]}")
+mc_truth_corr = get_closure_function_information(corr_files[year])
 
 cuts_eta = []
 cuts_names_eta = []
@@ -87,18 +83,7 @@ cuts_eta_neutrino = []
 cuts_names_eta_neutrino = []
 cuts_reco_eta = []
 cuts_names_reco_eta = []
-# if int(os.environ.get("NEUTRINO", 1)) == 0:
-#     print("NEUTRINO==0")
-#     for i in range(len(eta_bins) - 1):
-#         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
-#         cuts_eta.append(get_etabin(eta_low, eta_high))
-#         cuts_names_eta.append(f"MatchedJets_eta{eta_low}to{eta_high}")
-# elif int(os.environ.get("NEUTRINO", 0)) == 1:
-#     print("NEUTRINO==1")
-#     for i in range(len(eta_bins) - 1):
-#         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
-#         cuts_eta_neutrino.append(get_etabin_neutrino(eta_low, eta_high))
-#         cuts_names_eta_neutrino.append(f"MatchedJetsNeutrino_eta{eta_low}to{eta_high}")
+
 if int(os.environ.get("NEUTRINO", 1)) == 0:
     print("RECO JET ETA CUTS NEUTRINO==0")
     for i in range(len(eta_bins) - 1):
@@ -111,6 +96,12 @@ elif int(os.environ.get("NEUTRINO", 0)) == 1:
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
         cuts_reco_eta.append(get_reco_neutrino_etabin(eta_low, eta_high))
         cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_eta{eta_low}to{eta_high}")
+elif int(os.environ.get("ABS_ETA_INCLUSIVE", 0)) == 1:
+    print("RUNNING ABS_ETA_INCLUSIVE ETA BINS")
+    for i in range(len(eta_bins) - 1):
+        eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
+        cuts_reco_eta.append(get_reco_neutrino_abs_etabin(eta_low, eta_high))
+        cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_abseta{eta_low}to{eta_high}")
 else:
     print("RECO JET ETA CUTS")
     for i in range(len(eta_bins) - 1):
@@ -124,9 +115,6 @@ multicuts = [
         cuts=cuts_eta + cuts_eta_neutrino + cuts_reco_eta,
         cuts_names=cuts_names_eta + cuts_names_eta_neutrino + cuts_names_reco_eta,
     ),
-    # MultiCut(name="pt", #HERE
-    #          cuts=cuts_pt,
-    #          cuts_names=cuts_names_pt),
 ]
 
 common_cats = {
@@ -682,6 +670,13 @@ if False:
     )
 
 
+samples_dict = {
+    "2022_preEE": "QCD_PT-15to7000_JMENano_Summer22",
+    "2022_postEE": "QCD_PT-15to7000_JMENano_Summer22EE",
+    "2023_preBPix": "QCD_PT-15to7000_JMENano_Summer23",
+    "2023_postBPix": "QCD_PT-15to7000_JMENano_Summer23BPix",
+}
+
 cfg = Configurator(
     parameters=parameters,
     datasets={
@@ -691,18 +686,7 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                (
-                    "QCD_PT-15to7000_JMENano"
-                    if year == "2022_preEE"
-                    else (
-                        "QCD_PT-15to7000_JMENano_Summer23"
-                        if year == "2023_preBPix"
-                        else "QCD_PT-15to7000_JMENano_Summer23BPix"
-                    )
-                )
-                # "QCD_PT-15to7000_FlatPU"
-                # if int(os.environ.get("PNET", 0)) == 1
-                # else "QCD_PT-15to7000",
+                samples_dict[year],
             ],
             "samples_exclude": [],
             "year": [year],
@@ -715,6 +699,9 @@ cfg = Configurator(
         "mc_truth_corr_pnetreg": mc_truth_corr_pnetreg,
         "mc_truth_corr_pnetreg_neutrino": mc_truth_corr_pnetreg_neutrino,
         "mc_truth_corr": mc_truth_corr,
+        "DeltaR_matching": 0.2,
+        "SetRegResponseToZero": True,
+        "GenJetPtCut": 50,
     },
     skim=[],
     preselections=[],

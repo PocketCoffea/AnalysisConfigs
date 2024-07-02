@@ -73,7 +73,7 @@ parser.add_argument(
     "--year",
     help="Year",
     type=str,
-    default="2022_preEE",
+    default="2023_preBPix",
 )
 parser.add_argument(
     "-f",
@@ -101,6 +101,13 @@ parser.add_argument(
     default=False,
 )
 parser.add_argument(
+    "-a",
+    "--abs-eta-inclusive",
+    action="store_true",
+    help="Run over inclusive abs eta bins",
+    default=False,
+)
+parser.add_argument(
     "--closure",
     action="store_true",
     help="Produce closure test",
@@ -119,6 +126,7 @@ args.pnet = int(args.pnet)
 args.central = int(args.central)
 args.closure = int(args.closure)
 args.neutrino = int(args.neutrino)
+args.abs_eta_inclusive = int(args.abs_eta_inclusive)
 
 # Define a list of eta bins
 eta_bins = eta_bins if not args.inclusive_eta else None
@@ -138,7 +146,7 @@ def run_command(sign, flav, dir_name):
     neutrino_string = (
         f"&& export NEUTRINO={args.neutrino}" if args.neutrino != -1 else ""
     )
-    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} && export CLOSURE={args.closure} {neutrino_string} && export YEAR={args.year}" "C-m"'
+    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} && export ABS_ETA_INCLUSIVE={args.abs_eta_inclusive} && export CLOSURE={args.closure} {neutrino_string} && export YEAR={args.year}" "C-m"'
     command3 = f'tmux send-keys "time pocket-coffea run --cfg cartesian_config.py {executor} -o {dir_name}" "C-m"'
     command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 16" "C-m"'
 
@@ -183,18 +191,24 @@ if args.cartesian or args.full:
         command1 = f'tmux new-session -d -s {tmux_session} && tmux send-keys "micromamba activate pocket-coffea" "C-m"'
         subprocess.run(command1, shell=True)
 
+    eta_string=""
+    if args.abs_eta_inclusive:
+        eta_string="absinclusive"
+    elif args.central:
+        eta_string="central"
+
     if args.full:
-        for sign in eta_sign_list if not args.central else [""]:
+        for sign in (eta_sign_list if (not args.central and not args.abs_eta_inclusive) else [""]):
             if sign == "all":
                 continue
             for flav in flavs_list:
-                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/{sign if not args.central else 'central'}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
+                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/{sign if not eta_string else eta_string}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"{dir_prefix}out_cartesian_{sign if not args.central else 'central'}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{sign if not eta_string else eta_string}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )

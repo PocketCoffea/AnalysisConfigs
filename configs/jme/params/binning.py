@@ -104,21 +104,25 @@ for eta_sign, eta_interval in eta_sign_dict.items():
         eta_bins = [i for i in eta_bins if i >= eta_interval[0] and i <= eta_interval[1]]
         break
 
+inclusive_bins= [0.0, 1.3, 2.4, 2.7, 3.0, 5.0]
+if int(os.environ.get("ABS_ETA_INCLUSIVE", 0)) == 1:
+    eta_bins=inclusive_bins
 
 central_bins=[-5.191, -1.3, 1.3, 5.191]
 if int(os.environ.get("CENTRAL", 0)) == 1:
     eta_bins=central_bins
 
 pt_bins = [
-    15.0,
-    17.0,
-    20.0,
-    23.0,
-    27.0,
-    30.0,
-    35.0,
-    40.0,
-    45.0,
+    # 15.0,
+    # 17.0,
+    # 20.0,
+    # 23.0,
+    # 27.0,
+    # 30.0,
+    # 35.0,
+    # 40.0,
+    # 45.0,
+    50.0,#NEW
     57.0,
     72.0,
     90.0,

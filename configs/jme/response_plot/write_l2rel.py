@@ -5,10 +5,11 @@ sys.path.append("../")
 from params.binning import *
 
 
-pol_string = {
-    23: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15)+[16]*pow(log10(x),16)+[17]*pow(log10(x),17)+[18]*pow(log10(x),18)+[19]*pow(log10(x),19)+[20]*pow(log10(x),20)",
-    18: "[0]+[1]*log10(x)+[2]*pow(log10(x),2)+[3]*pow(log10(x),3)+[4]*pow(log10(x),4)+[5]*pow(log10(x),5)+[6]*pow(log10(x),6)+[7]*pow(log10(x),7)+[8]*pow(log10(x),8)+[9]*pow(log10(x),9)+[10]*pow(log10(x),10)+[11]*pow(log10(x),11)+[12]*pow(log10(x),12)+[13]*pow(log10(x),13)+[14]*pow(log10(x),14)+[15]*pow(log10(x),15)",
-}
+def create_pol_string(num_params):
+    pol_string = "[0]"
+    for i in range(1, num_params-2):
+        pol_string += f"+[{i}]*pow(log10(x),{i})"
+    return pol_string
 
 def write_l2rel_txt(main_dir, correct_eta_bins, year, num_params):
 
@@ -18,7 +19,7 @@ def write_l2rel_txt(main_dir, correct_eta_bins, year, num_params):
     for file_name in file_names:
         with open(f"{main_dir}/{file_name}", "w") as l2_file:
             suffix="Neutrino" if "NEUTRINO" in file_name else ""
-            l2_file.write(f"{{1 JetEta 1 JetPt ({pol_string[num_params]})  Correction L2Relative }}\n")
+            l2_file.write(f"{{1 JetEta 1 JetPt ({create_pol_string(num_params)})  Correction L2Relative }}\n")
             for i in range(len(correct_eta_bins) - 1):
                 try:
                     with open(

@@ -62,8 +62,8 @@
             }
         ]
     },
-    "QCD_PT-15to7000_JMENano": {
-        "sample": "QCD_PT-15to7000_JMENano",
+    "QCD_PT-15_JMENano": {
+        "sample": "QCD_PT-15_JMENano",
         "json_output": "datasets/QCD.json",
         "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&ordDirection=1&ordFieldName=cross_section&pageSize=10&searchQuery=process_name%3DQCD_PT-15to7000_TuneCP5_13p6TeV_pythia8",
         "files": [
@@ -74,11 +74,50 @@
                 "metadata": {
                     "year": "2022_preEE",
                     "isMC": true,
-                    "xsec": 1438000000.0,
-                    "part": "PT-15to7000_JMENano"
+                    "xsec": 1438000000.0
                 },
                 "das_parents_names": [
                     "/QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/Run3Summer22MiniAODv4-130X_mcRun3_2022_realistic_v5-v2/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "QCD_PT-15to7000_JMENano_Summer22": {
+        "sample": "QCD_PT-15to7000_JMENano_Summer22",
+        "json_output": "datasets/QCD.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&ordDirection=1&ordFieldName=cross_section&pageSize=10&searchQuery=process_name%3DQCD_PT-15to7000_TuneCP5_13p6TeV_pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/QCD_PT-15to7000_TuneCP5_Flat2022_13p6TeV_pythia8/Run3Summer22NanoAODv12-JMENano12p5_132X_mcRun3_2022_realistic_v3-v3/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_preEE",
+                    "isMC": true,
+                    "xsec": 1438000000.0
+                },
+                "das_parents_names": [
+                    "/QCD_PT-15to7000_TuneCP5_Flat2022_13p6TeV_pythia8/Run3Summer22MiniAODv4-130X_mcRun3_2022_realistic_v5-v3/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "QCD_PT-15to7000_JMENano_Summer22EE": {
+        "sample": "QCD_PT-15to7000_JMENano_Summer22EE",
+        "json_output": "datasets/QCD.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&ordDirection=1&ordFieldName=cross_section&pageSize=10&searchQuery=process_name%3DQCD_PT-15to7000_TuneCP5_13p6TeV_pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/QCD_PT-15to7000_TuneCP5_Flat2022_13p6TeV_pythia8/Run3Summer22EENanoAODv12-JMENano12p5_132X_mcRun3_2022_realistic_postEE_v4-v3/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1438000000.0
+                },
+                "das_parents_names": [
+                    "/QCD_PT-15to7000_TuneCP5_Flat2022_13p6TeV_pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v3/MINIAODSIM"
                 ]
             }
         ]
@@ -95,8 +134,7 @@
                 "metadata": {
                     "year": "2023_preBPix",
                     "isMC": true,
-                    "xsec": 1438000000.0,
-                    "part": "PT-15to7000_JMENano"
+                    "xsec": 1438000000.0
                 },
                 "das_parents_names": [
                     "/QCD_PT-15to7000_TuneCP5_Flat2022_13p6TeV_pythia8/Run3Summer23MiniAODv4-130X_mcRun3_2023_realistic_v15-v3/MINIAODSIM"
@@ -116,8 +154,7 @@
                 "metadata": {
                     "year": "2023_postBPix",
                     "isMC": true,
-                    "xsec": 1438000000.0,
-                    "part": "PT-15to7000_JMENano"
+                    "xsec": 1438000000.0
                 },
                 "das_parents_names": [
                     "QCD_PT-15_TuneCP5_Flat2018_13p6TeV_pythia8/Run3Summer22MiniAODv4-130X_mcRun3_2022_realistic_v5-v2/MINIAODSIM"
