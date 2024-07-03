@@ -31,6 +31,7 @@ from confidence import *
 sys.path.append("../")
 from params.binning import *
 
+hep.style.use("CMS")
 
 parser = argparse.ArgumentParser(description="Run the jme analysis")
 parser.add_argument(
@@ -119,11 +120,21 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-DP_NOTE_PLOTS = False
+DP_NOTE_PLOTS = True
+REBIN = True
+PLOT_SINGLE_HISTO = False
+JET_PT = True
+PLOT_JETPT_HISTO = False
+FIT = True
+CLOSURE = False
+
+if "closure" in args.dir:
+    FIT = False
+    CLOSURE = True
 
 # save the log also in a file
-sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
-sys.stderr = open(file=f"{args.dir}/response_plot.err", mode="w")
+# sys.stdout = open(file=f"{args.dir}/response_plot.log", mode="w")
+# sys.stderr = open(file=f"{args.dir}/response_plot.err", mode="w")
 
 if "preEE" in args.dir:
     year = "Summer22Run3"
@@ -136,23 +147,14 @@ elif "postBPix" in args.dir:
 
 
 if DP_NOTE_PLOTS:
-    year = 2023 if 23 in year else 2022
+    year = "2023" if "23" in year else "2022"
 
 # set global variables
-REBIN = True
-PLOT_SINGLE_HISTO = False
-JET_PT = True
 GOOD_FIT = 0
 BAD_FIT = 0
 VALID_FIT = 0
 TOTAL_FIT = 0
 
-FIT = True
-CLOSURE = False
-
-if "closure" in args.dir:
-    FIT = False
-    CLOSURE = True
 
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -185,7 +187,7 @@ if JET_PT:
         }
     )
 
-labels_dict={
+labels_dict = {
     "PNetReg": "PNet",
     "PNetRegNeutrino": "PNet incl. neutrinos",
     "JEC": "JEC",
@@ -1119,7 +1121,7 @@ def fit_inv_median(ax, x, y, yerr, variable, y_pos, name_plot):
     #     verticalalignment="top",
     #     transform=ax.transAxes,
     #     color=variables_plot_settings[variable][0],
-    #     fontsize=8,
+    #
     # )
 
     print(
@@ -1260,7 +1262,6 @@ def fit_inv_median_pol(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
             verticalalignment="top",
             transform=ax.transAxes,
             color=variables_plot_settings[variable][0],
-            fontsize=10,
         )
 
     fit_results = {
@@ -1448,7 +1449,7 @@ def fit_inv_median_root(ax, x, y, xerr, yerr, variable, y_pos, name_plot):
     #     verticalalignment="top",
     #     transform=ax.transAxes,
     #     color=variables_plot_settings[variable][0],
-    #     fontsize=8,
+    #
     # )
 
     if True:  # "Invalid FitResult" not in str(fit_info):
@@ -1534,47 +1535,40 @@ def plot_median_resolution(eta_bin, plot_type):
         tot_fit_results = dict()
         # print("plotting median", flav_group, "eta", eta_sign)
         if "median" in plot_type or "jet_pt" in plot_type:
-            fig, ax = plt.subplots(figsize=(5, 5))
+            fig, ax = plt.subplots()
         else:
             fig, (ax, ax_ratio) = plt.subplots(
                 2,
                 1,
                 sharex=True,
                 gridspec_kw={"height_ratios": [2.5, 1]},
-                figsize=(5, 5),
             )
             fig.tight_layout()
             ax_ratio
 
-        hep.cms.label(
-            year=year,
-            com="13.6",
-            label=f"Preliminary",
-            ax=ax,
-        )
+        # hep.cms.label(
+        #     year=year,
+        #     com="13.6",
+        #     label=f"Preliminary",
+        #     ax=ax,
+        # )
+
+        hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+        hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
+
         ax.text(
-            0.2,
-            0.8,
+            0.05,
+            0.75 if "median" in plot_type or "jet_pt" in plot_type else 0.7,
             r"anti-$k_{T}$ R=0.4 (PUPPI)"
-            + ("\nRegression Closure Test" if CLOSURE else ""),
-            horizontalalignment="right",
+            + ("\nRegression Closure Test" if CLOSURE else "")
+            + f"\n{correct_eta_bins[eta_bin]} <"
+            + (r"$\eta^{reco}$" if not args.abs_eta_inclusive else r"$|\eta^{reco}$|")
+            + f"< {correct_eta_bins[eta_bin+1]}",
+            horizontalalignment="left",
             verticalalignment="top",
             transform=ax.transAxes,
             color="black",
-            # fontsize=10,
-            # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
-        )
-
-        # write a string on the plot
-        ax.text(
-            0.98,
-            0.7,
-            f"{correct_eta_bins[eta_bin]} <"
-            + r"$\eta^{reco}$"
-            + f"< {correct_eta_bins[eta_bin+1]}",
-            horizontalalignment="right",
-            verticalalignment="top",
-            transform=ax.transAxes,
+            #
             # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
         )
 
@@ -1654,7 +1648,7 @@ def plot_median_resolution(eta_bin, plot_type):
                     ),
                     plot_array,
                     yerr=(err_plot_array),
-                    label=f"{labels_dict[variable.replace('Response','')]}"
+                    label=f"{labels_dict[variable.replace('Response','').replace('JetPt','')]}"
                     # + (" Closure Test" if CLOSURE and "PNet" in variable else "")
                     + (f" ({flav})" if flav != "inclusive" else ""),
                     marker=variables_plot_settings[variable][
@@ -1662,7 +1656,6 @@ def plot_median_resolution(eta_bin, plot_type):
                     ],  # flavs[flav_group][j],
                     color=variables_plot_settings[variable][0],
                     linestyle="None",
-                    markersize=3,
                 )
                 if (
                     "inverse" in plot_type
@@ -1763,11 +1756,10 @@ def plot_median_resolution(eta_bin, plot_type):
                         ],  # flavs[flav_group][j],
                         color=variables_plot_settings[variable][0],
                         linestyle="None",
-                        markersize=3,
                     )
                 if "median" in plot_type:
                     # plot line at 1 for the whole figure
-                    ax.axhline(y=1, color="black", linestyle="-", linewidth=0.7)
+                    ax.axhline(y=1, color="black", linestyle="--", linewidth=0.7)
 
             j += 1
         # if no variable is plotted, skip
@@ -1775,16 +1767,18 @@ def plot_median_resolution(eta_bin, plot_type):
             continue
         # check if plot_array is only nan or 0
         if not np.all(np.isnan(plot_array)) and not np.all(plot_array == 0):
-            if CLOSURE:
-                ax.set_ylim(top=1.03 * max_value, bottom=min_value / 1.01)
+            if "resolution" in plot_type or "width" in plot_type:
+                ax.set_ylim(top=1.9 * max_value, bottom=min_value / 1.1)
+            elif CLOSURE and "median" in plot_type:
+                ax.set_ylim(top=1.05 * max_value, bottom=min_value / 1.01)
             else:
                 ax.set_ylim(top=1.2 * max_value, bottom=min_value / 1.1)
         if "inverse" in plot_type:
-            ax.set_xlabel(r"$p_{T}^{reco}$ (GeV)", fontsize=12, loc="right")
+            ax.set_xlabel(r"$p_{T}^{reco}$ (GeV)", loc="right")
         elif "median" in plot_type or "jet_pt" in plot_type:
-            ax.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", fontsize=12, loc="right")
+            ax.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", loc="right")
         else:
-            ax_ratio.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", fontsize=12, loc="right")
+            ax_ratio.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", loc="right")
 
         if plot_type == "median":
             label_y = f"Median jet response"
@@ -1800,7 +1794,7 @@ def plot_median_resolution(eta_bin, plot_type):
             # ax.set_yscale("log")
             label_y = r"$\langle p_{T}^{Jet} \rangle$ (GeV)"
 
-        ax.set_ylabel(label_y, fontsize=12, loc="top")
+        ax.set_ylabel(label_y, loc="top")
 
         # log x scale
         ax.set_xscale("log")
@@ -1856,14 +1850,12 @@ def plot_median_resolution(eta_bin, plot_type):
             frameon=False,
             ncol=1,
             loc="upper right",
-            fontsize=10,
         )
 
         # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
         if "resolution" in plot_type or "width" in plot_type:
-            ax_ratio.set_ylabel("reg / standard - 1", fontsize=12, loc="top")
+            ax_ratio.set_ylabel("reg / standard - 1", loc="top")
             # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
-        # hep.style.use("CMS")
 
         # create string for flavour
         flav_str = ""
@@ -1971,7 +1963,7 @@ def plot_median_resolution(eta_bin, plot_type):
                 ]
             for plot_dir in plots_dir:
                 fig.savefig(
-                    f"{plot_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.png",
+                    f"{plot_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                     bbox_inches="tight",
                     dpi=300,
                 )
@@ -1985,7 +1977,7 @@ def plot_median_resolution(eta_bin, plot_type):
 
         else:
             fig.savefig(
-                f"{plots_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.png",
+                f"{plots_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                 bbox_inches="tight",
                 dpi=300,
             )
@@ -1996,350 +1988,6 @@ def plot_median_resolution(eta_bin, plot_type):
                     "w",
                 ) as f:
                     json.dump(tot_fit_results, f)
-        plt.close(fig)
-
-
-def plot_median_resolution_inclusive(plot_type, variable):
-
-    if "median" in plot_type or "jet_pt" in plot_type:
-        plot_dict = medians_dict
-        err_plot_dict = err_medians_dict
-    elif "resolution" in plot_type:
-        plot_dict = resolutions_dict
-        err_plot_dict = None
-    elif "width" in plot_type:
-        plot_dict = width_dict
-        err_plot_dict = None
-    else:
-        print("plot_type not valid")
-        return
-
-    if "median" in plot_type or "jet_pt" in plot_type:
-        fig, ax = plt.subplots(figsize=(5, 5))
-    else:
-        fig, (ax, ax_ratio) = plt.subplots(
-            2, 1, sharex=True, gridspec_kw={"height_ratios": [2.5, 1]}, figsize=(5, 5)
-        )
-        fig.tight_layout()
-        ax_ratio
-
-    hep.cms.label(
-        year=year,
-        com="13.6",
-        label=f"Preliminary",
-        ax=ax,
-    )
-    for eta_sign in plot_dict.keys():
-        for flav_group in plot_dict[eta_sign].keys():
-
-            j = 0
-            plot = False
-            max_value = 0
-            min_value = 1000
-            for flav in plot_dict[eta_sign][flav_group].keys():
-                if "Response" not in variable:
-                    continue
-                plot_array = plot_dict[eta_sign][flav_group][flav][variable][index, :]
-                err_plot_array = (
-                    err_plot_dict[eta_sign][flav_group][flav][variable][index, :]
-                    if err_plot_dict is not None
-                    else None
-                )
-
-                if "inverse" in plot_type:
-                    err_plot_array = err_plot_array / (plot_array**2)  # * 3  # HERE
-                    plot_array = 1 / plot_array
-                if "weighted" in plot_type:
-                    plot_array = (
-                        plot_array
-                        * 2
-                        / medians_dict[eta_sign][flav_group][flav][variable][index, :]
-                    )
-
-                max_value = (
-                    max(max_value, np.nanmax(plot_array))
-                    if not np.all(np.isnan(plot_array))
-                    else max_value
-                )
-                min_value = (
-                    min(min_value, np.nanmin(plot_array))
-                    if not np.all(np.isnan(plot_array))
-                    else min_value
-                )
-
-                if variable not in list(variables_plot_settings.keys()) or np.all(
-                    np.isnan(plot_array)
-                ):
-                    continue
-
-                plot = True
-                ax.errorbar(
-                    (
-                        pt_bins[1:]
-                        if "inverse" not in plot_type
-                        else plot_dict[eta_sign][flav_group][flav][
-                            variable.replace("Response", "JetPt")
-                        ][index, :]
-                    ),
-                    plot_array,
-                    yerr=(err_plot_array),
-                    label=f"{labels_dict[variable.replace('Response','')]}"
-                    + (f" ({flav})" if flav != "inclusive" else ""),
-                    marker=variables_plot_settings[variable][
-                        1
-                    ],  # flavs[flav_group][j],
-                    color=variables_plot_settings[variable][0],
-                    linestyle="None",
-                    markersize=3,
-                )
-                if (
-                    "inverse" in plot_type
-                    and "PNet" in variable
-                    # and "Neutrino" in variable
-                ):  # and "Neutrino" in variable:
-                    mask_nan = (
-                        ~np.isnan(plot_array)
-                        & ~np.isnan(err_plot_array)
-                        & (
-                            ~np.isnan(
-                                plot_dict[eta_sign][flav_group][flav][
-                                    variable.replace("Response", "JetPt")
-                                ][index, :]
-                            )
-                        )
-                    )
-                    x = plot_dict[eta_sign][flav_group][flav][
-                        variable.replace("Response", "JetPt")
-                    ][index, :]
-                    xerr = err_plot_dict[eta_sign][flav_group][flav][
-                        variable.replace("Response", "JetPt")
-                    ][index, :]
-                    # pt-clipping
-                    mask_clip = x > 10  # HERE 35
-                    mask_tot = mask_nan & mask_clip
-                    x = x[mask_tot]
-                    xerr = xerr[mask_tot]
-                    y = plot_array[mask_tot]
-                    y_err = err_plot_array[mask_tot]
-
-                if "ResponsePNetReg" in variable and (
-                    "resolution" in plot_type or "width" in plot_type
-                ):
-                    # plot ratio pnreg / jec
-                    jec = (
-                        plot_dict[eta_sign][flav_group][flav]["ResponseJEC"][index, :]
-                        if (plot_type == "resolution" or plot_type == "width")
-                        else plot_dict[eta_sign][flav_group][flav]["ResponseJEC"][
-                            index, :
-                        ]
-                        * 2
-                        / medians_dict[eta_sign][flav_group][flav]["ResponseJEC"][
-                            index, :
-                        ]
-                    )
-                    gain_res = (jec - plot_array) / jec
-                    ax_ratio.errorbar(
-                        pt_bins[1:],
-                        gain_res,
-                        # label= f"{variable.replace('Response','')} / JEC ({flav.replace('_','') if flav != '' else 'inclusive'})",
-                        marker=variables_plot_settings[variable][
-                            1
-                        ],  # flavs[flav_group][j],
-                        color=variables_plot_settings[variable][0],
-                        linestyle="None",
-                        markersize=3,
-                    )
-                if "median" in plot_type:
-                    # plot line at 1 for the whole figure
-                    ax.axhline(y=1, color="black", linestyle="-", linewidth=0.7)
-
-                j += 1
-            # if no variable is plotted, skip
-            if plot == False:
-                continue
-            # check if plot_array is only nan or 0
-            if not np.all(np.isnan(plot_array)) and not np.all(plot_array == 0):
-                if CLOSURE:
-                    ax.set_ylim(top=1.1 * max_value, bottom=min_value / 1.05)
-                else:
-                    ax.set_ylim(top=1.2 * max_value, bottom=min_value / 1.1)
-
-            if "inverse" in plot_type:
-                ax.set_xlabel(r"$p_{T}^{reco}$ (GeV)", fontsize=12, loc="right")
-            elif "median" in plot_type or "jet_pt" in plot_type:
-                ax.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", fontsize=12, loc="right")
-            else:
-                ax_ratio.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", fontsize=12, loc="right")
-
-            if plot_type == "median":
-                label_y = f"Median jet response"
-            elif plot_type == "inverse_median":
-                label_y = r"[Median jet response]$^{-1}$"
-            elif plot_type == "resolution":
-                label_y = r"$\frac{q_{84}-q_{16}}{2}$"
-            elif plot_type == "weighted_resolution":
-                label_y = r"$\frac{q_{84}-q_{16}}{q_{50}}$"
-            elif plot_type == "width":
-                label_y = "Jet response resolution"
-            elif plot_type == "average_jet_pt":
-                # ax.set_yscale("log")
-                label_y = r"$\langle p_{T}^{Jet} \rangle$ (GeV)"
-
-            ax.set_ylabel(label_y, fontsize=12, loc="top")
-
-            if CLOSURE:
-                ax.text(
-                    0.98,
-                    0.7,
-                    "Closure test",
-                    horizontalalignment="right",
-                    verticalalignment="top",
-                    transform=ax.transAxes,
-                    color="black",
-                    fontsize=10,
-                    # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
-                )
-
-            # log x scale
-            ax.set_xscale("log")
-
-            handles, labels = ax.get_legend_handles_labels()
-            handles_dict = dict(zip(labels, handles))
-            unique_labels = list((handles_dict.keys()))
-            unique_dict = {label: handles_dict[label] for label in unique_labels}
-
-            ax.legend(
-                unique_dict.values(),
-                unique_dict.keys(),
-                frameon=False,
-                ncol=1,
-                loc="upper right",
-                fontsize=10,
-            )
-
-            # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
-            if "resolution" in plot_type or "width" in plot_type:
-                ax_ratio.set_ylabel("Reg / JEC - 1", fontsize=12, loc="top")
-                # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
-
-        # create string for flavour
-        flav_str = ""
-        for flav in flav_group:
-            flav_str += flav.replace("_", "")
-
-        if plot_type == "median" or plot_type == "average_jet_pt":
-            plots_dir = median_dir
-        elif plot_type == "inverse_median":
-            plots_dir = inv_median_dir
-        elif plot_type == "resolution":
-            plots_dir = resolution_dir
-        elif plot_type == "weighted_resolution":
-            plots_dir = weighted_resolution_dir
-        elif plot_type == "width":
-            plots_dir = width_dir
-
-        if args.full:
-            if plot_type == "median" or plot_type == "average_jet_pt":
-                plots_dir = [
-                    (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-                plots_dir = [
-                    (
-                        f"{main_dir}/median_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/median_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-            elif plot_type == "inverse_median":
-                plots_dir = [
-                    (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/inv_median_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-                plots_dir = [
-                    (
-                        f"{main_dir}/inv_median_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/inv_median_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-            elif plot_type == "resolution":
-                plots_dir = [
-                    (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/resolution_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-                plots_dir = [
-                    (
-                        f"{main_dir}/resolution_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/resolution_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-
-            elif plot_type == "weighted_resolution":
-                plots_dir = [
-                    (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/weighted_resolution_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-
-                plots_dir = [
-                    (
-                        f"{main_dir}/weighted_resolution_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/weighted_resolution_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-            elif plot_type == "width":
-                plots_dir = [
-                    (
-                        f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/width_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/width_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-                plots_dir = [
-                    (
-                        f"{main_dir}/width_plots_unbinned"
-                        if args.unbinned
-                        else f"{main_dir}/width_plots_binned"
-                    )
-                    for flav in flav_group
-                ]
-            for plot_dir in plots_dir:
-                fig.savefig(
-                    f"{plot_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.png",
-                    bbox_inches="tight",
-                    dpi=300,
-                )
-
-        else:
-            fig.savefig(
-                f"{plots_dir}/{plot_type}_{'JetPt' if 'jet_pt' in plot_type else 'Response'}_{flav_str}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}.png",
-                bbox_inches="tight",
-                dpi=300,
-            )
-
         plt.close(fig)
 
 
@@ -2362,12 +2010,14 @@ def plot_histos(eta_pt, histogram_dir):
             plot_response = False
             plot_jetpt = False
 
-            fig_tot_response, ax_tot_response = plt.subplots(figsize=(5, 5))
-            fig_tot_jetpt, ax_tot_jetpt = plt.subplots(figsize=(5, 5))
+            fig_tot_response, ax_tot_response = plt.subplots()
+            fig_tot_jetpt, ax_tot_jetpt = plt.subplots()
 
             max_value_response = 0
             max_value_jetpt = 0
             for variable in histogram_dict[eta_sign][flav_group][flav].keys():
+                if "JetPt" in variable and not PLOT_JETPT_HISTO:
+                    continue
                 histos = histogram_dict[eta_sign][flav_group][flav][variable]
                 if variable not in list(variables_plot_settings.keys()):
                     print(
@@ -2439,6 +2089,7 @@ def plot_histos(eta_pt, histogram_dir):
                         + (f" ({flav})" if flav != "inclusive" else ""),
                         color=variables_plot_settings[variable][0],
                         density=True,
+                        linewidth=1.5,
                     )
                     max_value_response = max(
                         max_value_response,
@@ -2454,6 +2105,7 @@ def plot_histos(eta_pt, histogram_dir):
                         + (f" ({flav})" if flav != "inclusive" else ""),
                         color=variables_plot_settings[variable][0],
                         density=True,
+                        linewidth=1.5,
                     )
                     max_value_jetpt = max(
                         max_value_jetpt,
@@ -2461,7 +2113,7 @@ def plot_histos(eta_pt, histogram_dir):
                     )
 
                 if PLOT_SINGLE_HISTO:
-                    fig, ax = plt.subplots(figsize=(5, 5))
+                    fig, ax = plt.subplots()
                     # bins_mid = (bins[1:] + bins[:-1]) / 2
                     # print("values", len(values), "bins", len(bins), "bins_mid", len(bins_mid))
                     ax.hist(
@@ -2473,6 +2125,8 @@ def plot_histos(eta_pt, histogram_dir):
                         + (f" ({flav})" if flav != "inclusive" else ""),
                         color=variables_plot_settings[variable][0],
                         density=True,
+                        linewidth=1.5,
+
                     )
 
                     # write axis name in latex
@@ -2482,48 +2136,45 @@ def plot_histos(eta_pt, histogram_dir):
                             if "Response" in variable
                             else r"$p_{T}^{reco}$"
                         ),
-                        fontsize=12,
                         loc="right",
                     )
-                    ax.set_ylabel(f"a.u.", fontsize=12, loc="top")
+                    ax.set_ylabel(f"a.u.", loc="top")
                     # if np.any(values != np.nan) and np.any(values != 0):
                     #     ax.set_ylim(top=1.2 * np.nanmax(values))
 
                     ax.legend(frameon=False, loc="upper right")
 
-                    hep.cms.label(
-                        year=year,
-                        com="13.6",
-                        label=f"Preliminary",
-                    )
+                    # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
+
+                    # hep.cms.label(
+                    #     year=year,
+                    #     com="13.6",
+                    #     label=f"Preliminary",
+                    # )
+                    hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+                    hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
                     ax.text(
-                        0.98,
-                        0.8,
-                        r"anti-$k_{T}$ R=0.4 (PUPPI)",
-                        horizontalalignment="right",
-                        verticalalignment="top",
-                        transform=ax.transAxes,
-                        # fontsize=12,
-                    )
-                    # write a string on the plot
-                    ax.text(
-                        0.98,
-                        0.7,
-                        f"{correct_eta_bins[eta_bin]} <"
-                        + r"$\eta^{reco}$"
+                        0.05,
+                        0.75,
+                        r"anti-$k_{T}$ R=0.4 (PUPPI)"
+                        + f"\n{correct_eta_bins[eta_bin]} <"
+                        + (
+                            r"$\eta^{reco}$"
+                            if not args.abs_eta_inclusive
+                            else r"$|\eta^{reco}$|"
+                        )
                         + f"< {correct_eta_bins[eta_bin+1]}\n"
-                        + f" {int(pt_bins[pt_bin])} <"
+                        + f"{int(pt_bins[pt_bin])} <"
                         + r"$p_{T}^{ptcl}$"
                         + f"< {int(pt_bins[pt_bin+1])}",
-                        horizontalalignment="right",
+                        horizontalalignment="left",
                         verticalalignment="top",
                         transform=ax.transAxes,
-                        # put frame
-                        # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+                        #
                     )
 
                     fig.savefig(
-                        f"{histogram_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
+                        f"{histogram_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                         bbox_inches="tight",
                         dpi=300,
                     )
@@ -2535,47 +2186,45 @@ def plot_histos(eta_pt, histogram_dir):
                 #     color="gray", linestyle=":", linewidth=0.4, which="both"
                 # )
                 # write axis name in latex
-                ax_tot_response.set_xlabel(
-                    r"$p_T^{reco} / p_T^{ptcl}$", fontsize=12, loc="right"
-                )
-                ax_tot_response.set_ylabel(f"a.u.", fontsize=12, loc="top")
+                ax_tot_response.set_xlabel(r"$p_T^{reco} / p_T^{ptcl}$", loc="right")
+                ax_tot_response.set_ylabel(f"a.u.", loc="top")
                 ax_tot_response.legend(frameon=False, loc="upper right", ncol=2)
 
                 ax_tot_response.set_ylim(top=1.2 * max_value_response)
-                hep.cms.label(
-                    year=year,
-                    com="13.6",
-                    label=f"Preliminary",
-                    ax=ax_tot_response,
-                )
+                ax_tot_response.set_xlim(right=1.8,  left=-0.2)
+                # hep.cms.label(
+                #     year=year,
+                #     com="13.6",
+                #     label=f"Preliminary",
+                #     ax=ax_tot_response,
+                # )
+
+                hep.cms.lumitext("2023 (13.6 TeV)", ax=ax_tot_response)
+                hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax_tot_response)
 
                 ax_tot_response.text(
-                    0.98,
-                    0.8,
-                    r"anti-$k_{T}$ R=0.4 (PUPPI)",
-                    horizontalalignment="right",
-                    verticalalignment="top",
-                    transform=ax_tot_response.transAxes,
-                    # fontsize=12,
-                )
-                ax_tot_response.text(
-                    0.98,
-                    0.7,
-                    f"{correct_eta_bins[eta_bin]} <"
-                    + r"$\eta^{reco}$"
+                    0.05,
+                    0.75,
+                    r"anti-$k_{T}$ R=0.4 (PUPPI)"
+                    + f"\n{correct_eta_bins[eta_bin]} <"
+                    + (
+                        r"$\eta^{reco}$"
+                        if not args.abs_eta_inclusive
+                        else r"$|\eta^{reco}$|"
+                    )
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
-                    + f" {int(pt_bins[pt_bin])} <"
+                    + f"{int(pt_bins[pt_bin])} <"
                     + r"$p_{T}^{ptcl}$"
                     + f"< {int(pt_bins[pt_bin+1])}",
-                    horizontalalignment="right",
+                    horizontalalignment="left",
                     verticalalignment="top",
                     transform=ax_tot_response.transAxes,
-                    # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+                    #
                 )
 
                 # ax_tot_response.set_yscale("log")
                 fig_tot_response.savefig(
-                    f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
+                    f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                     bbox_inches="tight",
                     dpi=300,
                 )
@@ -2583,8 +2232,8 @@ def plot_histos(eta_pt, histogram_dir):
                 # ax.*.grid(
                 #     color="gray", linestyle=":", linewidth=0.4, which="both"
                 # )
-                ax_tot_jetpt.set_xlabel(r"$p_{T}^{reco}$", fontsize=12, loc="right")
-                ax_tot_jetpt.set_ylabel(f"a.u.", fontsize=12, loc="top")
+                ax_tot_jetpt.set_xlabel(r"$p_{T}^{reco}$", loc="right")
+                ax_tot_jetpt.set_ylabel(f"a.u.", loc="top")
                 ax_tot_jetpt.legend(frameon=False, loc="upper right", ncol=2)
 
                 ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
@@ -2592,36 +2241,34 @@ def plot_histos(eta_pt, histogram_dir):
                     left=2 * pt_bins[pt_bin + 1], right=0.5 * pt_bins[pt_bin]
                 )
 
-                hep.cms.label(
-                    year=year, com="13.6", label=f"Preliminary", ax=ax_tot_jetpt
-                )
-                ax_tot_jetpt.text(
-                    0.98,
-                    0.8,
-                    r"anti-$k_{T}$ R=0.4 (PUPPI)",
-                    horizontalalignment="right",
-                    verticalalignment="top",
-                    transform=ax_tot_jetpt.transAxes,
-                    # fontsize=12,
-                )
+                # hep.cms.label(
+                #     year=year, com="13.6", label=f"Preliminary", ax=ax_tot_jetpt
+                # )
 
+                hep.cms.lumitext("2023 (13.6 TeV)", ax=ax_tot_jetpt)
+                hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax_tot_jetpt)
                 ax_tot_jetpt.text(
-                    0.98,
-                    0.7,
-                    f"{correct_eta_bins[eta_bin]} <"
-                    + r"$\eta^{reco}$"
+                    0.05,
+                    0.75,
+                    r"anti-$k_{T}$ R=0.4 (PUPPI)"
+                    + f"\n{correct_eta_bins[eta_bin]} <"
+                    + (
+                        r"$\eta^{reco}$"
+                        if not args.abs_eta_inclusive
+                        else r"$|\eta^{reco}$|"
+                    )
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
-                    + f" {int(pt_bins[pt_bin])} <"
+                    + f"{int(pt_bins[pt_bin])} <"
                     + r"$p_{T}^{ptcl}$"
                     + f"< {int(pt_bins[pt_bin+1])}",
-                    horizontalalignment="right",
+                    horizontalalignment="left",
                     verticalalignment="top",
                     transform=ax_tot_jetpt.transAxes,
-                    # bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
+                    #
                 )
                 # ax_tot_jetpt.set_yscale("log")
                 fig_tot_jetpt.savefig(
-                    f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.png",
+                    f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                     bbox_inches="tight",
                     dpi=300,
                 )
@@ -2661,13 +2308,16 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     median_2d = plot_dict[eta_sign][flav_group][flav][variable]
                     median_2d = np.array(median_2d)  # -1
 
-                    fig, ax = plt.subplots(figsize=(5, 5))
-                    hep.cms.label(
-                        year=year,
-                        com="13.6",
-                        label=f"Preliminary",
-                        ax=ax,
-                    )
+                    fig, ax = plt.subplots()
+                    # hep.cms.label(
+                    #     year=year,
+                    #     com="13.6",
+                    #     label=f"Preliminary",
+                    #     ax=ax,
+                    # )
+
+                    hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+                    hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
                     # print(
                     #     "plotting median",
                     #     flav_group,
@@ -2731,18 +2381,17 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                         horizontalalignment="right",
                         verticalalignment="top",
                         transform=ax.transAxes,
-                        fontsize=10,
                         bbox=dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9),
                     )
 
-                    ax.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", fontsize=12, loc="right")
-                    ax.set_ylabel(r"$\eta^{reco}$", fontsize=12, loc="top")
+                    ax.set_xlabel(r"$p_{T}^{ptcl}$ (GeV)", loc="right")
+                    ax.set_ylabel(r"$\eta^{reco}$", loc="top")
                     # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
 
                     # ax.legend(frameon=False, ncol=2, loc="upper right")
 
                     fig.savefig(
-                        f"{plot_2d_dir}/median_response_2d_{eta_sign}_{flav}_{variable}.png",
+                        f"{plot_2d_dir}/median_response_2d_{eta_sign}_{flav}_{variable}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                         bbox_inches="tight",
                         dpi=300,
                     )

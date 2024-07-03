@@ -114,3 +114,8 @@ fig.savefig(
     bbox_inches="tight",
     dpi=300,
 )
+fig.savefig(
+    f"{args.dir}/median_plots_binned/inclusive_eta_median_{type_plot}.pdf",
+    bbox_inches="tight",
+    dpi=300,
+)
