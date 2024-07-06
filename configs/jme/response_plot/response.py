@@ -1560,7 +1560,7 @@ def plot_median_resolution(eta_bin, plot_type):
             0.05,
             0.75 if "median" in plot_type or "jet_pt" in plot_type else 0.7,
             r"anti-$k_{T}$ R=0.4 (PUPPI)"
-            + ("\nRegression Closure Test" if CLOSURE else "")
+            + ("\nRegression Closure Test" if (CLOSURE and not DP_NOTE_PLOTS) else "")
             + f"\n{correct_eta_bins[eta_bin]} <"
             + (r"$\eta^{reco}$" if not args.abs_eta_inclusive else r"$|\eta^{reco}$|")
             + f"< {correct_eta_bins[eta_bin+1]}",
@@ -1789,7 +1789,7 @@ def plot_median_resolution(eta_bin, plot_type):
         elif plot_type == "weighted_resolution":
             label_y = r"$\frac{q_{84}-q_{16}}{q_{50}}$"
         elif plot_type == "width":
-            label_y = "Jet response resolution"
+            label_y = "Jet energy resolution"
         elif plot_type == "average_jet_pt":
             # ax.set_yscale("log")
             label_y = r"$\langle p_{T}^{Jet} \rangle$ (GeV)"
@@ -1854,7 +1854,7 @@ def plot_median_resolution(eta_bin, plot_type):
 
         # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
         if "resolution" in plot_type or "width" in plot_type:
-            ax_ratio.set_ylabel("reg / standard - 1", loc="top")
+            ax_ratio.set_ylabel("1 - PNet / JEC - 1", loc="bottom") #1-PNet/Standard
             # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
 
         # create string for flavour
