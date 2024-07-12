@@ -48,7 +48,8 @@ cfg = Configurator(
 
     workflow = PartonMatchingProcessorWithFSR,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "parton_jet_min_dR_postfsr": 1.0},
+                        "parton_jet_min_dR_postfsr": 1.0,
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_20_06_24/"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
