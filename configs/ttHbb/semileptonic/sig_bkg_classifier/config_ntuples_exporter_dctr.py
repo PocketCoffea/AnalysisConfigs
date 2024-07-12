@@ -82,8 +82,7 @@ cfg = Configurator(
     
     preselections = [semileptonic_presel],
     categories = {
-        "baseline": [passthrough],
-        "semilep_LHE": [semilep_lhe]
+        "semilep": [passthrough],
     },
 
     weights= {
@@ -152,47 +151,61 @@ cfg = Configurator(
         "common": {
             "inclusive": [],
             "bycategory": {
-                    "semilep_LHE": [
-                        ColOut(
-                            "Parton",
-                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"]
-                        ),
-                        ColOut(
-                            "PartonMatched",
-                            ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
-                        ),
+                    "semilep": [
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
-                        ),
-                        ColOut(
-                            "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                            ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
+                            flatten=False
                         ),
                         ColOut("LeptonGood",
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
-                               pos_end=1, store_size=False),
-                        ColOut("MET", ["phi","pt","significance"]),
-                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
-                        ColOut("events", ["deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "mbb"])
+                               pos_end=1, store_size=False, flatten=False),
+                        ColOut("MET", ["phi","pt","significance"], flatten=False),
+                        ColOut("events", ["deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "mbb"], flatten=False)
                     ]
             }
         },
         "bysample": {
             "ttHTobb": {
                 "bycategory": {
-                    "semilep_LHE": [
+                    "semilep": [
                         ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
+                        ColOut("JetGoodMatched",
+                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                               flatten=False,
+                        ),
                     ]
                 }
             },
             "ttHTobb_ttToSemiLep": {
                 "bycategory": {
-                    "semilep_LHE": [
+                    "semilep": [
                         ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
+                        ColOut("JetGoodMatched",
+                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                        ),
+                    ]
+                }
+            },
+            "TTbbSemiLeptonic": {
+                "bycategory": {
+                    "semilep": [
+                        ColOut("JetGoodMatched",
+                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                               flatten=False
+                        ),
+                    ]
+                }
+            },
+            "TTToSemiLeptonic": {
+                "bycategory": {
+                    "semilep": [
+                        ColOut("JetGoodMatched",
+                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                               flatten=False
+                        ),
                     ]
                 }
             }
