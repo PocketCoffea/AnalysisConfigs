@@ -1,8 +1,11 @@
 import awkward as ak
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
+from pocket_coffea.lib.objects import btagging
 from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 from pocket_coffea.lib.deltaR_matching import object_matching
 from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb, get_partons_provenance_ttbb4F, get_partons_provenance_tt5F
+
+from custom_functions import invariant_mass
 
 class ttbarBackgroundProcessor(ttHbbBaseProcessor):
     def __init__(self, cfg) -> None:
@@ -20,6 +23,23 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         vars.update(available_sf_btag_variations)
         return vars
 
+    def apply_object_preselection(self, variation):
+        super().apply_object_preselection(variation=variation)
+
+        self.events["LightJetGood"] = btagging(
+            self.events["JetGood"],
+            self.params.btagging.working_point[self._year],
+            wp=self.params.object_preselection.Jet["btag"]["wp"],
+            veto=True
+        )
+
+    def define_common_variables_before_presel(self, variation):
+        super().define_common_variables_before_presel(variation=variation)
+
+        # Compute the scalar sum of the transverse momenta of the b-jets and light jets
+        self.events["BJetGood_Ht"] = ak.sum(abs(self.events.BJetGood.pt), axis=1)
+        self.events["LightJetGood_Ht"] = ak.sum(abs(self.events.LightJetGood.pt), axis=1)
+
     def define_common_variables_after_presel(self, variation):
         super().define_common_variables_before_presel(variation=variation)
 
@@ -28,6 +48,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         deltaR = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"]), axis=2)
         deltaEta = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=metric_eta), axis=2)
         deltaPhi = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=metric_phi), axis=2)
+        mbb = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=invariant_mass), axis=2)
         deltaR = deltaR[deltaR > 0.]
         deltaEta = deltaEta[deltaEta > 0.]
         deltaPhi = deltaPhi[deltaPhi > 0.]
@@ -49,6 +70,8 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         self.events["deltaEtabb_min"] = ak.min(deltaEta, axis=1)
         self.events["deltaPhibb_min"] = ak.min(deltaPhi, axis=1)
         self.events["mbb"] = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
+        self.events["mbb_max"] = ak.max(mbb, axis=1)
+        self.events["deltaRbb_avg"] = ak.mean(deltaR_unique, axis=1)
 
         # Define labels for btagged jets at different working points
         for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
