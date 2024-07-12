@@ -13,6 +13,17 @@ class PartonMatchingProcessorWithFSR(ttHbbBaseProcessor):
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
         self.dr_min_postfsr = self.workflow_options.get("parton_jet_min_dR_postfsr", 1.)
 
+    def define_common_variables_after_presel(self, variation):
+        super().define_common_variables_before_presel(variation=variation)
+
+        # Define labels for btagged jets at different working points
+        for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
+            self.events["JetGood"] = ak.with_field(
+                self.events.JetGood,
+                ak.values_astype(self.events.JetGood.btagDeepFlavB > val, int),
+                f"btag_{wp}"
+            )
+
     def do_parton_matching_ttHbb(self) -> ak.Array:
 
         genparts = self.events.GenPart
