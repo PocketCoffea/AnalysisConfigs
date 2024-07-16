@@ -5,8 +5,6 @@ from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 from pocket_coffea.lib.deltaR_matching import object_matching
 from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb, get_partons_provenance_ttbb4F, get_partons_provenance_tt5F
 
-from custom_functions import invariant_mass
-
 class ttbarBackgroundProcessor(ttHbbBaseProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
@@ -48,7 +46,6 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         deltaR = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"]), axis=2)
         deltaEta = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=metric_eta), axis=2)
         deltaPhi = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=metric_phi), axis=2)
-        mbb = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"], metric=invariant_mass), axis=2)
         deltaR = deltaR[deltaR > 0.]
         deltaEta = deltaEta[deltaEta > 0.]
         deltaPhi = deltaPhi[deltaPhi > 0.]
@@ -65,11 +62,15 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         idx_pairs_sorted = ak.argsort(deltaR_unique, axis=1)
         pairs_sorted = pairs[idx_pairs_sorted]
 
-        # Compute the minimum deltaR(b, b), deltaEta(b, b), deltaPhi(b, b) and the invariant mass of the closest b-jet pair
+        # Compute the minimum deltaR(b, b), deltaEta(b, b), deltaPhi(b, b)
         self.events["deltaRbb_min"] = ak.min(deltaR, axis=1)
         self.events["deltaEtabb_min"] = ak.min(deltaEta, axis=1)
         self.events["deltaPhibb_min"] = ak.min(deltaPhi, axis=1)
-        self.events["mbb"] = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
+
+        # Compute the invariant mass of the closest b-jet pair, the minimum and maximum invariant mass of all b-jet pairs
+        mbb = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
+        self.events["mbb_closest"] = mbb[:,0]
+        self.events["mbb_min"] = ak.min(mbb, axis=1)
         self.events["mbb_max"] = ak.max(mbb, axis=1)
         self.events["deltaRbb_avg"] = ak.mean(deltaR_unique, axis=1)
 
