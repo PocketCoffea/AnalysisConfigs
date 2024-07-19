@@ -10,7 +10,6 @@ from workflow import ttbarBackgroundProcessor
 
 import custom_cut_functions
 import custom_cuts
-import custom_functions
 from custom_cut_functions import *
 from custom_cuts import *
 from params.axis_settings import axis_settings
@@ -74,7 +73,7 @@ cfg = Configurator(
 
     workflow = ttbarBackgroundProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_old_matching_with_event_features_11_07_24/"},
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_old_matching_with_event_features_19_07_24/"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
@@ -134,11 +133,15 @@ cfg = Configurator(
             [Axis(coll="events", field="deltaPhibb_min", bins=50, start=0, stop=5,
                   label="$\Delta \phi_{bb}$")]
         ),
-        "mbb" : HistConf(
-            [Axis(coll="events", field="mbb", bins=50, start=0, stop=500,
-                    label="$m_{bb}$ [GeV]")]
+        "mbb_closest" : HistConf(
+            [Axis(coll="events", field="mbb_closest", bins=50, start=0, stop=500,
+                    label="$m_{bb}(min \Delta R(bb))$ [GeV]")]
         ),
-        "mbb" : HistConf(
+        "mbb_min" : HistConf(
+            [Axis(coll="events", field="mbb_min", bins=50, start=0, stop=500,
+                    label="$m_{bb}^{min}$ [GeV]")]
+        ),
+        "mbb_max" : HistConf(
             [Axis(coll="events", field="mbb_max", bins=50, start=0, stop=500,
                     label="$m_{bb}^{max}$ [GeV]")]
         ),
@@ -161,7 +164,7 @@ cfg = Configurator(
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
                                pos_end=1, store_size=False, flatten=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
-                        ColOut("events", ["deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "mbb"], flatten=False)
+                        ColOut("events", ["deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False)
                     ]
             }
         },
@@ -173,7 +176,7 @@ cfg = Configurator(
                                ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
                         ColOut("JetGoodMatched",
                                ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
-                               flatten=False,
+                               flatten=False
                         ),
                     ]
                 }
@@ -185,6 +188,7 @@ cfg = Configurator(
                                ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
                         ColOut("JetGoodMatched",
                                ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                               flatten=False
                         ),
                     ]
                 }
@@ -218,4 +222,3 @@ import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
-cloudpickle.register_pickle_by_value(custom_functions)
