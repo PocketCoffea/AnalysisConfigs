@@ -73,7 +73,7 @@ cfg = Configurator(
 
     workflow = ttbarBackgroundProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_old_matching_with_event_features_19_07_24/"},
+                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_old_matching_with_event_features_22_07_24/"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
@@ -164,7 +164,7 @@ cfg = Configurator(
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
                                pos_end=1, store_size=False, flatten=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
-                        ColOut("events", ["deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False)
+                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False)
                     ]
             }
         },
