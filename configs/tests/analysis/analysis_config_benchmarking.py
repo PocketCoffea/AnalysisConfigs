@@ -27,9 +27,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar.json",
                   f"{localdir}/datasets/DATA_SingleEle.json",
                     ],
         "filter" : {
@@ -101,17 +99,18 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=0),
         **jet_hists(coll="JetGood", pos=1),
         **jet_hists(coll="JetGood", pos=2),
+       **processing_metadata_hists(["baseline"], 300000)
     },
 
-    columns = {
-        "common": {},
-        "bysample": {
-            "TTToSemiLeptonic" : { "inclusive":  [ColOut("LeptonGood",["pt","eta","phi"])]},
-            "TTToSemiLeptonic__=1b" :{ "inclusive":  [ColOut("JetGood",["pt","eta","phi"])]},
-            "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
+    # columns = {
+    #     "common": {},
+    #     "bysample": {
+    #         "TTToSemiLeptonic" : { "inclusive":  [ColOut("LeptonGood",["pt","eta","phi"])]},
+    #         "TTToSemiLeptonic__=1b" :{ "inclusive":  [ColOut("JetGood",["pt","eta","phi"])]},
+    #         "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
                 
-        },
-    }
+    #     },
+    # }
     
 )
 
@@ -120,7 +119,7 @@ cfg = Configurator(
 
 run_options = {
         "executor"       : "dask/slurm",
-        "env"            : "singularity",
+        "env"            : "conda",
         "workers"        : 1,
         "scaleout"       : 20,
         "queue"          : "standard",
@@ -128,7 +127,7 @@ run_options = {
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 200000,
+        "chunk"          : 300000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
