@@ -4,7 +4,7 @@ import numba
 
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
 from pocket_coffea.lib.deltaR_matching import object_matching
-from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb
+from pocket_coffea.lib.parton_provenance import *
 
 
 class PartonMatchingProcessor(ttHbbBaseProcessor):
@@ -45,6 +45,14 @@ class PartonMatchingProcessor(ttHbbBaseProcessor):
             self.events["HiggsParton"] = self.events.LHEPart[
                 self.events.LHEPart.pdgId == 25
             ]
+        elif self._sample == "TTbbSemiLeptonic":
+            prov = get_partons_provenance_ttbb4F(
+                ak.Array(quarks.pdgId, behavior={}), ak.ArrayBuilder()
+            ).snapshot()
+        elif self._sample == "TTToSemiLeptonic":
+             prov = get_partons_provenance_tt5F(
+                ak.Array(quarks.pdgId, behavior={}), ak.ArrayBuilder()
+            ).snapshot()
         else:
             prov = -1 * ak.ones_like(quarks)
 
@@ -73,6 +81,7 @@ class PartonMatchingProcessor(ttHbbBaseProcessor):
             matched_jets, deltaR_matched, "dRMatchedJet"
         )
         self.matched_partons_mask = ~ak.is_none(self.events.JetGoodMatched, axis=1)
+        
 
     def count_partons(self):
         self.events["nParton"] = ak.num(self.events.Parton, axis=1)
