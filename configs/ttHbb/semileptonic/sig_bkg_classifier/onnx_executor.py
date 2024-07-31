@@ -11,7 +11,7 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         
         session = ort.InferenceSession(
-    f"/work/dvalsecc/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier/spanet.onnx", 
+            self.workflow_options["spanet_model"], 
             sess_options = sess_options,
             providers=['CPUExecutionProvider']
         )

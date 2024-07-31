@@ -41,6 +41,13 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
     def define_common_variables_after_presel(self, variation):
         super().define_common_variables_before_presel(variation=variation)
 
+        # Compute the `is_electron` flag for LeptonGood
+        self.events["LeptonGood"] = ak.with_field(
+            self.events.LeptonGood,
+            ak.values_astype(self.events.LeptonGood.pdgId == 11, bool),
+            "is_electron"
+        )
+
         # Compute deltaR(b, b) of all possible b-jet pairs.
         # We require deltaR > 0 to exclude the deltaR between the jets with themselves
         deltaR = ak.flatten(self.events["BJetGood"].metric_table(self.events["BJetGood"]), axis=2)
@@ -78,7 +85,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
             self.events["JetGood"] = ak.with_field(
                 self.events.JetGood,
-                ak.values_astype(self.events.JetGood.btagDeepFlavB > val, int),
+                ak.values_astype(self.events.JetGood[self.params.btagging.working_point[self._year]["btagging_algorithm"]] > val, int),
                 f"btag_{wp}"
             )
 
