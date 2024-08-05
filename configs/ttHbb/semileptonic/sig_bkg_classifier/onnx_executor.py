@@ -11,7 +11,7 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         
         session = ort.InferenceSession(
-            self.workflow_options["spanet_model"], 
+            "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/multiclassifier_full_Run2_btag_LMH_8M_balance_events/spanet_output/version_3/spanet.onnx", 
             sess_options = sess_options,
             providers=['CPUExecutionProvider']
         )
