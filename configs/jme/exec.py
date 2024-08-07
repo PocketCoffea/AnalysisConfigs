@@ -114,6 +114,18 @@ parser.add_argument(
     default=False,
 )
 parser.add_argument(
+    "--pnet-reg-15",
+    action="store_true",
+    help="Evaluate ParticleNet regression also for jet with pT < 15 GeV",
+    default=False,
+)
+parser.add_argument(
+    "--split-pnet-reg-15",
+    action="store_true",
+    help="Evaluate ParticleNet regression also for jet with pT < 15 GeV and slit between < and > 15 GeV",
+    default=False,
+)
+parser.add_argument(
     "--neutrino",
     help="Sum neutrino pT to GenJet pT",
     default=-1,
@@ -125,6 +137,8 @@ args.flavsplit = int(args.flavsplit)
 args.pnet = int(args.pnet)
 args.central = int(args.central)
 args.closure = int(args.closure)
+args.pnet_reg_15 = int(args.pnet_reg_15)
+args.split_pnet_reg_15 = int(args.split_pnet_reg_15)
 args.neutrino = int(args.neutrino)
 args.abs_eta_inclusive = int(args.abs_eta_inclusive)
 
@@ -146,7 +160,7 @@ def run_command(sign, flav, dir_name):
     neutrino_string = (
         f"&& export NEUTRINO={args.neutrino}" if args.neutrino != -1 else ""
     )
-    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} && export ABS_ETA_INCLUSIVE={args.abs_eta_inclusive} && export CLOSURE={args.closure} {neutrino_string} && export YEAR={args.year}" "C-m"'
+    command2 = f'tmux send-keys "export CARTESIAN=1 && export SIGN={sign} && export FLAVSPLIT={args.flavsplit} && export PNET={args.pnet} && export FLAV={flav} && export CENTRAL={args.central} && export ABS_ETA_INCLUSIVE={args.abs_eta_inclusive} && export CLOSURE={args.closure} && export PNETREG15={args.pnet_reg_15} && export SPLITPNETREG15={args.split_pnet_reg_15} {neutrino_string} && export YEAR={args.year}" "C-m"'
     command3 = f'tmux send-keys "time pocket-coffea run --cfg cartesian_config.py {executor} -o {dir_name}" "C-m"'
     command4 = f'tmux send-keys "make_plots.py {dir_name} --overwrite -j 16" "C-m"'
 
@@ -202,13 +216,13 @@ if args.cartesian or args.full:
             if sign == "all":
                 continue
             for flav in flavs_list:
-                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/{sign if not eta_string else eta_string}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
+                dir_name = f"{dir_prefix}out_cartesian_full{args.dir}{'_pnetreg15' if args.pnet_reg_15 else ''}{'_splitpnetreg15' if args.split_pnet_reg_15 else ''}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/{sign if not eta_string else eta_string}eta_{flav}flav{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}"
                 if not os.path.isfile(f"{dir_name}/output_all.coffea"):
                     print(f"{dir_name}")
                     run_command(sign, flav, dir_name)
     else:
         dir_name = (
-            f"{dir_prefix}out_cartesian_{sign if not eta_string else eta_string}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}"
+            f"{dir_prefix}out_cartesian_{sign if not eta_string else eta_string}eta{'_flavsplit' if args.flavsplit else f'_{args.flav}flav'}{'_pnet' if args.pnet else ''}{'_neutrino' if args.neutrino == 1 else ''}{args.dir}{'_pnetreg15' if args.pnet_reg_15 else ''}{'_splitpnetreg15' if args.split_pnet_reg_15 else ''}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}"
             if not args.dir
             else args.dir
         )
@@ -255,7 +269,7 @@ else:
                 eta_bin_min = eta_bins[i]
                 eta_bin_max = eta_bins[i + 1]
                 dir_name = (
-                    f"{dir_prefix}out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
+                    f"{dir_prefix}out_separate_eta_bin_seq{'_pnet' if args.pnet else ''}{'_pnetreg15' if args.pnet_reg_15 else ''}{'_splitpnetreg15' if args.split_pnet_reg_15 else ''}_{args.year}{'_closure' if args.closure else ''}{'_test' if args.test else ''}/eta{eta_bin_min}to{eta_bin_max}"
                     if not args.dir
                     else args.dir
                 )
@@ -272,6 +286,8 @@ else:
                     subprocess.run(command3, shell=True)
                     # subprocess.run(comand4, shell=True)
                     # os.system(command3)
+                else:
+                    print(f"{dir_name}/output_all.coffea already exists!")
 
     else:
         print("No eta bins defined")

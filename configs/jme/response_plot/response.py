@@ -104,7 +104,7 @@ parser.add_argument(
     "--num-params",
     type=int,
     help="Num param fit polynomial + 2 for the jet pt range",
-    default=7,
+    default=9,
 )
 parser.add_argument(
     "--no-plot",
@@ -120,13 +120,18 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-DP_NOTE_PLOTS = True
+DP_NOTE_PLOTS = False
 REBIN = True
 PLOT_SINGLE_HISTO = False
 JET_PT = True
 PLOT_JETPT_HISTO = False
+PLOT_JETPT_MEDIAN = False
 FIT = True
 CLOSURE = False
+HISTO_LOG = False
+
+VERSION = "V2"
+
 
 if "closure" in args.dir:
     FIT = False
@@ -138,23 +143,29 @@ if "closure" in args.dir:
 
 if "preEE" in args.dir:
     year = "Summer22Run3"
+    year_txt = "Summer22_22Sep2023"
 elif "postEE" in args.dir:
     year = "Summer22EERun3"
+    year_txt = "Summer22EE_22Sep2023"
 elif "preBPix" in args.dir:
     year = "Summer23Run3"
+    year_txt = "Summer23Prompt23"
 elif "postBPix" in args.dir:
     year = "Summer23BPixRun3"
+    year_txt = "Summer23BPixPrompt23"
 
-
+year_txt = year
 if DP_NOTE_PLOTS:
     year = "2023" if "23" in year else "2022"
+
+
+pt_bins = pt_bins_all if "pnetreg15" in args.dir else pt_bins_reduced
 
 # set global variables
 GOOD_FIT = 0
 BAD_FIT = 0
 VALID_FIT = 0
 TOTAL_FIT = 0
-
 
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -176,6 +187,8 @@ variables_plot_settings = {
     "ResponseRaw": ["green", "s"],
     "ResponsePNetReg": ["red", "v"],
     "ResponsePNetRegNeutrino": ["purple", "^"],
+    "ResponsePNetRegSplit15": ["pink", "x"],
+    "ResponsePNetRegNeutrinoSplit15": ["darkviolet", "D"],
 }
 if JET_PT:
     variables_plot_settings.update(
@@ -184,14 +197,18 @@ if JET_PT:
             "JetPtRaw": ["green", "s"],
             "JetPtPNetReg": ["red", "v"],
             "JetPtPNetRegNeutrino": ["purple", "^"],
+            "JetPtPNetRegSplit15": ["pink", "x"],
+            "JetPtPNetRegNeutrinoSplit15": ["darkviolet", "D"],
         }
     )
 
 labels_dict = {
-    "PNetReg": "PNet",
-    "PNetRegNeutrino": "PNet incl. neutrinos",
     "JEC": "JEC",
     "Raw": "Raw",
+    "PNetReg": "PNet",
+    "PNetRegNeutrino": "PNet incl. neutrinos",
+    "PNetRegSplit15": "PNet (<15 GeV)",
+    "PNetRegNeutrinoSplit15": "PNet incl. neutrinos (<15 GeV)",
 }
 
 main_dir = args.dir
@@ -280,8 +297,8 @@ if args.load:
                 width_dict[eta_sign][flav_group][flav] = dict()
                 if args.histo:
                     histogram_dict[eta_sign][flav_group][flav] = dict()
-                print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav)
                 for variable in list(variables_plot_settings.keys()):
+                    print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable)
                     if args.full:
                         median_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
@@ -344,41 +361,49 @@ if args.load:
                                 if args.unbinned
                                 else f"{main_dir}/histogram_plots_binned"
                             )
-                    medians_dict[eta_sign][flav_group][flav][variable] = np.load(
-                        f"{median_dir}/medians_{eta_sign}_{flav}_{variable}.npy"
-                    )
-                    err_medians_dict[eta_sign][flav_group][flav][variable] = np.load(
-                        f"{median_dir}/err_medians_{eta_sign}_{flav}_{variable}.npy"
-                    )
-                    resolutions_dict[eta_sign][flav_group][flav][variable] = np.load(
-                        f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy"
-                    )
-                    width_dict[eta_sign][flav_group][flav][variable] = np.load(
-                        f"{width_dir}/width_{eta_sign}_{flav}_{variable}.npy"
-                    )
-                    # TODO: load inverse median and weighted resolution
-                    if args.histo:
-                        # histogram_dict[eta_sign][flav_group][flav][variable] = np.load(
-                        #     f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}.npy",
-                        #     allow_pickle=True,
-                        # )
-
-                        # load from json files
-                        with open(
-                            f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}.json"
-                        ) as f:
-                            histogram_dict[eta_sign][flav_group][flav][variable] = (
-                                json.load(f)
+                    try:
+                        medians_dict[eta_sign][flav_group][flav][variable] = np.load(
+                            f"{median_dir}/medians_{eta_sign}_{flav}_{variable}.npy"
+                        )
+                    except FileNotFoundError:
+                        continue
+                    try:
+                        err_medians_dict[eta_sign][flav_group][flav][variable] = (
+                            np.load(
+                                f"{median_dir}/err_medians_{eta_sign}_{flav}_{variable}.npy"
                             )
+                        )
+                    except FileNotFoundError:
+                        continue
+                    try:
+                        resolutions_dict[eta_sign][flav_group][flav][variable] = (
+                            np.load(
+                                f"{resolution_dir}/resolution_{eta_sign}_{flav}_{variable}.npy"
+                            )
+                        )
+                    except FileNotFoundError:
+                        continue
+                    try:
+                        width_dict[eta_sign][flav_group][flav][variable] = np.load(
+                            f"{width_dir}/width_{eta_sign}_{flav}_{variable}.npy"
+                        )
+                    except FileNotFoundError:
+                        continue
 
-                        # histogram_dict[eta_sign][flav_group][flav][variable] = list(list())
-                        # for i in range(len(correct_eta_bins) - 1):
-                        #     histogram_dict[eta_sign][flav_group][flav][variable].append(
-                        #         np.load(
-                        #             f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}_{correct_eta_bins[i]}to{correct_eta_bins[i+1]}.npy",
-                        #             allow_pickle=True,
-                        #         )
-                        #     )
+                    if args.histo:
+                        # load from json files
+                        try:
+                            with open(
+                                f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}.json"
+                            ) as f:
+                                histogram_dict[eta_sign][flav_group][flav][variable] = (
+                                    json.load(f)
+                                )
+                            if "Split15" in variable and "Response" in variable:
+                                print("histo", histogram_dict[eta_sign][flav_group][flav][variable], eta_sign, flav_group, flav, variable, "\n\n\n")
+                        except FileNotFoundError:
+                            continue
+
     # else:
     #     medians_dict = np.load(f"{median_dir}/medians.npy")
     #     err_medians_dict = np.load(f"{median_dir}/err_medians.npy")
@@ -441,7 +466,6 @@ else:
         histogram_dict = dict()
         # medians = list(list())
         # err_medians = list(list())
-        # TODO: create a new dictionary accumulating all histos in each eta_sign and get the median information from there
 
         o = load(f"{main_dir}/output_all.coffea") if not args.full else None
         variables = o["variables"].keys() if not args.full else None
@@ -561,12 +585,18 @@ else:
                                             # h is a histo2d and we want to find the median of the distribution along the axis MatchedJets.Response
                                             # for each bin in the axis MatchedJets.pt
                                             # so we need to loop over the bins in the axis MatchedJets.pt
-                                            try:
-                                                jet_pt = "MatchedJets.pt"
-                                                pt_axis_histo = h.axes[jet_pt]
-                                            except KeyError:
-                                                jet_pt = "MatchedJetsNeutrino.pt"
-                                                pt_axis_histo = h.axes[jet_pt]
+
+                                            for jet_pt in [
+                                                "MatchedJets.pt",
+                                                "MatchedJetsNeutrino.pt",
+                                                "MatchedJetsSplit15.pt",
+                                                "MatchedJetsNeutrinoSplit15.pt",
+                                            ]:
+                                                try:
+                                                    pt_axis_histo = h.axes[jet_pt]
+                                                    break
+                                                except KeyError:
+                                                    continue
 
                                             for j in range(len(pt_axis_histo)):
                                                 # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable, "eta", categories[i], "pt", h.axes[jet_pt][j])
@@ -580,8 +610,8 @@ else:
 
                                                 # HERE
                                                 # remove the first bin which is a peak to zero in the response
-                                                # bins = bins[3:]
-                                                # values = values[3:]
+                                                bins = bins[2:]
+                                                values = values[2:]
 
                                                 bins_mid = (bins[1:] + bins[:-1]) / 2
 
@@ -604,7 +634,16 @@ else:
                                                 else:
                                                     condition = False
 
-                                                # print("values", np.sum(values))
+                                                # print(
+                                                #     "variable",
+                                                #     variable,
+                                                #     "eta",
+                                                #     categories[i],
+                                                #     "pt",
+                                                #     h.axes[jet_pt][j],
+                                                #     "values",
+                                                #     np.sum(values),
+                                                # )
 
                                                 if np.sum(values) < 20 or (condition):
                                                     # for k in range(
@@ -626,7 +665,6 @@ else:
                                                     histogram_dict[eta_sign][
                                                         flav_group
                                                     ][flav][variable][i].append(
-                                                        # (np.array([]), np.array([]))
                                                         ([], [])
                                                     )
                                                     continue
@@ -868,31 +906,6 @@ else:
                             width_dict[eta_sign][flav_group][flav][variable] = np.array(
                                 width_dict[eta_sign][flav_group][flav][variable]
                             )
-                            # print(
-                            #     "medians_dict",
-                            #     eta_sign,
-                            #     flav_group,
-                            #     flav,
-                            #     variable,
-                            #     medians_dict[eta_sign][flav_group][flav][variable],
-                            # )
-
-                            # if args.histo:
-                            # for i in range(len(histogram_dict[eta_sign][flav_group][flav][variable])):
-                            #     for j in range(len(histogram_dict[eta_sign][flav_group][flav][variable][i])):
-                            #         histogram_dict[eta_sign][flav_group][flav][variable][i][j] = (
-                            #             np.array(
-                            #                 histogram_dict[eta_sign][flav_group][flav][variable][i][j]
-                            #             )
-                            #         )
-
-                            # histogram_dict[eta_sign][flav_group][flav][variable] = (
-                            #     np.array(
-                            #         histogram_dict[eta_sign][flav_group][flav][
-                            #             variable
-                            #         ]
-                            #     )
-                            # )
 
         if not args.full:
             correct_eta_bins = []
@@ -1005,14 +1018,6 @@ else:
                     )
                     # TODO: save inverse median and weighted resolution
                     if args.histo:
-                        # print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable)
-                        # print(histogram_dict[eta_sign][flav_group][flav][variable])
-                        # TODO: save the histograms correctly
-                        # np.save(
-                        #     f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}.npy",
-                        #     histogram_dict[eta_sign][flav_group][flav][variable],
-                        #     allow_pickle=True,
-                        # )
 
                         # save in a json file
                         with open(
@@ -1024,13 +1029,6 @@ else:
                                 f,
                                 indent=4,
                             )
-
-                        # save the histograms
-                        # for i in range(len(histogram_dict[eta_sign][flav_group][flav][variable])):
-                        #     np.save(
-                        #         f"{histogram_dir}/histogram_{eta_sign}_{flav}_{variable}_eta{correct_eta_bins[i]}_{correct_eta_bins[i+1]}.npy",
-                        #         histogram_dict[eta_sign][flav_group][flav][variable][i],
-                        #     )
 
 if args.central:
     correct_eta_bins = central_bins
@@ -1553,7 +1551,7 @@ def plot_median_resolution(eta_bin, plot_type):
         #     ax=ax,
         # )
 
-        hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+        hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax)
         hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
 
         ax.text(
@@ -1638,6 +1636,24 @@ def plot_median_resolution(eta_bin, plot_type):
                 #     index,
                 # )
                 plot = True
+
+                if "width" in plot_type:
+                    # if the last point is distant form the latter more than 1.5 times the latter, remove it
+                    for q in range(len(plot_array) - 1, 0, -1):
+                        # print("last point", plot_array[q], plot_array[q - 1])
+                        if plot_array[q] is not np.nan and (
+                            (
+                                plot_array[q] > 1.5 * plot_array[q - 1]
+                                or plot_array[q] < plot_array[q - 1] / 1.5
+                            )
+                            or (
+                                plot_array[q] > 1.5 * plot_array[q - 2]
+                                or plot_array[q] < plot_array[q - 2] / 1.5
+                            )
+                        ):
+                            # print("removing last point")
+                            plot_array[q] = np.nan
+
                 ax.errorbar(
                     (
                         pt_bins[1:]
@@ -1680,7 +1696,7 @@ def plot_median_resolution(eta_bin, plot_type):
                         variable.replace("Response", "JetPt")
                     ][index, :]
                     # pt-clipping
-                    mask_clip = x > 10  # HERE 35
+                    mask_clip = x > 1  # HERE 35
                     mask_tot = mask_nan & mask_clip
                     x = x[mask_tot]
                     xerr = xerr[mask_tot]
@@ -1854,7 +1870,7 @@ def plot_median_resolution(eta_bin, plot_type):
 
         # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
         if "resolution" in plot_type or "width" in plot_type:
-            ax_ratio.set_ylabel("1 - PNet / JEC - 1", loc="bottom") #1-PNet/Standard
+            ax_ratio.set_ylabel("1 - PNet / JEC", loc="bottom")  # 1-PNet/Standard
             # ax.*.grid(color="gray", linestyle=":", linewidth=0.4, which="both")
 
         # create string for flavour
@@ -2018,12 +2034,14 @@ def plot_histos(eta_pt, histogram_dir):
             for variable in histogram_dict[eta_sign][flav_group][flav].keys():
                 if "JetPt" in variable and not PLOT_JETPT_HISTO:
                     continue
-                histos = histogram_dict[eta_sign][flav_group][flav][variable]
                 if variable not in list(variables_plot_settings.keys()):
                     print(
-                        "skipping", variable, "index", index, "len(histos)", len(histos)
+                        "skipping", variable, "index", index, "eta_sign", eta_sign, flav_group, flav
                     )
                     continue
+                histos = histogram_dict[eta_sign][flav_group][flav][variable]
+                if "Split15" in variable:
+                    print(variable, eta_sign, flav_group, flav, index, histos)
                 # for pt_bin in range(len(histos[eta_bin])):
                 # print(
                 #     "plotting response",
@@ -2062,19 +2080,20 @@ def plot_histos(eta_pt, histogram_dir):
                 values = histos[index][pt_bin][0]
                 bins = histos[index][pt_bin][1]
                 if len(values) == 0:
-                    # print(
-                    #     "SKIP histo:",
-                    #     "flav",
-                    #     flav,
-                    #     "variable",
-                    #     variable,
-                    #     "eta",
-                    #     correct_eta_bins[eta_bin],
-                    #     "pt",
-                    #     pt_bins[pt_bin],
-                    # )
+                    print(
+                        "variable",
+                        variable,
+                        "values",
+                        values,
+                        "bins",
+                        bins,
+                        "pt_bin",
+                        pt_bins[pt_bin],
+                        "eta_bin",
+                        eta_bin,
+                        "is empty, skipping",
+                    )
                     continue
-                    break
 
                 plot_response = True if "Response" in variable else plot_response
                 plot_jetpt = True if "JetPt" in variable else plot_jetpt
@@ -2126,7 +2145,6 @@ def plot_histos(eta_pt, histogram_dir):
                         color=variables_plot_settings[variable][0],
                         density=True,
                         linewidth=1.5,
-
                     )
 
                     # write axis name in latex
@@ -2151,7 +2169,7 @@ def plot_histos(eta_pt, histogram_dir):
                     #     com="13.6",
                     #     label=f"Preliminary",
                     # )
-                    hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+                    hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax)
                     hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
                     ax.text(
                         0.05,
@@ -2170,11 +2188,11 @@ def plot_histos(eta_pt, histogram_dir):
                         horizontalalignment="left",
                         verticalalignment="top",
                         transform=ax.transAxes,
-                        #
                     )
-
+                    if HISTO_LOG:
+                        ax.set_yscale("log")
                     fig.savefig(
-                        f"{histogram_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
+                        f"{histogram_dir}/histos_{variable}_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}{'_log' if HISTO_LOG else ''}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                         bbox_inches="tight",
                         dpi=300,
                     )
@@ -2182,16 +2200,27 @@ def plot_histos(eta_pt, histogram_dir):
 
             # check if the plot has plotted histograms
             if plot_response:
-                # ax.*.grid(
+                # ax.grid(
                 #     color="gray", linestyle=":", linewidth=0.4, which="both"
                 # )
                 # write axis name in latex
                 ax_tot_response.set_xlabel(r"$p_T^{reco} / p_T^{ptcl}$", loc="right")
                 ax_tot_response.set_ylabel(f"a.u.", loc="top")
                 ax_tot_response.legend(frameon=False, loc="upper right", ncol=2)
+                if max_value_response != 0 and not HISTO_LOG:
+                    ax_tot_response.set_ylim(
+                        top=(
+                            1.2 * max_value_response
+                            if not DP_NOTE_PLOTS
+                            else 1.75 * max_value_response
+                        )
+                    )
 
-                ax_tot_response.set_ylim(top=1.2 * max_value_response)
-                ax_tot_response.set_xlim(right=1.8,  left=-0.2)
+                if not HISTO_LOG and not DP_NOTE_PLOTS:
+                    ax_tot_response.set_xlim(right=1.8, left=-0.2)
+                elif not HISTO_LOG and DP_NOTE_PLOTS:
+                    ax_tot_response.set_xlim(right=1.3, left=0.7)
+
                 # hep.cms.label(
                 #     year=year,
                 #     com="13.6",
@@ -2199,7 +2228,7 @@ def plot_histos(eta_pt, histogram_dir):
                 #     ax=ax_tot_response,
                 # )
 
-                hep.cms.lumitext("2023 (13.6 TeV)", ax=ax_tot_response)
+                hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax_tot_response)
                 hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax_tot_response)
 
                 ax_tot_response.text(
@@ -2214,7 +2243,7 @@ def plot_histos(eta_pt, histogram_dir):
                     )
                     + f"< {correct_eta_bins[eta_bin+1]}\n"
                     + f"{int(pt_bins[pt_bin])} <"
-                    + r"$p_{T}^{ptcl}$"
+                    + r"$p_{T}^{ptcl}$ (GeV)"
                     + f"< {int(pt_bins[pt_bin+1])}",
                     horizontalalignment="left",
                     verticalalignment="top",
@@ -2222,30 +2251,32 @@ def plot_histos(eta_pt, histogram_dir):
                     #
                 )
 
-                # ax_tot_response.set_yscale("log")
+                if HISTO_LOG:
+                    ax_tot_response.set_yscale("log")
                 fig_tot_response.savefig(
-                    f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
+                    f"{histogram_dir}/histos_ResponseAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}{'_log' if HISTO_LOG else ''}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                     bbox_inches="tight",
                     dpi=300,
                 )
             if plot_jetpt:
-                # ax.*.grid(
+                # ax.grid(
                 #     color="gray", linestyle=":", linewidth=0.4, which="both"
                 # )
                 ax_tot_jetpt.set_xlabel(r"$p_{T}^{reco}$", loc="right")
                 ax_tot_jetpt.set_ylabel(f"a.u.", loc="top")
                 ax_tot_jetpt.legend(frameon=False, loc="upper right", ncol=2)
-
-                ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
-                ax_tot_jetpt.set_xlim(
-                    left=2 * pt_bins[pt_bin + 1], right=0.5 * pt_bins[pt_bin]
-                )
+                if max_value_jetpt != 0 and not HISTO_LOG:
+                    ax_tot_jetpt.set_ylim(top=1.2 * max_value_jetpt)
+                if not HISTO_LOG:
+                    ax_tot_jetpt.set_xlim(
+                        left=2 * pt_bins[pt_bin + 1], right=0.5 * pt_bins[pt_bin]
+                    )
 
                 # hep.cms.label(
                 #     year=year, com="13.6", label=f"Preliminary", ax=ax_tot_jetpt
                 # )
 
-                hep.cms.lumitext("2023 (13.6 TeV)", ax=ax_tot_jetpt)
+                hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax_tot_jetpt)
                 hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax_tot_jetpt)
                 ax_tot_jetpt.text(
                     0.05,
@@ -2266,9 +2297,11 @@ def plot_histos(eta_pt, histogram_dir):
                     transform=ax_tot_jetpt.transAxes,
                     #
                 )
-                # ax_tot_jetpt.set_yscale("log")
+                if HISTO_LOG:
+                    ax_tot_jetpt.set_yscale("log")
+
                 fig_tot_jetpt.savefig(
-                    f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
+                    f"{histogram_dir}/histos_JetPtAll_{flav}_eta{correct_eta_bins[eta_bin]}to{correct_eta_bins[eta_bin+1]}_pt{pt_bins[pt_bin]}to{pt_bins[pt_bin+1]}{'_log' if HISTO_LOG else ''}.{'pdf' if DP_NOTE_PLOTS else 'png'}",
                     bbox_inches="tight",
                     dpi=300,
                 )
@@ -2309,14 +2342,9 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
                     median_2d = np.array(median_2d)  # -1
 
                     fig, ax = plt.subplots()
-                    # hep.cms.label(
-                    #     year=year,
-                    #     com="13.6",
-                    #     label=f"Preliminary",
-                    #     ax=ax,
-                    # )
 
-                    hep.cms.lumitext("2023 (13.6 TeV)", ax=ax)
+
+                    hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax)
                     hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
                     # print(
                     #     "plotting median",
@@ -2398,6 +2426,17 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
                     plt.close(fig)
 
+if args.histo:
+    print("Plotting histograms...")
+    eta_pt_bins = []
+    for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
+        for pt in range(len(pt_bins) - 1 if not args.test else 1):
+            eta_pt_bins.append((eta, pt))
+    with Pool(args.num_processes) as p:
+        p.map(functools.partial(plot_histos, histogram_dir=histogram_dir), eta_pt_bins)
+
+if args.no_plot:
+    sys.exit()
 
 print("Plotting inverse medians...")
 with Pool(args.num_processes) as p:
@@ -2409,11 +2448,8 @@ with Pool(args.num_processes) as p:
 
 # save the fit results
 print("Saving fit results...")
-write_l2rel_txt(main_dir, correct_eta_bins, year, args.num_params)
+write_l2rel_txt(main_dir, correct_eta_bins, year_txt, args.num_params, VERSION)
 
-
-if args.no_plot:
-    sys.exit()
 
 print("Plotting width...")
 with Pool(args.num_processes) as p:
@@ -2421,21 +2457,6 @@ with Pool(args.num_processes) as p:
         functools.partial(plot_median_resolution, plot_type="width"),
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
-# for eta_bin in range(len(correct_eta_bins) - 1 if not args.test else 1):
-#     plot_median_resolution(eta_bin, "inverse_median")
-
-# print(
-#     "TOTAL_FIT",
-#     TOTAL_FIT,
-#     "GOOD_FIT",
-#     GOOD_FIT,
-#     "BAD_FIT",
-#     BAD_FIT,
-#     "VALID_FIT",
-#     VALID_FIT,
-# )
-# sys.exit()
-
 # print("Plotting 2d median...")
 # plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
 
@@ -2446,12 +2467,13 @@ with Pool(args.num_processes) as p:
         range(len(correct_eta_bins) - 1 if not args.test else 1),
     )
 
-print("Plotting average jet pt...")
-with Pool(args.num_processes) as p:
-    p.map(
-        functools.partial(plot_median_resolution, plot_type="average_jet_pt"),
-        range(len(correct_eta_bins) - 1 if not args.test else 1),
-    )
+if PLOT_JETPT_MEDIAN:
+    print("Plotting average jet pt...")
+    with Pool(args.num_processes) as p:
+        p.map(
+            functools.partial(plot_median_resolution, plot_type="average_jet_pt"),
+            range(len(correct_eta_bins) - 1 if not args.test else 1),
+        )
 
 print("Plotting resolution...")
 with Pool(args.num_processes) as p:
@@ -2468,14 +2490,4 @@ with Pool(args.num_processes) as p:
     )
 
 
-if args.histo:
-    print("Plotting histograms...")
-    eta_pt_bins = []
-    for eta in range(len(correct_eta_bins) - 1 if not args.test else 1):
-        for pt in range(len(pt_bins) - 1 if not args.test else 1):
-            eta_pt_bins.append((eta, pt))
-    with Pool(args.num_processes) as p:
-        p.map(functools.partial(plot_histos, histogram_dir=histogram_dir), eta_pt_bins)
-
-# print(median_dir)
 print("Done!")

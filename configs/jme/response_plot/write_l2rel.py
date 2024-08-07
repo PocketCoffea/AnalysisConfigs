@@ -11,14 +11,14 @@ def create_pol_string(num_params):
         pol_string += f"+[{i}]*pow(log10(x),{i})"
     return pol_string
 
-def write_l2rel_txt(main_dir, correct_eta_bins, year, num_params):
+def write_l2rel_txt(main_dir, correct_eta_bins, year, num_params, version):
 
     # create txt file for L2Relative
     flav = "inclusive"
-    file_names=[f"{year}_PNETREG_MC_L2Relative_AK4PUPPI.txt",f"{year}_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt"]
+    file_names=[f"{year}_{version}_MC_L2Relative_AK4PFPNet.txt",f"{year}_{version}_MC_L2Relative_AK4PFPNetPlusNeutrino.txt"]
     for file_name in file_names:
         with open(f"{main_dir}/{file_name}", "w") as l2_file:
-            suffix="Neutrino" if "NEUTRINO" in file_name else ""
+            suffix="Neutrino" if "Neutrino" in file_name else ""
             l2_file.write(f"{{1 JetEta 1 JetPt ({create_pol_string(num_params)})  Correction L2Relative }}\n")
             for i in range(len(correct_eta_bins) - 1):
                 try:

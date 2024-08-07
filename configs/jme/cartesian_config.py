@@ -101,7 +101,9 @@ elif int(os.environ.get("ABS_ETA_INCLUSIVE", 0)) == 1:
     for i in range(len(eta_bins) - 1):
         eta_low, eta_high = eta_bins[i], eta_bins[i + 1]
         cuts_reco_eta.append(get_reco_neutrino_abs_etabin(eta_low, eta_high))
-        cuts_names_reco_eta.append(f"MatchedJetsNeutrino_reco_abseta{eta_low}to{eta_high}")
+        cuts_names_reco_eta.append(
+            f"MatchedJetsNeutrino_reco_abseta{eta_low}to{eta_high}"
+        )
 else:
     print("RECO JET ETA CUTS")
     for i in range(len(eta_bins) - 1):
@@ -120,7 +122,6 @@ multicuts = [
 common_cats = {
     "baseline": [passthrough],
 }
-
 
 variables_dict = (
     {
@@ -438,83 +439,6 @@ variables_dict = (
 if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 0)) == 0:
     variables_dict.update(
         {
-            # **{
-            #     f"MatchedJets{flav}_ResponsePNetReg": HistConf(
-            #         [
-            #             Axis(
-            #                 coll=f"MatchedJets{flav}",
-            #                 field="ResponsePNetReg",
-            #                 bins=100,
-            #                 start=0,
-            #                 stop=4,
-            #                 pos=None,
-            #                 label=f"MatchedJets{flav}_ResponsePNetReg",
-            #             )
-            #         ]
-            #     )
-            #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-            # },
-            # **{
-            #     f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino": HistConf(
-            #         [
-            #             Axis(
-            #                 coll=f"MatchedJetsNeutrino{flav}",
-            #                 field="ResponsePNetRegNeutrino",
-            #                 bins=100,
-            #                 start=0,
-            #                 stop=4,
-            #                 pos=None,
-            #                 label=f"MatchedJetsNeutrino{flav}_ResponsePNetRegNeutrino",
-            #             )
-            #         ]
-            #     )
-            #     for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
-            # },
-            # **{
-            #     f"JetMatched_PNetRegPtRawCorr": HistConf(
-            #         [
-            #             Axis(
-            #                 coll=f"JetMatched",
-            #                 field="PNetRegPtRawCorr",
-            #                 bins=100,
-            #                 start=0,
-            #                 stop=4,
-            #                 pos=None,
-            #                 label="JetMatched_PNetRegPtRawCorr",
-            #             )
-            #         ]
-            #     )
-            # },
-            # **{
-            #     f"JetMatched_PNetRegPtRawCorrNeutrino": HistConf(
-            #         [
-            #             Axis(
-            #                 coll=f"JetMatched",
-            #                 field="PNetRegPtRawCorrNeutrino",
-            #                 bins=100,
-            #                 start=0,
-            #                 stop=4,
-            #                 pos=None,
-            #                 label="JetMatched_PNetRegPtRawCorrNeutrino",
-            #             )
-            #         ]
-            #     )
-            # },
-            # **{
-            #     f"JetMatched_PNetRegPtRawCorrFull": HistConf(
-            #         [
-            #             Axis(
-            #                 coll=f"JetMatched",
-            #                 field="PNetRegPtRawCorrFull",
-            #                 bins=100,
-            #                 start=0,
-            #                 stop=4,
-            #                 pos=None,
-            #                 label="JetMatched_PNetRegPtRawCorrFull",
-            #             )
-            #         ]
-            #     )
-            # },
             **{
                 f"MatchedJets{flav}_ResponsePNetRegVSpt": HistConf(
                     [
@@ -563,6 +487,57 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 0)) ==
             },
         }
     )
+    if int(os.environ.get("SPLITPNETREG15", 0)) == 1:
+        variables_dict.update(
+            {
+                **{
+                    f"MatchedJets{flav}_ResponsePNetRegSplit15VSpt": HistConf(
+                        [
+                            Axis(
+                                coll=f"MatchedJetsSplit15{flav}",
+                                field="ResponsePNetReg",
+                                bins=response_bins,
+                                pos=None,
+                                label=f"MatchedJets{flav}_ResponsePNetReg",
+                            ),
+                            Axis(
+                                coll=f"MatchedJetsSplit15{flav}",
+                                field="pt",
+                                bins=pt_bins,
+                                label=f"MatchedJets{flav}_pt",
+                                type="variable",
+                                pos=None,
+                            ),
+                        ],
+                        only_categories=cuts_names_eta + cuts_names_reco_eta,
+                    )
+                    for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+                },
+                **{
+                    f"MatchedJets{flav}_JetPtPNetRegSplit15VSpt": HistConf(
+                        [
+                            Axis(
+                                coll=f"MatchedJetsSplit15{flav}",
+                                field="JetPtPNetReg",
+                                bins=jet_pt_bins,
+                                pos=None,
+                                label=f"MatchedJets{flav}_JetPtPNetReg",
+                            ),
+                            Axis(
+                                coll=f"MatchedJetsSplit15{flav}",
+                                field="pt",
+                                bins=pt_bins,
+                                label=f"MatchedJets{flav}_pt",
+                                type="variable",
+                                pos=None,
+                            ),
+                        ],
+                        only_categories=cuts_names_eta + cuts_names_reco_eta,
+                    )
+                    for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+                },
+            }
+        )
 
 if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) == 1:
     variables_dict.update(
@@ -581,7 +556,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
                             coll=f"MatchedJetsNeutrino{flav}",
                             field="pt",
                             bins=pt_bins,
-                            label=f"MatchedJetsNeutrino{flav}_pt",
+                            label=f"MatchedJets{flav}_pt",
                             type="variable",
                             pos=None,
                         ),
@@ -604,7 +579,7 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
                             coll=f"MatchedJetsNeutrino{flav}",
                             field="pt",
                             bins=pt_bins,
-                            label=f"MatchedJetsNeutrino{flav}_pt",
+                            label=f"MatchedJets{flav}_pt",
                             type="variable",
                             pos=None,
                         ),
@@ -615,6 +590,57 @@ if int(os.environ.get("PNET", 0)) == 1 and int(os.environ.get("NEUTRINO", 1)) ==
             },
         }
     )
+    if int(os.environ.get("SPLITPNETREG15", 0)) == 1:
+        variables_dict.update(
+            {
+                **{
+                    f"MatchedJets{flav}_ResponsePNetRegNeutrinoSplit15VSpt": HistConf(
+                        [
+                            Axis(
+                                coll=f"MatchedJetsNeutrinoSplit15{flav}",
+                                field="ResponsePNetRegNeutrino",
+                                bins=response_bins,
+                                pos=None,
+                                label=f"MatchedJets{flav}_ResponsePNetRegNeutrino",
+                            ),
+                            Axis(
+                                coll=f"MatchedJetsNeutrinoSplit15{flav}",
+                                field="pt",
+                                bins=pt_bins,
+                                label=f"MatchedJets{flav}_pt",
+                                type="variable",
+                                pos=None,
+                            ),
+                        ],
+                        only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
+                    )
+                    for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+                },
+                **{
+                    f"MatchedJets{flav}_JetPtPNetRegNeutrinoSplit15VSpt": HistConf(
+                        [
+                            Axis(
+                                coll=f"MatchedJetsNeutrinoSplit15{flav}",
+                                field="JetPtPNetRegNeutrino",
+                                bins=jet_pt_bins,
+                                pos=None,
+                                label=f"MatchedJets{flav}_JetPtPNetRegNeutrino",
+                            ),
+                            Axis(
+                                coll=f"MatchedJetsNeutrinoSplit15{flav}",
+                                field="pt",
+                                bins=pt_bins,
+                                label=f"MatchedJets{flav}_pt",
+                                type="variable",
+                                pos=None,
+                            ),
+                        ],
+                        only_categories=cuts_names_eta_neutrino + cuts_names_reco_eta,
+                    )
+                    for flav in list([f"_{x}" for x in flav_dict.keys()]) + [""]
+                },
+            }
+        )
 
 # if int(os.environ.get("CLOSURE", 0)) == 1:
 if False:
@@ -657,7 +683,7 @@ if False:
                             coll=f"MatchedJetsNeutrino{flav}",
                             field="JetPtPNetRegNeutrino",
                             bins=pt_bins,
-                            label=f"MatchedJetsNeutrino{flav}_JetPtPNetRegNeutrino",
+                            label=f"MatchedJets{flav}_JetPtPNetRegNeutrino",
                             type="variable",
                             pos=None,
                         ),
@@ -676,6 +702,12 @@ samples_dict = {
     "2023_preBPix": "QCD_PT-15to7000_JMENano_Summer23",
     "2023_postBPix": "QCD_PT-15to7000_JMENano_Summer23BPix",
 }
+samples_PNetReg15_dict = {
+    "2022_preEE": "QCD_PT-15to7000_PNetReg15_JMENano_Summer22",
+    "2022_postEE": "QCD_PT-15to7000_PNetReg15_JMENano_Summer22EE",
+    "2023_preBPix": "QCD_PT-15to7000_PNetReg15_JMENano_Summer23",
+    "2023_postBPix": "QCD_PT-15to7000_PNetReg15_JMENano_Summer23BPix",
+}
 
 cfg = Configurator(
     parameters=parameters,
@@ -683,10 +715,18 @@ cfg = Configurator(
         "jsons": [
             # f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/QCD_redirector.json",
+            f"{localdir}/datasets/QCD_PNetReg15_redirector.json",
         ],
         "filter": {
             "samples": [
-                samples_dict[year],
+                (
+                    samples_PNetReg15_dict[year]
+                    if (
+                        int(os.environ.get("PNETREG15", 0)) == 1
+                        or int(os.environ.get("SPLITPNETREG15", 0)) == 1
+                    )
+                    else samples_dict[year]
+                )
             ],
             "samples_exclude": [],
             "year": [year],
@@ -701,7 +741,14 @@ cfg = Configurator(
         "mc_truth_corr": mc_truth_corr,
         "DeltaR_matching": 0.2,
         "SetRegResponseToZero": True,
-        "GenJetPtCut": 50,
+        "GenJetPtCut": (
+            15
+            if (
+                int(os.environ.get("PNETREG15", 0)) == 1
+                or int(os.environ.get("SPLITPNETREG15", 0)) == 1
+            )
+            else 50
+        ),
     },
     skim=[],
     preselections=[],
