@@ -44,29 +44,29 @@ class SpanetInferenceProcessor(ttbarBackgroundProcessor):
 
         data = np.transpose(
             np.stack([
-                ak.to_numpy(jets_padded.btag_H),
-                ak.to_numpy(jets_padded.btag_M),
-                ak.to_numpy(jets_padded.btag_L),
+                np.log(1 + ak.to_numpy(jets_padded.pt)),
+                ak.to_numpy(jets_padded.eta),
                 np.sin(ak.to_numpy(jets_padded.phi)),
                 np.cos(ak.to_numpy(jets_padded.phi)),
-                ak.to_numpy(jets_padded.eta),
-                np.log(1 + ak.to_numpy(jets_padded.pt))
+                ak.to_numpy(jets_padded.btag_L),
+                ak.to_numpy(jets_padded.btag_M),
+                ak.to_numpy(jets_padded.btag_H)
             ]),
             axes=[1,2,0]).astype(np.float32)
 
         mask = ~ak.to_numpy(jets_padded.pt == 0)
 
-        met_data = np.stack([np.sin(ak.to_numpy(self.events.MET.phi)),
-                             np.cos(ak.to_numpy(self.events.MET.phi)),
+        met_data = np.stack([np.log(1+ ak.to_numpy(self.events.MET.pt)),
                              ak.zeros_like(self.events.MET.pt).to_numpy(),
-                             np.log(1+ ak.to_numpy(self.events.MET.pt))
+                             np.sin(ak.to_numpy(self.events.MET.phi)),
+                             np.cos(ak.to_numpy(self.events.MET.phi))
                              ], axis=1)[:,None,:].astype(np.float32)
 
-        lep_data = np.stack([ak.to_numpy(self.events.LeptonGood[:,0].is_electron).astype(np.int32),
+        lep_data = np.stack([np.log(1 + ak.to_numpy(self.events.LeptonGood[:,0].pt)),
+                             ak.to_numpy(self.events.LeptonGood[:,0].eta),
                              np.sin(ak.to_numpy(self.events.LeptonGood[:,0].phi)),
                              np.cos(ak.to_numpy(self.events.LeptonGood[:,0].phi)),
-                             ak.to_numpy(self.events.LeptonGood[:,0].eta),
-                             np.log(1 + ak.to_numpy(self.events.LeptonGood[:,0].pt))
+                             ak.to_numpy(self.events.LeptonGood[:,0].is_electron).astype(np.int32),
                              ], axis=1)[:,None,:].astype(np.float32)
 
         ht_array = ak.to_numpy(self.events.JetGood_Ht[:,None, None]).astype(np.float32)
