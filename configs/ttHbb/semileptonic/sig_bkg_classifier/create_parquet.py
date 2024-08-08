@@ -2,11 +2,31 @@ import os
 import argparse
 import awkward as ak
 
+from multiprocessing import Pool
+
 parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--input", type=str, required=True)
+parser.add_argument("-i", "--input", type=str, required=True, help="Input folder path")
+parser.add_argument("-j", "--workers", type=int, default=8, help="Number of parallel workers")
 args = parser.parse_args()
 
-#basedir = "/work/mmarcheg/ttHbb/EFT/sig_bkg_classifier/sig_bkg_ntuples_ttHTobb_ttToSemiLep_improved_matching/ntuples/output_columns_parton_matching/parton_matching_20_06_24"
+def create_parquet_metadata(dataset):
+    if dataset.startswith("TTToSemiLeptonic") or dataset.startswith("TTbbSemiLeptonic"):
+        subfolders = os.listdir(os.path.join(args.input, dataset))
+        for subfolder in subfolders:
+            print(f"Processing {dataset}/{subfolder}")
+            dataset_path = os.path.join(args.input, dataset, subfolder, "semilep")
+            if os.path.exists(os.path.join(dataset_path, "_metadata")):
+                print(f"Metadata already exists for {dataset}/{subfolder}")
+                continue
+            ak.to_parquet.dataset(dataset_path)
+    else:
+        print(f"Processing {dataset}")
+        dataset_path = os.path.join(args.input, dataset, "semilep")
+        if os.path.exists(os.path.join(dataset_path, "_metadata")):
+            print(f"Metadata already exists for {dataset}")
+        ak.to_parquet.dataset(dataset_path)
+
 datasets =os.listdir(args.input)
-for d in datasets:
-    ak.to_parquet.dataset(os.path.join(args.input, d, "semilep"))
+# Parallelize the code: one process per dataset
+with Pool(args.workers) as pool:
+    pool.map(create_parquet_metadata, datasets)
