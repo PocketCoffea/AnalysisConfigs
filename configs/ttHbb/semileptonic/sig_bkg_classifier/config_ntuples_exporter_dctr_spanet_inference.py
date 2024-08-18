@@ -17,6 +17,9 @@ from params.axis_settings import axis_settings
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
+# Define SPANet model path for inference
+spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 default_parameters = defaults.get_default_parameters()
@@ -54,8 +57,8 @@ cfg = Configurator(
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
                      "2016_PostVFP",
-                     "2017",
-                     "2018"
+                     #"2017",
+                     #"2018"
                      ] #All the years
         },
         "subsamples": {
@@ -74,8 +77,8 @@ cfg = Configurator(
 
     workflow = SpanetInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_spanet_inference/spanet_inference_with_event_features_05_08_24/",
-                        "spanet_model": "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/multiclassifier_full_Run2_btag_LMH_8M_balance_events/spanet_output/version_3/spanet.onnx"},
+                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_spanet_inference/spanet_inference_meanloss_18_08_24/",
+                        "spanet_model": spanet_model_path},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
@@ -105,12 +108,22 @@ cfg = Configurator(
     },
     
     variables = {
+        **count_hist(name="nLeptons", coll="LeptonGood",bins=3, start=0, stop=3),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **ele_hists(axis_settings=axis_settings),
+        **muon_hists(axis_settings=axis_settings),
+        **met_hists(coll="MET", axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=0, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=1, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=2, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=3, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=4, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=0, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=1, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=2, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=3, axis_settings=axis_settings),
+        **jet_hists(name="bjet",coll="BJetGood", pos=4, axis_settings=axis_settings),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
