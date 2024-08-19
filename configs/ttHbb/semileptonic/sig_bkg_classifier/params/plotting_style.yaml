@@ -12,7 +12,7 @@ plotting_style:
     ttHTobb: "$t\\bar{t}H$"
 
   colors_mc:
-    ttHTobb: CMS_xxx
+    ttHTobb: CMS_red
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: CMS_dark_orange
     TTToSemiLeptonic__TTToSemiLeptonic_tt+C: CMS_orange
     TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: CMS_blue
