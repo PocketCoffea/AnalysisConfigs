@@ -57,8 +57,8 @@ cfg = Configurator(
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
                      "2016_PostVFP",
-                     #"2017",
-                     #"2018"
+                     "2017",
+                     "2018"
                      ] #All the years
         },
         "subsamples": {
