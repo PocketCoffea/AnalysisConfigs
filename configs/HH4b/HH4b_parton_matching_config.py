@@ -60,12 +60,13 @@ cfg = Configurator(
         "filter": {
             "samples": (
                 [
+                    "GluGlutoHHto4B",
+                    # "QCD-4Jets",
+                    # "DATA_JetMET_JMENano",
+
                     # "SPANet_classification",
                     # "SPANet_classification_data",
-                    "GluGlutoHHto4B",
                     # "GluGlutoHHto4B_poisson",
-                    "DATA_JetMET_JMENano",
-                    "QCD-4Jets",
                     # "GluGlutoHHto4B_private",
                     # "GluGlutoHHto4B_spanet",
                 ]
@@ -429,7 +430,7 @@ cfg = Configurator(
                             ],
                         ),
                     ]
-                    if False #CLASSIFICATION
+                    if CLASSIFICATION
                     else []
                 )
             ),

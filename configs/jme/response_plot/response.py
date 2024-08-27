@@ -126,7 +126,7 @@ PLOT_SINGLE_HISTO = False
 JET_PT = True
 PLOT_JETPT_HISTO = False
 PLOT_JETPT_MEDIAN = False
-FIT = True
+FIT = False
 CLOSURE = False
 HISTO_LOG = False
 
@@ -298,7 +298,16 @@ if args.load:
                 if args.histo:
                     histogram_dict[eta_sign][flav_group][flav] = dict()
                 for variable in list(variables_plot_settings.keys()):
-                    print("eta_sign", eta_sign, "flav_group", flav_group, "flav", flav, "variable", variable)
+                    print(
+                        "eta_sign",
+                        eta_sign,
+                        "flav_group",
+                        flav_group,
+                        "flav",
+                        flav,
+                        "variable",
+                        variable,
+                    )
                     if args.full:
                         median_dir = (
                             f"{main_dir}/{eta_sign}eta_{flav}flav_pnet/median_plots_unbinned"
@@ -400,7 +409,17 @@ if args.load:
                                     json.load(f)
                                 )
                             if "Split15" in variable and "Response" in variable:
-                                print("histo", histogram_dict[eta_sign][flav_group][flav][variable], eta_sign, flav_group, flav, variable, "\n\n\n")
+                                print(
+                                    "histo",
+                                    histogram_dict[eta_sign][flav_group][flav][
+                                        variable
+                                    ],
+                                    eta_sign,
+                                    flav_group,
+                                    flav,
+                                    variable,
+                                    "\n\n\n",
+                                )
                         except FileNotFoundError:
                             continue
 
@@ -767,30 +786,32 @@ else:
                                                     )
                                                     # # print("median_bin_index", median_bin_index)
                                                     median = bins_mid[median_bin_index]
-                                                    # print("median:\n", median)
                                                     medians_dict[eta_sign][flav_group][
                                                         flav
                                                     ][variable][i].append(median)
 
-                                                    # print("bins_mid", bins_mid)
                                                     mean = np.average(
                                                         bins_mid, weights=values
                                                     )
-                                                    # print("mean", mean)
                                                     rms = np.sqrt(
                                                         np.average(
                                                             (bins_mid - mean) ** 2,
                                                             weights=values,
                                                         )
                                                     )
-                                                    # print("rms", rms)
                                                     err_median = (
                                                         1.253
                                                         * rms
                                                         / np.sqrt(np.sum(values))
                                                     )
+
+                                                    # print("bins_mid", bins_mid)
+                                                    # print("median:\n", median)
+                                                    # print("mean", mean)
+                                                    # print("rms", rms)
                                                     # print("sum", np.sum(values))
                                                     # print("err_median:\n", err_median)
+
                                                     err_medians_dict[eta_sign][
                                                         flav_group
                                                     ][flav][variable][i].append(
@@ -800,7 +821,7 @@ else:
                                                     # get the index of the bin for which bins>=0.5
                                                     # to remove low response bins for jec and raw respone
                                                     index_05 = np.argmax(
-                                                        bins_mid >= 0.5
+                                                        bins_mid >= 0.01
                                                     )
                                                     values_noZero = values[index_05:]
 
@@ -818,6 +839,7 @@ else:
                                                         bins_mid_noZero[1]
                                                         - bins_mid_noZero[0]
                                                     )
+                                                    # print("variable", variable, "bins_mid_noZero", bins_mid_noZero, "values_noZero", values_noZero)
                                                     # compute standard resolution
                                                     width = Confidence_numpy(
                                                         values_noZero,
@@ -1592,7 +1614,7 @@ def plot_median_resolution(eta_bin, plot_type):
                 )
 
                 if "inverse" in plot_type:
-                    err_plot_array = err_plot_array / (plot_array**2)  # * 3  # HERE
+                    err_plot_array = err_plot_array / (plot_array**2)
                     plot_array = 1 / plot_array
                 if "weighted" in plot_type:
                     plot_array = (
@@ -1639,21 +1661,23 @@ def plot_median_resolution(eta_bin, plot_type):
 
                 if "width" in plot_type:
                     # if the last point is distant form the latter more than 1.5 times the latter, remove it
+                    non_nan = 0
                     for q in range(len(plot_array) - 1, 0, -1):
-                        # print("last point", plot_array[q], plot_array[q - 1])
-                        if plot_array[q] is not np.nan and (
-                            (
-                                plot_array[q] > 1.5 * plot_array[q - 1]
-                                or plot_array[q] < plot_array[q - 1] / 1.5
-                            )
-                            or (
-                                plot_array[q] > 1.5 * plot_array[q - 2]
-                                or plot_array[q] < plot_array[q - 2] / 1.5
-                            )
-                        ):
-                            # print("removing last point")
-                            plot_array[q] = np.nan
 
+                        if ~np.isnan(plot_array[q]) and q > non_nan:
+                            if any(
+                                [
+                                    (
+                                        plot_array[q] > 2.5 * plot_array[q - k]
+                                        or plot_array[q] < plot_array[q - k] / 2.5
+                                    )
+                                    for k in range(1, 4)
+                                ]
+                            ):
+
+                                plot_array[q] = np.nan
+                            else:
+                                non_nan = q
                 ax.errorbar(
                     (
                         pt_bins[1:]
@@ -2036,12 +2060,20 @@ def plot_histos(eta_pt, histogram_dir):
                     continue
                 if variable not in list(variables_plot_settings.keys()):
                     print(
-                        "skipping", variable, "index", index, "eta_sign", eta_sign, flav_group, flav
+                        "skipping",
+                        variable,
+                        "index",
+                        index,
+                        "eta_sign",
+                        eta_sign,
+                        flav_group,
+                        flav,
                     )
                     continue
                 histos = histogram_dict[eta_sign][flav_group][flav][variable]
-                if "Split15" in variable:
-                    print(variable, eta_sign, flav_group, flav, index, histos)
+                # if "Split15" in variable:
+                #     print(variable, eta_sign, flav_group, flav, index, histos)
+                #
                 # for pt_bin in range(len(histos[eta_bin])):
                 # print(
                 #     "plotting response",
@@ -2343,7 +2375,6 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
                     fig, ax = plt.subplots()
 
-
                     hep.cms.lumitext(f"{year} (13.6 TeV)", ax=ax)
                     hep.cms.text(text="Simulation\nPreliminary", loc=2, ax=ax)
                     # print(
@@ -2426,6 +2457,18 @@ def plot_2d(plot_dict, pt_bins_2d, correct_eta_bins_2d):
 
                     plt.close(fig)
 
+
+print("Plotting width...")
+with Pool(args.num_processes) as p:
+    p.map(
+        functools.partial(plot_median_resolution, plot_type="width"),
+        range(len(correct_eta_bins) - 1 if not args.test else 1),
+    )
+
+
+if args.no_plot:
+    sys.exit()
+
 if args.histo:
     print("Plotting histograms...")
     eta_pt_bins = []
@@ -2434,9 +2477,6 @@ if args.histo:
             eta_pt_bins.append((eta, pt))
     with Pool(args.num_processes) as p:
         p.map(functools.partial(plot_histos, histogram_dir=histogram_dir), eta_pt_bins)
-
-if args.no_plot:
-    sys.exit()
 
 print("Plotting inverse medians...")
 with Pool(args.num_processes) as p:
@@ -2451,12 +2491,6 @@ print("Saving fit results...")
 write_l2rel_txt(main_dir, correct_eta_bins, year_txt, args.num_params, VERSION)
 
 
-print("Plotting width...")
-with Pool(args.num_processes) as p:
-    p.map(
-        functools.partial(plot_median_resolution, plot_type="width"),
-        range(len(correct_eta_bins) - 1 if not args.test else 1),
-    )
 # print("Plotting 2d median...")
 # plot_2d(medians_dict, np.array(pt_bins), np.array(correct_eta_bins))
 

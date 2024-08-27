@@ -148,7 +148,7 @@ eta_bins = eta_bins if not args.inclusive_eta else None
 executor = (
     "--test"
     if args.test
-    else "-e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml"
+    else "-e dask@T3_CH_PSI --custom-run-options params/t3_run_options_long.yaml"
 )
 
 eta_sign_list = list(eta_sign_dict.keys())
