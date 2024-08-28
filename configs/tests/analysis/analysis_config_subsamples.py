@@ -99,7 +99,7 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=0),
         **jet_hists(coll="JetGood", pos=1),
         **jet_hists(coll="JetGood", pos=2),
-       **processing_metadata_hists(["baseline"], 200000)
+       #**processing_metadata_hists(["baseline"], 200000)
     },
 
     columns = {
@@ -116,21 +116,4 @@ cfg = Configurator(
 
 
 
-
-run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "singularity",
-        "workers"        : 1,
-        "scaleout"       : 20,
-        "queue"          : "standard",
-        "walltime"       : "00:40:00",
-        "mem_per_worker" : "4GB", # GB
-        "disk_per_worker" : "1GB", # GB
-        "exclusive"      : False,
-        "chunk"          : 200000,
-        "retries"        : 50,
-        "treereduction"  : 20,
-        "adapt"          : False,
-        
-    }
    

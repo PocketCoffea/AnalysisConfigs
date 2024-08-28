@@ -37,7 +37,5 @@ class OnnxExecutorFactory(DaskExecutorFactory):
 
 
 
-
-
 def get_executor_factory(executor_name, **kwargs):
     return OnnxExecutorFactory(**kwargs)
