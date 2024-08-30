@@ -45,9 +45,9 @@ parameters = defaults.merge_parameters_from_files(
 
 mc_truth_corr_pnetreg = None
 corr_files_pnetreg = {
-    "2022_preEE": f"{localdir}/params/Summer22Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
+    "2022_preEE": f"{localdir}/params/Summer22Run3_V2_MC_L2Relative_AK4PFPNet.txt",
     "2022_postEE": f"{localdir}/params/Summer22EERun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
-    "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
+    "2023_preBPix": f"{localdir}/params/Summer23Run3_V2_MC_L2Relative_AK4PFPNet.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREG_MC_L2Relative_AK4PUPPI.txt",
 }
 if int(os.environ.get("CLOSURE", 0)) == 1:
@@ -56,9 +56,9 @@ if int(os.environ.get("CLOSURE", 0)) == 1:
 
 mc_truth_corr_pnetreg_neutrino = None
 corr_files_pnetreg_neutrino = {
-    "2022_preEE": f"{localdir}/params/Summer22Run3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
+    "2022_preEE": f"{localdir}/params/Summer22Run3_V2_MC_L2Relative_AK4PFPNetPlusNeutrino.txt",
     "2022_postEE": f"{localdir}/params/Summer22EERun3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
-    "2023_preBPix": f"{localdir}/params/Summer23Run3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
+    "2023_preBPix": f"{localdir}/params/Summer23Run3_V2_MC_L2Relative_AK4PFPNetPlusNeutrino.txt",
     "2023_postBPix": f"{localdir}/params/Summer23BPixRun3_PNETREGNEUTRINO_MC_L2Relative_AK4PUPPI.txt",
 }
 if int(os.environ.get("CLOSURE", 0)) == 1:

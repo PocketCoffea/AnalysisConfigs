@@ -191,7 +191,9 @@ class QCDBaseProcessor(BaseProcessorABC):
                 self.events.JetGood.eta < eta_bins[-1]
             )
 
-            self.events["JetGood"] = self.events.JetGood[physisical_jet_mask & eta_mask]
+            pt_mask = self.events.JetGood.ptRaw > 8
+
+            self.events["JetGood"] = self.events.JetGood[physisical_jet_mask & eta_mask & pt_mask]
 
             self.events["GenJetGood"] = self.events.GenJet[
                 (self.events.GenJet.pt > pt_bins[0])

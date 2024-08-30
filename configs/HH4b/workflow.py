@@ -396,8 +396,10 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             try:
                 worker = get_worker()
+               #  print("found worker", worker)
             except ValueError:
                 worker = None
+               #  print("     >>>>>>>>>>   NOT found worker", worker)
 
             if worker is None:
                 import onnxruntime as ort
@@ -408,12 +410,18 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     sess_options = sess_options,
                     providers=['CPUExecutionProvider']
                 )
+                # input_name = [input.name for input in model_session.get_inputs()]
+                # output_name = [output.name for output in model_session.get_outputs()]
+               #  print("     >>>>>>>>>>   initialize new worker", worker)
             else:
                 model_session = worker.data['model_session']
+                # input_name = worker.data['input_name']
+                # output_name = worker.data['output_name']
+               #  print("get info from old worker", worker)
 
-            print(model_session)
             input_name = [input.name for input in model_session.get_inputs()]
             output_name = [output.name for output in model_session.get_outputs()]
+           #  print(model_session)
             (
                 pairing_predictions,
                 self.events["best_pairing_probability"],
@@ -452,9 +460,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["dR_min"] = ak.min(dR, axis=1)
             self.events["dR_max"] = ak.max(dR, axis=1)
 
-            # print("\ndR", dR[0])
-            # print("\ndR_min", self.events["dR_min"][0])
-            # print("\ndR_max", self.events["dR_max"][0])
 
             # Leading-pT H candidate pT , η, φ, and mass
             # Subleading-pT H candidate pT , η, φ, and mass
@@ -572,7 +577,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
 
 
-
+#TODO:
 # NEW THETA ANGLE DEFINITION
 
 # float HelicityCosTheta(TLorentzVector Booster, TLorentzVector Boosted)
