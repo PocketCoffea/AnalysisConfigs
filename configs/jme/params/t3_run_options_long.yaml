@@ -1,7 +1,7 @@
-scaleout: 50
+scaleout: 30
 cores-per-worker: 1
-mem-per-worker: "20GB"
+mem-per-worker: "12GB"
 disk-per-worker: "1GB"
-queue: "short"
-walltime: "00:40:00"
+queue: "standard"
+walltime: "04:00:00"
 chunk: 100000
