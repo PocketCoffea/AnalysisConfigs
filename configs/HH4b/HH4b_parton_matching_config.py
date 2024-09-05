@@ -39,6 +39,7 @@ parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
     f"{localdir}/params/triggers.yaml",
+    f"{localdir}/params/jets_calibration.yaml",
     # f"{localdir}/params/plotting_style.yaml",
     update=True,
 )
