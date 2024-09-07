@@ -32,7 +32,7 @@ def Confidence_numpy(hist, bins_mid, bin_width, confLevel = 0.87):
     if ntot==0: return 0
     while (nsum < confLevel * ntot):
         nlow = hist[ixlow-1] if ixlow>0 else 0
-        nhigh = hist[ixhigh+1] if ixhigh<nb else 0
+        nhigh = hist[ixhigh+1] if ixhigh<nb-1 else 0
         if (nsum+max(nlow,nhigh) < confLevel * ntot):
             if (nlow>=nhigh and ixlow>0):
                 nsum += nlow

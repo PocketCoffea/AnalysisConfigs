@@ -18,7 +18,6 @@ parser.add_argument(
     "--kill", "-k", action="store_true", help="Kill all tmux sessions", default=False
 )
 parser.add_argument(
-    "-c",
     "--cartesian",
     action="store_true",
     help="Run cartesian multicuts",
@@ -108,6 +107,7 @@ parser.add_argument(
     default=False,
 )
 parser.add_argument(
+    "-c",
     "--closure",
     action="store_true",
     help="Produce closure test",
@@ -152,6 +152,10 @@ executor = (
 )
 
 eta_sign_list = list(eta_sign_dict.keys())
+order_eta_sign_list=["pos1", "pos2", "pos3", "pos4", "neg4", "neg3", "neg2", "neg1"]
+if len(eta_sign_list) == len(order_eta_sign_list):
+    eta_sign_list=order_eta_sign_list
+
 dir_prefix = os.environ.get("WORK", "") + "/out_jme/"
 print("dir_prefix", dir_prefix)
 
@@ -186,8 +190,8 @@ if args.cartesian or args.full:
     flav = args.flav
 
     flavs_list = (
-        ["inclusive", "b", "c", "g", "uds"]
-        if (args.full and args.central)
+        ["inclusive"] #, "b", "c", "g", "uds"
+        if (args.full and (args.central or args.abs_eta_inclusive))
         else ["inclusive"]
     )
 

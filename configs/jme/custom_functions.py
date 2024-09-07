@@ -1,6 +1,7 @@
 import awkward as ak
 import numpy as np
 from matplotlib import pyplot as plt
+import os
 
 from response_plot.pol_functions import *
 from params.binning import eta_bins
@@ -57,7 +58,7 @@ def standard_gaus_function(x, *params):
         raise ValueError("x should be either a float or an awkward array")
 
 
-def get_closure_function_information(coor_file, use_function=False):
+def get_closure_function_information(coor_file, use_function=False, ak_array=True):
     # open file
     with open(coor_file, "r") as f:
         lines = f.readlines()
@@ -125,9 +126,14 @@ def get_closure_function_information(coor_file, use_function=False):
         # ]
 
         eta_bins_array = np.array(corrections_eta_bins)
-        mask_eta_bins = (eta_bins_array[0] >= eta_bins[0]) & (
-            eta_bins_array[1] <= eta_bins[-1]
-        )
+        if int(os.environ.get("ABS_ETA_INCLUSIVE", 0)) == 1:
+            # array of True
+            mask_eta_bins = np.array([True] * len(corrections_eta_bins[0]))
+        else:
+            mask_eta_bins = (eta_bins_array[0] >= eta_bins[0]) & (
+                eta_bins_array[1] <= eta_bins[-1]
+            )
+
         corrections_eta_bins = [
             [
                 corrections_eta_bins[0][i]
@@ -188,19 +194,20 @@ def get_closure_function_information(coor_file, use_function=False):
 
         # convert the string to one of the pol functions
         function = string_to_pol_function(function_string)
-
-        def def_closure_function(eta, pt):
-            # find the right bin
-            for i in range(len(corrections_eta_bins[0])):
-                if corrections_eta_bins[0][i] <= eta < corrections_eta_bins[1][i]:
-                    if jet_pt[0][i] <= pt < jet_pt[1][i]:
-                        # calculate the correction
-                        return function(pt, *params[i])
-                    elif pt < jet_pt[0][i]:
-                        return function(jet_pt[0][i], *params[i])
-                    else:
-                        return function(jet_pt[1][i], *params[i])
-            return 1
+        if not ak_array:
+            def def_closure_function(eta, pt):
+                # find the right bin
+                for i in range(len(corrections_eta_bins[0])):
+                    if corrections_eta_bins[0][i] <= eta < corrections_eta_bins[1][i]:
+                        if jet_pt[0][i] <= pt < jet_pt[1][i]:
+                            # calculate the correction
+                            return function(pt, *params[i])
+                        elif pt < jet_pt[0][i]:
+                            return function(jet_pt[0][i], *params[i])
+                        else:
+                            return function(jet_pt[1][i], *params[i])
+                return 1
+            return def_closure_function
 
         def def_closure_function_awkard(eta, pt):
             # eta and pt are awkward arrays
@@ -208,7 +215,7 @@ def get_closure_function_information(coor_file, use_function=False):
             corr = ak.ones_like(eta)
             print(type(pt))
             print(pt.type)
-            pt = ak.values_astype(pt, "float32")
+            # pt = ak.values_astype(pt, "float32")
             print(pt.type)
             for i in range(len(corrections_eta_bins[0])):
                 mask_eta = (corrections_eta_bins[0][i] <= eta) & (
@@ -243,7 +250,7 @@ def get_closure_function_information(coor_file, use_function=False):
 
 if __name__ == "__main__":
     test_closure_function = get_closure_function_information(
-        "params/Summer23Run3_PNETREG_MC_L2Relative_AK4PUPPI.txt", use_function=True
+        "params/Summer23Run3_V2_MC_L2Relative_AK4PFPNetPlusNeutrino.txt", use_function=True, ak_array=False
     )
 
     # print(test_closure_function(0.5, 15.19084472))
@@ -253,23 +260,38 @@ if __name__ == "__main__":
     # print(test_closure_function(0.5, 500000))
     # print(test_closure_function(6, 15.1))
     # print(test_closure_function(-5, 20))
+    print(test_closure_function(-0.130706787109375, 14.727144241333008))
 
-    a = ak.highlevel.Array([[-0.8, -0.8], [-0.8, -0.8, -0.8]])
-    b = ak.highlevel.Array([[15.1, 2091.427001953125], [15.1, 2000, 5000]])
+    # a = ak.highlevel.Array([[-0.8, -0.8], [-0.8, -0.8, -0.8]])
+    # b = ak.highlevel.Array([[15.1, 2091.427001953125], [15.1, 2000, 5000]])
 
-    # num = 10000
-    # a = ak.Array([-5] * num)
-    # b = ak.Array(list(np.linspace(10, 5000, num)))
+    test_closure_function = get_closure_function_information(
+        "params/Summer23Run3_V2_MC_L2Relative_AK4PFPNet.txt", use_function=True, ak_array=True
+    )
+    a=ak.highlevel.Array([[1.720458984375]])
+    b=ak.highlevel.Array([[14.56660270690918]])
+
+    a=ak.highlevel.Array([[-0.130706787109375]])
+    b=ak.highlevel.Array([[14.727144241333008]])
+
+    a=ak.highlevel.Array([[-0.0743560791015625]])
+    b=ak.highlevel.Array([[13.057621002197266]])
+
+    # a=ak.highlevel.Array([[0.7520751953125]])
+    # b=ak.highlevel.Array([[14.133272171020508]])
+
+    # # num = 10000
+    # # a = ak.Array([-5] * num)
+    # # b = ak.Array(list(np.linspace(10, 5000, num)))
 
     out = test_closure_function(a, b)
 
-    # print(out)
 
     for i in range(len(out)):
         for j in range(len(out[i])):
             print(a[i][j], b[i][j], out[i][j])
 
-            print((b**2)[i][j], b[i][j] ** 2)
+    #         print((b**2)[i][j], b[i][j] ** 2)
 
     # fig, ax = plt.subplots()
     # ax.plot(b, out, label="Closure function")
