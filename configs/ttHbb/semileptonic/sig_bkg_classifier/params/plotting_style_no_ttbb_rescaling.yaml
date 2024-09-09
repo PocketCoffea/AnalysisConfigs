@@ -26,6 +26,9 @@ plotting_style:
     - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF
     - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C
 
+rescale_samples:
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 1.0
+
   opts_sig:
     histtype: "step"
     stack: false
