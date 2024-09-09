@@ -36,3 +36,9 @@ plotting_style:
     edges: true
     linestyle: solid
     linewidth: 1
+
+  blind_hists:
+    categories: [semilep, SR, 4jSR, 5jSR, '>=6jSR']
+    histograms:
+      spanet_tthbb_transformed: [0.6, 1.0]
+      spanet_tthbb: [0.6, 1.0]
