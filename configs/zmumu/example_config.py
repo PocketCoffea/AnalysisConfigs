@@ -1,10 +1,11 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 import workflow
 from workflow import ZmumuBaseProcessor
+from pocket_coffea.lib.weights.common import common_weights
 
 # Register custom modules in cloudpickle to propagate them to dask workers
 import cloudpickle
@@ -44,8 +45,9 @@ cfg = Configurator(
     },
 
     workflow = ZmumuBaseProcessor,
-    
-    skim = [get_nObj_min(1, 18., "Muon"),
+
+    skim = [get_nPVgood(1), eventFlags, goldenJson, # basic skims
+            get_nObj_min(1, 18., "Muon"),
             # Asking only SingleMuon triggers since we are only using SingleMuon PD data
             get_HLTsel(primaryDatasets=["SingleMuon"])], 
     
@@ -54,6 +56,8 @@ cfg = Configurator(
         "baseline": [passthrough],
     },
 
+    weights_classes = common_weights,
+    
     weights = {
         "common": {
             "inclusive": ["genWeight","lumi","XS",
