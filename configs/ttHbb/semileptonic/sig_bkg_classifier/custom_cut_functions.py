@@ -67,3 +67,34 @@ def eq_genTtbarId_100(events, params, year, sample, **kwargs):
         return mask
     else:
         raise Exception(f'params["genTtbarId"] must be an integer or an iterable of integers between 0 and 56.\nPossible choices:{allowed_ids}')
+
+def spanet_sr(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.tthbb_transformed >= params["tthbb_transformed_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_cr1(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.tthbb_transformed < params["tthbb_transformed_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_cr2(events, params, year, sample, **kwargs):
+
+    mask = (
+        (events.spanet_output.tthbb_transformed >= params["tthbb_transformed_wp_lo"]) &
+        (events.spanet_output.tthbb_transformed < params["tthbb_transformed_wp_hi"])
+    )
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_ttlf_max(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.ttlf < params["ttlf_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)

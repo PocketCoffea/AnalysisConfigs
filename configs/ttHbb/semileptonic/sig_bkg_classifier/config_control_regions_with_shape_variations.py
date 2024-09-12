@@ -1,24 +1,31 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin
+from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow
-import workflow_spanet
-from workflow_spanet import SpanetInferenceProcessor
+import workflow, workflow_spanet, workflow_control_regions
+from workflow_control_regions import ControlRegionsProcessor
 
 import custom_cut_functions
 import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 from params.axis_settings import axis_settings
+import quantile_transformer
+from quantile_transformer import WeightedQuantileTransformer
+
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Define SPANet model path for inference
 spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+
+# Define tthbb working points for SPANet
+tthbb_L = 0.4
+tthbb_M = 0.6
+ttlf_wp = 0.6
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -30,6 +37,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
+                                                  f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
 cfg = Configurator(
@@ -55,10 +63,10 @@ cfg = Configurator(
                         "DATA_SingleMuon"
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
                      "2017",
-                     "2018"
+                     #"2018"
                      ] #All the years
         },
         "subsamples": {
@@ -75,18 +83,32 @@ cfg = Configurator(
         }
     },
 
-    workflow = SpanetInferenceProcessor,
+    workflow = ControlRegionsProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_spanet_inference/spanet_inference_meanloss_18_08_24/",
                         "spanet_model": spanet_model_path},
     
-    skim = [get_nObj_min(4, 15., "Jet"),
+    skim = [get_nPVgood(1),
+            eventFlags,
+            goldenJson,
+            get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
+        "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
+        "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
+        "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
+        "4jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(4, coll="JetGood")],
+        "4jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(4, coll="JetGood")],
+        "4jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(4, coll="JetGood")],
+        "5jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(5, coll="JetGood")],
+        "5jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(5, coll="JetGood")],
+        "5jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(5, coll="JetGood")],
+        ">=6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(6, coll="JetGood")],
+        ">=6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(6, coll="JetGood")],
+        ">=6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(6, coll="JetGood")],
     },
 
     weights= {
@@ -104,7 +126,23 @@ cfg = Configurator(
         "bysample": {},
     },
     variations = {
-        "weights": {"common": {"inclusive": [], "bycategory": {}}, "bysample": {}},
+        "weights": {
+            "common": {
+                "inclusive": ["pileup",
+                              "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
+                              "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
+                              "sf_btag",
+                              "sf_jet_puId",
+                              ],
+                "bycategory": {}
+            },
+            "bysample": {}
+        },
+        "shape": {
+            "common": {
+                "inclusive": ["JES_Total_AK4PFchs", "JER_AK4PFchs"]
+            }
+        }
     },
     
     variables = {
@@ -167,6 +205,9 @@ cfg = Configurator(
         "spanet_tthbb" : HistConf(
             [Axis(coll="spanet_output", field="tthbb", bins=50, start=0, stop=1, label="tthbb SPANet score")],
         ),
+        "spanet_tthbb_transformed" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
         "spanet_ttbb" : HistConf(
             [Axis(coll="spanet_output", field="ttbb", bins=50, start=0, stop=1, label="ttbb SPANet score")],
         ),
@@ -177,77 +218,13 @@ cfg = Configurator(
             [Axis(coll="spanet_output", field="ttlf", bins=50, start=0, stop=1, label="ttlf SPANet score")],
         )
     },
-    columns = {
-        "common": {
-            "inclusive": [],
-            "bycategory": {
-                    "semilep": [
-                        ColOut(
-                            "JetGood",
-                            ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
-                            flatten=False
-                        ),
-                        ColOut("LeptonGood",
-                               ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
-                               pos_end=1, store_size=False, flatten=False),
-                        ColOut("MET", ["phi","pt","significance"], flatten=False),
-                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False),
-                        ColOut("spanet_output", ["tthbb", "ttbb", "ttcc", "ttlf"], flatten=False)
-                    ]
-            }
-        },
-        "bysample": {
-            "ttHTobb": {
-                "bycategory": {
-                    "semilep": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
-                        ColOut("JetGoodMatched",
-                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
-                               flatten=False
-                        ),
-                    ]
-                }
-            },
-            "ttHTobb_ttToSemiLep": {
-                "bycategory": {
-                    "semilep": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False, flatten=False),
-                        ColOut("JetGoodMatched",
-                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
-                               flatten=False
-                        ),
-                    ]
-                }
-            },
-            "TTbbSemiLeptonic": {
-                "bycategory": {
-                    "semilep": [
-                        ColOut("JetGoodMatched",
-                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
-                               flatten=False
-                        ),
-                    ]
-                }
-            },
-            "TTToSemiLeptonic": {
-                "bycategory": {
-                    "semilep": [
-                        ColOut("JetGoodMatched",
-                               ["pt", "eta", "phi", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
-                               flatten=False
-                        ),
-                    ]
-                }
-            }
-        },
-    },
 )
 
 # Registering custom functions
 import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(workflow_spanet)
+cloudpickle.register_pickle_by_value(workflow_control_regions)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
+cloudpickle.register_pickle_by_value(quantile_transformer)

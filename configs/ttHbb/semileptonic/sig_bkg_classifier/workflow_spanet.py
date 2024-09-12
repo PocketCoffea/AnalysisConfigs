@@ -85,7 +85,6 @@ class SpanetInferenceProcessor(ttbarBackgroundProcessor):
             "Event_mask": mask_global},
         output_names=output_names
         )
-        print(outputs)
 
         outputs_zipped = dict(zip(output_names, outputs))
         self.events["spanet_output"] = ak.zip(
