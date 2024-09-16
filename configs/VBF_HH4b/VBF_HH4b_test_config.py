@@ -47,7 +47,7 @@ cfg = Configurator(
     datasets={
         "jsons": [
             f"{localdir}/datasets/QCD.json",
-            f"{localdir}/datasets/signal_VBF_HH4b_redirector.json",
+            f"{localdir}/datasets/signal_VBF_HH4b_local.json",
         ],
         "filter": {
             "samples": (
@@ -116,11 +116,9 @@ cfg = Configurator(
                             "pt",
                             "eta",
                             "phi",
-                            # "cosPhi",
-                            # "sinPhi",
                             "mass",
                             "btagPNetB",
-                            # "hadronFlavour",
+                            "hadronFlavour",
                         ],
                     ),
                 ]
