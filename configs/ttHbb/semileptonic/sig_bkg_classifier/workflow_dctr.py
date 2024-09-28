@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import awkward as ak
 from dask.distributed import get_worker
@@ -83,5 +84,31 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
 
         dctr_dict = {
             "score": out,
-            "weight":
+            "weight": dctr_weight
         }
+
+        self.events["dctr_output"] = ak.zip(dctr_dict)
+
+        with open(self.parameters.weight_dctr_cuts["by_njet"]["file"]) as f:
+            w_cuts = json.load(f)
+        for key in w_cuts.keys():
+            w_cuts[key][2][1] = float("inf")
+        # Integer index to label the different regions, based on the number of jets and the DCTR score
+        # 4j: 1, 2, 3
+        # 5j: 4, 5, 6
+        # 6j: 7, 8, 9
+        # >=7j: 10, 11, 12
+        w_dctr_index = ak.zeros_like(self.events.event, dtype=int)
+        for j, nj in enumerate([4, 5, 6, 7]):
+            if nj == 7:
+                mask_njet = self.events.nJets >= nj
+                w_cuts_list = w_cuts[f"njet>={nj}"]
+            else:
+                mask_njet = self.events.nJets == nj
+                w_cuts_list = w_cuts[f"njet={nj}"]
+            for i, cut in enumerate(w_cuts_list):
+                w_lo, w_hi = cut
+                mask = mask_njet & (self.events.dctr_output.weight >= w_lo) & (self.events.dctr_output.weight < w_hi)
+                w_dctr_index = ak.where(mask, i + 3*j + 1, w_dctr_index)
+
+        self.events["w_dctr_output"] = ak.with_field(self.events.dctr_output, w_dctr_index, "index")
