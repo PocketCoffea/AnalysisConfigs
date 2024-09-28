@@ -98,3 +98,17 @@ def spanet_ttlf_max(events, params, year, sample, **kwargs):
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
+
+def w_dctr_interval(events, params, year, sample, **kwargs):
+
+    if params["w_dctr_lo"] >= params["w_dctr_hi"]:
+        raise ValueError("The lower bound of the interval must be smaller than the upper bound.")
+    if params["w_dctr_hi"].lower() == "inf":
+        params["w_dctr_hi"] = float("inf")
+    mask = (
+        (events.dctr_output.weight >= params["w_dctr_lo"]) &
+        (events.dctr_output.weight < params["w_dctr_hi"])
+    )
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
