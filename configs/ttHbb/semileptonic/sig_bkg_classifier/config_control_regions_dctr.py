@@ -7,6 +7,7 @@ from pocket_coffea.parameters.histograms import *
 
 import workflow, workflow_spanet, workflow_control_regions
 from workflow_control_regions import ControlRegionsProcessor
+import onnx_executor
 
 import custom_cut_functions
 import custom_cuts
@@ -17,11 +18,12 @@ import quantile_transformer
 from quantile_transformer import WeightedQuantileTransformer
 
 import os
+import json
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Define SPANet model path for inference
 spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
-dctr_model_path = ""
+dctr_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
 tthbb_L = 0.4
@@ -40,9 +42,19 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
+                                                  f"{localdir}/params/weight_dctr_cuts.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
+#categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
+with open(parameters["weight_dctr_cuts"]["by_njet"]["file"]) as f:
+    w_cuts = json.load(f)
+
+# Set the limit of the last quantile for each key as inf
+for key in w_cuts.keys():
+    w_cuts[key][2][1] = float("inf")
+
+with open(parameters["weight_dctr_cuts"]["inclusive"]["file"]) as f:
+    w_cuts_inclusive = json.load(f)["weight_cuts"]["quantile0p33"]
 
 cfg = Configurator(
     parameters = parameters,
@@ -85,6 +97,18 @@ cfg = Configurator(
                 'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
                 'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
                 'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][0])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][1])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][2])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][0])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][1])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][2])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][0])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][1])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][2])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][0])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][1])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][2])],
             },
             'TTToSemiLeptonic' : {
                 'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
@@ -109,7 +133,7 @@ cfg = Configurator(
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
-        "semilep_calibrated": [passthrough],
+        #"semilep_calibrated": [passthrough],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
@@ -119,9 +143,12 @@ cfg = Configurator(
         "5jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(5, coll="JetGood")],
         "5jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(5, coll="JetGood")],
         "5jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(5, coll="JetGood")],
-        ">=6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(6, coll="JetGood")],
-        ">=6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(6, coll="JetGood")],
-        ">=6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(6, coll="JetGood")],
+        "6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(6, coll="JetGood")],
+        "6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(6, coll="JetGood")],
+        "6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(6, coll="JetGood")],
+        ">=7jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(7, coll="JetGood")],
+        ">=7jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(7, coll="JetGood")],
+        ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
     weights= {
@@ -134,7 +161,7 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId",
             ],
-            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            #"bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
         "bysample": {},
     },
@@ -224,7 +251,16 @@ cfg = Configurator(
         ),
         "spanet_ttlf" : HistConf(
             [Axis(coll="spanet_output", field="ttlf", bins=50, start=0, stop=1, label="ttlf SPANet score")],
-        )
+        ),
+        "dctr_score" : HistConf(
+            [Axis(coll="dctr_output", field="score", bins=50, start=0, stop=1, label="DCTR score")],
+        ),
+        "dctr_weight" : HistConf(
+            [Axis(coll="dctr_output", field="weight", bins=50, start=0, stop=2.5, label="DCTR weight")],
+        ),
+        "dctr_index" : HistConf(
+            [Axis(coll="dctr_output", field="index", bins=13, start=0, stop=13, label="DCTR index")],
+        ),
     },
 )
 
@@ -236,3 +272,4 @@ cloudpickle.register_pickle_by_value(workflow_control_regions)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)
+cloudpickle.register_pickle_by_value(onnx_executor)
