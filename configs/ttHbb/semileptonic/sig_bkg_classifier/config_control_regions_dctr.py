@@ -5,8 +5,8 @@ from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTse
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow, workflow_spanet, workflow_control_regions
-from workflow_control_regions import ControlRegionsProcessor
+import workflow, workflow_spanet, workflow_control_regions, workflow_dctr
+from workflow_dctr import DCTRInferenceProcessor
 import onnx_executor
 
 import custom_cut_functions
@@ -118,7 +118,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ControlRegionsProcessor,
+    workflow = DCTRInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
                         "spanet_model": spanet_model_path,
                         "dctr_model": dctr_model_path},
@@ -237,6 +237,14 @@ cfg = Configurator(
             [Axis(coll="events", field="deltaRbb_avg", bins=50, start=0, stop=5,
                   label="$\Delta R_{bb}^{avg}$")]
         ),
+        "ptbb_closest" : HistConf(
+            [Axis(coll="events", field="ptbb_closest", bins=axis_settings["jet_pt"]["bins"], start=axis_settings["jet_pt"]["start"], stop=axis_settings["jet_pt"]["stop"],
+                    label="$p_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
+        "htbb_closest" : HistConf(
+            [Axis(coll="events", field="htbb_closest", bins=100, start=0, stop=2500,
+                    label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
         "spanet_tthbb" : HistConf(
             [Axis(coll="spanet_output", field="tthbb", bins=50, start=0, stop=1, label="tthbb SPANet score")],
         ),
@@ -269,6 +277,7 @@ import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(workflow_spanet)
 cloudpickle.register_pickle_by_value(workflow_control_regions)
+cloudpickle.register_pickle_by_value(workflow_dctr)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)

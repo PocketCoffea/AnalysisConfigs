@@ -11,16 +11,16 @@ def get_input_features(events, mask=None, only=None):
     input_features = {
         "njet" : ak.num(events.JetGood),
         "nbjet" : ak.num(events.BJetGood),
-        "ht" : events.events.ht,
-        "ht_b" : events.events.bjets_ht,
-        "ht_light" : events.events.lightjets_ht,
-        "drbb_avg" : events.events.drbb_avg,
-        "mbb_max" : events.events.mbb_max,
-        "mbb_min" : events.events.mbb_min,
-        "mbb_closest" : events.events.mbb_closest,
-        "drbb_min" : events.events.drbb_min,
-        "detabb_min" : events.events.detabb_min,
-        "dphibb_min" : events.events.dphibb_min,
+        "ht" : events.JetGood_Ht,
+        "ht_b" : events.BJetGood_Ht,
+        "ht_light" : events.LightJetGood_Ht,
+        "drbb_avg" : events.deltaRbb_avg,
+        "mbb_max" : events.mbb_max,
+        "mbb_min" : events.mbb_min,
+        "mbb_closest" : events.mbb_closest,
+        "drbb_min" : events.deltaRbb_min,
+        "detabb_min" : events.deltaEtabb_min,
+        "dphibb_min" : events.deltaPhibb_min,
         "jet_pt_1" : events.JetGood.pt[:,0],
         "jet_pt_2" : events.JetGood.pt[:,1],
         "jet_pt_3" : events.JetGood.pt[:,2],
@@ -75,12 +75,18 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
             model_session = worker.data['model_session_dctr']
 
         print(model_session)
+        print("Available providers:", model_session.get_providers())
 
         input_features = get_input_features(self.events)
         data = np.stack(list(input_features.values()), axis=1).astype(np.float32)
 
-        out = model_session.run(output_names='output', input_feed={'input': data})[0]
+        print("DCTR input type:", data.dtype)
+        print("DCTR input shape:", data.shape)
+
+        out = ak.Array(model_session.run(output_names=['output'], input_feed={'input': data})[0][:,0])
         dctr_weight = out / (1 - out)
+
+        print("DCTR output:", out)
 
         dctr_dict = {
             "score": out,
@@ -89,7 +95,7 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
 
         self.events["dctr_output"] = ak.zip(dctr_dict)
 
-        with open(self.parameters.weight_dctr_cuts["by_njet"]["file"]) as f:
+        with open(self.params.weight_dctr_cuts["by_njet"]["file"]) as f:
             w_cuts = json.load(f)
         for key in w_cuts.keys():
             w_cuts[key][2][1] = float("inf")
@@ -101,14 +107,14 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
         w_dctr_index = ak.zeros_like(self.events.event, dtype=int)
         for j, nj in enumerate([4, 5, 6, 7]):
             if nj == 7:
-                mask_njet = self.events.nJets >= nj
+                mask_njet = self.events.nJetGood >= nj
                 w_cuts_list = w_cuts[f"njet>={nj}"]
             else:
-                mask_njet = self.events.nJets == nj
+                mask_njet = self.events.nJetGood == nj
                 w_cuts_list = w_cuts[f"njet={nj}"]
             for i, cut in enumerate(w_cuts_list):
                 w_lo, w_hi = cut
                 mask = mask_njet & (self.events.dctr_output.weight >= w_lo) & (self.events.dctr_output.weight < w_hi)
                 w_dctr_index = ak.where(mask, i + 3*j + 1, w_dctr_index)
 
-        self.events["w_dctr_output"] = ak.with_field(self.events.dctr_output, w_dctr_index, "index")
+        self.events["dctr_output"] = ak.with_field(self.events.dctr_output, w_dctr_index, "index")
