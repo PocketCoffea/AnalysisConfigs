@@ -1,4 +1,5 @@
 import json
+import joblib
 import numpy as np
 import awkward as ak
 from dask.distributed import get_worker
@@ -6,6 +7,7 @@ import workflow_spanet
 from workflow_control_regions import ControlRegionsProcessor
 import quantile_transformer
 from quantile_transformer import WeightedQuantileTransformer
+from sklearn.preprocessing import StandardScaler
 
 def get_input_features(events, mask=None, only=None):
     input_features = {
@@ -46,6 +48,11 @@ def get_input_features(events, mask=None, only=None):
 
     return input_features
 
+def data_normalization(x):
+    scaler = StandardScaler()
+    scaler.fit(x)
+    return scaler.transform(x)
+
 class DCTRInferenceProcessor(ControlRegionsProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
@@ -79,6 +86,9 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
 
         input_features = get_input_features(self.events)
         data = np.stack(list(input_features.values()), axis=1).astype(np.float32)
+        # Load the standard scaler fitted during the training data preprocessing and apply the same transformation to the input data
+        scaler = joblib.load(self.params.standard_scaler["training"]["file"])
+        data = scaler.transform(data)
 
         print("DCTR input type:", data.dtype)
         print("DCTR input shape:", data.shape)
