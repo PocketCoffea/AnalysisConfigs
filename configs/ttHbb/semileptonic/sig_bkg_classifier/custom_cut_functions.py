@@ -101,10 +101,12 @@ def spanet_ttlf_max(events, params, year, sample, **kwargs):
 
 def w_dctr_interval(events, params, year, sample, **kwargs):
 
+    if type(params["w_dctr_hi"]) == str:
+        if params["w_dctr_hi"].lower() == "inf":
+            params["w_dctr_hi"] = float("inf")
     if params["w_dctr_lo"] >= params["w_dctr_hi"]:
         raise ValueError("The lower bound of the interval must be smaller than the upper bound.")
-    if params["w_dctr_hi"].lower() == "inf":
-        params["w_dctr_hi"] = float("inf")
+
     mask = (
         (events.dctr_output.weight >= params["w_dctr_lo"]) &
         (events.dctr_output.weight < params["w_dctr_hi"])
