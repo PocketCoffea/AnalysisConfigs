@@ -1,6 +1,6 @@
 scaleout: 300
-chunksize: 100000
-mem-per-worker: "4GB"
+chunksize: 4096
+mem-per-worker: "8GB"
 disk-per-worker: "4GB"
 cores-per-worker: 1
 adaptive: false
