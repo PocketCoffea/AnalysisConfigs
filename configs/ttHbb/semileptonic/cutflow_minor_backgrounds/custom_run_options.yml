@@ -1,0 +1,2 @@
+sched-url: tls://10.100.200.155:31985
+voms-proxy: /eos/user/d/dvalsecc/my_x509_user_proxy

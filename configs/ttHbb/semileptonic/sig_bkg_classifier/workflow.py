@@ -75,10 +75,14 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
 
         # Compute the invariant mass of the closest b-jet pair, the minimum and maximum invariant mass of all b-jet pairs
         mbb = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
+        ptbb = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).pt
+        htbb = self.events.BJetGood[pairs_sorted.slot0].pt + self.events.BJetGood[pairs_sorted.slot1].pt
         self.events["mbb_closest"] = mbb[:,0]
         self.events["mbb_min"] = ak.min(mbb, axis=1)
         self.events["mbb_max"] = ak.max(mbb, axis=1)
         self.events["deltaRbb_avg"] = ak.mean(deltaR_unique, axis=1)
+        self.events["ptbb_closest"] = ptbb[:,0]
+        self.events["htbb_closest"] = htbb[:,0]
 
         # Define labels for btagged jets at different working points
         for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():

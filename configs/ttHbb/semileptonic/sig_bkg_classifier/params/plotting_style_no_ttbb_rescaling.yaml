@@ -29,6 +29,13 @@ plotting_style:
   rescale_samples:
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 1.0
 
+  opts_figure:
+    datamc:
+      figsize: [12,9]
+      ylim_log:
+        lo: 1.0
+        hi: 1e7
+
   opts_sig:
     histtype: "step"
     stack: false
@@ -42,3 +49,4 @@ plotting_style:
     histograms:
       spanet_tthbb_transformed: [0.6, 1.0]
       spanet_tthbb: [0.6, 1.0]
+      spanet_ttlf: [0.0, 0.2]

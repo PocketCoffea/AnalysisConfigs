@@ -1,0 +1,5 @@
+standard_scaler:
+  training:
+    file: "${config_dir:}/standard_scaler/standard_scaler_training.joblib"
+  test:
+    file: ""

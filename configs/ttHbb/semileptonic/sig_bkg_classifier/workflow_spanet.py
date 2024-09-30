@@ -32,7 +32,7 @@ class SpanetInferenceProcessor(ttbarBackgroundProcessor):
                 providers=['CPUExecutionProvider']
             )
         else:
-            model_session = worker.data['model_session']
+            model_session = worker.data['model_session_spanet']
 
         print(model_session)
 

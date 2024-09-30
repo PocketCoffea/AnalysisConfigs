@@ -36,9 +36,12 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
+                                                  f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
+
+categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
 
 cfg = Configurator(
     parameters = parameters,
@@ -63,13 +66,20 @@ cfg = Configurator(
                         "DATA_SingleMuon"
                         ],
             "samples_exclude" : [],
-            "year": [#"2016_PreVFP",
-                     #"2016_PostVFP",
+            "year": ["2016_PreVFP",
+                     "2016_PostVFP",
                      "2017",
-                     #"2018"
+                     "2018"
                      ] #All the years
         },
         "subsamples": {
+            'DATA_SingleEle'  : {
+                'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]
+            },
+            'DATA_SingleMuon' : {
+                'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
+                                     get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
+            },
             'TTbbSemiLeptonic' : {
                 'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
                 'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
@@ -97,6 +107,7 @@ cfg = Configurator(
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
+        "semilep_calibrated": [passthrough],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
@@ -121,7 +132,7 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId",
             ],
-            "bycategory": {},
+            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
         "bysample": {},
     },
