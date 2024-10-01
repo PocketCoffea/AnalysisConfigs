@@ -19,7 +19,7 @@ from quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json
-localdir = os.path.dirname(os.path.abspath(__file__))
+localdir = "/afs/cern.ch/work/m/mmarcheg/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier"
 
 # Define SPANet model path for inference
 spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
@@ -135,8 +135,10 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         #"semilep_calibrated": [passthrough],
+        "ttlf0p60": [get_ttlf_max(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
+        "CR": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
         "4jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(4, coll="JetGood")],
         "4jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(4, coll="JetGood")],
@@ -239,15 +241,15 @@ cfg = Configurator(
         **jet_hists(name="bjet",coll="BJetGood", pos=3, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=4, axis_settings=axis_settings),
         "jets_Ht" : HistConf(
-          [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
+          [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
         ),
         "bjets_Ht" : HistConf(
-          [Axis(coll="events", field="BJetGood_Ht", bins=100, start=0, stop=2500,
+          [Axis(coll="events", field="BJetGood_Ht", bins=25, start=0, stop=2500,
                 label="B-Jets $H_T$ [GeV]")]
         ),
         "lightjets_Ht" : HistConf(
-          [Axis(coll="events", field="LightJetGood_Ht", bins=100, start=0, stop=2500,
+          [Axis(coll="events", field="LightJetGood_Ht", bins=25, start=0, stop=2500,
                 label="Light-Jets $H_T$ [GeV]")]
         ),
         "deltaRbb_min" : HistConf(
@@ -283,7 +285,7 @@ cfg = Configurator(
                     label="$p_{T,bb}(min \Delta R(bb))$ [GeV]")]
         ),
         "htbb_closest" : HistConf(
-            [Axis(coll="events", field="htbb_closest", bins=100, start=0, stop=2500,
+            [Axis(coll="events", field="htbb_closest", bins=25, start=0, stop=2500,
                     label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
         ),
         "spanet_tthbb" : HistConf(
