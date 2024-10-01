@@ -19,7 +19,7 @@ from quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json
-localdir = "/afs/cern.ch/work/m/mmarcheg/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier"
+localdir = "/eos/user/m/mmarcheg/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier"
 
 # Define SPANet model path for inference
 spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
