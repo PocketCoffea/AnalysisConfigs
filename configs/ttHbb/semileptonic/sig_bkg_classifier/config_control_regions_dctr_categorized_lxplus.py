@@ -136,6 +136,7 @@ cfg = Configurator(
         "semilep": [passthrough],
         #"semilep_calibrated": [passthrough],
         "ttlf0p60": [get_ttlf_max(ttlf_wp)],
+        "CR_ttlf": [get_ttlf_min(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
         "CR": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_M)],
