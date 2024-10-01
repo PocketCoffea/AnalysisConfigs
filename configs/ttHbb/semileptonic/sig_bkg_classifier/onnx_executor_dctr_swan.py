@@ -1,4 +1,4 @@
-from pocket_coffea.executors.executors_cern_swan.py import DaskExecutorFactory
+from pocket_coffea.executors.executors_cern_swan import DaskExecutorFactory
 import onnx_executor
 from onnx_executor import WorkerInferenceSessionPlugin
 
