@@ -81,8 +81,8 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
         else:
             model_session = worker.data['model_session_dctr']
 
-        print(model_session)
-        print("Available providers:", model_session.get_providers())
+        #print(model_session)
+        #print("Available providers:", model_session.get_providers())
 
         input_features = get_input_features(self.events)
         data = np.stack(list(input_features.values()), axis=1).astype(np.float32)
@@ -90,13 +90,13 @@ class DCTRInferenceProcessor(ControlRegionsProcessor):
         scaler = joblib.load(self.params.standard_scaler["training"]["file"])
         data = scaler.transform(data)
 
-        print("DCTR input type:", data.dtype)
-        print("DCTR input shape:", data.shape)
+        #print("DCTR input type:", data.dtype)
+        #print("DCTR input shape:", data.shape)
 
         out = ak.Array(model_session.run(output_names=['output'], input_feed={'input': data})[0][:,0])
         dctr_weight = out / (1 - out)
 
-        print("DCTR output:", out)
+        #print("DCTR output:", out)
 
         dctr_dict = {
             "score": out,

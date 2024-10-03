@@ -32,9 +32,18 @@ class SpanetInferenceProcessor(ttbarBackgroundProcessor):
                 providers=['CPUExecutionProvider']
             )
         else:
-            model_session = worker.data['model_session_spanet']
+            model_session = worker.data.get('model_session_spanet', None)
+            if model_session is None:
+                import onnxruntime as ort
+                sess_options = ort.SessionOptions()
+                sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+                model_session = ort.InferenceSession(
+                    self.workflow_options["spanet_model"],
+                    sess_options = sess_options,
+                    providers=['CPUExecutionProvider']
+                )
 
-        print(model_session)
+        #print(model_session)
 
         btagging_algorithm = self.params.btagging.working_point[self._year]["btagging_algorithm"]
         pad_dict = {btagging_algorithm:0., "btag_L":0, "btag_M":0, "btag_H":0,"pt":0., "phi":0., "eta":0.}

@@ -14,9 +14,10 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         sess_options = ort.SessionOptions()
 
         sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        working_dir = worker.local_directory
         
         session = ort.InferenceSession(
-            self.model_path,
+            working_dir + "/"+ self.model_path,
             sess_options = sess_options,
             providers=['CPUExecutionProvider']
         )

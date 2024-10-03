@@ -19,10 +19,10 @@ from quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json
-localdir = "/eos/user/m/mmarcheg/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier"
+localdir = "/eos/user/d/dvalsecc/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier/"
 
 # Define SPANet model path for inference
-spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+spanet_model_path = "/eos/user/d/dvalsecc/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier/spanet.onnx"
 dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
@@ -60,31 +60,34 @@ with open(parameters["weight_dctr_cuts"]["inclusive"]["file"]) as f:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar.json",
-                  f"{localdir}/datasets/backgrounds_MC.json",
-                  f"{localdir}/datasets/DATA_SingleEle.json",
-                  f"{localdir}/datasets/DATA_SingleMuon.json",
-                  ],
+         "jsons": [f"{localdir}/datasets/signal_ttHTobb.json",
+                   f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
+                   f"{localdir}/datasets/backgrounds_MC_TTbb.json",
+                   f"{localdir}/datasets/backgrounds_MC_ttbar.json",
+                   f"{localdir}/datasets/backgrounds_MC.json",
+                   f"{localdir}/datasets/DATA_SingleEle.json",
+                   f"{localdir}/datasets/DATA_SingleMuon.json",],
+        
+        #"jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_test.json"],
         "filter" : {
-            "samples": ["ttHTobb",
-                        "ttHTobb_ttToSemiLep",
-                        "TTbbSemiLeptonic",
-                        "TTToSemiLeptonic",
-                        "TTTo2L2Nu",
-                        "SingleTop",
-                        "WJetsToLNu_HT",
-                        "DATA_SingleEle",
-                        "DATA_SingleMuon"
-                        ],
+            "samples": [
+                    #"ttHTobb",
+                    #"ttHTobb_ttToSemiLep",
+                    #"TTbbSemiLeptonic",
+                    "TTToSemiLeptonic",
+                    "TTTo2L2Nu",
+                        
+                    # "SingleTop",
+                    # "WJetsToLNu_HT",
+                    # "DATA_SingleEle",
+                    # "DATA_SingleMuon"
+            ],
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
                      "2016_PostVFP",
                      "2017",
                      "2018"
-                     ] #All the years
+                    ] #All the years
         },
         "subsamples": {
             'DATA_SingleEle'  : {
