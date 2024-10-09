@@ -32,6 +32,9 @@ plotting_style:
   opts_figure:
     datamc:
       figsize: [12,9]
+
+  opts_ylim:
+    datamc:
       ylim_log:
         lo: 1.0
         hi: 1e7
