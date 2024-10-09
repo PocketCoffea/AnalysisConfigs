@@ -99,6 +99,13 @@ def spanet_ttlf_max(events, params, year, sample, **kwargs):
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
 
+def spanet_ttlf_min(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.ttlf >= params["ttlf_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
 def w_dctr_interval(events, params, year, sample, **kwargs):
 
     if type(params["w_dctr_hi"]) == str:

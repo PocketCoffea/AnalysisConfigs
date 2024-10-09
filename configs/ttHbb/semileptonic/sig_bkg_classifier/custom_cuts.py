@@ -71,6 +71,11 @@ def get_ttlf_max(ttlf_wp, name=None):
         name = f"spanet_ttlf_max_ttlf_{ttlf_wp}"
     return Cut(name=name, params={"ttlf_wp" : ttlf_wp}, function=cuts_f.spanet_ttlf_max)
 
+def get_ttlf_min(ttlf_wp, name=None):
+    if name == None:
+        name = f"spanet_ttlf_min_ttlf_{ttlf_wp}"
+    return Cut(name=name, params={"ttlf_wp" : ttlf_wp}, function=cuts_f.spanet_ttlf_min)
+
 def get_w_dctr_interval(w_dctr_lo, w_dctr_hi, name=None):
     if name == None:
         name = f"w_dctr_interval_{w_dctr_lo}_{w_dctr_hi}"
