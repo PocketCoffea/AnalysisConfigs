@@ -1,0 +1,143 @@
+{
+  "WW_TuneCP5_13TeV-pythia8": {
+    "sample": "VV",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17",
+    "files": [
+      {
+        "das_names": [
+          "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 118.7
+        }
+      },
+      {
+        "das_names": [
+          "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 118.7
+        }
+      },
+      {
+        "das_names": [
+          "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 118.7
+        }
+      },
+      {
+        "das_names": [
+          "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 118.7
+        }
+      }
+    ]
+  },
+  "WZ_TuneCP5_13TeV-pythia8": {
+    "sample": "VV",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17",
+    "files": [
+      {
+        "das_names": [
+          "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 65.5443
+        }
+      },
+      {
+        "das_names": [
+          "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 65.5443
+        }
+      },
+      {
+        "das_names": [
+          "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 65.5443
+        }
+      },
+      {
+        "das_names": [
+          "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 65.5443
+        }
+      }
+    ]
+  },
+  "ZZ_TuneCP5_13TeV-pythia8": {
+    "sample": "VV",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17",
+    "files": [
+      {
+        "das_names": [
+          "/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 15.8274
+        }
+      },
+      {
+        "das_names": [
+          "/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 15.8274
+        }
+      },
+      {
+        "das_names": [
+          "/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 15.8274
+        }
+      },
+      {
+        "das_names": [
+          "/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 15.8274
+        }
+      }
+    ]
+  }
+}
