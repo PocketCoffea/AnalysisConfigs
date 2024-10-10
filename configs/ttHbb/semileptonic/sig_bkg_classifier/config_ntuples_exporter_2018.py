@@ -24,6 +24,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
+                                                  f"{localdir}/params/btagging.yaml",
+                                                  f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   update=True)
 
@@ -78,9 +80,9 @@ cfg = Configurator(
             "inclusive": [
                 "genWeight", "lumi","XS",
                 "pileup",
-                "sf_ele_reco", "sf_ele_id",
-                "sf_mu_id", "sf_mu_iso",
-                "sf_btag",
+                "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
+                "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
+                "sf_btag", "sf_btag_calib",
                 "sf_jet_puId",
             ],
             "bycategory": {},
