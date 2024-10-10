@@ -33,13 +33,13 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_local.json",
-                  f"{localdir}/datasets/DATA_SingleEle_local.json",
-                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
+        "jsons": [f"{localdir}/datasets/signal_ttHTobb.json",
+                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar.json",
+                  f"{localdir}/datasets/backgrounds_MC.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json",
+                  f"{localdir}/datasets/DATA_SingleMuon.json",
                   ],
         "filter" : {
             "samples": ["ttHTobb",
@@ -49,6 +49,9 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "SingleTop",
                         "WJetsToLNu_HT",
+                        "DYJetsToLL",
+                        "VV",
+                        "TTV",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
@@ -75,7 +78,7 @@ cfg = Configurator(
 
     workflow = ttbarBackgroundProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_parton_matching/parton_matching_old_matching_with_event_features_22_07_24/"},
+                        "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr"},
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
