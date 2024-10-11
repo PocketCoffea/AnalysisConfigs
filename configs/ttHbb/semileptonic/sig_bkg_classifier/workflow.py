@@ -17,8 +17,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         available_sf_ele_trigger_variations = [f"sf_ele_trigger_{v}" for v in variations_sf_ele_trigger]
         variations_sf_btag = ["hf", "lf", "hfstats1", "hfstats2", "lfstats1", "lfstats2", "cferr1", "cferr2"]
         available_sf_btag_variations = [f"sf_btag_{v}" for v in variations_sf_btag]
-        available_shape_variations = ["JES_Total_AK4PFchs", "JER_AK4PFchs"]
-        vars = vars + available_sf_ele_trigger_variations + available_sf_btag_variations + available_shape_variations
+        vars = vars + available_sf_ele_trigger_variations + available_sf_btag_variations
         return vars
 
     def apply_object_preselection(self, variation):
