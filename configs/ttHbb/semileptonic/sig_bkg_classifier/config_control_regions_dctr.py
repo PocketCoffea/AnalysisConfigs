@@ -39,6 +39,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
+                                                  f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
@@ -46,7 +47,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/standard_scaler.yaml",
                                                   update=True)
 
-#categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
+categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
 with open(parameters["weight_dctr_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
@@ -76,6 +77,9 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "SingleTop",
                         "WJetsToLNu_HT",
+                        "DYJetsToLL",
+                        "VV",
+                        "TTV",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
@@ -134,7 +138,7 @@ cfg = Configurator(
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
-        #"semilep_calibrated": [passthrough],
+        "semilep_calibrated": [passthrough],
         "ttlf0p60": [get_ttlf_max(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
@@ -164,7 +168,7 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId",
             ],
-            #"bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
         "bysample": {},
     },
