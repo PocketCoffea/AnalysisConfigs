@@ -36,12 +36,13 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
+                                                  f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
+categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
 
 cfg = Configurator(
     parameters = parameters,
@@ -62,6 +63,9 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "SingleTop",
                         "WJetsToLNu_HT",
+                        "DYJetsToLL",
+                        "VV",
+                        "TTV",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
@@ -108,8 +112,10 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         "semilep_calibrated": [passthrough],
+        "ttlf0p60": [get_ttlf_max(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
+        "CR": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
         "4jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(4, coll="JetGood")],
         "4jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(4, coll="JetGood")],
@@ -117,9 +123,12 @@ cfg = Configurator(
         "5jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(5, coll="JetGood")],
         "5jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(5, coll="JetGood")],
         "5jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(5, coll="JetGood")],
-        ">=6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(6, coll="JetGood")],
-        ">=6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(6, coll="JetGood")],
-        ">=6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(6, coll="JetGood")],
+        "6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(6, coll="JetGood")],
+        "6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(6, coll="JetGood")],
+        "6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(6, coll="JetGood")],
+        ">=7jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(7, coll="JetGood")],
+        ">=7jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(7, coll="JetGood")],
+        ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
     weights= {
