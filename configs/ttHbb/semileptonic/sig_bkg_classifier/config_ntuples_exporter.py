@@ -1,7 +1,7 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -67,7 +67,10 @@ cfg = Configurator(
     workflow = ttbarBackgroundProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3},
     
-    skim = [get_nObj_min(4, 15., "Jet"),
+    skim = [get_nPVgood(1),
+            eventFlags,
+            goldenJson,
+            get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     

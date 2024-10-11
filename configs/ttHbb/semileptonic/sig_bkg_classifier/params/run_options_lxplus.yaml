@@ -1,6 +1,6 @@
 scaleout: 300
 chunksize: 20000
-mem-per-worker: "6GB"
+mem-per-worker: "4GB"
 disk-per-worker: "4GB"
 cores-per-worker: 1
 adaptive: false

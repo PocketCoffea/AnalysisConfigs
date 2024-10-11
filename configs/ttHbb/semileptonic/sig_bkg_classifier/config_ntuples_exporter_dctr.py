@@ -1,7 +1,7 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -80,7 +80,10 @@ cfg = Configurator(
     workflow_options = {"parton_jet_min_dR": 0.3,
                         "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr"},
     
-    skim = [get_nObj_min(4, 15., "Jet"),
+    skim = [get_nPVgood(1),
+            eventFlags,
+            goldenJson,
+            get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
@@ -153,6 +156,14 @@ cfg = Configurator(
         "deltaRbb_avg" : HistConf(
             [Axis(coll="events", field="deltaRbb_avg", bins=50, start=0, stop=5,
                   label="$\Delta R_{bb}^{avg}$")]
+        ),
+        "ptbb_closest" : HistConf(
+            [Axis(coll="events", field="ptbb_closest", bins=axis_settings["jet_pt"]["bins"], start=axis_settings["jet_pt"]["start"], stop=axis_settings["jet_pt"]["stop"],
+                    label="$p_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
+        "htbb_closest" : HistConf(
+            [Axis(coll="events", field="htbb_closest", bins=25, start=0, stop=2500,
+                    label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
         ),
     },
     columns = {
