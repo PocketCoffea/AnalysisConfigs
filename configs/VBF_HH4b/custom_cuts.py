@@ -79,8 +79,8 @@ hh4b_presel = Cut(
         "pt_jet2": 45,
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
-        # "third_pnet_jet": 0.2605,
-        # "fourth_pnet_jet": 0.2605,
+        "njet_vbf": 2,
+        "delta_eta": 5,
     },
     function=cuts_f.hh4b_presel_cuts,
 )
@@ -102,6 +102,22 @@ hh4b_4b_region = Cut(
     function=cuts_f.hh4b_4b_cuts,
 )
 
+#TODO qvg selection 07 08 09
+qvg_05_region = Cut(
+    name="qvg05",
+    params={
+        "qvg_cut" : 0.5,
+    },
+    function=cuts_f.qvg_cuts,
+)
+
+qvg_06_region = Cut(
+    name="qvg06",
+    params={
+        "qvg_cut" : 0.6,
+    },
+    function=cuts_f.qvg_cuts,
+)
 
 def lepton_selection(events, lepton_flavour, params):
     leptons = events[lepton_flavour]
@@ -147,19 +163,25 @@ def lepton_selection(events, lepton_flavour, params):
 def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
+    print(jet_type, cuts)
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
-    mask_presel = (
-        (jets.pt > cuts["pt"])
-        & (np.abs(jets.eta) < cuts["eta"])
-        & (jets.jetId >= cuts["jetId"])
-        & (jets.btagPNetB > cuts["btagPNetB"])
-    )
-    # Lepton cleaning
-    if leptons_collection != "":
-        dR_jets_lep = jets.metric_table(events[leptons_collection])
-        mask_lepton_cleaning = ak.prod(dR_jets_lep > cuts["dr_lepton"], axis=2) == 1
+    if "VBF" in jet_type:
+        mask_presel_vbf = (
+            (jets.pt > cuts["pt"])
+            & (np.abs(jets.eta) > cuts["eta_min"])
+            & (np.abs(jets.eta) < cuts["eta_max"])
+            & (jets.jetId >= cuts["jetId"])
+        )
+        mask_good_jets = mask_presel_vbf  # & mask_lepton_cleaning
+    else:
+        mask_presel = (
+            (jets.pt > cuts["pt"])
+            & (np.abs(jets.eta) < cuts["eta"])
+            & (jets.jetId >= cuts["jetId"])
+            & (jets.btagPNetB > cuts["btagPNetB"])   
+        )
+        mask_good_jets = mask_presel  # & mask_lepton_cleaning
 
-    mask_good_jets = mask_presel  # & mask_lepton_cleaning
 
     return jets[mask_good_jets]

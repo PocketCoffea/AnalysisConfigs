@@ -24,7 +24,21 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "pt",
         )
+
+        self.events["JetGoodVBF"] = self.events.Jet
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
+
+        self.events["JetGoodVBF"] = jet_selection_nopu(self.events, "JetGoodVBF", self.params)
+
+        a = []
+        for i in range(len(self.events)):
+            if(len(self.events.JetGoodVBF[i]) >= 2):
+                eta0 = self.events.JetGoodVBF.eta[i,0]
+                eta1 = self.events.JetGoodVBF.eta[i,1]
+                a.append(abs(eta0 - eta1))
+            else:
+                a.append(False)
+        self.events["deltaEta"] = ak.Array(a)
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
@@ -181,6 +195,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["nMuonGood"] = ak.num(self.events.MuonGood, axis=1)
         self.events["nJetGood"] = ak.num(self.events.JetGood, axis=1)
         self.events["nJetGoodHiggs"] = ak.num(self.events.JetGoodHiggs, axis=1)
+        self.events["nJetGoodVBF"] = ak.num(self.events.JetGoodVBF, axis=1)
 
     def reconstruct_higgs_candidates(self, matched_jets_higgs):
 

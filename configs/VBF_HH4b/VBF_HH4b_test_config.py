@@ -53,6 +53,7 @@ cfg = Configurator(
             "samples": (
                 [
                     "VBF_HHto4B",
+                    #TODO qcd
                 ]
 
             ),
@@ -74,7 +75,9 @@ cfg = Configurator(
         hh4b_presel
     ],
     categories={
-        "4b_region": [hh4b_4b_region],  # HERE
+        "4b_region": [hh4b_4b_region],  
+        "4b_region_05qvg": [hh4b_4b_region, qvg_05_region],
+        "4b_region_06qvg": [hh4b_4b_region, qvg_06_region],
         # "2b_region": [hh4b_2b_region],
     },
     weights={
@@ -105,6 +108,48 @@ cfg = Configurator(
         **jet_hists(coll="JetGood", pos=3),
         **jet_hists(coll="JetGood", pos=4),
         **jet_hists(coll="JetGood", pos=5),
+        **{
+            f"JetGoodVBFeta": HistConf(
+                [
+                    Axis(
+                        coll=f"JetGoodVBF",
+                        field="eta",
+                        bins=60,
+                        start=-5,
+                        stop=5,
+                        label=f"JetGoodVBFeta",
+                    )
+                ]
+            )
+        },
+        **{
+            f"JetGoodVBFQvG": HistConf(
+                [
+                    Axis(
+                        coll=f"JetGoodVBF",
+                        field="btagPNetQvG",
+                        bins=60,
+                        start=0,
+                        stop=1,
+                        label=f"JetGoodVBFQvG",
+                    )
+                ]
+            )
+        },
+        **{
+            f"JetGoodVBFdeltaEta": HistConf(
+                [
+                    Axis(
+                        coll=f"events",
+                        field="deltaEta",
+                        bins=60,
+                        start=5,
+                        stop=10,
+                        label=f"JetGoodVBFQvG",
+                    )
+                ]
+            )
+        },
     },
     columns={
         "common": {

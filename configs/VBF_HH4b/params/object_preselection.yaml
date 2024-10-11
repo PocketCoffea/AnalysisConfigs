@@ -24,3 +24,10 @@ object_preselection:
     dz_barrel: 0.1
     dxy_endcap: 0.1
     dz_endcap: 0.2
+  JetGoodVBF:
+    dr_lepton: 0.4 #useless?
+    pt: 25  # HERE_OLD_CUTS 35
+    eta_min: 2.5
+    eta_max: 4.7
+    jetId: 6 # 6 with lepveto or 2 w/o lepveto
+    btagPNetB: 0 # 0.2605

@@ -108,10 +108,11 @@ def jet_btag_all(events, params, **kwargs):
 
 def hh4b_presel_cuts(events, params, **kwargs):
     at_least_four_jets = events.nJetGood >= params["njet"]
+    at_least_two_vbf = events.nJetGoodVBF >= params["njet_vbf"]
     no_electron = events.nElectronGood == 0
     no_muon = events.nMuonGood == 0
 
-    mask_4jet_nolep = at_least_four_jets & no_electron & no_muon
+    mask_4jet_nolep = at_least_four_jets & no_electron & no_muon & at_least_two_vbf
 
     # convert false to None
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
@@ -133,13 +134,13 @@ def hh4b_presel_cuts(events, params, **kwargs):
     mask_btag = (
         (jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]) / 2
         > params["mean_pnet_jet"]
-        # & (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"])
-        # & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
     )
 
     mask_btag = ak.where(ak.is_none(mask_btag), False, mask_btag)
 
-    mask = mask_pt & mask_btag
+    mask_delta_eta = events.deltaEta > params["delta_eta"]
+
+    mask = mask_pt & mask_btag & mask_delta_eta
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
@@ -163,3 +164,9 @@ def hh4b_4b_cuts(events, params, **kwargs):
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
+
+def qvg_cuts(events, params, **kwargs):
+    mask = ak.Array((events.JetGoodVBF.btagPNetQvG[:, 0] > params["qvg_cut"]) &
+           (events.JetGoodVBF.btagPNetQvG[:, 1] > params["qvg_cut"]))
+
+    return mask
