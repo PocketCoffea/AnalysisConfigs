@@ -7,6 +7,7 @@ from pocket_coffea.parameters.histograms import *
 
 import workflow, workflow_spanet
 from workflow_spanet import SpanetInferenceProcessor
+import onnx_executor
 import quantile_transformer
 from quantile_transformer import WeightedQuantileTransformer
 
@@ -39,13 +40,13 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_local.json",
-                  f"{localdir}/datasets/DATA_SingleEle_local.json",
-                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
+        "jsons": [f"{localdir}/datasets/signal_ttHTobb.json",
+                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar.json",
+                  f"{localdir}/datasets/backgrounds_MC.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json",
+                  f"{localdir}/datasets/DATA_SingleMuon.json",
                   ],
         "filter" : {
             "samples": ["ttHTobb",
@@ -185,6 +186,9 @@ cfg = Configurator(
         "spanet_tthbb" : HistConf(
             [Axis(coll="spanet_output", field="tthbb", bins=50, start=0, stop=1, label="tthbb SPANet score")],
         ),
+        "spanet_tthbb_transformed" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
         "spanet_ttbb" : HistConf(
             [Axis(coll="spanet_output", field="ttbb", bins=50, start=0, stop=1, label="ttbb SPANet score")],
         ),
@@ -210,7 +214,7 @@ cfg = Configurator(
                                pos_end=1, store_size=False, flatten=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
                         ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "ptbb_closest", "htbb_closest", "mbb_closest", "mbb_min", "mbb_max"], flatten=False),
-                        ColOut("spanet_output", ["tthbb", "ttbb", "ttcc", "ttlf"], flatten=False)
+                        ColOut("spanet_output", ["tthbb", "ttbb", "ttcc", "ttlf", "tthbb_transformed"], flatten=False)
                     ]
             }
         },
@@ -270,3 +274,4 @@ cloudpickle.register_pickle_by_value(workflow_spanet)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)
+cloudpickle.register_pickle_by_value(onnx_executor)
