@@ -5,9 +5,10 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagM
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow
-import workflow_spanet
+import workflow, workflow_spanet
 from workflow_spanet import SpanetInferenceProcessor
+import quantile_transformer
+from quantile_transformer import WeightedQuantileTransformer
 
 import custom_cut_functions
 import custom_cuts
@@ -32,6 +33,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
+                                                  f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
 cfg = Configurator(
@@ -267,3 +269,4 @@ cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(workflow_spanet)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
+cloudpickle.register_pickle_by_value(quantile_transformer)

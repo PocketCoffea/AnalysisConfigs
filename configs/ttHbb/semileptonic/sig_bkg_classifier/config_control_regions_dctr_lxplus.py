@@ -8,14 +8,14 @@ from pocket_coffea.parameters.histograms import *
 import workflow, workflow_spanet, workflow_control_regions, workflow_dctr
 from workflow_dctr import DCTRInferenceProcessor
 import onnx_executor
+import quantile_transformer
+from quantile_transformer import WeightedQuantileTransformer
 
 import custom_cut_functions
 import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 from params.axis_settings import axis_settings
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json
