@@ -53,6 +53,9 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "SingleTop",
                         "WJetsToLNu_HT",
+                        "DYJetsToLL",
+                        "VV",
+                        "TTV",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
@@ -79,7 +82,7 @@ cfg = Configurator(
 
     workflow = SpanetInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/output_columns_spanet_inference/spanet_inference_meanloss_18_08_24/",
+                        "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr",
                         "spanet_model": spanet_model_path},
     
     skim = [get_nPVgood(1),
@@ -169,6 +172,14 @@ cfg = Configurator(
             [Axis(coll="events", field="deltaRbb_avg", bins=50, start=0, stop=5,
                   label="$\Delta R_{bb}^{avg}$")]
         ),
+        "ptbb_closest" : HistConf(
+            [Axis(coll="events", field="ptbb_closest", bins=axis_settings["jet_pt"]["bins"], start=axis_settings["jet_pt"]["start"], stop=axis_settings["jet_pt"]["stop"],
+                    label="$p_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
+        "htbb_closest" : HistConf(
+            [Axis(coll="events", field="htbb_closest", bins=25, start=0, stop=2500,
+                    label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
         "spanet_tthbb" : HistConf(
             [Axis(coll="spanet_output", field="tthbb", bins=50, start=0, stop=1, label="tthbb SPANet score")],
         ),
@@ -196,7 +207,7 @@ cfg = Configurator(
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
                                pos_end=1, store_size=False, flatten=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
-                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False),
+                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "ptbb_closest", "htbb_closest", "mbb_closest", "mbb_min", "mbb_max"], flatten=False),
                         ColOut("spanet_output", ["tthbb", "ttbb", "ttcc", "ttlf"], flatten=False)
                     ]
             }

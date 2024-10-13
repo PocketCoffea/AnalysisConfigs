@@ -1,6 +1,6 @@
 scaleout: 300
 chunksize: 20000
-mem-per-worker: "8GB"
+mem-per-worker: "6GB"
 disk-per-worker: "4GB"
 cores-per-worker: 1
 adaptive: false
@@ -11,6 +11,6 @@ custom-setup-commands: null
 conda-env: false
 death-timeout: "3600"
 worker-image: "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-el9-latest"
-local-virtualenv: "/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference"
+#local-virtualenv: "/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference"
 spanet_model: "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
-dctr_model: "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
+#dctr_model: "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
