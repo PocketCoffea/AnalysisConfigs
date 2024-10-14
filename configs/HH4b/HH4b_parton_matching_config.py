@@ -175,34 +175,6 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodMatched", pos=3),
         # **parton_hists(coll="JetGoodMatched"),
         # **{
-        #     f"GenHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="GenHiggs1Mass",
-        #                 bins=60,
-        #                 start=123,
-        #                 stop=126,
-        #                 label=f"GenHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"GenHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="GenHiggs2Mass",
-        #                 bins=60,
-        #                 start=123,
-        #                 stop=126,
-        #                 label=f"GenHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
         #     f"RecoHiggs1Mass": HistConf(
         #         [
         #             Axis(
@@ -231,61 +203,7 @@ cfg = Configurator(
         #     )
         # },
         # **{
-        #     f"PNetRegRecoHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="PNetRegRecoHiggs1Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"PNetRegRecoHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"PNetRegRecoHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="PNetRegRecoHiggs2Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"PNetRegRecoHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"AllGenHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="AllGenHiggs1Mass",
-        #                 bins=80,
-        #                 start=120,
-        #                 stop=130,
-        #                 label=f"AllGenHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"AllGenHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="AllGenHiggs2Mass",
-        #                 bins=80,
-        #                 start=120,
-        #                 stop=130,
-        #                 label=f"AllGenHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
+
     },
     columns={
         "common": {
