@@ -5,8 +5,8 @@ from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTse
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow, workflow_spanet, workflow_control_regions
-from workflow_control_regions import ControlRegionsProcessor
+import workflow, workflow_spanet
+from workflow_spanet import SpanetInferenceProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -97,7 +97,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ControlRegionsProcessor,
+    workflow = SpanetInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
                         "spanet_model": spanet_model_path},
     
@@ -239,7 +239,6 @@ cfg = Configurator(
 import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(workflow_spanet)
-cloudpickle.register_pickle_by_value(workflow_control_regions)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)
