@@ -17,8 +17,7 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         available_sf_ele_trigger_variations = [f"sf_ele_trigger_{v}" for v in variations_sf_ele_trigger]
         variations_sf_btag = ["hf", "lf", "hfstats1", "hfstats2", "lfstats1", "lfstats2", "cferr1", "cferr2"]
         available_sf_btag_variations = [f"sf_btag_{v}" for v in variations_sf_btag]
-        vars.update(available_sf_ele_trigger_variations)
-        vars.update(available_sf_btag_variations)
+        vars = vars + available_sf_ele_trigger_variations + available_sf_btag_variations
         return vars
 
     def apply_object_preselection(self, variation):
@@ -40,6 +39,13 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
 
     def define_common_variables_after_presel(self, variation):
         super().define_common_variables_before_presel(variation=variation)
+
+        # Compute the `is_electron` flag for LeptonGood
+        self.events["LeptonGood"] = ak.with_field(
+            self.events.LeptonGood,
+            ak.values_astype(self.events.LeptonGood.pdgId == 11, bool),
+            "is_electron"
+        )
 
         # Compute deltaR(b, b) of all possible b-jet pairs.
         # We require deltaR > 0 to exclude the deltaR between the jets with themselves
@@ -69,16 +75,20 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
 
         # Compute the invariant mass of the closest b-jet pair, the minimum and maximum invariant mass of all b-jet pairs
         mbb = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).mass
+        ptbb = (self.events.BJetGood[pairs_sorted.slot0] + self.events.BJetGood[pairs_sorted.slot1]).pt
+        htbb = self.events.BJetGood[pairs_sorted.slot0].pt + self.events.BJetGood[pairs_sorted.slot1].pt
         self.events["mbb_closest"] = mbb[:,0]
         self.events["mbb_min"] = ak.min(mbb, axis=1)
         self.events["mbb_max"] = ak.max(mbb, axis=1)
         self.events["deltaRbb_avg"] = ak.mean(deltaR_unique, axis=1)
+        self.events["ptbb_closest"] = ptbb[:,0]
+        self.events["htbb_closest"] = htbb[:,0]
 
         # Define labels for btagged jets at different working points
         for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
             self.events["JetGood"] = ak.with_field(
                 self.events.JetGood,
-                ak.values_astype(self.events.JetGood.btagDeepFlavB > val, int),
+                ak.values_astype(self.events.JetGood[self.params.btagging.working_point[self._year]["btagging_algorithm"]] > val, int),
                 f"btag_{wp}"
             )
 

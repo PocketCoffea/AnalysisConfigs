@@ -5,8 +5,11 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagM
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow
-from workflow import ttbarBackgroundProcessor
+import workflow, workflow_spanet
+from workflow_spanet import SpanetInferenceProcessor
+import onnx_executor
+import quantile_transformer
+from quantile_transformer import WeightedQuantileTransformer
 
 import custom_cut_functions
 import custom_cuts
@@ -15,6 +18,9 @@ from custom_cuts import *
 from params.axis_settings import axis_settings
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
+
+# Define SPANet model path for inference
+spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -28,6 +34,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
+                                                  f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
 cfg = Configurator(
@@ -76,9 +83,10 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = SpanetInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr"},
+                        "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr",
+                        "spanet_model": spanet_model_path},
     
     skim = [get_nPVgood(1),
             eventFlags,
@@ -111,12 +119,22 @@ cfg = Configurator(
     },
     
     variables = {
+        **count_hist(name="nLeptons", coll="LeptonGood",bins=3, start=0, stop=3),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **ele_hists(axis_settings=axis_settings),
+        **muon_hists(axis_settings=axis_settings),
+        **met_hists(coll="MET", axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=0, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=1, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=2, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=3, axis_settings=axis_settings),
+        **jet_hists(coll="JetGood", pos=4, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=0, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=1, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=2, axis_settings=axis_settings),
         **jet_hists(name="bjet",coll="BJetGood", pos=3, axis_settings=axis_settings),
+        **jet_hists(name="bjet",coll="BJetGood", pos=4, axis_settings=axis_settings),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=100, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -165,6 +183,21 @@ cfg = Configurator(
             [Axis(coll="events", field="htbb_closest", bins=25, start=0, stop=2500,
                     label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
         ),
+        "spanet_tthbb" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb", bins=50, start=0, stop=1, label="tthbb SPANet score")],
+        ),
+        "spanet_tthbb_transformed" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_ttbb" : HistConf(
+            [Axis(coll="spanet_output", field="ttbb", bins=50, start=0, stop=1, label="ttbb SPANet score")],
+        ),
+        "spanet_ttcc" : HistConf(
+            [Axis(coll="spanet_output", field="ttcc", bins=50, start=0, stop=1, label="ttcc SPANet score")],
+        ),
+        "spanet_ttlf" : HistConf(
+            [Axis(coll="spanet_output", field="ttlf", bins=50, start=0, stop=1, label="ttlf SPANet score")],
+        )
     },
     columns = {
         "common": {
@@ -180,7 +213,8 @@ cfg = Configurator(
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
                                pos_end=1, store_size=False, flatten=False),
                         ColOut("MET", ["phi","pt","significance"], flatten=False),
-                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "mbb_closest", "mbb_min", "mbb_max"], flatten=False)
+                        ColOut("events", ["JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "deltaRbb_min", "deltaEtabb_min", "deltaPhibb_min", "deltaRbb_avg", "ptbb_closest", "htbb_closest", "mbb_closest", "mbb_min", "mbb_max"], flatten=False),
+                        ColOut("spanet_output", ["tthbb", "ttbb", "ttcc", "ttlf", "tthbb_transformed"], flatten=False)
                     ]
             }
         },
@@ -236,5 +270,8 @@ cfg = Configurator(
 # Registering custom functions
 import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(workflow_spanet)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
+cloudpickle.register_pickle_by_value(quantile_transformer)
+cloudpickle.register_pickle_by_value(onnx_executor)

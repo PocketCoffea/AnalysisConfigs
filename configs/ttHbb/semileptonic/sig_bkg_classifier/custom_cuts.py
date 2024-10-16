@@ -50,3 +50,33 @@ def get_genTtbarId_100_eq(genTtbarId, name=None):
         if isinstance(genTtbarId, Iterable):
             name = f"genTtbarId_100_eq_" + "_".join([str(s) for s in genTtbarId])
     return Cut(name=name, params={"genTtbarId" : genTtbarId}, function=cuts_f.eq_genTtbarId_100)
+
+def get_SR(tthbb_transformed_wp, name=None):
+    if name == None:
+        name = f"spanet_sr_tthbb_{tthbb_transformed_wp}"
+    return Cut(name=name, params={"tthbb_transformed_wp" : tthbb_transformed_wp}, function=cuts_f.spanet_sr)
+
+def get_CR1(tthbb_transformed_wp, name=None):
+    if name == None:
+        name = f"spanet_cr1_tthbb_{tthbb_transformed_wp}"
+    return Cut(name=name, params={"tthbb_transformed_wp" : tthbb_transformed_wp}, function=cuts_f.spanet_cr1)
+
+def get_CR2(tthbb_transformed_wp_lo, tthbb_transformed_wp_hi, name=None):
+    if name == None:
+        name = f"spanet_cr2_tthbb_{tthbb_transformed_wp_lo}_{tthbb_transformed_wp_hi}"
+    return Cut(name=name, params={"tthbb_transformed_wp_lo" : tthbb_transformed_wp_lo, "tthbb_transformed_wp_hi" : tthbb_transformed_wp_hi}, function=cuts_f.spanet_cr2)
+
+def get_ttlf_max(ttlf_wp, name=None):
+    if name == None:
+        name = f"spanet_ttlf_max_ttlf_{ttlf_wp}"
+    return Cut(name=name, params={"ttlf_wp" : ttlf_wp}, function=cuts_f.spanet_ttlf_max)
+
+def get_ttlf_min(ttlf_wp, name=None):
+    if name == None:
+        name = f"spanet_ttlf_min_ttlf_{ttlf_wp}"
+    return Cut(name=name, params={"ttlf_wp" : ttlf_wp}, function=cuts_f.spanet_ttlf_min)
+
+def get_w_dctr_interval(w_dctr_lo, w_dctr_hi, name=None):
+    if name == None:
+        name = f"w_dctr_interval_{w_dctr_lo}_{w_dctr_hi}"
+    return Cut(name=name, params={"w_dctr_lo" : w_dctr_lo, "w_dctr_hi" : w_dctr_hi}, function=cuts_f.w_dctr_interval)

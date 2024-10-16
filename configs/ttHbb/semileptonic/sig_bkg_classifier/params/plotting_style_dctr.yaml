@@ -25,9 +25,21 @@ plotting_style:
     - TTToSemiLeptonic__TTToSemiLeptonic_tt+B
     - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF
     - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H
 
   rescale_samples:
-    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 0.7465542103437566
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 1.0
 
   opts_figure:
     datamc:

@@ -67,3 +67,57 @@ def eq_genTtbarId_100(events, params, year, sample, **kwargs):
         return mask
     else:
         raise Exception(f'params["genTtbarId"] must be an integer or an iterable of integers between 0 and 56.\nPossible choices:{allowed_ids}')
+
+def spanet_sr(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.tthbb_transformed >= params["tthbb_transformed_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_cr1(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.tthbb_transformed < params["tthbb_transformed_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_cr2(events, params, year, sample, **kwargs):
+
+    mask = (
+        (events.spanet_output.tthbb_transformed >= params["tthbb_transformed_wp_lo"]) &
+        (events.spanet_output.tthbb_transformed < params["tthbb_transformed_wp_hi"])
+    )
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_ttlf_max(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.ttlf < params["ttlf_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def spanet_ttlf_min(events, params, year, sample, **kwargs):
+
+    mask = events.spanet_output.ttlf >= params["ttlf_wp"]
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def w_dctr_interval(events, params, year, sample, **kwargs):
+
+    if type(params["w_dctr_hi"]) == str:
+        if params["w_dctr_hi"].lower() == "inf":
+            params["w_dctr_hi"] = float("inf")
+    if params["w_dctr_lo"] >= params["w_dctr_hi"]:
+        raise ValueError("The lower bound of the interval must be smaller than the upper bound.")
+
+    mask = (
+        (events.dctr_output.weight >= params["w_dctr_lo"]) &
+        (events.dctr_output.weight < params["w_dctr_hi"])
+    )
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)

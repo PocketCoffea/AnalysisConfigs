@@ -27,7 +27,7 @@ plotting_style:
     - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C
 
   rescale_samples:
-    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 0.7465542103437566
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 1.0
 
   opts_figure:
     datamc:

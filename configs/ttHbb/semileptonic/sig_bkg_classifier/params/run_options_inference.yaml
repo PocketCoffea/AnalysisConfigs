@@ -1,0 +1,14 @@
+scaleout: 300
+chunksize: 20000
+mem-per-worker: "8GB"
+disk-per-worker: "4GB"
+cores-per-worker: 1
+adaptive: false
+queue: "standard"
+walltime: "12:00:00"
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+local-virtualenv: false
+spanet_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+dctr_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/version_1/model_epoch700.onnx"
