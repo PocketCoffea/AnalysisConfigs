@@ -1,0 +1,31 @@
+scaleout: 300
+chunksize: 400000
+mem-per-worker: "2GB"
+disk-per-worker: "4GB"
+queue: "standard"
+walltime: "12:00:00"
+adaptive: false
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+death-timeout: "3600"
+group-samples:
+  signal:
+    - "ttHTobb"
+    - "ttHTobb_ttToSemiLep"
+  TTToSemiLeptonic:
+    - "TTToSemiLeptonic"
+  TTbbSemiLeptonic:
+    - "TTbbSemiLeptonic"
+  "TTTo2L2Nu_SingleTop":
+    - "TTTo2L2Nu"
+    - "SingleTop"
+  VJets:
+    - "WJetsToLNu_HT"
+    - "DYJetsToLL"
+  VV_TTV:
+    - "VV"
+    - "TTV"
+  DATA:
+    - "DATA_SingleEle"
+    - "DATA_SingleMuon"
