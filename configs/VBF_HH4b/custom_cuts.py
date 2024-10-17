@@ -102,7 +102,6 @@ hh4b_4b_region = Cut(
     function=cuts_f.hh4b_4b_cuts,
 )
 
-#TODO qvg selection 07 08 09
 qvg_05_region = Cut(
     name="qvg05",
     params={
@@ -115,6 +114,30 @@ qvg_06_region = Cut(
     name="qvg06",
     params={
         "qvg_cut" : 0.6,
+    },
+    function=cuts_f.qvg_cuts,
+)
+
+qvg_07_region = Cut(
+    name="qvg07",
+    params={
+        "qvg_cut" : 0.7,
+    },
+    function=cuts_f.qvg_cuts,
+)
+
+qvg_08_region = Cut(
+    name="qvg08",
+    params={
+        "qvg_cut" : 0.8,
+    },
+    function=cuts_f.qvg_cuts,
+)
+
+qvg_09_region = Cut(
+    name="qvg09",
+    params={
+        "qvg_cut" : 0.9,
     },
     function=cuts_f.qvg_cuts,
 )

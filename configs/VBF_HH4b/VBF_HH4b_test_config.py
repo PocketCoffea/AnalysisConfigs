@@ -78,6 +78,9 @@ cfg = Configurator(
         "4b_region": [hh4b_4b_region],  
         "4b_region_05qvg": [hh4b_4b_region, qvg_05_region],
         "4b_region_06qvg": [hh4b_4b_region, qvg_06_region],
+        "4b_region_07qvg": [hh4b_4b_region, qvg_07_region],
+        "4b_region_08qvg": [hh4b_4b_region, qvg_08_region],
+        "4b_region_09qvg": [hh4b_4b_region, qvg_09_region],
         # "2b_region": [hh4b_2b_region],
     },
     weights={
@@ -128,6 +131,22 @@ cfg = Configurator(
                     Axis(
                         coll=f"JetGoodVBF",
                         field="btagPNetQvG",
+                        pos = 0,
+                        bins=60,
+                        start=0,
+                        stop=1,
+                        label=f"JetGoodVBFQvG",
+                    )
+                ]
+            )
+        },
+        **{
+            f"JetGoodVBFQvG": HistConf(
+                [
+                    Axis(
+                        coll=f"JetGoodVBF",
+                        field="btagPNetQvG",
+                        pos = 1,
                         bins=60,
                         start=0,
                         stop=1,

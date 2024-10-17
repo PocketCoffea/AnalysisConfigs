@@ -25,10 +25,12 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "pt",
         )
 
-        self.events["JetGoodVBF"] = self.events.Jet
+
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
 
+        self.events["JetGoodVBF"] = self.events.Jet
         self.events["JetGoodVBF"] = jet_selection_nopu(self.events, "JetGoodVBF", self.params)
+        #self.events["JetGoodVBF"] = self.events.JetGood[:, :2] #Keep only the first 2 jets for QvG selection
 
         a = []
         for i in range(len(self.events)):
