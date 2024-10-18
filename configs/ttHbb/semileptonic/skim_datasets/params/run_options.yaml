@@ -1,0 +1,12 @@
+scaleout: 300
+chunksize: 200000
+mem-per-worker: "2GB"
+disk-per-worker: "4GB"
+queue: "standard"
+walltime: "12:00:00"
+tree-reduction: 20
+adaptive: false
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+death-timeout: "3600"
