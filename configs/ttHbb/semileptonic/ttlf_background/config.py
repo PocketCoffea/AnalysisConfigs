@@ -2,6 +2,7 @@ from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
+from pocket_coffea.lib.weights.common.common import common_weights
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -10,8 +11,10 @@ from workflow import ttbarBackgroundProcessor
 
 import custom_cut_functions
 import custom_cuts
+import custom_weights
 from custom_cut_functions import *
 from custom_cuts import *
+from custom_weights import SF_top_pt
 from params.axis_settings import axis_settings
 
 import os
@@ -32,6 +35,15 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   update=True)
 
 categories_to_calibrate = ["semilep", "4j", "5j", "6j", ">=6j", ">=7j"]
+categories_sf_top_pt = ["semilep_top_reweighting", "4j_top_reweighting", "5j_top_reweighting", "6j_top_reweighting", ">=6j_top_reweighting", ">=7j_top_reweighting"]
+samples_top = ["TTbbSemiLeptonic", "TTToSemiLeptonic", "TTTo2L2Nu"]
+columns = {
+    "bycategory": {
+        "semilep": [
+            ColOut("events", ["top_pt", "antitop_pt", "sf_top_pt", "JetGood_Ht", "BJetGood_Ht", "LightJetGood_Ht", "nJetGood", "nBJetGood"], flatten=False)
+        ]
+    }
+}
 
 cfg = Configurator(
     parameters = parameters,
@@ -59,9 +71,9 @@ cfg = Configurator(
                         "DATA_SingleMuon"
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
-                     "2017",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
+                     #"2017",
                      "2018"
                      ] #All the years
         },
@@ -87,31 +99,38 @@ cfg = Configurator(
     },
 
     workflow = ttbarBackgroundProcessor,
-    workflow_options = {"parton_jet_min_dR": 0.3,},
+    workflow_options = {"parton_jet_min_dR": 0.3,
+                        "samples_top": samples_top},
     
     skim = [get_nPVgood(1),
             eventFlags,
             goldenJson,
             get_nObj_min(4, 15., "Jet"),
-            get_nBtagMin(3, 15., coll="Jet", wp="M"),
+            get_nBtagMin(2, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [semileptonic_presel_2b],
     categories = {
         "semilep_uncalibrated": [passthrough],
         "semilep": [passthrough],
-        "4j": [get_nObj_eq(4, coll="JetGood")],
-        "5j": [get_nObj_eq(5, coll="JetGood")],
-        "6j": [get_nObj_eq(6, coll="JetGood")],
-        ">=6j": [get_nObj_min(6, coll="JetGood")],
-        ">=7j": [get_nObj_min(7, coll="JetGood")],
+        "semilep_top_reweighting": [passthrough],
         "4j_uncalibrated": [get_nObj_eq(4, coll="JetGood")],
         "5j_uncalibrated": [get_nObj_eq(5, coll="JetGood")],
         "6j_uncalibrated": [get_nObj_eq(6, coll="JetGood")],
         ">=6j_uncalibrated": [get_nObj_min(6, coll="JetGood")],
         ">=7j_uncalibrated": [get_nObj_min(7, coll="JetGood")],
+        "4j": [get_nObj_eq(4, coll="JetGood")],
+        "5j": [get_nObj_eq(5, coll="JetGood")],
+        "6j": [get_nObj_eq(6, coll="JetGood")],
+        ">=6j": [get_nObj_min(6, coll="JetGood")],
+        ">=7j": [get_nObj_min(7, coll="JetGood")],
+        "4j_top_reweighting": [get_nObj_eq(4, coll="JetGood")],
+        "5j_top_reweighting": [get_nObj_eq(5, coll="JetGood")],
+        "6j_top_reweighting": [get_nObj_eq(6, coll="JetGood")],
+        ">=6j_top_reweighting": [get_nObj_min(6, coll="JetGood")],
+        ">=7j_top_reweighting": [get_nObj_min(7, coll="JetGood")],
     },
-
+    weights_classes = common_weights + [SF_top_pt],
     weights= {
         "common": {
             "inclusive": [
@@ -120,11 +139,10 @@ cfg = Configurator(
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag",
-                "sf_jet_puId",
+                "sf_jet_puId"
             ],
-            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate } | { cat : ["sf_btag_calib", "sf_top_pt"] for cat in categories_sf_top_pt}
         },
-        "bysample": {},
     },
     variations = {
         "weights": {
@@ -135,9 +153,8 @@ cfg = Configurator(
                               "sf_btag",
                               "sf_jet_puId",
                               ],
-                "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+                "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate } | { cat : ["sf_btag_calib", "sf_top_pt"] for cat in categories_sf_top_pt}
             },
-            "bysample": {}
         },
     },
     
@@ -210,6 +227,15 @@ cfg = Configurator(
                   label="$\Delta R_{bb}^{avg}$")]
         )
     },
+    columns = {
+        "common": {
+            "inclusive": [],
+            "bycategory": {}
+        },
+        "bysample": {
+            sample : columns for sample in samples_top
+        }
+    }
 )
 
 # Registering custom functions
@@ -217,3 +243,4 @@ import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
+cloudpickle.register_pickle_by_value(custom_weights)

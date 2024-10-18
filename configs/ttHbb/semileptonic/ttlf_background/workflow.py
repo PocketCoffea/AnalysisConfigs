@@ -4,6 +4,7 @@ from pocket_coffea.lib.objects import btagging
 from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 from pocket_coffea.lib.deltaR_matching import object_matching
 from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb, get_partons_provenance_ttbb4F, get_partons_provenance_tt5F
+from custom_weights import get_sf_top_pt
 
 class ttbarBackgroundProcessor(ttHbbBaseProcessor):
     def __init__(self, cfg) -> None:
@@ -83,6 +84,18 @@ class ttbarBackgroundProcessor(ttHbbBaseProcessor):
         self.events["deltaRbb_avg"] = ak.mean(deltaR_unique, axis=1)
         self.events["ptbb_closest"] = ptbb[:,0]
         self.events["htbb_closest"] = htbb[:,0]
+
+        # Save top and anti-top pT
+        samples_top = self.workflow_options["samples_top"]
+        if self._isMC & (self._sample in samples_top):
+            mask_tops = ~ak.is_none(self.events.GenPart.parent, axis=1) & self.events.GenPart.hasFlags("isLastCopy") & (abs(self.events.GenPart.pdgId) == 6)
+            part = self.events.GenPart[mask_tops]
+            assert all(ak.num(part.pt, axis=1) == 2), f"There should be exactly 2 tops in the event. Please check the mask to select the top and anti-top GenParticles. Sample: {self._sample}"
+            top = part[part.pdgId == 6][:,0]
+            antitop = part[part.pdgId == -6][:,0]
+            self.events["top_pt"] = top.pt
+            self.events["antitop_pt"] = antitop.pt
+            self.events["sf_top_pt"] = get_sf_top_pt(self.events, self.events.metadata)
 
         # Define labels for btagged jets at different working points
         for wp, val in self.params.btagging.working_point[self._year]["btagging_WP"].items():
