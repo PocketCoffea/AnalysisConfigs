@@ -32,15 +32,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["JetGoodVBF"] = jet_selection_nopu(self.events, "JetGoodVBF", self.params)
         #self.events["JetGoodVBF"] = self.events.JetGood[:, :2] #Keep only the first 2 jets for QvG selection
 
-        a = []
-        for i in range(len(self.events)):
-            if(len(self.events.JetGoodVBF[i]) >= 2):
-                eta0 = self.events.JetGoodVBF.eta[i,0]
-                eta1 = self.events.JetGoodVBF.eta[i,1]
-                a.append(abs(eta0 - eta1))
-            else:
-                a.append(False)
-        self.events["deltaEta"] = ak.Array(a)
+        self.events["JetVBF_generalSelection"] = self.events.Jet
+        self.events["JetVBF_generalSelection"] = jet_selection_nopu(self.events, "JetVBF_generalSelection", self.params)
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
@@ -56,32 +49,6 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["JetGoodHiggsPtOrder"] = self.events.JetGoodHiggs[
             ak.argsort(self.events.JetGoodHiggs.pt, axis=1, ascending=False)
         ]
-
-    def reconstruct_higgs(self, jet_collection, idx_collection):
-        higgs_1 = ak.unflatten(
-            jet_collection[np.arange(len(idx_collection)), idx_collection[:, 0, 0]]
-            + jet_collection[np.arange(len(idx_collection)), idx_collection[:, 0, 1]],
-            1,
-        )
-        higgs_2 = ak.unflatten(
-            jet_collection[np.arange(len(idx_collection)), idx_collection[:, 1, 0]]
-            + jet_collection[np.arange(len(idx_collection)), idx_collection[:, 1, 1]],
-            1,
-        )
-
-        higgs_leading_index = ak.where(higgs_1.pt > higgs_2.pt, 0, 1)
-
-        higgs_lead = ak.where(higgs_leading_index == 0, higgs_1, higgs_2)
-        higgs_sub = ak.where(higgs_leading_index == 0, higgs_2, higgs_1)
-
-        higgs_leading_index_expanded = higgs_leading_index[
-            :, np.newaxis, np.newaxis
-        ] * np.ones((2, 2))
-        idx_ordered = ak.where(
-            higgs_leading_index_expanded == 0, idx_collection, idx_collection[:, ::-1]
-        )[0]
-
-        return higgs_lead, higgs_sub, idx_ordered
 
     def do_parton_matching(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
@@ -198,6 +165,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood, axis=1)
         self.events["nJetGoodHiggs"] = ak.num(self.events.JetGoodHiggs, axis=1)
         self.events["nJetGoodVBF"] = ak.num(self.events.JetGoodVBF, axis=1)
+        self.events["nJetVBF_generalSelection"] = ak.num(self.events.JetVBF_generalSelection, axis=1)
 
     def reconstruct_higgs_candidates(self, matched_jets_higgs):
 
@@ -227,42 +195,19 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
             self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
 
-            # collection with the pt regressed without neutrino
-            self.events["JetGoodHiggsRegMatched"] = ak.with_field(
-                self.events.JetGoodHiggsMatched,
-                self.events.JetGoodHiggsMatched.pt
-                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
-                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr,
-                "pt",
-            )
-            # collection with the pt regressed with neutrino
-            self.events["JetGoodHiggsRegNeutrinoMatched"] = ak.with_field(
-                self.events.JetGoodHiggsMatched,
-                self.events.JetGoodHiggsMatched.pt
-                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
-                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr
-                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorrNeutrino,
-                "pt",
-            )
-
             # reconstruct the higgs candidates
             self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
                 self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
             )
+            # todo vbf matching poi
+            
+            #Create new variable delta eta
+            JetGoodVBF_padded = ak.pad_none(self.events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
+            self.events["deltaEta"] = ak.where(ak.num(self.events.JetGoodVBF, axis=1) > 1, 
+                                               abs(JetGoodVBF_padded.eta[:,0] - JetGoodVBF_padded.eta[:,1]), -1)
 
-            # reconstruct the higgs candidates with the pt regressed without neutrino
-            self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = (
-                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsRegMatched)
-            )
-
-            # reconstruct the higgs candidates with the pt regressed with neutrino
-            (
-                self.events["PNetRegNeutrinoRecoHiggs1"],
-                self.events["PNetRegNeutrinoRecoHiggs2"],
-            ) = self.reconstruct_higgs_candidates(
-                self.events.JetGoodHiggsRegNeutrinoMatched
-            )
-
+            #Create new variable for invariant mass of the jets
+            self.events["jj_mass"]=(self.events.JetVBF_generalSelection[:,0]+self.events.JetVBF_generalSelection[:,1]).mass
 
         else:
             self.dummy_provenance()

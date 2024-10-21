@@ -79,8 +79,6 @@ hh4b_presel = Cut(
         "pt_jet2": 45,
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
-        "njet_vbf": 2,
-        "delta_eta": 5,
     },
     function=cuts_f.hh4b_presel_cuts,
 )
@@ -102,44 +100,34 @@ hh4b_4b_region = Cut(
     function=cuts_f.hh4b_4b_cuts,
 )
 
-qvg_05_region = Cut(
-    name="qvg05",
+VBF_region = Cut(
+    name="VBF",
     params={
-        "qvg_cut" : 0.5,
+        "njet_vbf": 2,
+        "delta_eta": 5,
     },
-    function=cuts_f.qvg_cuts,
+    function=cuts_f.VBF_cuts,
 )
 
-qvg_06_region = Cut(
-    name="qvg06",
+VBF_generalSelection_region = Cut(
+    name="4b_VBF_genSel",
     params={
-        "qvg_cut" : 0.6,
+        "njet_vbf": 2,
+        "pt_VBFjet0": 30,
+        "eta_product": 0,
+        "mjj": 250,
     },
-    function=cuts_f.qvg_cuts,
+    function=cuts_f.VBF_generalSelection_cuts,
 )
 
-qvg_07_region = Cut(
-    name="qvg07",
-    params={
-        "qvg_cut" : 0.7,
-    },
-    function=cuts_f.qvg_cuts,
-)
-
-qvg_08_region = Cut(
-    name="qvg08",
-    params={
-        "qvg_cut" : 0.8,
-    },
-    function=cuts_f.qvg_cuts,
-)
-
-qvg_09_region = Cut(
-    name="qvg09",
-    params={
-        "qvg_cut" : 0.9,
-    },
-    function=cuts_f.qvg_cuts,
+qvg_regions = {}
+for i in range(5, 10):
+    qvg_regions[f'qvg_0{i}_region'] = Cut(
+        name=f'qvg0{i}',
+        params={
+            "qvg_cut": i/10
+        },
+        function=cuts_f.qvg_cuts,
 )
 
 def lepton_selection(events, lepton_flavour, params):
@@ -189,14 +177,21 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
     print(jet_type, cuts)
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
-    if "VBF" in jet_type:
+    if "GoodVBF" in jet_type:
         mask_presel_vbf = (
             (jets.pt > cuts["pt"])
             & (np.abs(jets.eta) > cuts["eta_min"])
             & (np.abs(jets.eta) < cuts["eta_max"])
             & (jets.jetId >= cuts["jetId"])
         )
-        mask_good_jets = mask_presel_vbf  # & mask_lepton_cleaning
+        mask_good_jets = mask_presel_vbf  
+    elif "VBF_generalSelection" in jet_type:
+        mask_presel_VBF_generalSelection = (
+            jets.pt > cuts["pt"] 
+            & (np.abs(jets.eta) < cuts["eta"])
+            & (jets.jetId >= cuts["jetId"])
+            & (jets.btagPNetB > cuts["btagPNetB"]))
+        mask_good_jets = mask_presel_VBF_generalSelection
     else:
         mask_presel = (
             (jets.pt > cuts["pt"])

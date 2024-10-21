@@ -75,12 +75,10 @@ cfg = Configurator(
         hh4b_presel
     ],
     categories={
-        "4b_region": [hh4b_4b_region],  
-        "4b_region_05qvg": [hh4b_4b_region, qvg_05_region],
-        "4b_region_06qvg": [hh4b_4b_region, qvg_06_region],
-        "4b_region_07qvg": [hh4b_4b_region, qvg_07_region],
-        "4b_region_08qvg": [hh4b_4b_region, qvg_08_region],
-        "4b_region_09qvg": [hh4b_4b_region, qvg_09_region],
+        **{"4b_region": [hh4b_4b_region]}, 
+        **{"4b_VBF_region": [hh4b_4b_region, VBF_region]}, 
+        **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
+        **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # "2b_region": [hh4b_2b_region],
     },
     weights={
@@ -170,6 +168,7 @@ cfg = Configurator(
             )
         },
     },
+    #TODO per gen sel
     columns={
         "common": {
             "inclusive": (
