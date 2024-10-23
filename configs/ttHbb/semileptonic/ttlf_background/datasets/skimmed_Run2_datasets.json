@@ -7,10 +7,10 @@
       "isMC": "True",
       "xsec": "46.605630000000005",
       "part": "200to400",
-      "nevents": 98902,
-      "size": 201228537,
-      "skim_efficiency": 0.0168699002205665,
-      "isSkim": true
+      "nevents": "98902",
+      "size": "201228537",
+      "skim_efficiency": "0.0168699002205665",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2016_PreVFP/DYJetsToLL_M-50_HT-200to400_200to400_2016_PreVFP_1.root"
@@ -23,10 +23,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "15.8274",
-      "nevents": 7382,
-      "size": 8914362,
-      "skim_efficiency": 0.005758190327613105,
-      "isSkim": true
+      "nevents": "7382",
+      "size": "8914362",
+      "skim_efficiency": "0.005758190327613105",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ZZ_2016_PreVFP/ZZ_2016_PreVFP_1.root"
@@ -40,10 +40,10 @@
       "isMC": "True",
       "xsec": "6.455886",
       "part": "400to600",
-      "nevents": 144968,
-      "size": 367124320,
-      "skim_efficiency": 0.026924445586870748,
-      "isSkim": true
+      "nevents": "144968",
+      "size": "367124320",
+      "skim_efficiency": "0.026924445586870748",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2017/DYJetsToLL_M-50_HT-400to600_400to600_2017_1.root"
@@ -57,10 +57,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "D",
-      "nevents": 1218436,
-      "size": 951099000,
-      "skim_efficiency": 0.012430737718816452,
-      "isSkim": true
+      "nevents": "1218436",
+      "size": "951099000",
+      "skim_efficiency": "0.012430737718816452",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PreVFP_EraD/DATA_SingleMuon_2016_PreVFP_EraD_1.root",
@@ -77,10 +77,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "E",
-      "nevents": 734516,
-      "size": 669644881,
-      "skim_efficiency": 0.006263489980160732,
-      "isSkim": true
+      "nevents": "734516",
+      "size": "669644881",
+      "skim_efficiency": "0.006263489980160732",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PreVFP_EraE/DATA_SingleEle_2016_PreVFP_EraE_1.root",
@@ -95,10 +95,10 @@
       "isMC": "True",
       "xsec": "199.3161",
       "part": "70to100",
-      "nevents": 42629,
-      "size": 63728832,
-      "skim_efficiency": 0.007232719875261075,
-      "isSkim": true
+      "nevents": "42629",
+      "size": "63728832",
+      "skim_efficiency": "0.007232719875261075",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2016_PostVFP/DYJetsToLL_M-50_HT-70to100_70to100_2016_PostVFP_1.root"
@@ -112,10 +112,10 @@
       "isMC": "True",
       "xsec": "0.004053405",
       "part": "2500toInf",
-      "nevents": 128639,
-      "size": 432773857,
-      "skim_efficiency": 0.06502820994609755,
-      "isSkim": true
+      "nevents": "128639",
+      "size": "432773857",
+      "skim_efficiency": "0.06502820994609755",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2018/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2018_1.root"
@@ -129,10 +129,10 @@
       "isMC": "True",
       "xsec": "0.02646",
       "part": "2500ToInf",
-      "nevents": 41719,
-      "size": 130651940,
-      "skim_efficiency": 0.03518515238690426,
-      "isSkim": true
+      "nevents": "41719",
+      "size": "130651940",
+      "skim_efficiency": "0.03518515238690426",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2017/WJetsToLNu_HT-2500ToInf_2500ToInf_2017_1.root"
@@ -146,10 +146,10 @@
       "isMC": "True",
       "xsec": "12.05",
       "part": "600To800",
-      "nevents": 111545,
-      "size": 271911033,
-      "skim_efficiency": 0.01445114600587011,
-      "isSkim": true
+      "nevents": "111545",
+      "size": "271911033",
+      "skim_efficiency": "0.01445114600587011",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-600To800_600To800_2018/WJetsToLNu_HT-600To800_600To800_2018_1.root"
@@ -163,10 +163,10 @@
       "isMC": "True",
       "xsec": "5.501",
       "part": "800To1200",
-      "nevents": 35127,
-      "size": 91050843,
-      "skim_efficiency": 0.016474317005498475,
-      "isSkim": true
+      "nevents": "35127",
+      "size": "91050843",
+      "skim_efficiency": "0.016474317005498475",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-800To1200_800To1200_2016_PostVFP/WJetsToLNu_HT-800To1200_800To1200_2016_PostVFP_1.root"
@@ -180,10 +180,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "D",
-      "nevents": 461304,
-      "size": 420436659,
-      "skim_efficiency": 0.00895512704920523,
-      "isSkim": true
+      "nevents": "461304",
+      "size": "420436659",
+      "skim_efficiency": "0.00895512704920523",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2017_EraD/DATA_SingleEle_2017_EraD_1.root",
@@ -198,10 +198,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "D",
-      "nevents": 4767716,
-      "size": 4913588644,
-      "skim_efficiency": 0.0063356282408650565,
-      "isSkim": true
+      "nevents": "4767716",
+      "size": "4913588644",
+      "skim_efficiency": "0.0063356282408650565",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2018_EraD/DATA_SingleEle_2018_EraD_1.root",
@@ -225,10 +225,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.2589",
-      "nevents": 1175487,
-      "size": 2980803088,
-      "skim_efficiency": 0.20295010359116022,
-      "isSkim": true
+      "nevents": "1175487",
+      "size": "2980803088",
+      "skim_efficiency": "0.20295010359116022",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToLLNuNu_2016_PreVFP/TTZToLLNuNu_2016_PreVFP_1.root",
@@ -244,10 +244,10 @@
       "isMC": "True",
       "xsec": "5.501",
       "part": "800To1200",
-      "nevents": 40965,
-      "size": 105381815,
-      "skim_efficiency": 0.01631755113649264,
-      "isSkim": true
+      "nevents": "40965",
+      "size": "105381815",
+      "skim_efficiency": "0.01631755113649264",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-800To1200_800To1200_2016_PreVFP/WJetsToLNu_HT-800To1200_800To1200_2016_PreVFP_1.root"
@@ -261,10 +261,10 @@
       "isMC": "True",
       "xsec": "80.95",
       "part": "t-channel_antitop_4f_InclusiveDecays",
-      "nevents": 818977,
-      "size": 1360693673,
-      "skim_efficiency": 0.026756084811656703,
-      "isSkim": true
+      "nevents": "818977",
+      "size": "1360693673",
+      "skim_efficiency": "0.026756084811656703",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PostVFP/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PostVFP_1.root",
@@ -279,10 +279,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.3708",
-      "nevents": 135270,
-      "size": 370642263,
-      "skim_efficiency": 0.13942787877288623,
-      "isSkim": true
+      "nevents": "135270",
+      "size": "370642263",
+      "skim_efficiency": "0.13942787877288623",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToQQ_2018/TTWJetsToQQ_2018_1.root"
@@ -296,10 +296,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_antitop_5f_NoFullyHadronicDecays",
-      "nevents": 1361797,
-      "size": 2739661204,
-      "skim_efficiency": 0.1243693388446357,
-      "isSkim": true
+      "nevents": "1361797",
+      "size": "2739661204",
+      "skim_efficiency": "0.1243693388446357",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2018/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2018_1.root",
@@ -316,10 +316,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "F",
-      "nevents": 861685,
-      "size": 701952327,
-      "skim_efficiency": 0.01499485977282418,
-      "isSkim": true
+      "nevents": "861685",
+      "size": "701952327",
+      "skim_efficiency": "0.01499485977282418",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PreVFP_EraF/DATA_SingleMuon_2016_PreVFP_EraF_1.root",
@@ -335,10 +335,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "B",
-      "nevents": 2727239,
-      "size": 2369773944,
-      "skim_efficiency": 0.022742529173076637,
-      "isSkim": true
+      "nevents": "2727239",
+      "size": "2369773944",
+      "skim_efficiency": "0.022742529173076637",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2018_EraB/DATA_SingleMuon_2018_EraB_1.root",
@@ -358,10 +358,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "B",
-      "nevents": 1175128,
-      "size": 880012593,
-      "skim_efficiency": 0.008621611934345014,
-      "isSkim": true
+      "nevents": "1175128",
+      "size": "880012593",
+      "skim_efficiency": "0.008621611934345014",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2017_EraB/DATA_SingleMuon_2017_EraB_1.root",
@@ -377,10 +377,10 @@
       "isMC": "True",
       "xsec": "80.95",
       "part": "t-channel_antitop_4f_InclusiveDecays",
-      "nevents": 776054,
-      "size": 1299810148,
-      "skim_efficiency": 0.0250146338318721,
-      "isSkim": true
+      "nevents": "776054",
+      "size": "1299810148",
+      "skim_efficiency": "0.0250146338318721",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PreVFP/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PreVFP_1.root",
@@ -395,10 +395,10 @@
       "isMC": "True",
       "xsec": "3.36",
       "part": "s-channel_4f_leptonDecays",
-      "nevents": 541290,
-      "size": 858687969,
-      "skim_efficiency": 0.0989380369219521,
-      "isSkim": true
+      "nevents": "541290",
+      "size": "858687969",
+      "skim_efficiency": "0.0989380369219521",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PostVFP/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PostVFP_1.root",
@@ -413,10 +413,10 @@
       "isMC": "True",
       "xsec": "6.455886",
       "part": "400to600",
-      "nevents": 248787,
-      "size": 619008198,
-      "skim_efficiency": 0.028654645906012688,
-      "isSkim": true
+      "nevents": "248787",
+      "size": "619008198",
+      "skim_efficiency": "0.028654645906012688",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2018/DYJetsToLL_M-50_HT-400to600_400to600_2018_1.root"
@@ -430,10 +430,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "F",
-      "nevents": 1522304,
-      "size": 1548258935,
-      "skim_efficiency": 0.011849746296765518,
-      "isSkim": true
+      "nevents": "1522304",
+      "size": "1548258935",
+      "skim_efficiency": "0.011849746296765518",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2017_EraF/DATA_SingleEle_2017_EraF_1.root",
@@ -450,10 +450,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_antitop_5f_NoFullyHadronicDecays",
-      "nevents": 985906,
-      "size": 2025559034,
-      "skim_efficiency": 0.11689663668404948,
-      "isSkim": true
+      "nevents": "985906",
+      "size": "2025559034",
+      "skim_efficiency": "0.11689663668404948",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2017/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2017_1.root",
@@ -469,10 +469,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "F",
-      "nevents": 120767,
-      "size": 94775829,
-      "skim_efficiency": 0.015050357076317312,
-      "isSkim": true
+      "nevents": "120767",
+      "size": "94775829",
+      "skim_efficiency": "0.015050357076317312",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PostVFP_EraF/DATA_SingleMuon_2016_PostVFP_EraF_1.root"
@@ -485,10 +485,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.3708",
-      "nevents": 86766,
-      "size": 245210799,
-      "skim_efficiency": 0.13246353535322694,
-      "isSkim": true
+      "nevents": "86766",
+      "size": "245210799",
+      "skim_efficiency": "0.13246353535322694",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToQQ_2017/TTWJetsToQQ_2017_1.root"
@@ -502,10 +502,10 @@
       "isMC": "True",
       "xsec": "12.05",
       "part": "600To800",
-      "nevents": 73474,
-      "size": 181458302,
-      "skim_efficiency": 0.013249783870947964,
-      "isSkim": true
+      "nevents": "73474",
+      "size": "181458302",
+      "skim_efficiency": "0.013249783870947964",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-600To800_600To800_2017/WJetsToLNu_HT-600To800_600To800_2017_1.root"
@@ -519,10 +519,10 @@
       "isMC": "True",
       "xsec": "1292.0",
       "part": "70To100",
-      "nevents": 27408,
-      "size": 34691479,
-      "skim_efficiency": 0.0014098815474190727,
-      "isSkim": true
+      "nevents": "27408",
+      "size": "34691479",
+      "skim_efficiency": "0.0014098815474190727",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-70To100_70To100_2016_PostVFP/WJetsToLNu_HT-70To100_70To100_2016_PostVFP_1.root"
@@ -535,10 +535,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.2589",
-      "nevents": 1292140,
-      "size": 3285152865,
-      "skim_efficiency": 0.21474821339537975,
-      "isSkim": true
+      "nevents": "1292140",
+      "size": "3285152865",
+      "skim_efficiency": "0.21474821339537975",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToLLNuNu_2016_PostVFP/TTZToLLNuNu_2016_PostVFP_1.root",
@@ -555,10 +555,10 @@
       "isMC": "True",
       "xsec": "0.004053405",
       "part": "2500toInf",
-      "nevents": 87911,
-      "size": 298049300,
-      "skim_efficiency": 0.05939743805433206,
-      "isSkim": true
+      "nevents": "87911",
+      "size": "298049300",
+      "skim_efficiency": "0.05939743805433206",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2017/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2017_1.root"
@@ -572,10 +572,10 @@
       "isMC": "True",
       "xsec": "0.02646",
       "part": "2500ToInf",
-      "nevents": 81232,
-      "size": 255093035,
-      "skim_efficiency": 0.03872527707222565,
-      "isSkim": true
+      "nevents": "81232",
+      "size": "255093035",
+      "skim_efficiency": "0.03872527707222565",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2018/WJetsToLNu_HT-2500ToInf_2500ToInf_2018_1.root"
@@ -589,10 +589,10 @@
       "isMC": "True",
       "xsec": "3.36",
       "part": "s-channel_4f_leptonDecays",
-      "nevents": 2376244,
-      "size": 3847911185,
-      "skim_efficiency": 0.12270185493658241,
-      "isSkim": true
+      "nevents": "2376244",
+      "size": "3847911185",
+      "skim_efficiency": "0.12270185493658241",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2018/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2018_1.root",
@@ -611,10 +611,10 @@
       "isMC": "True",
       "xsec": "46.605630000000005",
       "part": "200to400",
-      "nevents": 104856,
-      "size": 212623509,
-      "skim_efficiency": 0.018546169625924733,
-      "isSkim": true
+      "nevents": "104856",
+      "size": "212623509",
+      "skim_efficiency": "0.018546169625924733",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2016_PostVFP/DYJetsToLL_M-50_HT-200to400_200to400_2016_PostVFP_1.root"
@@ -628,10 +628,10 @@
       "isMC": "True",
       "xsec": "199.3161",
       "part": "70to100",
-      "nevents": 150633,
-      "size": 228720693,
-      "skim_efficiency": 0.00885845473353919,
-      "isSkim": true
+      "nevents": "150633",
+      "size": "228720693",
+      "skim_efficiency": "0.00885845473353919",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2018/DYJetsToLL_M-50_HT-70to100_70to100_2018_1.root"
@@ -645,10 +645,10 @@
       "isMC": "True",
       "xsec": "0.02646",
       "part": "2500ToInf",
-      "nevents": 25930,
-      "size": 79824755,
-      "skim_efficiency": 0.036546142852713265,
-      "isSkim": true
+      "nevents": "25930",
+      "size": "79824755",
+      "skim_efficiency": "0.036546142852713265",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PostVFP/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PostVFP_1.root"
@@ -662,10 +662,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_antitop_5f_NoFullyHadronicDecays",
-      "nevents": 388693,
-      "size": 770778111,
-      "skim_efficiency": 0.1063598129434589,
-      "isSkim": true
+      "nevents": "388693",
+      "size": "770778111",
+      "skim_efficiency": "0.1063598129434589",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PostVFP/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PostVFP_1.root"
@@ -679,10 +679,10 @@
       "isMC": "True",
       "xsec": "48.91",
       "part": "400To600",
-      "nevents": 82723,
-      "size": 184331492,
-      "skim_efficiency": 0.011112663436337576,
-      "isSkim": true
+      "nevents": "82723",
+      "size": "184331492",
+      "skim_efficiency": "0.011112663436337576",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-400To600_400To600_2018/WJetsToLNu_HT-400To600_400To600_2018_1.root"
@@ -696,10 +696,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "D",
-      "nevents": 12059986,
-      "size": 10544741808,
-      "skim_efficiency": 0.023467121650707117,
-      "isSkim": true
+      "nevents": "12059986",
+      "size": "10544741808",
+      "skim_efficiency": "0.023467121650707117",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2018_EraD/DATA_SingleMuon_2018_EraD_1.root",
@@ -743,10 +743,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "D",
-      "nevents": 1041514,
-      "size": 836795619,
-      "skim_efficiency": 0.014802294317672438,
-      "isSkim": true
+      "nevents": "1041514",
+      "size": "836795619",
+      "skim_efficiency": "0.014802294317672438",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2017_EraD/DATA_SingleMuon_2017_EraD_1.root",
@@ -761,10 +761,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "65.5443",
-      "nevents": 34168,
-      "size": 41013705,
-      "skim_efficiency": 0.004306528863120746,
-      "isSkim": true
+      "nevents": "34168",
+      "size": "41013705",
+      "skim_efficiency": "0.004306528863120746",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WZ_2016_PreVFP/WZ_2016_PreVFP_1.root"
@@ -777,10 +777,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.2953",
-      "nevents": 2137451,
-      "size": 6165922953,
-      "skim_efficiency": 0.2210851261894911,
-      "isSkim": true
+      "nevents": "2137451",
+      "size": "6165922953",
+      "skim_efficiency": "0.2210851261894911",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_2018/ttHTobb_2018_1.root",
@@ -799,10 +799,10 @@
       "isMC": "True",
       "xsec": "1292.0",
       "part": "70To100",
-      "nevents": 78720,
-      "size": 105097514,
-      "skim_efficiency": 0.0017659525162467857,
-      "isSkim": true
+      "nevents": "78720",
+      "size": "105097514",
+      "skim_efficiency": "0.0017659525162467857",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-70To100_70To100_2017/WJetsToLNu_HT-70To100_70To100_2017_1.root"
@@ -816,10 +816,10 @@
       "isMC": "True",
       "xsec": "48.91",
       "part": "400To600",
-      "nevents": 19974,
-      "size": 43757940,
-      "skim_efficiency": 0.009441699373531382,
-      "isSkim": true
+      "nevents": "19974",
+      "size": "43757940",
+      "skim_efficiency": "0.009441699373531382",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-400To600_400To600_2016_PostVFP/WJetsToLNu_HT-400To600_400To600_2016_PostVFP_1.root"
@@ -833,10 +833,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "G",
-      "nevents": 1101650,
-      "size": 988906570,
-      "skim_efficiency": 0.00718327899834112,
-      "isSkim": true
+      "nevents": "1101650",
+      "size": "988906570",
+      "skim_efficiency": "0.00718327899834112",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PostVFP_EraG/DATA_SingleEle_2016_PostVFP_EraG_1.root",
@@ -852,10 +852,10 @@
       "isMC": "True",
       "xsec": "12.05",
       "part": "600To800",
-      "nevents": 28270,
-      "size": 67856490,
-      "skim_efficiency": 0.012059911353039294,
-      "isSkim": true
+      "nevents": "28270",
+      "size": "67856490",
+      "skim_efficiency": "0.012059911353039294",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-600To800_600To800_2016_PreVFP/WJetsToLNu_HT-600To800_600To800_2016_PreVFP_1.root"
@@ -869,10 +869,10 @@
       "isMC": "True",
       "xsec": "136.02",
       "part": "t-channel_top_4f_InclusiveDecays",
-      "nevents": 1302033,
-      "size": 2172382478,
-      "skim_efficiency": 0.023266792945086757,
-      "isSkim": true
+      "nevents": "1302033",
+      "size": "2172382478",
+      "skim_efficiency": "0.023266792945086757",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PreVFP/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PreVFP_1.root",
@@ -889,10 +889,10 @@
       "isMC": "True",
       "xsec": "1345.0",
       "part": "100To200",
-      "nevents": 49542,
-      "size": 70376276,
-      "skim_efficiency": 0.002507953089704858,
-      "isSkim": true
+      "nevents": "49542",
+      "size": "70376276",
+      "skim_efficiency": "0.002507953089704858",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-100To200_100To200_2016_PostVFP/WJetsToLNu_HT-100To200_100To200_2016_PostVFP_1.root"
@@ -906,10 +906,10 @@
       "isMC": "True",
       "xsec": "1.554279",
       "part": "600to800",
-      "nevents": 159868,
-      "size": 437866269,
-      "skim_efficiency": 0.031232112178351326,
-      "isSkim": true
+      "nevents": "159868",
+      "size": "437866269",
+      "skim_efficiency": "0.031232112178351326",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2017/DYJetsToLL_M-50_HT-600to800_600to800_2017_1.root"
@@ -922,10 +922,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "19.2",
-      "nevents": 2008183,
-      "size": 5176004531,
-      "skim_efficiency": 0.27438350974211806,
-      "isSkim": true
+      "nevents": "2008183",
+      "size": "5176004531",
+      "skim_efficiency": "0.27438350974211806",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTbbSemiLeptonic_4f_2017/TTbbSemiLeptonic_4f_2017_1.root",
@@ -942,10 +942,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.2953",
-      "nevents": 1660886,
-      "size": 4862919143,
-      "skim_efficiency": 0.2122538019169329,
-      "isSkim": true
+      "nevents": "1660886",
+      "size": "4862919143",
+      "skim_efficiency": "0.2122538019169329",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_2017/ttHTobb_2017_1.root",
@@ -963,10 +963,10 @@
       "isMC": "True",
       "xsec": "167.59380000000002",
       "part": "100to200",
-      "nevents": 95658,
-      "size": 159294744,
-      "skim_efficiency": 0.011502400511955304,
-      "isSkim": true
+      "nevents": "95658",
+      "size": "159294744",
+      "skim_efficiency": "0.011502400511955304",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2016_PostVFP/DYJetsToLL_M-50_HT-100to200_100to200_2016_PostVFP_1.root"
@@ -980,10 +980,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "C",
-      "nevents": 530925,
-      "size": 476882308,
-      "skim_efficiency": 0.005458829909409488,
-      "isSkim": true
+      "nevents": "530925",
+      "size": "476882308",
+      "skim_efficiency": "0.005458829909409488",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PreVFP_EraC/DATA_SingleEle_2016_PreVFP_EraC_1.root",
@@ -998,10 +998,10 @@
       "isMC": "True",
       "xsec": "167.59380000000002",
       "part": "100to200",
-      "nevents": 98052,
-      "size": 164217713,
-      "skim_efficiency": 0.010245723059522623,
-      "isSkim": true
+      "nevents": "98052",
+      "size": "164217713",
+      "skim_efficiency": "0.010245723059522623",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2016_PreVFP/DYJetsToLL_M-50_HT-100to200_100to200_2016_PreVFP_1.root"
@@ -1015,10 +1015,10 @@
       "isMC": "True",
       "xsec": "48.91",
       "part": "400To600",
-      "nevents": 54777,
-      "size": 124844030,
-      "skim_efficiency": 0.010016873083217198,
-      "isSkim": true
+      "nevents": "54777",
+      "size": "124844030",
+      "skim_efficiency": "0.010016873083217198",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-400To600_400To600_2017/WJetsToLNu_HT-400To600_400To600_2017_1.root"
@@ -1032,10 +1032,10 @@
       "isMC": "True",
       "xsec": "199.3161",
       "part": "70to100",
-      "nevents": 98867,
-      "size": 153816167,
-      "skim_efficiency": 0.008099896788109545,
-      "isSkim": true
+      "nevents": "98867",
+      "size": "153816167",
+      "skim_efficiency": "0.008099896788109545",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2017/DYJetsToLL_M-50_HT-70to100_70to100_2017_1.root"
@@ -1049,10 +1049,10 @@
       "isMC": "True",
       "xsec": "6.455886",
       "part": "400to600",
-      "nevents": 63702,
-      "size": 157451850,
-      "skim_efficiency": 0.025568592318585093,
-      "isSkim": true
+      "nevents": "63702",
+      "size": "157451850",
+      "skim_efficiency": "0.025568592318585093",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2016_PostVFP/DYJetsToLL_M-50_HT-400to600_400to600_2016_PostVFP_1.root"
@@ -1066,10 +1066,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "F",
-      "nevents": 4848211,
-      "size": 4389247170,
-      "skim_efficiency": 0.02002226554133877,
-      "isSkim": true
+      "nevents": "4848211",
+      "size": "4389247170",
+      "skim_efficiency": "0.02002226554133877",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2017_EraF/DATA_SingleMuon_2017_EraF_1.root",
@@ -1095,10 +1095,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "B",
-      "nevents": 1609727,
-      "size": 1235135141,
-      "skim_efficiency": 0.010002344735962133,
-      "isSkim": true
+      "nevents": "1609727",
+      "size": "1235135141",
+      "skim_efficiency": "0.010002344735962133",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PreVFP_EraB/DATA_SingleMuon_2016_PreVFP_EraB_1.root",
@@ -1116,10 +1116,10 @@
       "isMC": "True",
       "xsec": "3.36",
       "part": "s-channel_4f_leptonDecays",
-      "nevents": 1569205,
-      "size": 2599441126,
-      "skim_efficiency": 0.1152132892804699,
-      "isSkim": true
+      "nevents": "1569205",
+      "size": "2599441126",
+      "skim_efficiency": "0.1152132892804699",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2017/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2017_1.root",
@@ -1135,10 +1135,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "19.2",
-      "nevents": 2986961,
-      "size": 7552664123,
-      "skim_efficiency": 0.2877977461683233,
-      "isSkim": true
+      "nevents": "2986961",
+      "size": "7552664123",
+      "skim_efficiency": "0.2877977461683233",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTbbSemiLeptonic_4f_2018/TTbbSemiLeptonic_4f_2018_1.root",
@@ -1159,10 +1159,10 @@
       "isMC": "True",
       "xsec": "1.554279",
       "part": "600to800",
-      "nevents": 234900,
-      "size": 633919658,
-      "skim_efficiency": 0.03338558388032015,
-      "isSkim": true
+      "nevents": "234900",
+      "size": "633919658",
+      "skim_efficiency": "0.03338558388032015",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2018/DYJetsToLL_M-50_HT-600to800_600to800_2018_1.root"
@@ -1176,10 +1176,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_top_5f_NoFullyHadronicDecays",
-      "nevents": 323795,
-      "size": 643747412,
-      "skim_efficiency": 0.0982783420388002,
-      "isSkim": true
+      "nevents": "323795",
+      "size": "643747412",
+      "skim_efficiency": "0.0982783420388002",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PreVFP/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PreVFP_1.root"
@@ -1193,10 +1193,10 @@
       "isMC": "True",
       "xsec": "0.7167648",
       "part": "800to1200",
-      "nevents": 83382,
-      "size": 236858102,
-      "skim_efficiency": 0.034582684768015806,
-      "isSkim": true
+      "nevents": "83382",
+      "size": "236858102",
+      "skim_efficiency": "0.034582684768015806",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PreVFP/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PreVFP_1.root"
@@ -1210,10 +1210,10 @@
       "isMC": "True",
       "xsec": "48.91",
       "part": "400To600",
-      "nevents": 21230,
-      "size": 46771349,
-      "skim_efficiency": 0.008603857024402856,
-      "isSkim": true
+      "nevents": "21230",
+      "size": "46771349",
+      "skim_efficiency": "0.008603857024402856",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-400To600_400To600_2016_PreVFP/WJetsToLNu_HT-400To600_400To600_2016_PreVFP_1.root"
@@ -1227,10 +1227,10 @@
       "isMC": "True",
       "xsec": "359.7",
       "part": "200To400",
-      "nevents": 80435,
-      "size": 142522136,
-      "skim_efficiency": 0.005338268065011723,
-      "isSkim": true
+      "nevents": "80435",
+      "size": "142522136",
+      "skim_efficiency": "0.005338268065011723",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-200To400_200To400_2016_PostVFP/WJetsToLNu_HT-200To400_200To400_2016_PostVFP_1.root"
@@ -1244,10 +1244,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "H",
-      "nevents": 1303026,
-      "size": 1205739901,
-      "skim_efficiency": 0.010099262766203562,
-      "isSkim": true
+      "nevents": "1303026",
+      "size": "1205739901",
+      "skim_efficiency": "0.010099262766203562",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PostVFP_EraH/DATA_SingleEle_2016_PostVFP_EraH_1.root",
@@ -1263,10 +1263,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "19.2",
-      "nevents": 836831,
-      "size": 2083826710,
-      "skim_efficiency": 0.25963399416341565,
-      "isSkim": true
+      "nevents": "836831",
+      "size": "2083826710",
+      "skim_efficiency": "0.25963399416341565",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTbbSemiLeptonic_4f_2016_PostVFP/TTbbSemiLeptonic_4f_2016_PostVFP_1.root",
@@ -1282,10 +1282,10 @@
       "isMC": "True",
       "xsec": "3.36",
       "part": "s-channel_4f_leptonDecays",
-      "nevents": 509776,
-      "size": 812298311,
-      "skim_efficiency": 0.09238419717288873,
-      "isSkim": true
+      "nevents": "509776",
+      "size": "812298311",
+      "skim_efficiency": "0.09238419717288873",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PreVFP/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PreVFP_1.root",
@@ -1300,10 +1300,10 @@
       "isMC": "True",
       "xsec": "1292.0",
       "part": "70To100",
-      "nevents": 135207,
-      "size": 176773339,
-      "skim_efficiency": 0.0020417770659177156,
-      "isSkim": true
+      "nevents": "135207",
+      "size": "176773339",
+      "skim_efficiency": "0.0020417770659177156",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-70To100_70To100_2018/WJetsToLNu_HT-70To100_70To100_2018_1.root"
@@ -1317,10 +1317,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "B",
-      "nevents": 601630,
-      "size": 503520504,
-      "skim_efficiency": 0.009938139159717392,
-      "isSkim": true
+      "nevents": "601630",
+      "size": "503520504",
+      "skim_efficiency": "0.009938139159717392",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2017_EraB/DATA_SingleEle_2017_EraB_1.root",
@@ -1335,10 +1335,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "B",
-      "nevents": 1058535,
-      "size": 1068028888,
-      "skim_efficiency": 0.006881538801880951,
-      "isSkim": true
+      "nevents": "1058535",
+      "size": "1068028888",
+      "skim_efficiency": "0.006881538801880951",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2018_EraB/DATA_SingleEle_2018_EraB_1.root",
@@ -1353,10 +1353,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.1792",
-      "nevents": 2044886,
-      "size": 5643312608,
-      "skim_efficiency": 0.2863821144189039,
-      "isSkim": true
+      "nevents": "2044886",
+      "size": "5643312608",
+      "skim_efficiency": "0.2863821144189039",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToLNu_2017/TTWJetsToLNu_2017_1.root",
@@ -1375,10 +1375,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "A",
-      "nevents": 2919017,
-      "size": 2925621724,
-      "skim_efficiency": 0.008610333559518213,
-      "isSkim": true
+      "nevents": "2919017",
+      "size": "2925621724",
+      "skim_efficiency": "0.008610333559518213",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2018_EraA/DATA_SingleEle_2018_EraA_1.root",
@@ -1398,10 +1398,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.1298",
-      "nevents": 3584054,
-      "size": 10216678074,
-      "skim_efficiency": 0.3590157267354503,
-      "isSkim": true
+      "nevents": "3584054",
+      "size": "10216678074",
+      "skim_efficiency": "0.3590157267354503",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_1.root",
@@ -1423,10 +1423,10 @@
       "isMC": "True",
       "xsec": "1.152",
       "part": "1200To2500",
-      "nevents": 160000,
-      "size": 441670626,
-      "skim_efficiency": 0.024685575200130587,
-      "isSkim": true
+      "nevents": "160000",
+      "size": "441670626",
+      "skim_efficiency": "0.024685575200130587",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2018/WJetsToLNu_HT-1200To2500_1200To2500_2018_1.root"
@@ -1439,10 +1439,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.3708",
-      "nevents": 38051,
-      "size": 105306351,
-      "skim_efficiency": 0.12314917001906253,
-      "isSkim": true
+      "nevents": "38051",
+      "size": "105306351",
+      "skim_efficiency": "0.12314917001906253",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToQQ_2016_PostVFP/TTWJetsToQQ_2016_PostVFP_1.root"
@@ -1455,10 +1455,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "19.2",
-      "nevents": 742353,
-      "size": 1852692331,
-      "skim_efficiency": 0.2481301321717541,
-      "isSkim": true
+      "nevents": "742353",
+      "size": "1852692331",
+      "skim_efficiency": "0.2481301321717541",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTbbSemiLeptonic_4f_2016_PreVFP/TTbbSemiLeptonic_4f_2016_PreVFP_1.root",
@@ -1473,10 +1473,10 @@
       "isMC": "True",
       "xsec": "359.7",
       "part": "200To400",
-      "nevents": 383903,
-      "size": 685419135,
-      "skim_efficiency": 0.006593367676970857,
-      "isSkim": true
+      "nevents": "383903",
+      "size": "685419135",
+      "skim_efficiency": "0.006593367676970857",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-200To400_200To400_2018/WJetsToLNu_HT-200To400_200To400_2018_1.root"
@@ -1490,10 +1490,10 @@
       "isMC": "True",
       "xsec": "0.004053405",
       "part": "2500toInf",
-      "nevents": 55075,
-      "size": 183600425,
-      "skim_efficiency": 0.0763441843959834,
-      "isSkim": true
+      "nevents": "55075",
+      "size": "183600425",
+      "skim_efficiency": "0.0763441843959834",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PreVFP/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PreVFP_1.root"
@@ -1506,10 +1506,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "15.8274",
-      "nevents": 18989,
-      "size": 23754637,
-      "skim_efficiency": 0.007017368810051737,
-      "isSkim": true
+      "nevents": "18989",
+      "size": "23754637",
+      "skim_efficiency": "0.007017368810051737",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ZZ_2017/ZZ_2017_1.root"
@@ -1522,10 +1522,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "118.7",
-      "nevents": 22424,
-      "size": 26422932,
-      "skim_efficiency": 0.0014173566778332596,
-      "isSkim": true
+      "nevents": "22424",
+      "size": "26422932",
+      "skim_efficiency": "0.0014173566778332596",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WW_2016_PostVFP/WW_2016_PostVFP_1.root"
@@ -1538,10 +1538,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.3708",
-      "nevents": 32187,
-      "size": 89357463,
-      "skim_efficiency": 0.11855423284320947,
-      "isSkim": true
+      "nevents": "32187",
+      "size": "89357463",
+      "skim_efficiency": "0.11855423284320947",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToQQ_2016_PreVFP/TTWJetsToQQ_2016_PreVFP_1.root"
@@ -1555,10 +1555,10 @@
       "isMC": "True",
       "xsec": "1345.0",
       "part": "100To200",
-      "nevents": 48645,
-      "size": 69708979,
-      "skim_efficiency": 0.002238143635956241,
-      "isSkim": true
+      "nevents": "48645",
+      "size": "69708979",
+      "skim_efficiency": "0.002238143635956241",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-100To200_100To200_2016_PreVFP/WJetsToLNu_HT-100To200_100To200_2016_PreVFP_1.root"
@@ -1572,10 +1572,10 @@
       "isMC": "True",
       "xsec": "167.59380000000002",
       "part": "100to200",
-      "nevents": 359893,
-      "size": 606482310,
-      "skim_efficiency": 0.013735153609251819,
-      "isSkim": true
+      "nevents": "359893",
+      "size": "606482310",
+      "skim_efficiency": "0.013735153609251819",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2018/DYJetsToLL_M-50_HT-100to200_100to200_2018_1.root"
@@ -1588,10 +1588,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.1298",
-      "nevents": 1700506,
-      "size": 4760682375,
-      "skim_efficiency": 0.3401595033388723,
-      "isSkim": true
+      "nevents": "1700506",
+      "size": "4760682375",
+      "skim_efficiency": "0.3401595033388723",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_ttToSemiLep_2016_PostVFP/ttHTobb_ttToSemiLep_2016_PostVFP_1.root",
@@ -1609,10 +1609,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "F",
-      "nevents": 62888,
-      "size": 55293213,
-      "skim_efficiency": 0.00709940590679422,
-      "isSkim": true
+      "nevents": "62888",
+      "size": "55293213",
+      "skim_efficiency": "0.00709940590679422",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PostVFP_EraF/DATA_SingleEle_2016_PostVFP_EraF_1.root"
@@ -1626,10 +1626,10 @@
       "isMC": "True",
       "xsec": "80.95",
       "part": "t-channel_antitop_4f_InclusiveDecays",
-      "nevents": 3044874,
-      "size": 5162313912,
-      "skim_efficiency": 0.03184115364907401,
-      "isSkim": true
+      "nevents": "3044874",
+      "size": "5162313912",
+      "skim_efficiency": "0.03184115364907401",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2018/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2018_1.root",
@@ -1649,10 +1649,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "366.2852",
-      "nevents": 70902917,
-      "size": 157016433427,
-      "skim_efficiency": 0.20489093257660698,
-      "isSkim": true
+      "nevents": "70902917",
+      "size": "157016433427",
+      "skim_efficiency": "0.20489093257660698",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_1.root",
@@ -1841,10 +1841,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "E",
-      "nevents": 2701985,
-      "size": 2346180230,
-      "skim_efficiency": 0.017475141796170237,
-      "isSkim": true
+      "nevents": "2701985",
+      "size": "2346180230",
+      "skim_efficiency": "0.017475141796170237",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2017_EraE/DATA_SingleMuon_2017_EraE_1.root",
@@ -1864,10 +1864,10 @@
       "isMC": "True",
       "xsec": "6.455886",
       "part": "400to600",
-      "nevents": 64051,
-      "size": 158274030,
-      "skim_efficiency": 0.023575099783134552,
-      "isSkim": true
+      "nevents": "64051",
+      "size": "158274030",
+      "skim_efficiency": "0.023575099783134552",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2016_PreVFP/DYJetsToLL_M-50_HT-400to600_400to600_2016_PreVFP_1.root"
@@ -1881,10 +1881,10 @@
       "isMC": "True",
       "xsec": "12.05",
       "part": "600To800",
-      "nevents": 28546,
-      "size": 68425017,
-      "skim_efficiency": 0.012676930127670799,
-      "isSkim": true
+      "nevents": "28546",
+      "size": "68425017",
+      "skim_efficiency": "0.012676930127670799",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-600To800_600To800_2016_PostVFP/WJetsToLNu_HT-600To800_600To800_2016_PostVFP_1.root"
@@ -1897,10 +1897,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.1792",
-      "nevents": 885932,
-      "size": 2367998589,
-      "skim_efficiency": 0.266634724224059,
-      "isSkim": true
+      "nevents": "885932",
+      "size": "2367998589",
+      "skim_efficiency": "0.266634724224059",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToLNu_2016_PostVFP/TTWJetsToLNu_2016_PostVFP_1.root",
@@ -1916,10 +1916,10 @@
       "isMC": "True",
       "xsec": "136.02",
       "part": "t-channel_top_4f_InclusiveDecays",
-      "nevents": 3707994,
-      "size": 6415546715,
-      "skim_efficiency": 0.02854432923027182,
-      "isSkim": true
+      "nevents": "3707994",
+      "size": "6415546715",
+      "skim_efficiency": "0.02854432923027182",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2017/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2017_1.root",
@@ -1942,10 +1942,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_top_5f_NoFullyHadronicDecays",
-      "nevents": 356952,
-      "size": 708747260,
-      "skim_efficiency": 0.10597157383011095,
-      "isSkim": true
+      "nevents": "356952",
+      "size": "708747260",
+      "skim_efficiency": "0.10597157383011095",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PostVFP/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PostVFP_1.root"
@@ -1959,10 +1959,10 @@
       "isMC": "True",
       "xsec": "1.554279",
       "part": "600to800",
-      "nevents": 70013,
-      "size": 185321892,
-      "skim_efficiency": 0.030442380447793838,
-      "isSkim": true
+      "nevents": "70013",
+      "size": "185321892",
+      "skim_efficiency": "0.030442380447793838",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2016_PostVFP/DYJetsToLL_M-50_HT-600to800_600to800_2016_PostVFP_1.root"
@@ -1976,10 +1976,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "C",
-      "nevents": 1105282,
-      "size": 1015757013,
-      "skim_efficiency": 0.00808913264233124,
-      "isSkim": true
+      "nevents": "1105282",
+      "size": "1015757013",
+      "skim_efficiency": "0.00808913264233124",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2017_EraC/DATA_SingleEle_2017_EraC_1.root",
@@ -1994,10 +1994,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "15.8274",
-      "nevents": 26135,
-      "size": 31861086,
-      "skim_efficiency": 0.007412081678956324,
-      "isSkim": true
+      "nevents": "26135",
+      "size": "31861086",
+      "skim_efficiency": "0.007412081678956324",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ZZ_2018/ZZ_2018_1.root"
@@ -2011,10 +2011,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "C",
-      "nevents": 1101859,
-      "size": 1152708198,
-      "skim_efficiency": 0.0074536604401832015,
-      "isSkim": true
+      "nevents": "1101859",
+      "size": "1152708198",
+      "skim_efficiency": "0.0074536604401832015",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2018_EraC/DATA_SingleEle_2018_EraC_1.root",
@@ -2030,10 +2030,10 @@
       "isMC": "True",
       "xsec": "167.59380000000002",
       "part": "100to200",
-      "nevents": 235351,
-      "size": 407180884,
-      "skim_efficiency": 0.012620341834729832,
-      "isSkim": true
+      "nevents": "235351",
+      "size": "407180884",
+      "skim_efficiency": "0.012620341834729832",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2017/DYJetsToLL_M-50_HT-100to200_100to200_2017_1.root"
@@ -2047,10 +2047,10 @@
       "isMC": "True",
       "xsec": "359.7",
       "part": "200To400",
-      "nevents": 251261,
-      "size": 460437983,
-      "skim_efficiency": 0.005942508036343332,
-      "isSkim": true
+      "nevents": "251261",
+      "size": "460437983",
+      "skim_efficiency": "0.005942508036343332",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-200To400_200To400_2017/WJetsToLNu_HT-200To400_200To400_2017_1.root"
@@ -2063,10 +2063,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.2953",
-      "nevents": 945381,
-      "size": 2684687634,
-      "skim_efficiency": 0.20453937689311985,
-      "isSkim": true
+      "nevents": "945381",
+      "size": "2684687634",
+      "skim_efficiency": "0.20453937689311985",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_2016_PreVFP/ttHTobb_2016_PreVFP_1.root",
@@ -2081,10 +2081,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.1792",
-      "nevents": 3136109,
-      "size": 8504530414,
-      "skim_efficiency": 0.30010612440191387,
-      "isSkim": true
+      "nevents": "3136109",
+      "size": "8504530414",
+      "skim_efficiency": "0.30010612440191387",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToLNu_2018/TTWJetsToLNu_2018_1.root",
@@ -2105,10 +2105,10 @@
       "isMC": "True",
       "xsec": "136.02",
       "part": "t-channel_top_4f_InclusiveDecays",
-      "nevents": 1625641,
-      "size": 2694972977,
-      "skim_efficiency": 0.025773960331679165,
-      "isSkim": true
+      "nevents": "1625641",
+      "size": "2694972977",
+      "skim_efficiency": "0.025773960331679165",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PostVFP/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PostVFP_1.root",
@@ -2125,10 +2125,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.1298",
-      "nevents": 3437335,
-      "size": 9954606131,
-      "skim_efficiency": 0.34400870696557245,
-      "isSkim": true
+      "nevents": "3437335",
+      "size": "9954606131",
+      "skim_efficiency": "0.34400870696557245",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_1.root",
@@ -2150,10 +2150,10 @@
       "isMC": "True",
       "xsec": "1.152",
       "part": "1200To2500",
-      "nevents": 107716,
-      "size": 302309104,
-      "skim_efficiency": 0.022666945559853522,
-      "isSkim": true
+      "nevents": "107716",
+      "size": "302309104",
+      "skim_efficiency": "0.022666945559853522",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2017/WJetsToLNu_HT-1200To2500_1200To2500_2017_1.root"
@@ -2167,10 +2167,10 @@
       "isMC": "True",
       "xsec": "1.554279",
       "part": "600to800",
-      "nevents": 77018,
-      "size": 205324720,
-      "skim_efficiency": 0.028720377379598382,
-      "isSkim": true
+      "nevents": "77018",
+      "size": "205324720",
+      "skim_efficiency": "0.028720377379598382",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2016_PreVFP/DYJetsToLL_M-50_HT-600to800_600to800_2016_PreVFP_1.root"
@@ -2184,10 +2184,10 @@
       "isMC": "True",
       "xsec": "136.02",
       "part": "t-channel_top_4f_InclusiveDecays",
-      "nevents": 5480171,
-      "size": 9256735330,
-      "skim_efficiency": 0.030729471335008075,
-      "isSkim": true
+      "nevents": "5480171",
+      "size": "9256735330",
+      "skim_efficiency": "0.030729471335008075",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018_1.root",
@@ -2214,10 +2214,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "C",
-      "nevents": 787878,
-      "size": 631637004,
-      "skim_efficiency": 0.011682424664717356,
-      "isSkim": true
+      "nevents": "787878",
+      "size": "631637004",
+      "skim_efficiency": "0.011682424664717356",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PreVFP_EraC/DATA_SingleMuon_2016_PreVFP_EraC_1.root",
@@ -2232,10 +2232,10 @@
       "isMC": "True",
       "xsec": "0.1721418",
       "part": "1200to2500",
-      "nevents": 87727,
-      "size": 263044745,
-      "skim_efficiency": 0.044512108184409115,
-      "isSkim": true
+      "nevents": "87727",
+      "size": "263044745",
+      "skim_efficiency": "0.044512108184409115",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PostVFP/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PostVFP_1.root"
@@ -2248,10 +2248,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "366.2852",
-      "nevents": 103231153,
-      "size": 223358864430,
-      "skim_efficiency": 0.21668643893469464,
-      "isSkim": true
+      "nevents": "103231153",
+      "size": "223358864430",
+      "skim_efficiency": "0.21668643893469464",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_1.root",
@@ -2519,10 +2519,10 @@
       "isMC": "True",
       "xsec": "0.1721418",
       "part": "1200to2500",
-      "nevents": 103811,
-      "size": 315893240,
-      "skim_efficiency": 0.04740955690005407,
-      "isSkim": true
+      "nevents": "103811",
+      "size": "315893240",
+      "skim_efficiency": "0.04740955690005407",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PreVFP/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PreVFP_1.root"
@@ -2535,10 +2535,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "118.7",
-      "nevents": 19808,
-      "size": 23530003,
-      "skim_efficiency": 0.0012490068730689199,
-      "isSkim": true
+      "nevents": "19808",
+      "size": "23530003",
+      "skim_efficiency": "0.0012490068730689199",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WW_2016_PreVFP/WW_2016_PreVFP_1.root"
@@ -2552,10 +2552,10 @@
       "isMC": "True",
       "xsec": "0.004053405",
       "part": "2500toInf",
-      "nevents": 43963,
-      "size": 148031069,
-      "skim_efficiency": 0.06309171353494707,
-      "isSkim": true
+      "nevents": "43963",
+      "size": "148031069",
+      "skim_efficiency": "0.06309171353494707",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PostVFP/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PostVFP_1.root"
@@ -2569,10 +2569,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "B",
-      "nevents": 1103075,
-      "size": 939716158,
-      "skim_efficiency": 0.004450336869007278,
-      "isSkim": true
+      "nevents": "1103075",
+      "size": "939716158",
+      "skim_efficiency": "0.004450336869007278",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PreVFP_EraB/DATA_SingleEle_2016_PreVFP_EraB_1.root",
@@ -2588,10 +2588,10 @@
       "isMC": "True",
       "xsec": "80.95",
       "part": "t-channel_antitop_4f_InclusiveDecays",
-      "nevents": 2066673,
-      "size": 3579630332,
-      "skim_efficiency": 0.029611465333199603,
-      "isSkim": true
+      "nevents": "2066673",
+      "size": "3579630332",
+      "skim_efficiency": "0.029611465333199603",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2017/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2017_1.root",
@@ -2609,10 +2609,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "88.5148",
-      "nevents": 10472783,
-      "size": 22011822135,
-      "skim_efficiency": 0.27923698173576855,
-      "isSkim": true
+      "nevents": "10472783",
+      "size": "22011822135",
+      "skim_efficiency": "0.27923698173576855",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTTo2L2Nu_2016_PreVFP/TTTo2L2Nu_2016_PreVFP_1.root",
@@ -2651,10 +2651,10 @@
       "isMC": "True",
       "xsec": "1345.0",
       "part": "100To200",
-      "nevents": 139200,
-      "size": 207438158,
-      "skim_efficiency": 0.002935193706337412,
-      "isSkim": true
+      "nevents": "139200",
+      "size": "207438158",
+      "skim_efficiency": "0.002935193706337412",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-100To200_100To200_2017/WJetsToLNu_HT-100To200_100To200_2017_1.root"
@@ -2667,10 +2667,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "65.5443",
-      "nevents": 35327,
-      "size": 41972737,
-      "skim_efficiency": 0.004658095991561181,
-      "isSkim": true
+      "nevents": "35327",
+      "size": "41972737",
+      "skim_efficiency": "0.004658095991561181",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WZ_2016_PostVFP/WZ_2016_PostVFP_1.root"
@@ -2684,10 +2684,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "H",
-      "nevents": 2688365,
-      "size": 2163572119,
-      "skim_efficiency": 0.015447251797918265,
-      "isSkim": true
+      "nevents": "2688365",
+      "size": "2163572119",
+      "skim_efficiency": "0.015447251797918265",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PostVFP_EraH/DATA_SingleMuon_2016_PostVFP_EraH_1.root",
@@ -2706,10 +2706,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.6012",
-      "nevents": 4517656,
-      "size": 12298871512,
-      "skim_efficiency": 0.1397886011383644,
-      "isSkim": true
+      "nevents": "4517656",
+      "size": "12298871512",
+      "skim_efficiency": "0.1397886011383644",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToQQ_2016_PreVFP/TTZToQQ_2016_PreVFP_1.root",
@@ -2733,10 +2733,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.6012",
-      "nevents": 9562151,
-      "size": 26400754844,
-      "skim_efficiency": 0.16169779051964356,
-      "isSkim": true
+      "nevents": "9562151",
+      "size": "26400754844",
+      "skim_efficiency": "0.16169779051964356",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToQQ_2018/TTZToQQ_2018_1.root",
@@ -2773,10 +2773,10 @@
       "isMC": "True",
       "xsec": "0.7167648",
       "part": "800to1200",
-      "nevents": 248287,
-      "size": 708839037,
-      "skim_efficiency": 0.03787935305451266,
-      "isSkim": true
+      "nevents": "248287",
+      "size": "708839037",
+      "skim_efficiency": "0.03787935305451266",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2018/DYJetsToLL_M-50_HT-800to1200_800to1200_2018_1.root"
@@ -2790,10 +2790,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "E",
-      "nevents": 1139521,
-      "size": 1108391652,
-      "skim_efficiency": 0.01115842214495194,
-      "isSkim": true
+      "nevents": "1139521",
+      "size": "1108391652",
+      "skim_efficiency": "0.01115842214495194",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2017_EraE/DATA_SingleEle_2017_EraE_1.root",
@@ -2809,10 +2809,10 @@
       "isMC": "True",
       "xsec": "46.605630000000005",
       "part": "200to400",
-      "nevents": 249352,
-      "size": 524230841,
-      "skim_efficiency": 0.020025537073207908,
-      "isSkim": true
+      "nevents": "249352",
+      "size": "524230841",
+      "skim_efficiency": "0.020025537073207908",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2017/DYJetsToLL_M-50_HT-200to400_200to400_2017_1.root"
@@ -2826,10 +2826,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_top_5f_NoFullyHadronicDecays",
-      "nevents": 990897,
-      "size": 2039554561,
-      "skim_efficiency": 0.11647741331669174,
-      "isSkim": true
+      "nevents": "990897",
+      "size": "2039554561",
+      "skim_efficiency": "0.11647741331669174",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2017/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2017_1.root",
@@ -2844,10 +2844,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.1792",
-      "nevents": 717431,
-      "size": 1935392901,
-      "skim_efficiency": 0.2517156907462167,
-      "isSkim": true
+      "nevents": "717431",
+      "size": "1935392901",
+      "skim_efficiency": "0.2517156907462167",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTWJetsToLNu_2016_PreVFP/TTWJetsToLNu_2016_PreVFP_1.root",
@@ -2862,10 +2862,10 @@
       "isMC": "True",
       "xsec": "0.02646",
       "part": "2500ToInf",
-      "nevents": 36972,
-      "size": 114649832,
-      "skim_efficiency": 0.045720702059855386,
-      "isSkim": true
+      "nevents": "36972",
+      "size": "114649832",
+      "skim_efficiency": "0.045720702059855386",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PreVFP/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PreVFP_1.root"
@@ -2879,10 +2879,10 @@
       "isMC": "True",
       "xsec": "199.3161",
       "part": "70to100",
-      "nevents": 42490,
-      "size": 63853901,
-      "skim_efficiency": 0.006318937240713884,
-      "isSkim": true
+      "nevents": "42490",
+      "size": "63853901",
+      "skim_efficiency": "0.006318937240713884",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2016_PreVFP/DYJetsToLL_M-50_HT-70to100_70to100_2016_PreVFP_1.root"
@@ -2896,10 +2896,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "D",
-      "nevents": 814736,
-      "size": 710305305,
-      "skim_efficiency": 0.005498741301471136,
-      "isSkim": true
+      "nevents": "814736",
+      "size": "710305305",
+      "skim_efficiency": "0.005498741301471136",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PreVFP_EraD/DATA_SingleEle_2016_PreVFP_EraD_1.root",
@@ -2914,10 +2914,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "118.7",
-      "nevents": 30418,
-      "size": 36827028,
-      "skim_efficiency": 0.0019400471968875567,
-      "isSkim": true
+      "nevents": "30418",
+      "size": "36827028",
+      "skim_efficiency": "0.0019400471968875567",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WW_2018/WW_2018_1.root"
@@ -2930,10 +2930,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "88.5148",
-      "nevents": 34513810,
-      "size": 75166153656,
-      "skim_efficiency": 0.32339314493459764,
-      "isSkim": true
+      "nevents": "34513810",
+      "size": "75166153656",
+      "skim_efficiency": "0.32339314493459764",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_1.root",
@@ -3031,10 +3031,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "A",
-      "nevents": 5702287,
-      "size": 4998166185,
-      "skim_efficiency": 0.023601377125262852,
-      "isSkim": true
+      "nevents": "5702287",
+      "size": "4998166185",
+      "skim_efficiency": "0.023601377125262852",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2018_EraA/DATA_SingleMuon_2018_EraA_1.root",
@@ -3061,10 +3061,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "0.2589",
-      "nevents": 4714790,
-      "size": 12112374947,
-      "skim_efficiency": 0.24045236638106895,
-      "isSkim": true
+      "nevents": "4714790",
+      "size": "12112374947",
+      "skim_efficiency": "0.24045236638106895",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToLLNuNu_2018/TTZToLLNuNu_2018_1.root",
@@ -3088,10 +3088,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "65.5443",
-      "nevents": 43627,
-      "size": 54968809,
-      "skim_efficiency": 0.005530105209785778,
-      "isSkim": true
+      "nevents": "43627",
+      "size": "54968809",
+      "skim_efficiency": "0.005530105209785778",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WZ_2017/WZ_2017_1.root"
@@ -3105,10 +3105,10 @@
       "isMC": "True",
       "xsec": "0.1721418",
       "part": "1200to2500",
-      "nevents": 274868,
-      "size": 834355420,
-      "skim_efficiency": 0.04606730632090544,
-      "isSkim": true
+      "nevents": "274868",
+      "size": "834355420",
+      "skim_efficiency": "0.04606730632090544",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2018/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2018_1.root"
@@ -3122,10 +3122,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "E",
-      "nevents": 1255974,
-      "size": 1011648060,
-      "skim_efficiency": 0.013804230288431514,
-      "isSkim": true
+      "nevents": "1255974",
+      "size": "1011648060",
+      "skim_efficiency": "0.013804230288431514",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PreVFP_EraE/DATA_SingleMuon_2016_PreVFP_EraE_1.root",
@@ -3142,10 +3142,10 @@
       "isMC": "True",
       "xsec": "5.501",
       "part": "800To1200",
-      "nevents": 132593,
-      "size": 341959020,
-      "skim_efficiency": 0.018148043569101092,
-      "isSkim": true
+      "nevents": "132593",
+      "size": "341959020",
+      "skim_efficiency": "0.018148043569101092",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-800To1200_800To1200_2018/WJetsToLNu_HT-800To1200_800To1200_2018_1.root"
@@ -3158,10 +3158,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.2953",
-      "nevents": 1033964,
-      "size": 2928978129,
-      "skim_efficiency": 0.20943163864695158,
-      "isSkim": true
+      "nevents": "1033964",
+      "size": "2928978129",
+      "skim_efficiency": "0.20943163864695158",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_2016_PostVFP/ttHTobb_2016_PostVFP_1.root",
@@ -3177,10 +3177,10 @@
       "isMC": "True",
       "xsec": "46.605630000000005",
       "part": "200to400",
-      "nevents": 396300,
-      "size": 810737843,
-      "skim_efficiency": 0.021473019906350976,
-      "isSkim": true
+      "nevents": "396300",
+      "size": "810737843",
+      "skim_efficiency": "0.021473019906350976",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2018/DYJetsToLL_M-50_HT-200to400_200to400_2018_1.root"
@@ -3193,10 +3193,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "366.2852",
-      "nevents": 27586386,
-      "size": 58768029247,
-      "skim_efficiency": 0.1906163955722005,
-      "isSkim": true
+      "nevents": "27586386",
+      "size": "58768029247",
+      "skim_efficiency": "0.1906163955722005",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_1.root",
@@ -3277,10 +3277,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.6012",
-      "nevents": 9258178,
-      "size": 25917840421,
-      "skim_efficiency": 0.1544660390385136,
-      "isSkim": true
+      "nevents": "9258178",
+      "size": "25917840421",
+      "skim_efficiency": "0.1544660390385136",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToQQ_2017/TTZToQQ_2017_1.root",
@@ -3316,10 +3316,10 @@
       "isMC": "True",
       "xsec": "0.7167648",
       "part": "800to1200",
-      "nevents": 153426,
-      "size": 442936784,
-      "skim_efficiency": 0.0352933219972175,
-      "isSkim": true
+      "nevents": "153426",
+      "size": "442936784",
+      "skim_efficiency": "0.0352933219972175",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2017/DYJetsToLL_M-50_HT-800to1200_800to1200_2017_1.root"
@@ -3333,10 +3333,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "G",
-      "nevents": 2252367,
-      "size": 1796839856,
-      "skim_efficiency": 0.015024108464286092,
-      "isSkim": true
+      "nevents": "2252367",
+      "size": "1796839856",
+      "skim_efficiency": "0.015024108464286092",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2016_PostVFP_EraG/DATA_SingleMuon_2016_PostVFP_EraG_1.root",
@@ -3355,10 +3355,10 @@
       "isMC": "True",
       "xsec": "0.7167648",
       "part": "800to1200",
-      "nevents": 84223,
-      "size": 238372021,
-      "skim_efficiency": 0.03518122153271378,
-      "isSkim": true
+      "nevents": "84223",
+      "size": "238372021",
+      "skim_efficiency": "0.03518122153271378",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PostVFP/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PostVFP_1.root"
@@ -3372,10 +3372,10 @@
       "isMC": "True",
       "xsec": "1345.0",
       "part": "100To200",
-      "nevents": 172213,
-      "size": 250375223,
-      "skim_efficiency": 0.0033498630696080704,
-      "isSkim": true
+      "nevents": "172213",
+      "size": "250375223",
+      "skim_efficiency": "0.0033498630696080704",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-100To200_100To200_2018/WJetsToLNu_HT-100To200_100To200_2018_1.root"
@@ -3389,10 +3389,10 @@
       "isMC": "True",
       "xsec": "1.152",
       "part": "1200To2500",
-      "nevents": 48655,
-      "size": 131870687,
-      "skim_efficiency": 0.023273657166664834,
-      "isSkim": true
+      "nevents": "48655",
+      "size": "131870687",
+      "skim_efficiency": "0.023273657166664834",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2016_PostVFP/WJetsToLNu_HT-1200To2500_1200To2500_2016_PostVFP_1.root"
@@ -3406,10 +3406,10 @@
       "isMC": "True",
       "xsec": "359.7",
       "part": "200To400",
-      "nevents": 85812,
-      "size": 152503603,
-      "skim_efficiency": 0.004801787492421316,
-      "isSkim": true
+      "nevents": "85812",
+      "size": "152503603",
+      "skim_efficiency": "0.004801787492421316",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-200To400_200To400_2016_PreVFP/WJetsToLNu_HT-200To400_200To400_2016_PreVFP_1.root"
@@ -3423,10 +3423,10 @@
       "isMC": "True",
       "xsec": "0.1721418",
       "part": "1200to2500",
-      "nevents": 203050,
-      "size": 622510848,
-      "skim_efficiency": 0.04296503380494361,
-      "isSkim": true
+      "nevents": "203050",
+      "size": "622510848",
+      "skim_efficiency": "0.04296503380494361",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2017/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2017_1.root"
@@ -3439,10 +3439,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "65.5443",
-      "nevents": 47794,
-      "size": 58485689,
-      "skim_efficiency": 0.0060193954659949625,
-      "isSkim": true
+      "nevents": "47794",
+      "size": "58485689",
+      "skim_efficiency": "0.0060193954659949625",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WZ_2018/WZ_2018_1.root"
@@ -3455,10 +3455,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "0.2589",
-      "nevents": 3237788,
-      "size": 8477982644,
-      "skim_efficiency": 0.23067740096893702,
-      "isSkim": true
+      "nevents": "3237788",
+      "size": "8477982644",
+      "skim_efficiency": "0.23067740096893702",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToLLNuNu_2017/TTZToLLNuNu_2017_1.root",
@@ -3478,10 +3478,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "0.1298",
-      "nevents": 1658137,
-      "size": 4651679688,
-      "skim_efficiency": 0.3320155926309041,
-      "isSkim": true
+      "nevents": "1658137",
+      "size": "4651679688",
+      "skim_efficiency": "0.3320155926309041",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ttHTobb_ttToSemiLep_2016_PreVFP/ttHTobb_ttToSemiLep_2016_PreVFP_1.root",
@@ -3499,10 +3499,10 @@
       "isMC": "False",
       "primaryDataset": "SingleEle",
       "era": "F",
-      "nevents": 416628,
-      "size": 378666579,
-      "skim_efficiency": 0.006748615857313202,
-      "isSkim": true
+      "nevents": "416628",
+      "size": "378666579",
+      "skim_efficiency": "0.006748615857313202",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleEle_2016_PreVFP_EraF/DATA_SingleEle_2016_PreVFP_EraF_1.root",
@@ -3517,10 +3517,10 @@
       "isMC": "True",
       "xsec": "1.152",
       "part": "1200To2500",
-      "nevents": 54083,
-      "size": 149066496,
-      "skim_efficiency": 0.025511149895635563,
-      "isSkim": true
+      "nevents": "54083",
+      "size": "149066496",
+      "skim_efficiency": "0.025511149895635563",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2016_PreVFP/WJetsToLNu_HT-1200To2500_1200To2500_2016_PreVFP_1.root"
@@ -3534,10 +3534,10 @@
       "isMC": "True",
       "xsec": "1292.0",
       "part": "70To100",
-      "nevents": 20899,
-      "size": 26759357,
-      "skim_efficiency": 0.00123430723258916,
-      "isSkim": true
+      "nevents": "20899",
+      "size": "26759357",
+      "skim_efficiency": "0.00123430723258916",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-70To100_70To100_2016_PreVFP/WJetsToLNu_HT-70To100_70To100_2016_PreVFP_1.root"
@@ -3550,10 +3550,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "0.6012",
-      "nevents": 4038742,
-      "size": 10955352546,
-      "skim_efficiency": 0.14649270293509753,
-      "isSkim": true
+      "nevents": "4038742",
+      "size": "10955352546",
+      "skim_efficiency": "0.14649270293509753",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTZToQQ_2016_PostVFP/TTZToQQ_2016_PostVFP_1.root",
@@ -3576,10 +3576,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_antitop_5f_NoFullyHadronicDecays",
-      "nevents": 312938,
-      "size": 624958609,
-      "skim_efficiency": 0.09851707154291615,
-      "isSkim": true
+      "nevents": "312938",
+      "size": "624958609",
+      "skim_efficiency": "0.09851707154291615",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PreVFP/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PreVFP_1.root"
@@ -3593,10 +3593,10 @@
       "isMC": "True",
       "xsec": "5.501",
       "part": "800To1200",
-      "nevents": 84885,
-      "size": 222687182,
-      "skim_efficiency": 0.01668178905186477,
-      "isSkim": true
+      "nevents": "84885",
+      "size": "222687182",
+      "skim_efficiency": "0.01668178905186477",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WJetsToLNu_HT-800To1200_800To1200_2017/WJetsToLNu_HT-800To1200_800To1200_2017_1.root"
@@ -3609,10 +3609,10 @@
       "year": "2017",
       "isMC": "True",
       "xsec": "118.7",
-      "nevents": 26325,
-      "size": 32709328,
-      "skim_efficiency": 0.00168383011385442,
-      "isSkim": true
+      "nevents": "26325",
+      "size": "32709328",
+      "skim_efficiency": "0.00168383011385442",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/WW_2017/WW_2017_1.root"
@@ -3625,10 +3625,10 @@
       "year": "2018",
       "isMC": "True",
       "xsec": "88.5148",
-      "nevents": 49083247,
-      "size": 104591195241,
-      "skim_efficiency": 0.3384584677975452,
-      "isSkim": true
+      "nevents": "49083247",
+      "size": "104591195241",
+      "skim_efficiency": "0.3384584677975452",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_1.root",
@@ -3760,10 +3760,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "15.8274",
-      "nevents": 7201,
-      "size": 8781669,
-      "skim_efficiency": 0.00625629887054735,
-      "isSkim": true
+      "nevents": "7201",
+      "size": "8781669",
+      "skim_efficiency": "0.00625629887054735",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ZZ_2016_PostVFP/ZZ_2016_PostVFP_1.root"
@@ -3776,10 +3776,10 @@
       "year": "2016_PreVFP",
       "isMC": "True",
       "xsec": "366.2852",
-      "nevents": 23745426,
-      "size": 50817292703,
-      "skim_efficiency": 0.17964733919411702,
-      "isSkim": true
+      "nevents": "23745426",
+      "size": "50817292703",
+      "skim_efficiency": "0.17964733919411702",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_1.root",
@@ -3850,10 +3850,10 @@
       "year": "2016_PostVFP",
       "isMC": "True",
       "xsec": "88.5148",
-      "nevents": 12906437,
-      "size": 27023187500,
-      "skim_efficiency": 0.296386281173931,
-      "isSkim": true
+      "nevents": "12906437",
+      "size": "27023187500",
+      "skim_efficiency": "0.296386281173931",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_1.root",
@@ -3898,10 +3898,10 @@
       "isMC": "True",
       "xsec": "35.85",
       "part": "tW_top_5f_NoFullyHadronicDecays",
-      "nevents": 1396946,
-      "size": 2808177308,
-      "skim_efficiency": 0.12394788841242083,
-      "isSkim": true
+      "nevents": "1396946",
+      "size": "2808177308",
+      "skim_efficiency": "0.12394788841242083",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2018/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2018_1.root",
@@ -3918,10 +3918,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "C",
-      "nevents": 2783917,
-      "size": 2501992570,
-      "skim_efficiency": 0.02531155576342442,
-      "isSkim": true
+      "nevents": "2783917",
+      "size": "2501992570",
+      "skim_efficiency": "0.02531155576342442",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2018_EraC/DATA_SingleMuon_2018_EraC_1.root",
@@ -3941,10 +3941,10 @@
       "isMC": "False",
       "primaryDataset": "SingleMuon",
       "era": "C",
-      "nevents": 2313092,
-      "size": 1857817846,
-      "skim_efficiency": 0.013963498440074247,
-      "isSkim": true
+      "nevents": "2313092",
+      "size": "1857817846",
+      "skim_efficiency": "0.013963498440074247",
+      "isSkim": "True"
     },
     "files": [
       "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b_hadd/DATA_SingleMuon_2017_EraC/DATA_SingleMuon_2017_EraC_1.root",
