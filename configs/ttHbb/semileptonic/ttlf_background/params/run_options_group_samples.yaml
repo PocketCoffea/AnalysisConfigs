@@ -3,7 +3,7 @@ chunksize: 200000
 mem-per-worker: "6GB"
 disk-per-worker: "20GB"
 queue: "standard"
-walltime: "6:00:00"
+walltime: "12:00:00"
 tree-reduction: 5
 adaptive: false
 performance-report: false
@@ -23,8 +23,9 @@ group-samples:
     - "TTTo2L2Nu"
   SingleTop:
     - "SingleTop"
-  VJets:
+  WJets:
     - "WJetsToLNu_HT"
+  ZJets:
     - "DYJetsToLL"
   VV_TTV:
     - "VV"
