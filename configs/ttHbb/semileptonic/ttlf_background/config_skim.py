@@ -48,13 +48,7 @@ columns = {
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_local.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
-                  f"{localdir}/datasets/backgrounds_MC.json",
-                  f"{localdir}/datasets/DATA_SingleEle_local.json",
-                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
+        "jsons": [f"{localdir}/datasets/skimmed_Run2_datasets.json",
                   ],
         "filter" : {
             "samples": ["ttHTobb",
