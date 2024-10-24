@@ -3,10 +3,11 @@ chunksize: 200000
 mem-per-worker: "6GB"
 disk-per-worker: "20GB"
 queue: "standard"
-walltime: "4:00:00"
+walltime: "6:00:00"
 tree-reduction: 5
 adaptive: false
 performance-report: false
 custom-setup-commands: null
 conda-env: false
 death-timeout: "3600"
+starting-time: "24-10-2024 05:00:00"

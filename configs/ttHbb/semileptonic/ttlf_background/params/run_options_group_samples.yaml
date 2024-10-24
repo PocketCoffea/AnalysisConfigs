@@ -1,5 +1,5 @@
 scaleout: 300
-chunksize: 400000
+chunksize: 200000
 mem-per-worker: "6GB"
 disk-per-worker: "20GB"
 queue: "standard"
@@ -15,14 +15,18 @@ group-samples:
   signal:
     - "ttHTobb"
     - "ttHTobb_ttToSemiLep"
-  ttbar:
+  TTToSemiLeptonic:
     - "TTToSemiLeptonic"
+  TTbbSemiLeptonic:
     - "TTbbSemiLeptonic"
+  TTTo2L2Nu:
     - "TTTo2L2Nu"
-  minor_backgrounds:
+  SingleTop:
     - "SingleTop"
+  VJets:
     - "WJetsToLNu_HT"
     - "DYJetsToLL"
+  VV_TTV:
     - "VV"
     - "TTV"
   DATA:
