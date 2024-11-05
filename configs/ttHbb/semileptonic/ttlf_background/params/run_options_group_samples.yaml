@@ -10,7 +10,7 @@ performance-report: false
 custom-setup-commands: null
 conda-env: false
 death-timeout: "3600"
-#sched-url: "tcp://192.33.123.29:40714"
+sched-url: "tcp://192.33.123.29:36330"
 group-samples:
   signal:
     - "ttHTobb"
