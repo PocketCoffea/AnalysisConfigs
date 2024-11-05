@@ -1,7 +1,7 @@
 {
   "TTWJetsToLNu": {
     "sample": "TTV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_TTV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {
@@ -48,7 +48,7 @@
   },
   "TTWJetsToQQ": {
     "sample": "TTV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_TTV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {
@@ -95,7 +95,7 @@
   },
   "TTZToLLNuNu": {
     "sample": "TTV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_TTV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {
@@ -142,7 +142,7 @@
   },
   "TTZToQQ": {
     "sample": "TTV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_TTV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {

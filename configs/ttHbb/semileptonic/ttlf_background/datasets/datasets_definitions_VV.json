@@ -1,7 +1,7 @@
 {
   "WW": {
     "sample": "VV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_VV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {
@@ -48,7 +48,7 @@
   },
   "WZ": {
     "sample": "VV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_VV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {
@@ -95,7 +95,7 @@
   },
   "ZZ": {
     "sample": "VV",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_VV.json",
     "description": "Cross-section taken from AN2019-094_v17",
     "files": [
       {

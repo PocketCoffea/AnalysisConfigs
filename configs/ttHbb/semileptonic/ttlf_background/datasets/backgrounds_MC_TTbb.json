@@ -27,9 +27,9 @@
             "size": "8026016459"
         },
         "files": [
-            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/3F997ADC-8F96-584C-B949-DFD7DC41F935.root",
-            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/8621F9BC-AFF4-BE48-A98E-5EF7E15028AA.root",
-            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/D85609B6-8CEC-8D46-9144-B1C0C416D992.root",
+            "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/3F997ADC-8F96-584C-B949-DFD7DC41F935.root",
+            "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/8621F9BC-AFF4-BE48-A98E-5EF7E15028AA.root",
+            "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/D85609B6-8CEC-8D46-9144-B1C0C416D992.root",
             "root://ccxrdcms.in2p3.fr:1094//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/356504C3-EC9E-2645-9361-2FC8734E5061.root",
             "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/36939F07-5B76-7F4D-AD8A-43C0FCE71E1B.root",
             "root://ccxrdcms.in2p3.fr:1094//store/mc/RunIISummer20UL16NanoAODv9/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/DBC40201-BF07-B04F-912A-0492E9D5C59C.root",

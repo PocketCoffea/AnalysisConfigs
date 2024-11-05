@@ -1,7 +1,7 @@
 {
   "DYJetsToLL_M-50_HT-70to100": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -52,7 +52,7 @@
   },
   "DYJetsToLL_M-50_HT-100to200": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -103,7 +103,7 @@
   },
   "DYJetsToLL_M-50_HT-200to400": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -154,7 +154,7 @@
   },
   "DYJetsToLL_M-50_HT-400to600": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -205,7 +205,7 @@
   },
   "DYJetsToLL_M-50_HT-600to800": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -256,7 +256,7 @@
   },
   "DYJetsToLL_M-50_HT-800to1200": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -307,7 +307,7 @@
   },
   "DYJetsToLL_M-50_HT-1200to2500": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
@@ -358,7 +358,7 @@
   },
   "DYJetsToLL_M-50_HT-2500toInf": {
     "sample": "DYJetsToLL",
-    "json_output": "datasets/backgrounds_MC.json",
+    "json_output": "datasets/backgrounds_MC_ZJets.json",
     "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
     "files": [
       {
