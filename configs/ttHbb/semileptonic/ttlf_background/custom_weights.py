@@ -1,6 +1,7 @@
-from pocket_coffea.lib.weights.weights import WeightLambda
+from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
 import numpy as np
 import awkward as ak
+import correctionlib
 
 samples_top = ["TTbbSemiLeptonic", "TTToSemiLeptonic", "TTTo2L2Nu"]
 
@@ -34,3 +35,37 @@ def get_sf_top_pt(events, metadata):
         return weight#, np.zeros(np.shape(weight)), ak.copy(weight)
     else:
         return np.ones(len(events), dtype=np.float64)
+
+def sf_ttlf_calib(params, sample, year, njets, jetsHt):
+    '''Correction to tt+LF background computed by correcting tt+LF to data minus the other backgrounds in 2D:
+    njets-JetsHT bins. Each year has a different correction stored in the correctionlib format.'''
+    cset = correctionlib.CorrectionSet.from_file(
+        params.ttlf_calibration[year]["file"]
+    )
+    corr = cset[params.ttlf_calibration[year]["name"]]
+    w = corr.evaluate(ak.to_numpy(njets), ak.to_numpy(jetsHt))
+    return w
+
+class SF_ttlf_calib(WeightWrapper):
+    name = "sf_ttlf_calib"
+    has_variations = False
+
+    def __init__(self, params, metadata):
+        super().__init__(params, metadata)
+        self.jet_coll = "JetGood"
+
+    def compute(self, events, size, shape_variation):
+        jetsHt = ak.sum(events[self.jet_coll].pt, axis=1)
+        out = sf_ttlf_calib(self._params,
+                            sample=self._metadata["sample"],
+                            year=self._metadata["year"],
+                            # Assuming n*JetCollection* is defined
+                            njets=events[f"n{self.jet_coll}"],
+                            jetsHt=jetsHt
+                            )
+        return WeightData(
+            name = self.name,
+            nominal = out, #out[0] only if has_variations = True
+            #up = out[1],
+            #down = out[2]
+            )
