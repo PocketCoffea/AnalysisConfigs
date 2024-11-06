@@ -17,14 +17,21 @@ def create_parquet_metadata(dataset):
             dataset_path = os.path.join(args.input, dataset, subfolder, "semilep")
             if os.path.exists(os.path.join(dataset_path, "_metadata")):
                 print(f"Metadata already exists for {dataset}/{subfolder}")
-                continue
-            ak.to_parquet.dataset(dataset_path)
+                return
+            try:
+                ak.to_parquet.dataset(dataset_path)
+            except:
+                print(f"Error processing {dataset}/{subfolder}")
     else:
         print(f"Processing {dataset}")
         dataset_path = os.path.join(args.input, dataset, "semilep")
         if os.path.exists(os.path.join(dataset_path, "_metadata")):
             print(f"Metadata already exists for {dataset}")
-        ak.to_parquet.dataset(dataset_path)
+            return
+        try:
+            ak.to_parquet.dataset(dataset_path)
+        except:
+            print(f"Error processing {dataset}")
 
 datasets =os.listdir(args.input)
 # Parallelize the code: one process per dataset
