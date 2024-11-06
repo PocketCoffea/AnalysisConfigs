@@ -29,18 +29,18 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [
-                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
-                  f"{localdir}/datasets/DATA_SingleEle_local.json",
+                  #f"{localdir}/datasets/DATA_SingleMuon_local.json",
+                  f"{localdir}/datasets/DATA_SingleEle_2018_EraD_local.json",
                   ],
         "filter" : {
             "samples": [
-                        "DATA_SingleMuon",
+                        #"DATA_SingleMuon",
                         "DATA_SingleEle",
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
-                     "2017",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
+                     #"2017",
                      "2018"
                      ] #All the years
         },

@@ -1,5 +1,5 @@
 scaleout: 300
-chunksize: 200000
+chunksize: 50000
 mem-per-worker: "2GB"
 disk-per-worker: "4GB"
 queue: "standard"

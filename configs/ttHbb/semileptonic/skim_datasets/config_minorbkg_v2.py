@@ -29,19 +29,20 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [
-                  f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTZToQQ_2018.json",
                   ],
         "filter" : {
             "samples": [
-                        #"TTbbSemiLeptonic",
-                        "TTToSemiLeptonic",
-                        "TTTo2L2Nu",
+                        #"SingleTop",
+                        #"WJetsToLNu_HT",
+                        #"DYJetsToLL",
+                        #"VV",
+                        "TTV",
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
-                     "2017",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
+                     #"2017",
                      "2018"
                      ] #All the years
         },

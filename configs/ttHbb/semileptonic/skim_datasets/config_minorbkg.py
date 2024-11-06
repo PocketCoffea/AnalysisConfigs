@@ -29,15 +29,15 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [
-                  f"{localdir}/datasets/backgrounds_MC.json",
+                  f"{localdir}/datasets/backgrounds_MC_local.json",
                   ],
         "filter" : {
             "samples": [
                         "SingleTop",
                         "WJetsToLNu_HT",
-                        "DYJetsToLL",
-                        "VV",
-                        "TTV",
+                        #"DYJetsToLL",
+                        #"VV",
+                        #"TTV",
                         ],
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
