@@ -26,6 +26,14 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "pt",
         )
+        self.events["Jet"] = ak.with_field(
+            self.events.Jet,
+            self.events.Jet.mass
+            * (1 - self.events.Jet.rawFactor)
+            * self.events.Jet.PNetRegPtRawCorr
+            * self.events.Jet.PNetRegPtRawCorrNeutrino,
+            "mass",
+        )
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
 
         self.events["ElectronGood"] = lepton_selection(
@@ -366,10 +374,10 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             try:
                 worker = get_worker()
-               #  print("found worker", worker)
+                # print("found worker", worker)
             except ValueError:
                 worker = None
-               #  print("     >>>>>>>>>>   NOT found worker", worker)
+                # print("     >>>>>>>>>>   NOT found worker", worker)
 
             if worker is None:
                 import onnxruntime as ort
@@ -382,16 +390,16 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 )
                 # input_name = [input.name for input in model_session.get_inputs()]
                 # output_name = [output.name for output in model_session.get_outputs()]
-               #  print("     >>>>>>>>>>   initialize new worker", worker)
+               # print("     >>>>>>>>>>   initialize new worker", worker)
             else:
                 model_session = worker.data['model_session']
                 # input_name = worker.data['input_name']
                 # output_name = worker.data['output_name']
-               #  print("get info from old worker", worker)
+                # print("get info from old worker", worker)
 
             input_name = [input.name for input in model_session.get_inputs()]
             output_name = [output.name for output in model_session.get_outputs()]
-           #  print(model_session)
+            # print(model_session)
             (
                 pairing_predictions,
                 self.events["best_pairing_probability"],

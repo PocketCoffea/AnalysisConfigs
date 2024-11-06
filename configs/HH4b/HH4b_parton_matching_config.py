@@ -1,3 +1,5 @@
+# for spanet evaluation: pocket-coffea run --cfg HH4b_parton_matching_config.py -e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml -o /work/mmalucch/out_test --executor-custom-setup onnx_executor.py
+
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
     get_nObj_eq,
@@ -28,7 +30,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
