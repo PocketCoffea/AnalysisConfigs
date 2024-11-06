@@ -9,13 +9,12 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         self.session_name = session_name
 
     async def setup(self, worker: Worker):
-        import sys
-        sys.path.append("/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference/lib/python3.9/site-packages")
         import onnxruntime as ort
 
         sess_options = ort.SessionOptions()
 
         sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        sess_options.intra_op_num_threads = 1
         
         session = ort.InferenceSession(
             self.model_path,

@@ -25,11 +25,10 @@ class SpanetInferenceProcessor(ttbarBackgroundProcessor):
             worker = None
 
         if worker is None:
-            import sys
-            sys.path.append("/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference/lib/python3.9/site-packages")
             import onnxruntime as ort
             sess_options = ort.SessionOptions()
             sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+            sess_options.intra_op_num_threads = 1
             model_session = ort.InferenceSession(
                 self.workflow_options["spanet_model"],
                 sess_options = sess_options,

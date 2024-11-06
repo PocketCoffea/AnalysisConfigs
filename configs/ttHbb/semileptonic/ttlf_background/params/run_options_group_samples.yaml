@@ -1,0 +1,35 @@
+scaleout: 300
+chunksize: 200000
+mem-per-worker: "6GB"
+disk-per-worker: "20GB"
+queue: "standard"
+walltime: "12:00:00"
+tree-reduction: 5
+adaptive: false
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+death-timeout: "3600"
+sched-url: "tcp://192.33.123.29:36330"
+group-samples:
+  signal:
+    - "ttHTobb"
+    - "ttHTobb_ttToSemiLep"
+  TTToSemiLeptonic:
+    - "TTToSemiLeptonic"
+  TTbbSemiLeptonic:
+    - "TTbbSemiLeptonic"
+  TTTo2L2Nu:
+    - "TTTo2L2Nu"
+  SingleTop:
+    - "SingleTop"
+  WJets:
+    - "WJetsToLNu_HT"
+  ZJets:
+    - "DYJetsToLL"
+  VV_TTV:
+    - "VV"
+    - "TTV"
+  DATA:
+    - "DATA_SingleEle"
+    - "DATA_SingleMuon"
