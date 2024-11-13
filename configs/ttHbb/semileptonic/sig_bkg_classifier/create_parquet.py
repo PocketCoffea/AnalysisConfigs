@@ -9,6 +9,8 @@ parser.add_argument("-i", "--input", type=str, required=True, help="Input folder
 parser.add_argument("-j", "--workers", type=int, default=8, help="Number of parallel workers")
 args = parser.parse_args()
 
+error_filename = "error_parquet_metadata.log"
+
 def create_parquet_metadata(dataset):
     if dataset.startswith("TTToSemiLeptonic") or dataset.startswith("TTbbSemiLeptonic"):
         subfolders = os.listdir(os.path.join(args.input, dataset))
@@ -22,6 +24,8 @@ def create_parquet_metadata(dataset):
                 ak.to_parquet.dataset(dataset_path)
             except:
                 print(f"Error processing {dataset}/{subfolder}")
+                with open(error_filename, "a") as f:
+                    f.write(f"{dataset}/{subfolder}\n")
     else:
         print(f"Processing {dataset}")
         dataset_path = os.path.join(args.input, dataset, "semilep")
@@ -32,6 +36,8 @@ def create_parquet_metadata(dataset):
             ak.to_parquet.dataset(dataset_path)
         except:
             print(f"Error processing {dataset}")
+            with open(error_filename, "a") as f:
+                f.write(f"{dataset}\n")
 
 datasets =os.listdir(args.input)
 # Parallelize the code: one process per dataset
