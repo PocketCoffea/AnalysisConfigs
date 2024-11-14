@@ -32,7 +32,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
 
 # adding object preselection
-year = "2018"  # TODO: change year to 2022
+year = "2022_postEE"  # TODO: change year to 2022
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
     f"{localdir}/params/object_preselection.yaml",
@@ -62,8 +62,10 @@ cfg = Configurator(
     workflow=HH4bbQuarkMatchingProcessor,
     workflow_options={
         "parton_jet_min_dR": 0.4,
-        "max_num_jets": 4,
+        "max_num_jets": 5,
         "which_bquark": "last",  # HERE
+        "classification": CLASSIFICATION,  # HERE
+        "spanet_model": spanet_model,
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),

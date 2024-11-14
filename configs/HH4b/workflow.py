@@ -14,9 +14,12 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
+        self.fifth_jet = self.workflow_options["fifth_jet"]
+        self.tight_cuts = self.workflow_options["tight_cuts"]
         self.classification = self.workflow_options["classification"]
         self.spanet_model = self.workflow_options["spanet_model"]
-
+        
+    
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
@@ -34,7 +37,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "mass",
         )
-        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
+        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params, self.tight_cuts)
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
@@ -47,9 +50,33 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # keep only the first 4 jets for the Higgs candidates reconstruction
         self.events["JetGoodHiggs"] = self.events.JetGood[:, :4]
 
-        self.events["JetGoodHiggsPtOrder"] = self.events.JetGoodHiggs[
-            ak.argsort(self.events.JetGoodHiggs.pt, axis=1, ascending=False)
-        ]
+        # Trying to reshuffle jets 4 and above by pt instead of b-tag score
+        if self.fifth_jet == "pt":
+            self.events["JetGoodNoHiggs"] = self.events["JetGood"][:,4:] 
+            self.events["JetGoodNoHiggsPt"] = self.events.JetGoodNoHiggs[
+                ak.argsort(self.events.JetGoodNoHiggs.pt, axis=1, ascending=False)
+            ]
+            self.events["JetGood"] = ak.concatenate((self.events["JetGoodHiggs"],self.events["JetGoodNoHiggsPt"]),axis=1)
+       
+#        five_pt  = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].pt ),value=9999)
+#        five_eta = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].eta),value=9999)
+#        five_phi = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].phi),value=9999)
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_pt,
+#                                "pt",
+#                                ))
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_eta,
+#                                "eta",
+#                                ))
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_phi,
+#                                "phi",
+#                                ))
+#        breakpoint()
 
     def get_pairing_information(self, session, input_name, output_name):
 

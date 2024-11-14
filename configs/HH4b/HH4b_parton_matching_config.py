@@ -56,15 +56,15 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/DATA_JetMET.json",
-            f"{localdir}/datasets/QCD.json",
-            f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
+            #f"{localdir}/datasets/DATA_JetMET.json",
+            #f"{localdir}/datasets/QCD.json",
+            #f"{localdir}/datasets/SPANet_classification.json",
+            f"{localdir}/datasets/signal_ggF_HH4b.json",
         ],
         "filter": {
             "samples": (
                 [
-                    "GluGlutoHHto4B",
+                    #"GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
 
@@ -72,7 +72,7 @@ cfg = Configurator(
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    # "GluGlutoHHto4B_spanet",
+                    "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 else ["GluGlutoHHto4B_spanet"]
@@ -89,6 +89,8 @@ cfg = Configurator(
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
+        "tight_cuts" : TIGHT_CUTS,
+        "fifth_jet" : "pt",
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -98,7 +100,7 @@ cfg = Configurator(
         # four_jet_presel,
         # jet_pt_presel,
         # jet_btag_presel,
-        hh4b_presel
+        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
     ],
     categories={
         # "lepton_veto": [lepton_veto_presel],
@@ -279,6 +281,7 @@ cfg = Configurator(
                     ColOut(
                         "JetGoodHiggs",
                         [
+                            "provenance",
                             "pt",
                             "eta",
                             "phi",
@@ -292,6 +295,7 @@ cfg = Configurator(
                     ColOut(
                         "JetGood",
                         [
+                            "provenance",
                             "pt",
                             "eta",
                             "phi",
