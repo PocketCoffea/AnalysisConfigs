@@ -31,6 +31,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 from pocket_coffea.parameters import defaults
 
 CLASSIFICATION = False
+TIGHT_CUTS=False
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
