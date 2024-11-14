@@ -15,9 +15,11 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
         self.fifth_jet = self.workflow_options["fifth_jet"]
+        self.tight_cuts = self.workflow_options["tight_cuts"]
         self.classification = self.workflow_options["classification"]
         self.spanet_model = self.workflow_options["spanet_model"]
-
+        
+    
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
@@ -35,7 +37,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "mass",
         )
-        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
+        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params, self.tight_cuts)
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params

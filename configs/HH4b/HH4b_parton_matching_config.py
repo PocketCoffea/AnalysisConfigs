@@ -89,6 +89,7 @@ cfg = Configurator(
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
+        "tight_cuts" : TIGHT_CUTS,
         "fifth_jet" : "pt",
     },
     skim=[
@@ -99,7 +100,7 @@ cfg = Configurator(
         # four_jet_presel,
         # jet_pt_presel,
         # jet_btag_presel,
-        hh4b_presel
+        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
     ],
     categories={
         # "lepton_veto": [lepton_veto_presel],
