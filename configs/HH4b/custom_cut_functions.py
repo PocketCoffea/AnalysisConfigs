@@ -118,7 +118,7 @@ def hh4b_presel_cuts(events, params, **kwargs):
     jets_btag_order = (
         events[mask_4jet_nolep_none].JetGood
         if not params["tight_cuts"]
-        else events.JetGoodHiggs
+        else events[mask_4jet_nolep_none].JetGoodHiggs
     )  # HERE_OLD_CUTS JetGoodHiggs
 
     jets_pt_order = jets_btag_order[

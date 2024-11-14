@@ -37,7 +37,9 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "mass",
         )
-        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params, self.tight_cuts)
+        self.events["JetGood"] = jet_selection_nopu(
+            self.events, "Jet", self.params, tight_cuts=self.tight_cuts
+        )
 
         self.events["ElectronGood"] = lepton_selection(
             self.events, "Electron", self.params
