@@ -184,13 +184,13 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
             & (np.abs(jets.eta) < cuts["eta_max"])
             & (jets.jetId >= cuts["jetId"])
         )
-        mask_good_jets = mask_presel_vbf  
-    elif "VBF_generalSelection" in jet_type:
+        mask_good_jets = mask_presel_vbf
+    elif "VBF_matching" in jet_type:
         mask_presel_VBF_generalSelection = (
-            jets.pt > cuts["pt"] 
+            (jets.pt > cuts["pt"])
             & (np.abs(jets.eta) < cuts["eta"])
             & (jets.jetId >= cuts["jetId"])
-            & (jets.btagPNetB > cuts["btagPNetB"]))
+        )
         mask_good_jets = mask_presel_VBF_generalSelection
     else:
         mask_presel = (

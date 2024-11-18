@@ -42,6 +42,30 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
+# TODO: spostare queste funzioni?
+
+# Combine jet_hists from position start to position end
+def jet_hists_dict(coll="JetGood", start=1, end=5):
+    """Combina i dizionari creati da jet_hists per ogni posizione da start a stop (inclusi)."""
+    combined_dict = {}
+    for pos in range(start, end + 1):
+        combined_dict.update(jet_hists(coll=coll, pos=pos))  # Unisce ogni dizionario al precedente
+    return combined_dict
+
+# Helper function to create HistConf() for a specific configuration
+def create_HistConf(coll, field, pos=None, bins=60, start=0, stop=1, label=None):
+    axis_params = {
+        "coll": coll,
+        "field": field,
+        "bins": bins,
+        "start": start,
+        "stop": stop,
+        "label": label if label else field,
+    }
+    if pos is not None:
+        axis_params["pos"] = pos
+    return {label: HistConf([Axis(**axis_params)])}
+
 cfg = Configurator(
     parameters=parameters,
     datasets={
@@ -76,9 +100,10 @@ cfg = Configurator(
     ],
     categories={
         **{"4b_region": [hh4b_4b_region]}, 
-        **{"4b_VBF_region": [hh4b_4b_region, VBF_region]}, 
-        **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
-        **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
+        # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]}, 
+        # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]}, 
+        # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
+        # **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # "2b_region": [hh4b_2b_region],
     },
     weights={
@@ -102,88 +127,39 @@ cfg = Configurator(
         }
     },
     variables={
-        **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        **jet_hists(coll="JetGood", pos=0),
-        **jet_hists(coll="JetGood", pos=1),
-        **jet_hists(coll="JetGood", pos=2),
-        **jet_hists(coll="JetGood", pos=3),
-        **jet_hists(coll="JetGood", pos=4),
-        **jet_hists(coll="JetGood", pos=5),
-        **{
-            f"JetGoodVBFeta": HistConf(
-                [
-                    Axis(
-                        coll=f"JetGoodVBF",
-                        field="eta",
-                        bins=60,
-                        start=-5,
-                        stop=5,
-                        label=f"JetGoodVBFeta",
-                    )
-                ]
-            )
-        },
-        **{
-            f"JetGoodVBFQvG": HistConf(
-                [
-                    Axis(
-                        coll=f"JetGoodVBF",
-                        field="btagPNetQvG",
-                        pos = 0,
-                        bins=60,
-                        start=0,
-                        stop=1,
-                        label=f"JetGoodVBFQvG",
-                    )
-                ]
-            )
-        },
-        **{
-            f"JetGoodVBFQvG": HistConf(
-                [
-                    Axis(
-                        coll=f"JetGoodVBF",
-                        field="btagPNetQvG",
-                        pos = 1,
-                        bins=60,
-                        start=0,
-                        stop=1,
-                        label=f"JetGoodVBFQvG",
-                    )
-                ]
-            )
-        },
-        **{
-            f"JetGoodVBFdeltaEta": HistConf(
-                [
-                    Axis(
-                        coll=f"events",
-                        field="deltaEta",
-                        bins=60,
-                        start=5,
-                        stop=10,
-                        label=f"JetGoodVBFQvG",
-                    )
-                ]
-            )
-        },
+        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
+        # **jet_hists_dict(coll="JetGood", start=1, end=5),        
+        # **create_HistConf("JetGoodVBF", "eta", bins=60, start=-5, stop=5, label="JetGoodVBFeta"),
+        # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetGoodVBFQvG_0"),
+        # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetGoodVBFQvG_1"),
+        # **create_HistConf("events", "deltaEta", bins=60, start=5, stop=10, label="JetGoodVBFdeltaEta"),
+        # **create_HistConf("JetVBF_generalSelection", "eta", bins=60, start=-5, stop=5, label="JetVBFgeneralSelectionEta"),
+        # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_0"),
+        # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_1"),
+        **create_HistConf("JetGoodVBF_matched", "eta", bins=60, start=-5, stop=5, label="JetVBF_matched_eta"),
+        **create_HistConf("JetGoodVBF_matched", "pt", bins=100, start=0, stop=1000, label="JetVBF_matched_pt"),
+        **create_HistConf("JetGoodVBF_matched", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBF_matchedQvG_0"),
+        **create_HistConf("JetGoodVBF_matched", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBF_matchedQvG_1"),
+        **create_HistConf("quarkVBF_matched", "eta", bins=60, start=-5, stop=5, label="quarkVBF_matched_Eta"),
+        **create_HistConf("quarkVBF_matched", "pt", bins=100, start=0, stop=1000, label="quarkVBF_matched_pt"),
+        **create_HistConf("events", "deltaEta_matched", bins=100, start=0, stop=10, label="deltaEta"),
+        **create_HistConf("events", "jj_mass_matched", bins=100, start=0, stop=5000, label="jj_mass"),
     },
-    #TODO per gen sel
     columns={
         "common": {
             "inclusive": (
                 [
-                    ColOut(
-                        "JetGood",
-                        [
-                            "pt",
-                            "eta",
-                            "phi",
-                            "mass",
-                            "btagPNetB",
-                            "hadronFlavour",
-                        ],
-                    ),
+                #     ColOut(
+                #         "JetGood",
+                #         [
+                #             "pt",
+                #             "eta",
+                #             "phi",
+                #             "mass",
+                #             "btagPNetB",
+                #             "hadronFlavour",
+                #         ],
+                #     ),
                 ]
 
             ),

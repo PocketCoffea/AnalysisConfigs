@@ -28,6 +28,9 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
 
+        self.events["JetVBF_matching"] = self.events.Jet
+        self.events["JetVBF_matching"] = jet_selection_nopu(self.events, "JetVBF_matching", self.params)
+
         self.events["JetGoodVBF"] = self.events.Jet
         self.events["JetGoodVBF"] = jet_selection_nopu(self.events, "JetGoodVBF", self.params)
         #self.events["JetGoodVBF"] = self.events.JetGood[:, :2] #Keep only the first 2 jets for QvG selection
@@ -146,6 +149,71 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "pdgId",
         )
 
+    def do_vbf_parton_matching(self, which_bquark):  # -> ak.Array:
+        # Select b-quarks at Gen level, coming from H->bb decay
+        # self.events.GenPart = ak.with_field(
+        #     self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
+        # )
+        # genpart = self.events.GenPart
+        # single_event=-1
+        # if (single_event!=-1):
+        #     genpart = self.events.GenPart[single_event]
+
+
+        # isQuark = abs(genpart.pdgId) < 7
+        # isLast = genpart.hasFlags(["isLastCopy"])
+        # isHard = genpart.hasFlags(["fromHardProcess"])
+
+        # vbf_quarks_last = genpart[isQuark & isLast & isHard]
+        # vbf_quarks_last = vbf_quarks_last[vbf_quarks_last.genPartIdxMother!=-1]
+        # vbf_quarks = vbf_quarks_last
+        # i = 0
+        # while True:
+        #     print(i)
+        #     i+=1
+        #     vbf_quark_mother = genpart[vbf_quarks.genPartIdxMother]
+        #     # Mother can't be higgs to avoid getting the quarks from higgs decay
+        #     mother_isnotH = abs(vbf_quark_mother.pdgId) != 25
+        #     vbf_quarks= vbf_quarks[mother_isnotH]
+        #     vbf_quark_mother = vbf_quark_mother[mother_isnotH]
+        #     vbf_quarks_last = vbf_quarks_last[mother_isnotH]
+
+        #     # Check if any of the children of mother is a Higgs
+        #     mother_children = vbf_quark_mother.children
+        #     # Contain Two higgs in the children
+        #     mother_children_isH = ak.sum((mother_children.pdgId == 25), axis=-1)==2
+
+        #     if ak.all(mother_children_isH):
+        #         break
+
+        #     vbf_quarks = ak.where(mother_children_isH, vbf_quarks, vbf_quark_mother)
+
+        self.events.GenPart=ak.with_field(self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index")
+        genpart= self.events.GenPart
+
+
+        isQuark = abs(genpart.pdgId) < 7
+        isHard = genpart.hasFlags(["fromHardProcess"])
+
+        quarks = genpart[isQuark & isHard]
+        quarks = quarks[quarks.genPartIdxMother!=-1]
+
+        quarks_mother = genpart[quarks.genPartIdxMother]
+        quarks_mother_children = quarks_mother.children
+        quarks_mother_children_isH = ak.sum((quarks_mother_children.pdgId == 25), axis=-1)==2
+        vbf_quarks = quarks[quarks_mother_children_isH]
+
+        matched_vbf_quarks, matched_vbf_jets, deltaR_matched_vbf = (
+            object_matching(
+                vbf_quarks,
+                self.events.JetVBF_matching,
+                dr_min=self.dr_min,
+            )
+        )
+
+        self.events["JetGoodVBF_matched"] = matched_vbf_jets
+        self.events["quarkVBF_matched"] = matched_vbf_quarks
+
     def dummy_provenance(self):
         self.events["JetGoodHiggs"] = ak.with_field(
             self.events.JetGoodHiggs,
@@ -199,15 +267,22 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
                 self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
             )
-            # todo vbf matching poi
-            
-            #Create new variable delta eta
-            JetGoodVBF_padded = ak.pad_none(self.events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
-            self.events["deltaEta"] = ak.where(ak.num(self.events.JetGoodVBF, axis=1) > 1, 
-                                               abs(JetGoodVBF_padded.eta[:,0] - JetGoodVBF_padded.eta[:,1]), -1)
 
-            #Create new variable for invariant mass of the jets
-            self.events["jj_mass"]=(self.events.JetVBF_generalSelection[:,0]+self.events.JetVBF_generalSelection[:,1]).mass
+            self.do_vbf_parton_matching(which_bquark=self.which_bquark)
+
+            
+            #Create new variable delta eta and invariant mass of the jets
+            # JetGoodVBF_padded = ak.pad_none(self.events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
+            # self.events["deltaEta"] = abs(JetGoodVBF_padded.eta[:,0] - JetGoodVBF_padded.eta[:,1])
+            # self.events["jj_mass"]=(self.events.JetGoodVBF[:,0]+self.events.JetGoodVBF[:,1]).mass
+
+            #Create new variable delta eta and invariant mass of the jets
+            JetGoodVBF_matched_padded = ak.pad_none(self.events.JetGoodVBF_matched, 2) #Adds none jets to events that have less than 2 jets
+            self.events["deltaEta_matched"] = abs(JetGoodVBF_matched_padded.eta[:,0] - JetGoodVBF_matched_padded.eta[:,1])
+
+            self.events["jj_mass_matched"]=(JetGoodVBF_matched_padded[:,0]+JetGoodVBF_matched_padded[:,1]).mass
+            
+    
 
         else:
             self.dummy_provenance()
