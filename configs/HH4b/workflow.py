@@ -18,8 +18,8 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.tight_cuts = self.workflow_options["tight_cuts"]
         self.classification = self.workflow_options["classification"]
         self.spanet_model = self.workflow_options["spanet_model"]
-        
-    
+
+
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
@@ -54,12 +54,34 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         # Trying to reshuffle jets 4 and above by pt instead of b-tag score
         if self.fifth_jet == "pt":
-            self.events["JetGoodNoHiggs"] = self.events["JetGood"][:,4:] 
+            self.events["JetGoodNoHiggs"] = self.events["JetGood"][:,4:]
             self.events["JetGoodNoHiggsPt"] = self.events.JetGoodNoHiggs[
                 ak.argsort(self.events.JetGoodNoHiggs.pt, axis=1, ascending=False)
             ]
             self.events["JetGood"] = ak.concatenate((self.events["JetGoodHiggs"],self.events["JetGoodNoHiggsPt"]),axis=1)
-       
+
+
+#        five_pt  = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].pt ),value=9999)
+#        five_eta = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].eta),value=9999)
+#        five_phi = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].phi),value=9999)
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_pt,
+#                                "pt",
+#                                ))
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_eta,
+#                                "eta",
+#                                ))
+#        self.events["FifthJet"] = ak.with_field(
+#                                ak.firsts(self.events.JetGoodNoHiggsPt,
+#                                five_phi,
+#                                "phi",
+#                                ))
+#        breakpoint()
+
+
 #        five_pt  = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].pt ),value=9999)
 #        five_eta = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].eta),value=9999)
 #        five_phi = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].phi),value=9999)
@@ -419,7 +441,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 )
                 # input_name = [input.name for input in model_session.get_inputs()]
                 # output_name = [output.name for output in model_session.get_outputs()]
-               # print("     >>>>>>>>>>   initialize new worker", worker)
+                # print("     >>>>>>>>>>   initialize new worker", worker)
             else:
                 model_session = worker.data['model_session']
                 # input_name = worker.data['input_name']
