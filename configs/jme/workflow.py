@@ -165,19 +165,6 @@ class QCDBaseProcessor(BaseProcessorABC):
                 corr,
             )
 
-        # if pnetreg:
-        #     # print("corr", corr)
-        #     # print("eta", eta)
-        #     # print("pt", pt)
-
-        #     # print("corr", ak.sum(corr[corr==1]))
-        #     # print("eta", ak.sum(eta[eta<0]))
-        #     # print eta only if negative
-        #     for h in range(len(eta)):
-        #         for j in range(len(eta[h])):
-        #             if pt[h][j] < 15:
-        #                 print("corr", corr[h][j],"eta", eta[h][j],"pt", pt[h][j])
-
         return corr
 
     def apply_object_preselection(self, variation):

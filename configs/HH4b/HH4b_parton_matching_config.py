@@ -1,3 +1,5 @@
+# for spanet evaluation: pocket-coffea run --cfg HH4b_parton_matching_config.py -e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml -o /work/mmalucch/out_test --executor-custom-setup onnx_executor.py
+
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
     get_nObj_eq,
@@ -28,7 +30,8 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
+TIGHT_CUTS=False
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -53,15 +56,15 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            f"{localdir}/datasets/DATA_JetMET.json",
-            f"{localdir}/datasets/QCD.json",
-            f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
+            #f"{localdir}/datasets/DATA_JetMET.json",
+            #f"{localdir}/datasets/QCD.json",
+            #f"{localdir}/datasets/SPANet_classification.json",
+            f"{localdir}/datasets/signal_ggF_HH4b.json",
         ],
         "filter": {
             "samples": (
                 [
-                    "GluGlutoHHto4B",
+                    #"GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
 
@@ -69,7 +72,7 @@ cfg = Configurator(
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    # "GluGlutoHHto4B_spanet",
+                    "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 else ["GluGlutoHHto4B_spanet"]
@@ -86,6 +89,8 @@ cfg = Configurator(
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
+        "tight_cuts" : TIGHT_CUTS,
+        "fifth_jet" : "pt",
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -95,7 +100,7 @@ cfg = Configurator(
         # four_jet_presel,
         # jet_pt_presel,
         # jet_btag_presel,
-        hh4b_presel
+        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
     ],
     categories={
         # "lepton_veto": [lepton_veto_presel],
@@ -175,34 +180,6 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodMatched", pos=3),
         # **parton_hists(coll="JetGoodMatched"),
         # **{
-        #     f"GenHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="GenHiggs1Mass",
-        #                 bins=60,
-        #                 start=123,
-        #                 stop=126,
-        #                 label=f"GenHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"GenHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="GenHiggs2Mass",
-        #                 bins=60,
-        #                 start=123,
-        #                 stop=126,
-        #                 label=f"GenHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
         #     f"RecoHiggs1Mass": HistConf(
         #         [
         #             Axis(
@@ -231,61 +208,7 @@ cfg = Configurator(
         #     )
         # },
         # **{
-        #     f"PNetRegRecoHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="PNetRegRecoHiggs1Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"PNetRegRecoHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"PNetRegRecoHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="PNetRegRecoHiggs2Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"PNetRegRecoHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"AllGenHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="AllGenHiggs1Mass",
-        #                 bins=80,
-        #                 start=120,
-        #                 stop=130,
-        #                 label=f"AllGenHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"AllGenHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="AllGenHiggs2Mass",
-        #                 bins=80,
-        #                 start=120,
-        #                 stop=130,
-        #                 label=f"AllGenHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
+
     },
     columns={
         "common": {
@@ -358,6 +281,7 @@ cfg = Configurator(
                     ColOut(
                         "JetGoodHiggs",
                         [
+                            "provenance",
                             "pt",
                             "eta",
                             "phi",
@@ -371,6 +295,7 @@ cfg = Configurator(
                     ColOut(
                         "JetGood",
                         [
+                            "provenance",
                             "pt",
                             "eta",
                             "phi",
