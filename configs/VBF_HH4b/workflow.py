@@ -210,9 +210,40 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
             self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
 
+            # collection with the pt regressed without neutrino
+            self.events["JetGoodHiggsRegMatched"] = ak.with_field(
+                self.events.JetGoodHiggsMatched,
+                self.events.JetGoodHiggsMatched.pt
+                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr,
+                "pt",
+            )
+            # collection with the pt regressed with neutrino
+            self.events["JetGoodHiggsRegNeutrinoMatched"] = ak.with_field(
+                self.events.JetGoodHiggsMatched,
+                self.events.JetGoodHiggsMatched.pt
+                * (1 - self.events.JetGoodHiggsMatched.rawFactor)
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorr
+                * self.events.JetGoodHiggsMatched.PNetRegPtRawCorrNeutrino,
+                "pt",
+            )
+
             # reconstruct the higgs candidates
             self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
                 self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
+            )
+
+            # reconstruct the higgs candidates with the pt regressed without neutrino
+            self.events["PNetRegRecoHiggs1"], self.events["PNetRegRecoHiggs2"] = (
+                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsRegMatched)
+            )
+
+            # reconstruct the higgs candidates with the pt regressed with neutrino
+            (
+                self.events["PNetRegNeutrinoRecoHiggs1"],
+                self.events["PNetRegNeutrinoRecoHiggs2"],
+            ) = self.reconstruct_higgs_candidates(
+                self.events.JetGoodHiggsRegNeutrinoMatched
             )
 
 
