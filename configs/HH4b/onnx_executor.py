@@ -13,6 +13,7 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         sess_options.graph_optimization_level = (
             ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         )
+        sess_options.intra_op_num_threads = 1
 
         session = ort.InferenceSession(
             spanet_model, sess_options=sess_options, providers=["CPUExecutionProvider"]
@@ -22,7 +23,7 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
 
 
 # Create an instance of the plugin
-inference_session_plugin = WorkerInferenceSessionPlugin()
+# inference_session_plugin = WorkerInferenceSessionPlugin()
 
 
 class OnnxExecutorFactory(DaskExecutorFactory):

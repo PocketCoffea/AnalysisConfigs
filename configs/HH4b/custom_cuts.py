@@ -4,6 +4,8 @@ import awkward as ak
 
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
+#from HH4b_parton_matching_config import TIGHT_CUTS
+
 
 lepton_veto_presel = Cut(
     name="lepton_veto",
@@ -79,6 +81,23 @@ hh4b_presel = Cut(
         "pt_jet2": 45,
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
+        "tight_cuts": False,
+        # "third_pnet_jet": 0.2605,
+        # "fourth_pnet_jet": 0.2605,
+    },
+    function=cuts_f.hh4b_presel_cuts,
+)
+
+hh4b_presel_tight = Cut(
+    name="hh4b",
+    params={
+        "njet": 4,
+        "pt_jet0": 80,
+        "pt_jet1": 60,
+        "pt_jet2": 45,
+        "pt_jet3": 35,
+        "mean_pnet_jet": 0.65,
+        "tight_cuts": True,
         # "third_pnet_jet": 0.2605,
         # "fourth_pnet_jet": 0.2605,
     },
@@ -144,13 +163,13 @@ def lepton_selection(events, lepton_flavour, params):
     return leptons[good_leptons]
 
 
-def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
+def jet_selection_nopu(events, jet_type, params, leptons_collection="", tight_cuts=False):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
     mask_presel = (
-        (jets.pt > cuts["pt"])
+        (jets.pt > cuts["pt"] if not tight_cuts else jets.pt > cuts["pt_tight"])
         & (np.abs(jets.eta) < cuts["eta"])
         & (jets.jetId >= cuts["jetId"])
         & (jets.btagPNetB > cuts["btagPNetB"])

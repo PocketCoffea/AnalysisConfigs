@@ -30,7 +30,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS=False
 
 default_parameters = defaults.get_default_parameters()
@@ -59,12 +59,14 @@ cfg = Configurator(
             f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_local.json",
+            f"{localdir}/datasets/signal_VBF_HH4b_local.json",
         ],
         "filter": {
             "samples": (
                 [
                     "GluGlutoHHto4B",
+                    "VBF_HHto4B"
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
 
@@ -74,8 +76,6 @@ cfg = Configurator(
                     # "GluGlutoHHto4B_private",
                     # "GluGlutoHHto4B_spanet",
                 ]
-                if CLASSIFICATION
-                else ["GluGlutoHHto4B_spanet"]
             ),
             "samples_exclude": [],
             "year": [year],
@@ -116,7 +116,7 @@ cfg = Configurator(
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
         "4b_region": [hh4b_4b_region],  # HERE
-        "2b_region": [hh4b_2b_region],
+        # "2b_region": [hh4b_2b_region],
     },
     weights={
         "common": {
@@ -139,113 +139,12 @@ cfg = Configurator(
         }
     },
     variables={
-        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        # **count_hist(coll="JetGoodHiggs", bins=10, start=0, stop=10),
-        # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
-        # **count_hist(coll="MuonGood", bins=3, start=0, stop=3),
-        # **count_hist(coll="JetGoodHiggsMatched", bins=10, start=0, stop=10),
-        # **count_hist(coll="bQuarkHiggsMatched", bins=10, start=0, stop=10),
-        # **count_hist(coll="JetGoodMatched", bins=10, start=0, stop=10),
-        # **count_hist(coll="bQuarkMatched", bins=10, start=0, stop=10),
-        # **jet_hists(coll="JetGood", pos=0),
-        # **jet_hists(coll="JetGood", pos=1),
-        # **jet_hists(coll="JetGood", pos=2),
-        # **jet_hists(coll="JetGood", pos=3),
-        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=0),
-        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=1),
-        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=2),
-        # **jet_hists(coll="JetGoodHiggsPtOrder", pos=3),
-        # **jet_hists(coll="JetGoodHiggs", pos=0),
-        # **jet_hists(coll="JetGoodHiggs", pos=1),
-        # **jet_hists(coll="JetGoodHiggs", pos=2),
-        # **jet_hists(coll="JetGoodHiggs", pos=3),
-        # **parton_hists(coll="bQuarkHiggsMatched", pos=0),
-        # **parton_hists(coll="bQuarkHiggsMatched", pos=1),
-        # **parton_hists(coll="bQuarkHiggsMatched", pos=2),
-        # **parton_hists(coll="bQuarkHiggsMatched", pos=3),
-        # **parton_hists(coll="bQuarkHiggsMatched"),
-        # **parton_hists(coll="JetGoodHiggsMatched", pos=0),
-        # **parton_hists(coll="JetGoodHiggsMatched", pos=1),
-        # **parton_hists(coll="JetGoodHiggsMatched", pos=2),
-        # **parton_hists(coll="JetGoodHiggsMatched", pos=3),
-        # **parton_hists(coll="JetGoodHiggsMatched"),
-        # **parton_hists(coll="bQuarkMatched", pos=0),
-        # **parton_hists(coll="bQuarkMatched", pos=1),
-        # **parton_hists(coll="bQuarkMatched", pos=2),
-        # **parton_hists(coll="bQuarkMatched", pos=3),
-        # **parton_hists(coll="bQuarkMatched"),
-        # **parton_hists(coll="JetGoodMatched", pos=0),
-        # **parton_hists(coll="JetGoodMatched", pos=1),
-        # **parton_hists(coll="JetGoodMatched", pos=2),
-        # **parton_hists(coll="JetGoodMatched", pos=3),
-        # **parton_hists(coll="JetGoodMatched"),
-        # **{
-        #     f"RecoHiggs1Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="RecoHiggs1Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"RecoHiggs1Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-        #     f"RecoHiggs2Mass": HistConf(
-        #         [
-        #             Axis(
-        #                 coll=f"events",
-        #                 field="RecoHiggs2Mass",
-        #                 bins=30,
-        #                 start=60,
-        #                 stop=200,
-        #                 label=f"RecoHiggs2Mass",
-        #             )
-        #         ]
-        #     )
-        # },
-        # **{
-
     },
     columns={
         "common": {
             "inclusive": (
                 [
-                    # ColOut(
-                    #     "bQuarkHiggsMatched",
-                    #     [
-                    #         "provenance",
-                    #         "dRMatchedJet",
-                    #         "pt",
-                    #         "eta",
-                    #         "phi",
-                    #         "mass",
-                    #     ],
-                    # ),
-                    # ColOut(
-                    #     "bQuarkMatched",
-                    #     [
-                    #         "provenance",
-                    #         "dRMatchedJet",
-                    #         "pt",
-                    #         "eta",
-                    #         "phi",
-                    #         "mass",
-                    #     ],
-                    # ),
-                    # ColOut(
-                    #     "bQuark",
-                    #     [
-                    #         "provenance",
-                    #         "pt",
-                    #         "eta",
-                    #         "phi",
-                    #         "mass",
-                    #     ],
-                    # ),
+
                     ColOut(
                         "JetGoodHiggsMatched",
                         [

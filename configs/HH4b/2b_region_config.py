@@ -50,12 +50,12 @@ cfg = Configurator(
         ],
         "filter": {
             "samples": [
-                # "GluGlutoHHto4B",
+                "GluGlutoHHto4B",
                 # "GluGlutoHHto4B_kl0_poisson",
                 # "GluGlutoHHto4B_kl2p45_poisson",
                 # "GluGlutoHHto4B_kl5_poisson",
                 # "GluGlutoHHto4B_poisson",
-                "DATA_JetMET_JMENano",
+                # "DATA_JetMET_JMENano",
             ],
             "samples_exclude": [],
             "year": [year],
@@ -65,7 +65,7 @@ cfg = Configurator(
     workflow=HH4bbQuarkMatchingProcessor,
     workflow_options={
         "parton_jet_min_dR": 0.4,
-        "max_num_jets": 4,
+        "max_num_jets": 5,
         "which_bquark": "last",  # HERE
     },
     skim=[
