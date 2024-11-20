@@ -4,7 +4,8 @@ import awkward as ak
 
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
-#from HH4b_parton_matching_config import TIGHT_CUTS
+
+# from HH4b_parton_matching_config import TIGHT_CUTS
 
 
 lepton_veto_presel = Cut(
@@ -163,7 +164,9 @@ def lepton_selection(events, lepton_flavour, params):
     return leptons[good_leptons]
 
 
-def jet_selection_nopu(events, jet_type, params, leptons_collection="", tight_cuts=False):
+def jet_selection_nopu(
+    events, jet_type, params, leptons_collection="", tight_cuts=False
+):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets

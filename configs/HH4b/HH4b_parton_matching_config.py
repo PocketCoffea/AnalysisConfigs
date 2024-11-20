@@ -31,7 +31,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 from pocket_coffea.parameters import defaults
 
 CLASSIFICATION = False
-TIGHT_CUTS=False
+TIGHT_CUTS = True
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -56,18 +56,17 @@ cfg = Configurator(
     parameters=parameters,
     datasets={
         "jsons": [
-            #f"{localdir}/datasets/DATA_JetMET.json",
-            #f"{localdir}/datasets/QCD.json",
-            #f"{localdir}/datasets/SPANet_classification.json",
+            # f"{localdir}/datasets/DATA_JetMET.json",
+            # f"{localdir}/datasets/QCD.json",
+            # f"{localdir}/datasets/SPANet_classification.json",
             f"{localdir}/datasets/signal_ggF_HH4b.json",
         ],
         "filter": {
             "samples": (
                 [
-                    #"GluGlutoHHto4B",
+                    # "GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
-
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
@@ -89,8 +88,8 @@ cfg = Configurator(
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
-        "tight_cuts" : TIGHT_CUTS,
-        "fifth_jet" : "pt",
+        "tight_cuts": TIGHT_CUTS,
+        "fifth_jet": "pt",
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -112,7 +111,7 @@ cfg = Configurator(
         # "jet_pt_copy2": [jet_pt_presel],
         # "jet_btag_loose": [jet_btag_loose_presel],
         # "full_parton_matching": [
-        #     jet_btag_medium,
+        #    jet_btag_medium,
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
         "4b_region": [hh4b_4b_region],  # HERE
@@ -208,7 +207,6 @@ cfg = Configurator(
         #     )
         # },
         # **{
-
     },
     columns={
         "common": {

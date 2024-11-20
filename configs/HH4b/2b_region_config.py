@@ -71,13 +71,10 @@ cfg = Configurator(
     skim=[
         # get_HLTsel(primaryDatasets=["JetMET"]),
     ],
-    preselections=[
-        hh4b_presel
-    ],
+    preselections=[hh4b_presel],
     categories={
         "2b_region": [hh4b_2b_region],
         "4b_region": [hh4b_4b_region],
-
     },
     weights={
         "common": {

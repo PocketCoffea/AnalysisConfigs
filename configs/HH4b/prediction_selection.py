@@ -21,9 +21,11 @@ NUMBA_DEBUG = False
 
 
 if NUMBA_DEBUG:
+
     def njit(*args, **kwargs):
         def wrapper(function):
             return function
+
         return wrapper
 
 
@@ -199,7 +201,9 @@ def extract_prediction(predictions, num_partons, max_jets):
         predictions[best_prediction][:] = float_negative_inf
         for i in range(num_targets):
             for jet in best_jets:
-                mask_jet(predictions[i], num_partons[i], max_jets, jet, float_negative_inf)
+                mask_jet(
+                    predictions[i], num_partons[i], max_jets, jet, float_negative_inf
+                )
 
     return results
 
@@ -210,14 +214,20 @@ def _extract_predictions(predictions, num_partons, max_jets, batch_size):
     predictions = [p.copy() for p in predictions]
 
     for batch in numba.prange(batch_size):
-        current_prediction = numba.typed.List([prediction[batch] for prediction in predictions])
-        output[batch, :, :] = extract_prediction(current_prediction, num_partons, max_jets)
+        current_prediction = numba.typed.List(
+            [prediction[batch] for prediction in predictions]
+        )
+        output[batch, :, :] = extract_prediction(
+            current_prediction, num_partons, max_jets
+        )
 
-    return np.ascontiguousarray(output.transpose((1, 0, 2)))#, predictions_new
+    return np.ascontiguousarray(output.transpose((1, 0, 2)))  # , predictions_new
 
 
 def extract_predictions(predictions: List[TArray]):
-    flat_predictions = numba.typed.List([p.reshape((p.shape[0], -1)) for p in predictions])
+    flat_predictions = numba.typed.List(
+        [p.reshape((p.shape[0], -1)) for p in predictions]
+    )
     num_partons = np.array([len(p.shape) - 1 for p in predictions])
     max_jets = max(max(p.shape[1:]) for p in predictions)
     batch_size = max(p.shape[0] for p in predictions)
