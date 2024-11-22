@@ -7,6 +7,8 @@ from pocket_coffea.lib.deltaR_matching import object_matching
 from custom_cut_functions import *
 from custom_cuts import *
 from prediction_selection import *
+from vbf_matching import analyze_parton_from_vbf_quarks
+#TODO import parton_matching_functions
 
 class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
@@ -24,7 +26,9 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "pt",
         )
-
+        self.events.Jet = ak.with_field(
+             self.events.Jet, ak.local_index(self.events.Jet, axis=1), "index"
+        )
 
         self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
 
@@ -150,47 +154,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         )
 
     def do_vbf_parton_matching(self, which_bquark):  # -> ak.Array:
-        # Select b-quarks at Gen level, coming from H->bb decay
-        # self.events.GenPart = ak.with_field(
-        #     self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
-        # )
-        # genpart = self.events.GenPart
-        # single_event=-1
-        # if (single_event!=-1):
-        #     genpart = self.events.GenPart[single_event]
-
-
-        # isQuark = abs(genpart.pdgId) < 7
-        # isLast = genpart.hasFlags(["isLastCopy"])
-        # isHard = genpart.hasFlags(["fromHardProcess"])
-
-        # vbf_quarks_last = genpart[isQuark & isLast & isHard]
-        # vbf_quarks_last = vbf_quarks_last[vbf_quarks_last.genPartIdxMother!=-1]
-        # vbf_quarks = vbf_quarks_last
-        # i = 0
-        # while True:
-        #     print(i)
-        #     i+=1
-        #     vbf_quark_mother = genpart[vbf_quarks.genPartIdxMother]
-        #     # Mother can't be higgs to avoid getting the quarks from higgs decay
-        #     mother_isnotH = abs(vbf_quark_mother.pdgId) != 25
-        #     vbf_quarks= vbf_quarks[mother_isnotH]
-        #     vbf_quark_mother = vbf_quark_mother[mother_isnotH]
-        #     vbf_quarks_last = vbf_quarks_last[mother_isnotH]
-
-        #     # Check if any of the children of mother is a Higgs
-        #     mother_children = vbf_quark_mother.children
-        #     # Contain Two higgs in the children
-        #     mother_children_isH = ak.sum((mother_children.pdgId == 25), axis=-1)==2
-
-        #     if ak.all(mother_children_isH):
-        #         break
-
-        #     vbf_quarks = ak.where(mother_children_isH, vbf_quarks, vbf_quark_mother)
-
-        self.events.GenPart=ak.with_field(self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index")
-        genpart= self.events.GenPart
-
+        self.events.GenPart = ak.with_field(self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index")
+        genpart = self.events.GenPart
 
         isQuark = abs(genpart.pdgId) < 7
         isHard = genpart.hasFlags(["fromHardProcess"])
@@ -203,9 +168,36 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         quarks_mother_children_isH = ak.sum((quarks_mother_children.pdgId == 25), axis=-1)==2
         vbf_quarks = quarks[quarks_mother_children_isH]
 
+        children_idxG = ak.without_parameters(genpart.childrenIdxG, behavior={})
+        children_idxG_flat = ak.flatten(children_idxG, axis=1)
+        genpart_pdgId_flat = ak.flatten(ak.without_parameters(genpart.pdgId, behavior={}), axis=1)
+        genpart_LastCopy_flat = ak.flatten(ak.without_parameters(genpart.hasFlags(["isLastCopy"]), behavior={}), axis=1)
+        genpart_pt_flat = ak.flatten(ak.without_parameters(genpart.pt, behavior={}), axis=1)
+        genparts_flat = ak.flatten(genpart)
+        genpart_offsets = np.concatenate([[0],np.cumsum(ak.to_numpy(ak.num(genpart, axis=1), allow_missing=True))])
+        vbf_quark_idx = ak.to_numpy(vbf_quarks.index+genpart_offsets[:-1], allow_missing=False)
+        vbf_quarks_pdgId = ak.to_numpy(vbf_quarks.pdgId, allow_missing=False)
+        nevents=vbf_quark_idx.shape[0]
+        firstgenpart_idxG = ak.firsts(genpart[:,0].children).genPartIdxMotherG
+        firstgenpart_idxG_numpy = ak.to_numpy( firstgenpart_idxG, allow_missing=False)
+
+        vbf_quark_last_idx=analyze_parton_from_vbf_quarks(
+            vbf_quark_idx,
+            vbf_quarks_pdgId,
+            children_idxG_flat,
+            genpart_pdgId_flat,
+            genpart_offsets,
+            genpart_LastCopy_flat,
+            genpart_pt_flat,
+            nevents,
+            firstgenpart_idxG_numpy
+        )
+
+        vbf_quark_last = genparts_flat[vbf_quark_last_idx]
+
         matched_vbf_quarks, matched_vbf_jets, deltaR_matched_vbf = (
             object_matching(
-                vbf_quarks,
+                vbf_quark_last,
                 self.events.JetVBF_matching,
                 dr_min=self.dr_min,
             )
@@ -265,7 +257,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             # reconstruct the higgs candidates
             self.events["RecoHiggs1"], self.events["RecoHiggs2"] = (
-                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
+                self.reconstruct_higgs_candidates(self.events.JetGoodMatched)
             )
 
             self.do_vbf_parton_matching(which_bquark=self.which_bquark)
@@ -281,9 +273,10 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["deltaEta_matched"] = abs(JetGoodVBF_matched_padded.eta[:,0] - JetGoodVBF_matched_padded.eta[:,1])
 
             self.events["jj_mass_matched"]=(JetGoodVBF_matched_padded[:,0]+JetGoodVBF_matched_padded[:,1]).mass
-            
-    
 
+            self.events["etaProduct"] = ((self.events.JetGoodVBF_matched.eta[:,0] * self.events.JetGoodVBF_matched.eta[:,1]) 
+                                                     / abs(self.events.JetGoodVBF_matched.eta[:,0] * self.events.JetGoodVBF_matched.eta[:,1]))
+    
         else:
             self.dummy_provenance()
 

@@ -20,7 +20,6 @@ import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 
-
 import os
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -105,6 +104,7 @@ cfg = Configurator(
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # "2b_region": [hh4b_2b_region],
+        #TODO 
     },
     weights={
         "common": {
@@ -137,6 +137,7 @@ cfg = Configurator(
         # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_0"),
         # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_1"),
         **create_HistConf("JetGoodVBF_matched", "eta", bins=60, start=-5, stop=5, label="JetVBF_matched_eta"),
+        **create_HistConf("events", "etaProduct", bins=5, start=-2.5, stop=2.5, label="JetVBF_matched_eta_product"),
         **create_HistConf("JetGoodVBF_matched", "pt", bins=100, start=0, stop=1000, label="JetVBF_matched_pt"),
         **create_HistConf("JetGoodVBF_matched", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBF_matchedQvG_0"),
         **create_HistConf("JetGoodVBF_matched", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBF_matchedQvG_1"),
@@ -149,17 +150,26 @@ cfg = Configurator(
         "common": {
             "inclusive": (
                 [
-                #     ColOut(
-                #         "JetGood",
-                #         [
-                #             "pt",
-                #             "eta",
-                #             "phi",
-                #             "mass",
-                #             "btagPNetB",
-                #             "hadronFlavour",
-                #         ],
-                #     ),
+                    # ColOut(
+                    #     "Jet",
+                    #     [
+                    #         "index"
+                    #     ],
+                    # ),
+                    # ColOut(
+                    #     "JetGoodVBF_matched",
+                    #     [
+                    #         "index",
+                    #         #pt, ...
+                    #     ],
+                    # ),
+                    # ColOut(
+                    #     "JetGoodMatched",
+                    #     [
+                    #         "index",
+                    #         #pt, ...
+                    #     ],
+                    # ),
                 ]
 
             ),
