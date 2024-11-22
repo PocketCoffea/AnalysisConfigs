@@ -260,6 +260,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.reconstruct_higgs_candidates(self.events.JetGoodMatched)
             )
 
+            self.events["HH_mass"] = (self.events.RecoHiggs1 + self.events.RecoHiggs2).mass
+
             self.do_vbf_parton_matching(which_bquark=self.which_bquark)
 
             

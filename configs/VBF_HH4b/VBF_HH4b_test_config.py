@@ -145,6 +145,7 @@ cfg = Configurator(
         **create_HistConf("quarkVBF_matched", "pt", bins=100, start=0, stop=1000, label="quarkVBF_matched_pt"),
         **create_HistConf("events", "deltaEta_matched", bins=100, start=0, stop=10, label="deltaEta"),
         **create_HistConf("events", "jj_mass_matched", bins=100, start=0, stop=5000, label="jj_mass"),
+        **create_HistConf("events", "HH_mass", bins=100, start=0, stop=2500, label="HH_mass"),
     },
     columns={
         "common": {
