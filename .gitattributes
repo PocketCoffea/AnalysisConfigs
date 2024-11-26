@@ -1,0 +1,4 @@
+configs/ttHbb/semileptonic/sig_bkg_classifier/params/quantile_transformer/quantiles_regressed_2016_PreVFP.pkl filter=lfs diff=lfs merge=lfs -text
+configs/ttHbb/semileptonic/sig_bkg_classifier/params/quantile_transformer/quantiles_regressed_2017.pkl filter=lfs diff=lfs merge=lfs -text
+configs/ttHbb/semileptonic/sig_bkg_classifier/params/quantile_transformer/quantiles_regressed_2018.pkl filter=lfs diff=lfs merge=lfs -text
+configs/ttHbb/semileptonic/sig_bkg_classifier/params/quantile_transformer/quantiles_regressed_2016_PostVFP.pkl filter=lfs diff=lfs merge=lfs -text
