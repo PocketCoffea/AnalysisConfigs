@@ -3,7 +3,9 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_HLTse
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 
-import workflow
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from common.workflows import workflow_ttbar as workflow
 from workflow import ttbarBackgroundProcessor
 
 import custom_cut_functions
