@@ -1,12 +1,11 @@
+import os
+import sys
 import awkward as ak
-import workflow
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from common.workflows import workflow_tthbb as workflow
-from workflow import ttHbbPartonMatchingProcessor
 from dask.distributed import get_worker
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
+
+sys.path.append(os.path.abspath("../.."))
+from common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
+from common.params.quantile_transformer import WeightedQuantileTransformer
 
 import numpy as np
 
