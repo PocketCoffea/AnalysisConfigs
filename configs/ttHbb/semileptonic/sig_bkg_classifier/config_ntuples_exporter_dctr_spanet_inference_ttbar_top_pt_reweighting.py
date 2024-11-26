@@ -2,6 +2,7 @@ from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
+from pocket_coffea.lib.weights.common.common import common_weights
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -22,7 +23,7 @@ import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Define SPANet model path for inference
-spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
