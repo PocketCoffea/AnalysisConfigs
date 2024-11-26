@@ -6,7 +6,7 @@ from pocket_coffea.parameters.cuts import passthrough
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from common.workflows import workflow_ttbar as workflow
-from workflow import ttbarBackgroundProcessor
+from workflow import ttbarPartonMatchingProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -123,7 +123,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = ttbarPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3},
     
     skim = [get_nObj_min(4, 15., "Jet"),

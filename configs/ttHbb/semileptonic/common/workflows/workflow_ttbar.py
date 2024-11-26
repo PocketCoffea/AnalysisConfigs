@@ -4,7 +4,7 @@ from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 from pocket_coffea.lib.deltaR_matching import object_matching
 from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb, get_partons_provenance_ttbb4F, get_partons_provenance_tt5F
 
-class ttbarBackgroundProcessor(ttHbbBaseProcessor):
+class ttbarPartonMatchingProcessor(ttHbbBaseProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
