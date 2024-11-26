@@ -1,13 +1,16 @@
 import awkward as ak
 import workflow
-from workflow import ttbarBackgroundProcessor
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from common.workflows import workflow_tthbb as workflow
+from workflow import ttHbbPartonMatchingProcessor
 from dask.distributed import get_worker
 import quantile_transformer
 from quantile_transformer import WeightedQuantileTransformer
 
 import numpy as np
 
-class SpanetInferenceProcessor(ttbarBackgroundProcessor):
+class SpanetInferenceProcessor(ttHbbPartonMatchingProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         if not "spanet_model" in self.workflow_options:
