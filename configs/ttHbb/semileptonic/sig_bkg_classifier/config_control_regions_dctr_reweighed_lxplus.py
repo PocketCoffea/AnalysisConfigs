@@ -8,14 +8,16 @@ from pocket_coffea.parameters.histograms import *
 import configs.ttHbb.semileptonic.common.workflows.workflow_dctr as workflow
 from configs.ttHbb.semileptonic.common.workflows.workflow_dctr import DCTRInferenceProcessor
 import onnx_executor
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
 
 import custom_cut_functions
 import custom_cuts
+import custom_weights
 from custom_cut_functions import *
 from custom_cuts import *
+from custom_weights import DCTRWeight
 from params.axis_settings import axis_settings
+import quantile_transformer
+from quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json
@@ -39,7 +41,6 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
-                                                  f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
@@ -47,7 +48,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/standard_scaler.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
+#categories_to_calibrate = ["semilep_calibrated", "CR1", "CR2", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", ">=6jCR1", ">=6jCR2", ">=6jSR"]
 with open(parameters["weight_dctr_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
@@ -77,9 +78,6 @@ cfg = Configurator(
                         "TTTo2L2Nu",
                         "SingleTop",
                         "WJetsToLNu_HT",
-                        "DYJetsToLL",
-                        "VV",
-                        "TTV",
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
@@ -140,7 +138,7 @@ cfg = Configurator(
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
-        "semilep_calibrated": [passthrough],
+        #"semilep_calibrated": [passthrough],
         "ttlf0p60": [get_ttlf_max(ttlf_wp)],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
@@ -161,6 +159,7 @@ cfg = Configurator(
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
+    weights_classes=[DCTRWeight],
     weights= {
         "common": {
             "inclusive": [
@@ -171,9 +170,10 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId",
             ],
-            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            #"bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
-        "bysample": {},
+        "bysample": {
+        },
     },
     variations = {
         "weights": {

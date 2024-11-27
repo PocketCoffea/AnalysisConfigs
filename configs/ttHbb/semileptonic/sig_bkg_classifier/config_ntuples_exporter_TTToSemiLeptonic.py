@@ -5,8 +5,8 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagM
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow
-from workflow import ttbarBackgroundProcessor
+from configs.ttHbb.semileptonic.common.workflows import workflow_tthbb as workflow
+from configs.ttHbb.semileptonic.common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -58,7 +58,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = ttHbbPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
                         "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
     

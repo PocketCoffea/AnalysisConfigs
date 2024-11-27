@@ -5,8 +5,8 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagM
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow, workflow_spanet
-from workflow_spanet import SpanetInferenceProcessor
+from configs.ttHbb.semileptonic.common.workflows import workflow_spanet as workflow
+from configs.ttHbb.semileptonic.common.workflows.workflow_spanet import SpanetInferenceProcessor
 import onnx_executor
 import quantile_transformer
 from quantile_transformer import WeightedQuantileTransformer
@@ -270,7 +270,6 @@ cfg = Configurator(
 # Registering custom functions
 import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
-cloudpickle.register_pickle_by_value(workflow_spanet)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)
