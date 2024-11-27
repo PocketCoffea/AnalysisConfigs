@@ -3,9 +3,8 @@ import sys
 import awkward as ak
 from dask.distributed import get_worker
 
-sys.path.append(os.path.abspath("../.."))
-from common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
-from common.params.quantile_transformer import WeightedQuantileTransformer
+from .workflow_tthbb import ttHbbPartonMatchingProcessor
+from ..params.quantile_transformer import WeightedQuantileTransformer
 
 import numpy as np
 

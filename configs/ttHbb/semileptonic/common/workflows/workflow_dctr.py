@@ -3,10 +3,8 @@ import joblib
 import numpy as np
 import awkward as ak
 from dask.distributed import get_worker
-import workflow_spanet
-from workflow_control_regions import ControlRegionsProcessor
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
+from .workflow_spanet import SpanetInferenceProcessor
+from ..params.quantile_transformer import WeightedQuantileTransformer
 from sklearn.preprocessing import StandardScaler
 
 def get_input_features(events, mask=None, only=None):
@@ -53,7 +51,7 @@ def data_normalization(x):
     scaler.fit(x)
     return scaler.transform(x)
 
-class DCTRInferenceProcessor(ControlRegionsProcessor):
+class DCTRInferenceProcessor(SpanetInferenceProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         if not "dctr_model" in self.workflow_options:
