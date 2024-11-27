@@ -8,9 +8,9 @@ from pocket_coffea.parameters.histograms import *
 
 from configs.ttHbb.semileptonic.common.workflows import workflow_spanet as workflow
 from configs.ttHbb.semileptonic.common.workflows.workflow_spanet import SpanetInferenceProcessor
-import onnx_executor
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
+from configs.ttHbb.semileptonic.common.executors import onnx_executor as onnx_executor
+import configs.ttHbb.semileptonic.common.params.quantile_transformer as quantile_transformer
+from configs.ttHbb.semileptonic.common.params.quantile_transformer import WeightedQuantileTransformer
 
 import custom_cut_functions
 import custom_cuts

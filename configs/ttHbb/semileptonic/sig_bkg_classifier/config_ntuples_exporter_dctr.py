@@ -8,10 +8,10 @@ from pocket_coffea.parameters.histograms import *
 import configs.ttHbb.semileptonic.common.workflows.workflow_tthbb as workflow
 from configs.ttHbb.semileptonic.common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
 
-import custom_cut_functions
-import custom_cuts
-from custom_cut_functions import *
-from custom_cuts import *
+import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
+import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
+from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
+from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
 from params.axis_settings import axis_settings
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
