@@ -16,8 +16,8 @@ from custom_cut_functions import *
 from custom_cuts import *
 from custom_weights import DCTRWeight
 from params.axis_settings import axis_settings
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
+import configs.ttHbb.semileptonic.common.params.quantile_transformer as quantile_transformer
+from configs.ttHbb.semileptonic.common.params.quantile_transformer import WeightedQuantileTransformer
 
 import os
 import json

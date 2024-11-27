@@ -7,14 +7,14 @@ from pocket_coffea.parameters.histograms import *
 
 import configs.ttHbb.semileptonic.common.workflows.workflow_dctr as workflow
 from configs.ttHbb.semileptonic.common.workflows.workflow_dctr import DCTRInferenceProcessor
-import onnx_executor
-import quantile_transformer
-from quantile_transformer import WeightedQuantileTransformer
+from configs.ttHbb.semileptonic.common.executors import onnx_executor as onnx_executor
+import configs.ttHbb.semileptonic.common.params.quantile_transformer as quantile_transformer
+from configs.ttHbb.semileptonic.common.params.quantile_transformer import WeightedQuantileTransformer
 
-import custom_cut_functions
-import custom_cuts
-from custom_cut_functions import *
-from custom_cuts import *
+import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
+import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
+from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
+from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
 from params.axis_settings import axis_settings
 
 import os
