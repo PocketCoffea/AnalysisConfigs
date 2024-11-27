@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 import awkward as ak
-import custom_cut_functions as cuts_f
+import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
 
 semileptonic_presel = Cut(
