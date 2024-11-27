@@ -2,6 +2,8 @@ from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
+from pocket_coffea.lib.weights.common.common import common_weights
+from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -78,6 +80,7 @@ cfg = Configurator(
         "semilep_LHE": [semilep_lhe]
     },
 
+    weights_classes = common_weights + [SF_ele_trigger],
     weights= {
         "common": {
             "inclusive": [
