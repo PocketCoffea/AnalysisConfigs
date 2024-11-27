@@ -6,7 +6,7 @@ from pocket_coffea.lib.deltaR_matching import object_matching
 
 from custom_cut_functions import *
 from custom_cuts import *
-from prediction_selection import *
+from prediction_selection import extract_predictions
 
 class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
@@ -60,47 +60,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             ]
             self.events["JetGood"] = ak.concatenate((self.events["JetGoodHiggs"],self.events["JetGoodNoHiggsPt"]),axis=1)
 
-
-#        five_pt  = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].pt ),value=9999)
-#        five_eta = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].eta),value=9999)
-#        five_phi = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].phi),value=9999)
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_pt,
-#                                "pt",
-#                                ))
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_eta,
-#                                "eta",
-#                                ))
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_phi,
-#                                "phi",
-#                                ))
-#        breakpoint()
-
-
-#        five_pt  = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].pt ),value=9999)
-#        five_eta = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].eta),value=9999)
-#        five_phi = ak.fill_none(ak.firsts(self.events["JetGoodNoHiggsPt"].phi),value=9999)
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_pt,
-#                                "pt",
-#                                ))
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_eta,
-#                                "eta",
-#                                ))
-#        self.events["FifthJet"] = ak.with_field(
-#                                ak.firsts(self.events.JetGoodNoHiggsPt,
-#                                five_phi,
-#                                "phi",
-#                                ))
-#        breakpoint()
 
     def get_pairing_information(self, session, input_name, output_name):
 
@@ -175,20 +134,34 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         outputs = session.run(output_name, inputs_complete)
 
+        return outputs
+
+    def get_best_pairings(self, outputs):
+
         # extract the best jet assignment from
         # the predicted probabilities
+
+        #NOTE: here the way this was implemented was changed
         assignment_probability = np.stack((outputs[0], outputs[1]), axis=0)
+        # assignment_probability = [outputs[0], outputs[1]]
+
         # print("\nassignment_probability", assignment_probability)
         # swap axis
         predictions_best = np.swapaxes(
             extract_predictions(assignment_probability), 0, 1
         )
+        # assignment_probability=np.array(assignment_probability)
 
         # get the probabilities of the best jet assignment
+
+        #NOTE: here the way this was implemented was changed
         num_events = assignment_probability.shape[1]
+        # num_events = len(assignment_probability[0])
+
         range_num_events = np.arange(num_events)
         best_pairing_probabilities = np.ndarray((2, num_events))
         for i in range(2):
+            # print("best", i)
             best_pairing_probabilities[i] = assignment_probability[
                 i,
                 range_num_events,
@@ -201,6 +174,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # set to zero the probabilities of the best jet assignment, the symmetrization and the same jet assignment on the other target
         for j in range(2):
             for k in range(2):
+                # print("set to zero", j, k)
                 assignment_probability[
                     j,
                     range_num_events,
@@ -225,6 +199,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         # get the probabilities of the second best jet assignment
         second_best_pairing_probabilities = np.ndarray((2, num_events))
         for i in range(2):
+            # print("second best", i)
             second_best_pairing_probabilities[i] = assignment_probability[
                 i,
                 range_num_events,
@@ -257,17 +232,28 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             1,
         )
 
+        # print("idx_collection", idx_collection, len(idx_collection))
+
         higgs_leading_index = ak.where(higgs_1.pt > higgs_2.pt, 0, 1)
+
+        # print("\nhiggs_leading_index", higgs_leading_index, len(higgs_leading_index))
 
         higgs_lead = ak.where(higgs_leading_index == 0, higgs_1, higgs_2)
         higgs_sub = ak.where(higgs_leading_index == 0, higgs_2, higgs_1)
 
         higgs_leading_index_expanded = higgs_leading_index[
-            :, np.newaxis, np.newaxis
+            :, np.newaxis#, np.newaxis
         ] * np.ones((2, 2))
+        # print("\nhiggs_leading_index_expanded", higgs_leading_index_expanded, len(higgs_leading_index_expanded), len(higgs_leading_index_expanded[0]), len(higgs_leading_index_expanded[1]))
         idx_ordered = ak.where(
             higgs_leading_index_expanded == 0, idx_collection, idx_collection[:, ::-1]
-        )[0]
+        )#[0]
+        # print("\nidx_ordered", idx_ordered, len(idx_ordered))
+        # print("\nidx_ordered[0]", idx_ordered[0], len(idx_ordered[0]))
+        # print("\nidx_ordered[1]", idx_ordered[1], len(idx_ordered[1]))
+        # print("\nidx_ordered[-1]", idx_ordered[-1], len(idx_ordered[-1]))
+
+
 
         return higgs_lead, higgs_sub, idx_ordered
 
@@ -419,7 +405,6 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
             )
 
-
         elif self.classification:
             self.dummy_provenance()
 
@@ -451,12 +436,15 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             input_name = [input.name for input in model_session.get_inputs()]
             output_name = [output.name for output in model_session.get_outputs()]
             # print(model_session)
+
+            #compute the pairing information using the spanet model
+            outputs=self.get_pairing_information(model_session, input_name, output_name)
+
             (
                 pairing_predictions,
                 self.events["best_pairing_probability"],
                 self.events["second_best_pairing_probability"],
-            ) = self.get_pairing_information(model_session, input_name, output_name)
-
+            ) = self.get_best_pairings(outputs)
 
             # get the probabilities difference between the best and second best jet assignment
             self.events["Delta_pairing_probabilities"] = (
@@ -465,7 +453,11 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
             # print("\nDelta_pairing_probabilities", self.events["Delta_pairing_probabilities"])
 
-            # ADDITIONAL VARIABLES
+
+
+            ########################
+            # ADDITIONAL VARIABLES #
+            ########################
 
             # HT : scalar sum of all jets with pT > 25 GeV inside | η | < 2.5
             self.events["HT"] = ak.sum(self.events.JetGood.pt, axis=1)

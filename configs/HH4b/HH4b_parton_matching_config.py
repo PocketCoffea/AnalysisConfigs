@@ -31,7 +31,11 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 from pocket_coffea.parameters import defaults
 
 CLASSIFICATION = True
-TIGHT_CUTS=False
+TIGHT_CUTS = False
+
+print("CLASSIFICATION ", CLASSIFICATION)
+print("TIGHT_CUTS ", TIGHT_CUTS)
+
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -67,7 +71,6 @@ cfg = Configurator(
                     "GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
-
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
@@ -89,8 +92,8 @@ cfg = Configurator(
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
-        "tight_cuts" : TIGHT_CUTS,
-        "fifth_jet" : "btag",
+        "tight_cuts": TIGHT_CUTS,
+        "fifth_jet": "btag",
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -208,7 +211,6 @@ cfg = Configurator(
         #     )
         # },
         # **{
-
     },
     columns={
         "common": {
