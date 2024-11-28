@@ -8,7 +8,6 @@ from custom_cut_functions import *
 from custom_cuts import *
 from prediction_selection import *
 from vbf_matching import analyze_parton_from_vbf_quarks
-#TODO import parton_matching_functions
 
 class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
@@ -37,7 +36,6 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         self.events["JetGoodVBF"] = self.events.Jet
         self.events["JetGoodVBF"] = jet_selection_nopu(self.events, "JetGoodVBF", self.params)
-        #self.events["JetGoodVBF"] = self.events.JetGood[:, :2] #Keep only the first 2 jets for QvG selection
 
         self.events["JetVBF_generalSelection"] = self.events.Jet
         self.events["JetVBF_generalSelection"] = jet_selection_nopu(self.events, "JetVBF_generalSelection", self.params)
@@ -203,8 +201,17 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
         )
 
-        self.events["JetGoodVBF_matched"] = matched_vbf_jets
-        self.events["quarkVBF_matched"] = matched_vbf_quarks
+        maskNotNone = ~ak.is_none(matched_vbf_jets, axis=1)
+        self.events["JetGoodVBF_matched"] = matched_vbf_jets[maskNotNone]
+
+        self.events["JetGoodVBF_matched"] = ak.with_field(
+            self.events.JetGoodVBF_matched,
+            self.events.JetGoodVBF_matched.pt/self.events.JetGoodVBF_matched.PNetRegPtRawCorrNeutrino,
+            "pt",
+        )
+
+        maskNotNone = ~ak.is_none(matched_vbf_quarks, axis=1)
+        self.events["quarkVBF_matched"] = matched_vbf_quarks[maskNotNone]
 
     def dummy_provenance(self):
         self.events["JetGoodHiggs"] = ak.with_field(
@@ -263,22 +270,24 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["HH_mass"] = (self.events.RecoHiggs1 + self.events.RecoHiggs2).mass
 
             self.do_vbf_parton_matching(which_bquark=self.which_bquark)
-
-            
-            #Create new variable delta eta and invariant mass of the jets
-            # JetGoodVBF_padded = ak.pad_none(self.events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
-            # self.events["deltaEta"] = abs(JetGoodVBF_padded.eta[:,0] - JetGoodVBF_padded.eta[:,1])
-            # self.events["jj_mass"]=(self.events.JetGoodVBF[:,0]+self.events.JetGoodVBF[:,1]).mass
+            # print(self.events.JetGoodVBF_matched)
+            # sum = 0
+            # for i in range(len(self.events.JetGoodVBF_matched)):
+            #     if len(self.events.JetGoodVBF_matched[i]) < 2:
+            #         sum += 1
+            # print(sum, len(self.events.JetGoodVBF_matched), sum/len(self.events.JetGoodVBF_matched))
 
             #Create new variable delta eta and invariant mass of the jets
             JetGoodVBF_matched_padded = ak.pad_none(self.events.JetGoodVBF_matched, 2) #Adds none jets to events that have less than 2 jets
+
             self.events["deltaEta_matched"] = abs(JetGoodVBF_matched_padded.eta[:,0] - JetGoodVBF_matched_padded.eta[:,1])
 
             self.events["jj_mass_matched"]=(JetGoodVBF_matched_padded[:,0]+JetGoodVBF_matched_padded[:,1]).mass
 
-            self.events["etaProduct"] = ((self.events.JetGoodVBF_matched.eta[:,0] * self.events.JetGoodVBF_matched.eta[:,1]) 
-                                                     / abs(self.events.JetGoodVBF_matched.eta[:,0] * self.events.JetGoodVBF_matched.eta[:,1]))
-    
+            #This product will give only -1 or 1 values, as it's needed to see if the two jets are in the same side or not
+            self.events["etaProduct"] = ((JetGoodVBF_matched_padded.eta[:,0] * JetGoodVBF_matched_padded.eta[:,1]) 
+                                                     / abs(JetGoodVBF_matched_padded.eta[:,0] * JetGoodVBF_matched_padded.eta[:,1]))
+            
         else:
             self.dummy_provenance()
 
