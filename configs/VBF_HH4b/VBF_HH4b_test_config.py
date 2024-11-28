@@ -99,6 +99,9 @@ cfg = Configurator(
     ],
     categories={
         **{"4b_region": [hh4b_4b_region]}, 
+        # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]}, 
+        # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]}, 
+        **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]}, 
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]}, 
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
@@ -136,6 +139,7 @@ cfg = Configurator(
         # **create_HistConf("JetVBF_generalSelection", "eta", bins=60, start=-5, stop=5, label="JetVBFgeneralSelectionEta"),
         # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_0"),
         # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_1"),
+
         **create_HistConf("JetGoodVBF_matched", "eta", bins=60, start=-5, stop=5, label="JetVBF_matched_eta"),
         **create_HistConf("events", "etaProduct", bins=5, start=-2.5, stop=2.5, label="JetVBF_matched_eta_product"),
         **create_HistConf("JetGoodVBF_matched", "pt", bins=100, start=0, stop=1000, label="JetVBF_matched_pt"),
@@ -143,6 +147,7 @@ cfg = Configurator(
         **create_HistConf("JetGoodVBF_matched", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBF_matchedQvG_1"),
         **create_HistConf("quarkVBF_matched", "eta", bins=60, start=-5, stop=5, label="quarkVBF_matched_Eta"),
         **create_HistConf("quarkVBF_matched", "pt", bins=100, start=0, stop=1000, label="quarkVBF_matched_pt"),
+        **create_HistConf("JetGoodVBF_matched", "btagPNetB", bins=100, start=0, stop=1, label="JetGoodVBF_matched_btag"),
         **create_HistConf("events", "deltaEta_matched", bins=100, start=0, stop=10, label="deltaEta"),
         **create_HistConf("events", "jj_mass_matched", bins=100, start=0, stop=5000, label="jj_mass"),
         **create_HistConf("events", "HH_mass", bins=100, start=0, stop=2500, label="HH_mass"),
@@ -151,24 +156,42 @@ cfg = Configurator(
         "common": {
             "inclusive": (
                 [
+                    ColOut(
+                        "events",
+                        [
+                            "etaProduct",
+                            "deltaEta_matched",
+                            "jj_mass_matched",
+                            "HH_mass",
+                        ],
+                    ),
                     # ColOut(
                     #     "Jet",
                     #     [
                     #         "index"
                     #     ],
                     # ),
-                    # ColOut(
-                    #     "JetGoodVBF_matched",
-                    #     [
-                    #         "index",
-                    #         #pt, ...
-                    #     ],
-                    # ),
+                    ColOut(
+                        "JetGoodVBF_matched",
+                        [
+                            "index",
+                            "pt",
+                            "btagPNetQvG", 
+                            "eta",
+                        ],
+                    ),
+                    ColOut(
+                        "quarkVBF_matched",
+                        [
+                            "index",
+                            "pt",
+                            "eta",
+                        ],
+                    ),
                     # ColOut(
                     #     "JetGoodMatched",
                     #     [
                     #         "index",
-                    #         #pt, ...
                     #     ],
                     # ),
                 ]

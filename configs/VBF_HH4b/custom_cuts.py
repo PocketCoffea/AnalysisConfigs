@@ -4,6 +4,7 @@ import awkward as ak
 
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
+from vbf_matching import mask_efficiency
 
 lepton_veto_presel = Cut(
     name="lepton_veto",
@@ -120,6 +121,58 @@ VBF_generalSelection_region = Cut(
     function=cuts_f.VBF_generalSelection_cuts,
 )
 
+# VBFtight_region = Cut(
+#     name="4b_VBFtight",
+#     params={
+#         "njet_vbf": 2,
+#         "eta_product": 0,
+#         "mjj": 350,
+#     },
+#     function=cuts_f.VBFtight_cuts,
+# )
+
+# Default parameters dictionary
+VBFtight_params = {
+    "njet_vbf": 2,
+    "eta_product": 0,
+    "mjj": 350,
+    "pt": 10,
+    "eta": 4.7,
+    "btag": 0.2605
+}
+
+# Different parameters dictionary
+no_cuts_params = { 
+    "njet_vbf": 0, 
+    "eta_product": 2, 
+    "mjj": 0, 
+    "pt": 0, 
+    "eta": 20, 
+    "btag": 2 
+}
+
+def vbf_wrapper(params = VBFtight_params):
+    return Cut(
+        name="4b_VBFtight",
+        params=params,
+        function=cuts_f.VBFtight_cuts,
+        )
+
+def generate_dictionaries(VBFtight_params, no_cuts_params):
+    dict_array = []
+    for key in no_cuts_params.keys():
+        temp_dict = no_cuts_params.copy()
+        temp_dict[key] = VBFtight_params[key]
+        dict_array.append(temp_dict)
+    
+
+    return dict_array
+
+# Generate the array of dictionaries
+ab = generate_dictionaries(VBFtight_params, no_cuts_params)
+for i in range(len(ab)):
+    print(list(no_cuts_params.keys())[i], ab[i], "\n")
+
 qvg_regions = {}
 for i in range(5, 10):
     qvg_regions[f'qvg_0{i}_region'] = Cut(
@@ -192,6 +245,18 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
             & (jets.jetId >= cuts["jetId"])
         )
         mask_good_jets = mask_presel_VBF_generalSelection
+    # elif "VBFtight" in jet_type:
+    #     mask_presel_VBFtight = (
+    #         (jets.pt > cuts["pt"])
+    #         & (np.abs(jets.eta) < cuts["eta"])
+    #         & (jets.jetId >= cuts["jetId"])
+    #         & (jets.btagPNetB < cuts["btagPNetB"])
+    #     )
+        # mask_good_jets = mask_presel_VBFtight
+        # print(f"Cut in pt = {cuts['pt']} : {mask_efficiency((jets.pt > cuts['pt']), True)}")
+        # print(f"Cut in eta = {cuts['eta']} : {mask_efficiency((np.abs(jets.eta) < cuts['eta']), True)}")
+        # print(f"Cut in jetId = {cuts['jetId']} : {mask_efficiency((jets.jetId >= cuts['jetId']), True)}")
+        # print(f"Cut in btagPNetB = {cuts['btagPNetB']} : {mask_efficiency((jets.btagPNetB > cuts['btagPNetB']), True)}")
     else:
         mask_presel = (
             (jets.pt > cuts["pt"])
