@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 import awkward as ak
+from vbf_matching import mask_efficiency
 
 
 def lepton_veto(events, params, **kwargs):
@@ -166,7 +167,39 @@ def VBF_cuts(events, params, **args):
     at_least_two_vbf = events.nJetGoodVBF >= params["njet_vbf"]
     mask_delta_eta = events.deltaEta > params["delta_eta"]
 
-    mask = at_least_two_vbf = mask_delta_eta
+    mask = at_least_two_vbf & mask_delta_eta
+
+    return mask 
+
+def VBFtight_cuts(events, params, **args):
+    mask_pt = events.JetGoodVBF_matched.pt > params["pt"]
+    mask_eta = events.JetGoodVBF_matched.eta < params["eta"]
+    mask_btag = events.JetGoodVBF_matched.btagPNetB < params["btag"]
+
+    mask = mask_pt & mask_eta & mask_btag
+
+    jetMasked = events.JetGoodVBF_matched[mask]
+
+    nJetMasked = ak.num(jetMasked)
+
+    mask_at_least_two_vbf = nJetMasked >= params["njet_vbf"]
+    jetMaskedTwoVBF = ak.mask(jetMasked, mask_at_least_two_vbf)
+    mask_opposite_eta = (jetMaskedTwoVBF.eta[:, 0] *
+                          jetMaskedTwoVBF.eta[:, 1] < 
+                          params["eta_product"])
+    
+    mjj = (jetMaskedTwoVBF[:,0]+jetMaskedTwoVBF[:,1]).mass
+    
+    mask_opposite_eta = ak.fill_none(mask_opposite_eta, False)
+        
+    mask_jj_mass = mjj > params["mjj"]
+
+    mask_jj_mass = ak.fill_none(mask_jj_mass, False)
+
+    mask = mask_opposite_eta & mask_jj_mass
+    # print(f"Cut in njet_vbf = {params['njet_vbf']} : {mask_efficiency(mask_at_least_two_vbf, False)}")
+    # print(f"Cut in opposite eta : {mask_efficiency(mask_opposite_eta, False)}")
+    # print(f"Cut in m_jj = {params['mjj']} : {mask_efficiency(mask_jj_mass, False)}", "\n")
 
     return mask 
 
