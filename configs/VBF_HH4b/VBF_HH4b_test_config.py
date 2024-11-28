@@ -156,25 +156,42 @@ cfg = Configurator(
         "common": {
             "inclusive": (
                 [
+                    ColOut(
+                        "events",
+                        [
+                            "etaProduct",
+                            "deltaEta_matched",
+                            "jj_mass_matched",
+                            "HH_mass",
+                        ],
+                    ),
                     # ColOut(
                     #     "Jet",
                     #     [
                     #         "index"
                     #     ],
                     # ),
-                    # ColOut(
-                    #     "JetGoodVBF_matched",
-                    #     [
-                    #         "index",
-                    #         #pt, ...
-                    # btag, eta, ..
-                    #     ],
-                    # ),
+                    ColOut(
+                        "JetGoodVBF_matched",
+                        [
+                            "index",
+                            "pt",
+                            "btagPNetQvG", 
+                            "eta",
+                        ],
+                    ),
+                    ColOut(
+                        "quarkVBF_matched",
+                        [
+                            "index",
+                            "pt",
+                            "eta",
+                        ],
+                    ),
                     # ColOut(
                     #     "JetGoodMatched",
                     #     [
                     #         "index",
-                    #         #pt, ...
                     #     ],
                     # ),
                 ]
