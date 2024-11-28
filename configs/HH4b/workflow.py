@@ -7,7 +7,7 @@ from pocket_coffea.lib.deltaR_matching import object_matching
 from custom_cut_functions import *
 from custom_cuts import *
 from prediction_selection import extract_predictions
-
+from parton_matching_function import get_parton_last_copy
 class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
@@ -259,35 +259,81 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
     def do_parton_matching(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
-        self.events.GenPart = ak.with_field(
+        genpart = ak.with_field(
             self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
         )
-        isHiggs = self.events.GenPart.pdgId == 25
-        isLast = self.events.GenPart.hasFlags(["isLastCopy"])
-        isHard = self.events.GenPart.hasFlags(["fromHardProcess"])
-        higgs = self.events.GenPart[isHiggs & isLast & isHard]
+        isHiggs = genpart.pdgId == 25
+        isB = abs(genpart.pdgId) == 5
+        isLast = genpart.hasFlags(["isLastCopy"])
+        isFirst = genpart.hasFlags(["isFirstCopy"])
+        isHard = genpart.hasFlags(["fromHardProcess"])
 
+        higgs = genpart[isHiggs & isLast & isHard]
         higgs = higgs[ak.num(higgs.childrenIdxG, axis=2) == 2]
-
         higgs = higgs[ak.argsort(higgs.pt, ascending=False)]
+
         if which_bquark == "last":
-            isB = abs(self.events.GenPart.pdgId) == 5
-            bquarks = self.events.GenPart[isB & isLast & isHard]
-            bquarks_first = bquarks
-            while True:
-                b_mother = self.events.GenPart[bquarks_first.genPartIdxMother]
-                mask_mother = (abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
-                bquarks = bquarks[mask_mother]
-                bquarks_first = bquarks_first[mask_mother]
-                b_mother = b_mother[mask_mother]
-                if ak.all((b_mother.pdgId) == 25):
-                    break
-                bquarks_first = ak.where(
-                    abs(b_mother.pdgId) == 5, b_mother, bquarks_first
-                )
+            bquarks_first = genpart[isB & isHard & isFirst]
+            mother_bquarks = genpart[bquarks_first.genPartIdxMother]
+            bquarks_from_higgs = bquarks_first[mother_bquarks.pdgId == 25]
             provenance = ak.where(
-                bquarks_first.genPartIdxMother == higgs.index[:, 0], 1, 2
+                bquarks_from_higgs.genPartIdxMother == higgs.index[:, 0], 1, 2
             )
+
+            #define variables to get the last copy
+            children_idxG = ak.without_parameters(genpart.childrenIdxG, behavior={})
+            children_idxG_flat = ak.flatten(children_idxG, axis=1)
+            genpart_pdgId_flat = ak.flatten(
+                ak.without_parameters(genpart.pdgId, behavior={}), axis=1
+            )
+            genpart_LastCopy_flat = ak.flatten(
+                ak.without_parameters(genpart.hasFlags(["isLastCopy"]), behavior={}), axis=1
+            )
+            genpart_pt_flat = ak.flatten(ak.without_parameters(genpart.pt, behavior={}), axis=1)
+            genparts_flat = ak.flatten(genpart)
+            genpart_offsets = np.concatenate(
+                [[0], np.cumsum(ak.to_numpy(ak.num(genpart, axis=1), allow_missing=True))]
+            )
+            b_quark_idx = ak.to_numpy(bquarks_from_higgs.index + genpart_offsets[:-1], allow_missing=False)
+            b_quarks_pdgId = ak.to_numpy(bquarks_from_higgs.pdgId, allow_missing=False)
+            nevents = b_quark_idx.shape[0]
+            firstgenpart_idxG = ak.firsts(genpart[:, 0].children).genPartIdxMotherG
+            firstgenpart_idxG_numpy = ak.to_numpy(firstgenpart_idxG, allow_missing=False)
+
+            b_quark_last_idx = get_parton_last_copy(
+                b_quark_idx,
+                b_quarks_pdgId,
+                children_idxG_flat,
+                genpart_pdgId_flat,
+                genpart_offsets,
+                genpart_LastCopy_flat,
+                genpart_pt_flat,
+                nevents,
+                firstgenpart_idxG_numpy,
+            )
+            bquarks = genparts_flat[b_quark_last_idx]
+
+
+            # bquarks1 = genpart[isB & isLast & isHard]
+            # bquarks_first = bquarks1
+            # while True:
+            #     b_mother = genpart[bquarks_first.genPartIdxMother]
+            #     mask_mother = (abs(b_mother.pdgId) == 5) | ((b_mother.pdgId) == 25)
+            #     bquarks1 = bquarks1[mask_mother]
+            #     bquarks_first = bquarks_first[mask_mother]
+            #     b_mother = b_mother[mask_mother]
+            #     if ak.all((b_mother.pdgId) == 25):
+            #         break
+            #     bquarks_first = ak.where(
+            #         abs(b_mother.pdgId) == 5, b_mother, bquarks_first
+            #     )
+            # provenance = ak.where(
+            #     bquarks_first.genPartIdxMother == higgs.index[:, 0], 1, 2
+            # )
+            # print("same index", ak.all(ak.sum(bquarks.index, axis=1)==ak.sum(bquarks1.index, axis=1)), ak.sum(bquarks.index, axis=1),ak.sum(bquarks1.index, axis=1), )
+            # print(bquarks.index)
+            # print(bquarks1.index)
+
         elif which_bquark == "first":
             bquarks = ak.flatten(higgs.children, axis=2)
             provenance = ak.where(bquarks.genPartIdxMother == higgs.index[:, 0], 1, 2)

@@ -30,7 +30,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS = False
 
 print("CLASSIFICATION ", CLASSIFICATION)
@@ -78,7 +78,8 @@ cfg = Configurator(
                     # "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
-                else ["GluGlutoHHto4B_spanet"]
+                else ["GluGlutoHHto4B"]
+                # else ["GluGlutoHHto4B_spanet"]
             ),
             "samples_exclude": [],
             "year": [year],
