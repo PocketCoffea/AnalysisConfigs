@@ -2,23 +2,13 @@
 
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
-    get_nObj_eq,
-    get_nObj_min,
-    get_nObj_less,
     get_HLTsel,
-    get_nBtagMin,
-    get_nElectron,
-    get_nMuon,
 )
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 
-import workflow
 from workflow import HH4bbQuarkMatchingProcessor
-
-import custom_cut_functions
-import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 
@@ -51,7 +41,6 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-# spanet_model="params/spanet_5jets_ptreg_ATLAS.onnx"
 spanet_model = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
@@ -63,7 +52,8 @@ cfg = Configurator(
             f"{localdir}/datasets/DATA_JetMET.json",
             f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_redirector.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_local.json",
+            f"{localdir}/datasets/signal_VBF_HH4b_local.json",
         ],
         "filter": {
             "samples": (
@@ -90,7 +80,7 @@ cfg = Configurator(
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
-        "which_bquark": "last",
+        "which_bquark": "last_numba",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
         "tight_cuts": TIGHT_CUTS,
@@ -107,6 +97,7 @@ cfg = Configurator(
         hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
     ],
     categories={
+        "baseline":[passthrough],
         # "lepton_veto": [lepton_veto_presel],
         # "four_jet": [four_jet_presel],
         # "jet_pt": [jet_pt_presel],
@@ -384,11 +375,3 @@ run_options = {
     "treereduction": 5,
     "adapt": False,
 }
-
-
-if "dask" in run_options["executor"]:
-    import cloudpickle
-
-    cloudpickle.register_pickle_by_value(workflow)
-    cloudpickle.register_pickle_by_value(custom_cut_functions)
-    cloudpickle.register_pickle_by_value(custom_cuts)

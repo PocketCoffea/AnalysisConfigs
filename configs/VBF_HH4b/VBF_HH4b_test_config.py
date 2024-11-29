@@ -1,22 +1,12 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
-    get_nObj_eq,
-    get_nObj_min,
-    get_nObj_less,
     get_HLTsel,
-    get_nBtagMin,
-    get_nElectron,
-    get_nMuon,
 )
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 
-import workflow
 from workflow import VBFHH4bbQuarkMatchingProcessor
-
-import custom_cut_functions
-import custom_cuts
 from custom_cut_functions import *
 from custom_cuts import *
 
@@ -40,6 +30,11 @@ parameters = defaults.merge_parameters_from_files(
     # f"{localdir}/params/plotting_style.yaml",
     update=True,
 )
+
+# spanet_model = (
+#     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+# )
+spanet_model = None
 
 # TODO: spostare queste funzioni?
 
@@ -71,11 +66,13 @@ cfg = Configurator(
         "jsons": [
             f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/signal_VBF_HH4b_local.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_local.json",
         ],
         "filter": {
             "samples": (
                 [
                     "VBF_HHto4B",
+                    # "GluGlutoHHto4B",
                     #TODO qcd
                 ]
 
@@ -89,7 +86,8 @@ cfg = Configurator(
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
-        "which_bquark": "last",
+        "which_bquark": "last_numba",
+        "spanet_model": spanet_model,
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -98,16 +96,16 @@ cfg = Configurator(
         hh4b_presel
     ],
     categories={
-        **{"4b_region": [hh4b_4b_region]}, 
-        # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]}, 
-        # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]}, 
-        **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
-        # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]}, 
-        # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]}, 
+        **{"4b_region": [hh4b_4b_region]},
+        # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
+        # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
+        # HERE **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
+        # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
+        # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # "2b_region": [hh4b_2b_region],
-        #TODO 
+        #TODO
     },
     weights={
         "common": {
@@ -131,7 +129,7 @@ cfg = Configurator(
     },
     variables={
         # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        # **jet_hists_dict(coll="JetGood", start=1, end=5),        
+        # **jet_hists_dict(coll="JetGood", start=1, end=5),
         # **create_HistConf("JetGoodVBF", "eta", bins=60, start=-5, stop=5, label="JetGoodVBFeta"),
         # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetGoodVBFQvG_0"),
         # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetGoodVBFQvG_1"),
@@ -176,7 +174,7 @@ cfg = Configurator(
                         [
                             "index",
                             "pt",
-                            "btagPNetQvG", 
+                            "btagPNetQvG",
                             "eta",
                         ],
                     ),

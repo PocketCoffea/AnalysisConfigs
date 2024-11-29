@@ -7,8 +7,8 @@ from pocket_coffea.lib.parton_provenance import reverse_index_array
 
 @njit
 def get_parton_last_copy(
-    quarks_idx,
-    quarks_pdgId,
+    partons_idx,
+    partons_pdgId,
     children_idxG_flat,
     genpart_pdgId_flat,
     genpart_offsets,
@@ -18,34 +18,34 @@ def get_parton_last_copy(
     firstgenpart_idxG_numpy,
 ):
     """
-    Get the last copy of quarks in the event.
+    Get the last copy of partons in the event.
 
-    This function iteratively finds the last copy of quarks by following their children
+    This function iteratively finds the last copy of partons by following their children
     until the last copy is reached. The last copy is defined as the particle with the same
     PDG ID as the mother and no further children or marked as the last copy.
     If multiple children have the same PDG ID as the mother, the one with the highest
     pT is chose.
 
     Parameters:
-    quarks_idx (numpy.ndarray): Indices of quarks in the event.
-    quarks_pdgId (numpy.ndarray): PDG IDs of the quarks.
+    partons_idx (numpy.ndarray): Indices of partons in the event.
+    partons_pdgId (numpy.ndarray): PDG IDs of the partons.
     children_idxG_flat (numpy.ndarray): Flattened array of children indices.
-    genpart_pdgId_flat (numpy.ndarray): Flattened array of PDG IDs of generated particles.
-    genpart_offsets (numpy.ndarray): Offsets for the generated particles.
+    genpart_pdgId_flat (numpy.ndarray): Flattened array of PDG IDs of gen particles.
+    genpart_offsets (numpy.ndarray): Offsets for the gen particles.
     genpart_LastCopy_flat (numpy.ndarray): Flattened array indicating if a particle is the last copy.
-    genpart_pt_flat (numpy.ndarray): Flattened array of transverse momentum of generated particles.
+    genpart_pt_flat (numpy.ndarray): Flattened array of pt of gen particles.
     nevents (int): Number of events.
-    firstgenpart_idxG_numpy (numpy.ndarray): Indices of the first generated particles.
+    firstgenpart_idxG_numpy (numpy.ndarray): Indices of the first gen particles in each event.
 
     Returns:
-    numpy.ndarray: Indices of the last copy of quarks.
+    numpy.ndarray: Indices of the last copy of partons.
     """
 
-    out = np.zeros(quarks_idx.shape, dtype="int64") - 1
+    out = np.zeros(partons_idx.shape, dtype="int64") - 1
 
-    for iev in range(quarks_idx.shape[0]):
-        for ipart in range(quarks_idx.shape[1]):
-            p_id = quarks_idx[iev][ipart]
+    for iev in range(partons_idx.shape[0]):
+        for ipart in range(partons_idx.shape[1]):
+            p_id = partons_idx[iev][ipart]
             # if the particle is already the last copy or has no children, it is the last copy
             if genpart_LastCopy_flat[p_id] or len(children_idxG_flat[p_id]) == 0:
                 out[iev][ipart] = p_id
@@ -69,7 +69,7 @@ def get_parton_last_copy(
                 # loop over children
                 for child_idx in children_idxs:
                     # if PDG ID is not the same as the mother, skip
-                    if genpart_pdgId_flat[child_idx] != quarks_pdgId[iev][ipart]:
+                    if genpart_pdgId_flat[child_idx] != partons_pdgId[iev][ipart]:
                         continue
                     child_pt = genpart_pt_flat[child_idx]
                     # get highest pt among children
