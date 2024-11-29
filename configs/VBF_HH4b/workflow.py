@@ -30,11 +30,11 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             * self.events.Jet.PNetRegPtRawCorrNeutrino,
             "pt",
         )
-        self.events.Jet = ak.with_field(
+        self.events["Jet"] = ak.with_field(
             self.events.Jet, ak.local_index(self.events.Jet, axis=1), "index"
         )
-
-        self.events["JetGood"] = jet_selection_nopu(self.events, "Jet", self.params)
+        self.events["JetGood"] = self.events.Jet
+        self.events["JetGood"] = jet_selection_nopu(self.events, "JetGood", self.params)
 
         self.events["JetVBF_matching"] = self.events.Jet
         self.events["JetVBF_matching"] = jet_selection_nopu(
@@ -68,7 +68,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
     def do_parton_matching(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
-        self.events.GenPart = ak.with_field(
+        self.events["GenPart"] = ak.with_field(
             self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
         )
         genpart = self.events.GenPart

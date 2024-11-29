@@ -80,7 +80,7 @@ cfg = Configurator(
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
-        "which_bquark": "last_numba",
+        "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "spanet_model": spanet_model,
         "tight_cuts": TIGHT_CUTS,

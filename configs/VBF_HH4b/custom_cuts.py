@@ -142,13 +142,13 @@ VBFtight_params = {
 }
 
 # Different parameters dictionary
-no_cuts_params = { 
-    "njet_vbf": 0, 
-    "eta_product": 2, 
-    "mjj": 0, 
-    "pt": 0, 
-    "eta": 20, 
-    "btag": 2 
+no_cuts_params = {
+    "njet_vbf": 0,
+    "eta_product": 2,
+    "mjj": 0,
+    "pt": 0,
+    "eta": 20,
+    "btag": 2
 }
 
 def vbf_wrapper(params = VBFtight_params):
@@ -164,7 +164,7 @@ def generate_dictionaries(VBFtight_params, no_cuts_params):
         temp_dict = no_cuts_params.copy()
         temp_dict[key] = VBFtight_params[key]
         dict_array.append(temp_dict)
-    
+
 
     return dict_array
 
@@ -227,7 +227,8 @@ def lepton_selection(events, lepton_flavour, params):
 def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
-    print(jet_type, cuts)
+    # print(jet_type, cuts)
+
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
     if "GoodVBF" in jet_type:
@@ -262,7 +263,7 @@ def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
             (jets.pt > cuts["pt"])
             & (np.abs(jets.eta) < cuts["eta"])
             & (jets.jetId >= cuts["jetId"])
-            & (jets.btagPNetB > cuts["btagPNetB"])   
+            & (jets.btagPNetB > cuts["btagPNetB"])
         )
         mask_good_jets = mask_presel  # & mask_lepton_cleaning
 

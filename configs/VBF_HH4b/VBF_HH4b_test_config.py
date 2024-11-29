@@ -86,7 +86,7 @@ cfg = Configurator(
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
-        "which_bquark": "last_numba",
+        "which_bquark": "last",
         "spanet_model": spanet_model,
     },
     skim=[
@@ -163,12 +163,12 @@ cfg = Configurator(
                             "HH_mass",
                         ],
                     ),
-                    # ColOut(
-                    #     "Jet",
-                    #     [
-                    #         "index"
-                    #     ],
-                    # ),
+                    ColOut(
+                        "Jet",
+                        [
+                            "index"
+                        ],
+                    ),
                     ColOut(
                         "JetGoodVBF_matched",
                         [
@@ -186,12 +186,12 @@ cfg = Configurator(
                             "eta",
                         ],
                     ),
-                    # ColOut(
-                    #     "JetGoodMatched",
-                    #     [
-                    #         "index",
-                    #     ],
-                    # ),
+                    ColOut(
+                        "JetGoodMatched",
+                        [
+                            "index",
+                        ],
+                    ),
                 ]
 
             ),
