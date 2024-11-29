@@ -99,7 +99,7 @@ cfg = Configurator(
         **{"4b_region": [hh4b_4b_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
-        # HERE **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
+        **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},

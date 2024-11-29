@@ -143,7 +143,7 @@ VBFtight_params = {
 
 # Different parameters dictionary
 no_cuts_params = {
-    "njet_vbf": 0,
+    "njet_vbf": 2,
     "eta_product": 2,
     "mjj": 0,
     "pt": 0,
