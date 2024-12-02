@@ -47,7 +47,6 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   f"{localdir}/params/ml_models.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
-                                                  f"{localdir}/params/standard_scaler.yaml",
                                                   update=True)
 
 categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
