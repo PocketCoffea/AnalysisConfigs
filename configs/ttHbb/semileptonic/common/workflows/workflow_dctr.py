@@ -1,5 +1,5 @@
 import json
-import joblib
+import pickle
 import numpy as np
 import awkward as ak
 from dask.distributed import get_worker
@@ -46,11 +46,6 @@ def get_input_features(events, mask=None, only=None):
 
     return input_features
 
-def data_normalization(x):
-    scaler = StandardScaler()
-    scaler.fit(x)
-    return scaler.transform(x)
-
 class DCTRInferenceProcessor(SpanetInferenceProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
@@ -82,10 +77,11 @@ class DCTRInferenceProcessor(SpanetInferenceProcessor):
         print(model_session)
         print("Available providers:", model_session.get_providers())
 
-        input_features = get_input_features(self.events)
+        # Here we have to distinguish between the model with 8 or 26 input features
+        input_features = get_input_features(self.events, only=self.params.dctr["input_features"])
         data = np.stack(list(input_features.values()), axis=1).astype(np.float32)
         # Load the standard scaler fitted during the training data preprocessing and apply the same transformation to the input data
-        scaler = joblib.load(self.params.standard_scaler["training"]["file"])
+        scaler = pickle.load(open(self.params.dctr["standard_scaler"]["file"], "rb"))
         data = scaler.transform(data)
 
         print("DCTR input type:", data.dtype)
