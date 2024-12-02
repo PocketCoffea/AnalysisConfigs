@@ -17,15 +17,16 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt
 from params.axis_settings import axis_settings
 
 import os
 import json
-localdir = "/eos/user/m/mmarcheg/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/sig_bkg_classifier"
+localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Define SPANet model path for inference
-spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
-dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
+#spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+#dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
 tthbb_L = 0.4
@@ -44,32 +45,26 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
+                                                  f"{localdir}/params/ml_models.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
-                                                  f"{localdir}/params/weight_dctr_cuts.yaml",
                                                   f"{localdir}/params/standard_scaler.yaml",
                                                   update=True)
 
 categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
-with open(parameters["weight_dctr_cuts"]["by_njet"]["file"]) as f:
+with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
 # Set the limit of the last quantile for each key as inf
 for key in w_cuts.keys():
     w_cuts[key][2][1] = float("inf")
 
-with open(parameters["weight_dctr_cuts"]["inclusive"]["file"]) as f:
+with open(parameters["dctr"]["weight_cuts"]["inclusive"]["file"]) as f:
     w_cuts_inclusive = json.load(f)["weight_cuts"]["quantile0p33"]
 
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
-                  f"{localdir}/datasets/backgrounds_MC_TTbb.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar.json",
-                  f"{localdir}/datasets/backgrounds_MC.json",
-                  f"{localdir}/datasets/DATA_SingleEle.json",
-                  f"{localdir}/datasets/DATA_SingleMuon.json",
+        "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
                   ],
         "filter" : {
             "samples": ["ttHTobb",
@@ -127,9 +122,8 @@ cfg = Configurator(
 
     workflow = DCTRInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "spanet_model": spanet_model_path,
-                        "dctr_model": dctr_model_path,
-                        #"local-virtualenv": "/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference",
+                        "spanet_model": parameters["spanet"]["file"],
+                        "dctr_model": parameters["dctr"]["file"],
                         },
     
     skim = [get_nPVgood(1),
@@ -163,7 +157,7 @@ cfg = Configurator(
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
-    weights_classes = common_weights + [SF_ele_trigger],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt],
     weights= {
         "common": {
             "inclusive": [
@@ -172,7 +166,7 @@ cfg = Configurator(
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag",
-                "sf_jet_puId",
+                "sf_jet_puId", "sf_top_pt"
             ],
             "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
@@ -185,9 +179,9 @@ cfg = Configurator(
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag",
-                              "sf_jet_puId",
+                              "sf_jet_puId", "sf_top_pt"
                               ],
-                "bycategory": {}
+                "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate }
             },
             "bysample": {}
         },
