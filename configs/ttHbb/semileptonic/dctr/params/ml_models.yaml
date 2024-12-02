@@ -1,0 +1,15 @@
+spanet:
+  file: "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+dctr:
+  file: "/eos/user/m/mmarcheg/ttHbb/dctr/training/scan_tthbb/tthbb_0p40To0p60/features_8/binary_classifier_full_Run2_batch8092_lr2e-3/lightning_logs/version_0/model.onnx"
+  input_features:
+    - njet
+    - nbjet
+    - ht
+    - ht_b
+    - ht_light
+    - drbb_min
+    - mbb_closest
+    - bjet_pt_3
+  standard_scaler:
+    file: "${config_dir:}/standard_scaler/features_8/standard_scaler_tthbb_0p40To0p60_train_1013153.pkl"
