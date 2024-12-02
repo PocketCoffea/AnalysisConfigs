@@ -13,3 +13,8 @@ dctr:
     - bjet_pt_3
   standard_scaler:
     file: "${config_dir:}/standard_scaler/features_8/standard_scaler_tthbb_0p40To0p60_train_1013153.pkl"
+  weight_cuts:
+    inclusive:
+      file: "${config_dir:}/dctr/weight_cuts_tthbb_0p40To0p60.json"
+    by_njet:
+      file: "${config_dir:}/dctr/weight_cuts_by_njet_tthbb_0p40To0p60.json"

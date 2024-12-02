@@ -1,5 +1,0 @@
-weight_dctr_cuts:
-  inclusive:
-    file: "${config_dir:}/dctr/weight_cuts_inclusive.json"
-  by_njet:
-    file: "${config_dir:}/dctr/weight_cuts_by_njet.json"
