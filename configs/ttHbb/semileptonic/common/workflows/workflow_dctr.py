@@ -99,7 +99,7 @@ class DCTRInferenceProcessor(SpanetInferenceProcessor):
 
         self.events["dctr_output"] = ak.zip(dctr_dict)
 
-        with open(self.params.weight_dctr_cuts["by_njet"]["file"]) as f:
+        with open(self.params.dctr["weight_cuts"]["by_njet"]["file"]) as f:
             w_cuts = json.load(f)
         for key in w_cuts.keys():
             w_cuts[key][2][1] = float("inf")
