@@ -12,6 +12,8 @@ sys.path.append("../../")
 from utils.parton_matching_function import get_parton_last_copy
 from utils.spanet_evaluation_functions import get_pairing_information, get_best_pairings
 from utils.basic_functions import add_4vec_features
+from vbf_matching import get_jets_no_higgs
+
 
 class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
@@ -330,6 +332,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["JetGoodMatched"] = self.events.JetGood
 
     def count_objects(self, variation):
+        # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
         self.events["nElectronGood"] = ak.num(self.events.ElectronGood, axis=1)
         self.events["nMuonGood"] = ak.num(self.events.MuonGood, axis=1)
         self.events["nJetGood"] = ak.num(self.events.JetGood, axis=1)
@@ -347,11 +350,10 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         higgs_lead = jet_higgs1[:, 0] + jet_higgs1[:, 1]
         higgs_sub = jet_higgs2[:, 0] + jet_higgs2[:, 1]
 
-        higgs_lead=add_4vec_features(higgs_lead)
-        higgs_sub=add_4vec_features(higgs_sub)
+        higgs_lead = add_4vec_features(higgs_lead)
+        higgs_sub = add_4vec_features(higgs_sub)
 
         return higgs_lead, higgs_sub
-
 
     def reconstruct_higgs(self, jet_collection, idx_collection):
         higgs_1 = ak.unflatten(
@@ -374,20 +376,20 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         higgs_lead = ak.where(higgs_leading_index == 0, higgs_1, higgs_2)
         higgs_sub = ak.where(higgs_leading_index == 0, higgs_2, higgs_1)
 
-        higgs_leading_index_expanded = higgs_leading_index[
-            :, np.newaxis
-        ] * np.ones((2, 2))
+        higgs_leading_index_expanded = higgs_leading_index[:, np.newaxis] * np.ones(
+            (2, 2)
+        )
         # print("\nhiggs_leading_index_expanded", higgs_leading_index_expanded, len(higgs_leading_index_expanded), len(higgs_leading_index_expanded[0]), len(higgs_leading_index_expanded[1]))
         idx_ordered = ak.where(
             higgs_leading_index_expanded == 0, idx_collection, idx_collection[:, ::-1]
         )
 
-        #flatten
+        # flatten
         higgs_lead = ak.flatten(higgs_lead)
         higgs_sub = ak.flatten(higgs_sub)
 
-        higgs_lead=add_4vec_features(higgs_lead)
-        higgs_sub=add_4vec_features(higgs_sub)
+        higgs_lead = add_4vec_features(higgs_lead)
+        higgs_sub = add_4vec_features(higgs_sub)
 
         return higgs_lead, higgs_sub, idx_ordered
 
@@ -399,13 +401,18 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events["nbQuarkHiggsMatched"] = ak.num(
                     self.events.bQuarkHiggsMatched, axis=1
                 )
-                self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
+                self.events["nbQuarkMatched"] = ak.num(
+                    self.events.bQuarkMatched, axis=1
+                )
 
                 # reconstruct the higgs candidates
                 self.events["HiggsLeading"], self.events["HiggsSubLeading"] = (
                     self.reconstruct_higgs_candidates(self.events.JetGoodMatched)
                 )
-                # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
+
+                self.events["JetNotFromHiggs"] = self.events.Jet[
+                    ~ak.is_none(self.events.JetGoodMatched.index, axis=1)
+                ]
             else:
                 # apply spanet model to get the pairing prediction for the b-jets from Higgs
                 self.dummy_provenance()
@@ -444,7 +451,11 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
                 # compute the pairing information using the spanet model
                 outputs = get_pairing_information(
-                    model_session, input_name, output_name, self.events, self.max_num_jets
+                    model_session,
+                    input_name,
+                    output_name,
+                    self.events,
+                    self.max_num_jets,
                 )
 
                 (
@@ -458,6 +469,89 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     self.events["HiggsSubLeading"],
                     pairing_predictions_ordered,
                 ) = self.reconstruct_higgs(self.events.JetGood, pairing_predictions)
+                print("pairing_predictions_ordered", pairing_predictions_ordered)
+
+                # jets_from_higgs_list = []
+
+                # for i in range(4):
+                #     print(
+                #         ak.to_numpy(
+                #             ak.flatten(pairing_predictions_ordered, axis=2)[:, i]
+                #         )
+                #     )
+                #     print(
+                #         ak.singletons(
+                #             self.events.Jet[
+                #                 ak.local_index(self.events.Jet, axis=0),
+                #                 ak.to_numpy(
+                #                     ak.flatten(pairing_predictions_ordered, axis=2)[
+                #                         :, i
+                #                     ]
+                #                 ),
+                #             ]
+                #         ).index
+                #     )
+                #     jets_from_higgs_list.append(
+                #         ak.singletons(
+                #             self.events.Jet[
+                #                 ak.local_index(self.events.Jet, axis=0),
+                #                 ak.to_numpy(
+                #                     ak.flatten(pairing_predictions_ordered, axis=2)[
+                #                         :, i
+                #                     ]
+                #                 ),
+                #             ]
+                #         )
+                #     )
+                # print(
+                #     "jets_from_higgs_list",
+                #     jets_from_higgs_list,
+                #     jets_from_higgs_list[0].index,
+                # )
+
+                # self.events["JetNotFromHiggs"] = ak.concatenate(
+                #     jets_from_higgs_list, axis=1
+                # )
+                # raise ("this is viceversa!")
+
+                matched_jet_higgs_idx_not_none = ak.flatten(
+                    pairing_predictions_ordered, axis=2
+                )
+                jet_offsets = np.concatenate(
+                    [
+                        [0],
+                        np.cumsum(
+                            ak.to_numpy(
+                                ak.num(self.events.Jet, axis=1), allow_missing=True
+                            )
+                        ),
+                    ]
+                )
+                local_index_all = ak.local_index(self.events.Jet, axis=1)
+                jets_index_all = ak.to_numpy(
+                    ak.flatten(local_index_all + jet_offsets[:-1]), allow_missing=True
+                )
+                jets_from_higgs_idx = ak.to_numpy(
+                    ak.flatten(matched_jet_higgs_idx_not_none + jet_offsets[:-1]),
+                    allow_missing=False,
+                )
+                jets_no_higgs_idx = get_jets_no_higgs(
+                    jets_index_all, jets_from_higgs_idx
+                )
+                jets_no_higgs_idx_unflat = (
+                    ak.unflatten(jets_no_higgs_idx, ak.num(self.events.Jet, axis=1))
+                    - jet_offsets[:-1]
+                )
+                self.events["JetNotFromHiggs"] = ak.pad_none(
+                    self.events.Jet[jets_no_higgs_idx_unflat >= 0], 2
+                )
+
+                print("JetNotFromHiggs", self.events["JetNotFromHiggs"].index)
+
+            # order in pt
+            self.events["JetNotFromHiggs"] = self.events.JetNotFromHiggs[
+                ak.argsort(self.events.JetNotFromHiggs.pt, axis=1, ascending=False)
+            ]
 
             self.events["HH_mass"] = (
                 self.events.HiggsLeading + self.events.HiggsSubLeading
@@ -477,6 +571,69 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             # print(ak.sum(num_JetGoodVBF_matched) / (len(self.events) * 2))
 
             self.events["nJetVBF_matched"] = ak.num(self.events.JetGoodVBF_matched, axis=1)
+
+            # choose vbf jets as the two jets with the highest pt that are not from higgs decay
+            self.events["JetVBFLeadingPtNotFromHiggs"] = self.events["JetNotFromHiggs"][
+                ak.argsort(self.events["JetNotFromHiggs"].pt, axis=1, ascending=False)
+            ][:, :2]
+            print(self.events["JetVBFLeadingPtNotFromHiggs"].index)
+            # print(
+            #     "JetVBFLeadingPtNotFromHiggs",
+            #     self.events["JetVBFLeadingPtNotFromHiggs"].index,
+            #     self.events["JetVBFLeadingPtNotFromHiggs"].pt,
+            #     (
+            #         self.events["JetVBFLeadingPtNotFromHiggs"][:, 0]
+            #         + self.events["JetVBFLeadingPtNotFromHiggs"][:, 1]
+            #     ).mass,
+            # )
+
+            # choose higgs jets as the two jets with the highest mjj that are not from higgs decay
+            jet_combinations = ak.combinations(self.events.JetNotFromHiggs, 2)
+            jet_combinations_mass = (jet_combinations["0"] + jet_combinations["1"]).mass
+            jet_combinations_mass_max_idx = ak.to_numpy(
+                ak.argsort(jet_combinations_mass, axis=1, ascending=False)[:, 0]
+            )
+            print("jet_combinations", jet_combinations)
+            print("jet_combinations_mass_max_idx", jet_combinations_mass_max_idx)
+            print(
+                "ak.local_index(jet_combinations, axis=0)",
+                ak.local_index(jet_combinations, axis=0),
+            )
+            jets_max_mass = jet_combinations[
+                ak.local_index(jet_combinations, axis=0), jet_combinations_mass_max_idx
+            ]
+            vbf_jets_max_mass_0 = ak.singletons(
+                self.events.Jet[
+                    ak.local_index(self.events.Jet, axis=0),
+                    ak.to_numpy(jets_max_mass["0"].index),
+                ]
+            )
+            vbf_jets_max_mass_1 = ak.singletons(
+                self.events.Jet[
+                    ak.local_index(self.events.Jet, axis=0),
+                    ak.to_numpy(jets_max_mass["1"].index),
+                ]
+            )
+            self.events["JetVBFLeadingMjjNotFromHiggs"] = ak.concatenate(
+                [vbf_jets_max_mass_0, vbf_jets_max_mass_1], axis=1
+            )
+            print(self.events["JetVBFLeadingMjjNotFromHiggs"].index)
+            # print(
+            #     "JetVBFLeadingMjjNotFromHiggs",
+            #     self.events["JetVBFLeadingMjjNotFromHiggs"].index,
+            #     self.events["JetVBFLeadingMjjNotFromHiggs"].pt,
+            #     (
+            #         self.events["JetVBFLeadingMjjNotFromHiggs"][:, 0]
+            #         + self.events["JetVBFLeadingMjjNotFromHiggs"][:, 1]
+            #     ).mass,
+            # )
+
+            # print(self.events.JetGoodVBF_matched)
+            # sum = 0
+            # for i in range(len(self.events.JetGoodVBF_matched)):
+            #     if len(self.events.JetGoodVBF_matched[i]) < 2:
+            #         sum += 1
+            # print(sum, len(self.events.JetGoodVBF_matched), sum/len(self.events.JetGoodVBF_matched))
 
             # Create new variable delta eta and invariant mass of the jets
             JetGoodVBF_matched_padded = ak.pad_none(

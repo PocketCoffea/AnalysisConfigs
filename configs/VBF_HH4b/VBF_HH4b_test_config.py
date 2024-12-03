@@ -31,10 +31,10 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-# spanet_model = (
-#     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
-# )
 spanet_model = None
+spanet_model = (
+    "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+)
 
 # TODO: spostare queste funzioni?
 

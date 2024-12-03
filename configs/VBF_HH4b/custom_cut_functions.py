@@ -108,11 +108,13 @@ def jet_btag_all(events, params, **kwargs):
 
 
 def hh4b_presel_cuts(events, params, **kwargs):
+
+    mask_6_jets = ak.num(events.Jet) >= 6 #HERE
     at_least_four_jets = events.nJetGood >= params["njet"]
     no_electron = events.nElectronGood == 0
     no_muon = events.nMuonGood == 0
 
-    mask_4jet_nolep = at_least_four_jets & no_electron & no_muon
+    mask_4jet_nolep = at_least_four_jets & no_electron & no_muon & mask_6_jets
 
     # convert false to None
     mask_4jet_nolep_none = ak.mask(mask_4jet_nolep, mask_4jet_nolep)
@@ -187,11 +189,11 @@ def VBFtight_cuts(events, params, **args):
     mask_opposite_eta = ((jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1]) / 
                           (abs(jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1])) < 
                           params["eta_product"])
-    
+
     mjj = (jetMaskedTwoVBF[:,0]+jetMaskedTwoVBF[:,1]).mass
-    
+
     mask_opposite_eta = ak.fill_none(mask_opposite_eta, False)
-        
+
     mask_jj_mass = mjj > params["mjj"]
 
     mask_jj_mass = ak.fill_none(mask_jj_mass, False)
@@ -221,7 +223,7 @@ def VBF_generalSelection_cuts(events, params, **kwargs):
 
     #No jets on the same side
     mask_no_same_side = (events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 0] *
-                          events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 1] < 
+                          events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 1] <
                           params["eta_product"])
 
     mask_mass = (events.jj_mass > params["mjj"])
