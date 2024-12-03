@@ -1,0 +1,36 @@
+scaleout: 300
+chunksize: 20000
+mem-per-worker: "8GB"
+disk-per-worker: "4GB"
+cores-per-worker: 1
+adaptive: false
+queue: "standard"
+walltime: "12:00:00"
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+local-virtualenv: false
+spanet_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+dctr_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/scan_tthbb/tthbb_0p40To0p60/features_8/binary_classifier_full_Run2_batch8092_lr2e-3/lightning_logs/version_0/model.onnx"
+group-samples:
+  signal:
+    - "ttHTobb"
+    - "ttHTobb_ttToSemiLep"
+  TTToSemiLeptonic:
+    - "TTToSemiLeptonic"
+  TTbbSemiLeptonic:
+    - "TTbbSemiLeptonic"
+  TTTo2L2Nu:
+    - "TTTo2L2Nu"
+  SingleTop:
+    - "SingleTop"
+  WJets:
+    - "WJetsToLNu_HT"
+  ZJets:
+    - "DYJetsToLL"
+  VV_TTV:
+    - "VV"
+    - "TTV"
+  DATA:
+    - "DATA_SingleEle"
+    - "DATA_SingleMuon"
