@@ -99,7 +99,7 @@ cfg = Configurator(
         **{"4b_region": [hh4b_4b_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
-        **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 1)},
+        **{f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [hh4b_4b_region, vbf_wrapper(ab[i])] for i in range(0, 6)},
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
@@ -161,12 +161,29 @@ cfg = Configurator(
                             "deltaEta_matched",
                             "jj_mass_matched",
                             "HH_mass",
+                            "nJetVBF_matched",
                         ],
                     ),
                     ColOut(
                         "Jet",
                         [
-                            "index"
+                            "index",
+                            "pt",
+                            "btagPNetQvG",
+                            "eta",
+                            "btagPNetB",
+                            "phi"
+                        ],
+                    ),
+                    ColOut(
+                        "JetVBF_matching",
+                        [
+                            "index",
+                            "pt",
+                            "btagPNetQvG",
+                            "eta",
+                            "btagPNetB",
+                            "phi"
                         ],
                     ),
                     ColOut(
@@ -176,6 +193,8 @@ cfg = Configurator(
                             "pt",
                             "btagPNetQvG",
                             "eta",
+                            "btagPNetB",
+                            "phi"
                         ],
                     ),
                     ColOut(
@@ -184,12 +203,47 @@ cfg = Configurator(
                             "index",
                             "pt",
                             "eta",
+                            "phi",
+                        ],
+                    ),
+                    ColOut(
+                        "quarkVBF",
+                        [
+                            "index",
+                            "pt",
+                            "eta",
+                            "phi",
                         ],
                     ),
                     ColOut(
                         "JetGoodMatched",
                         [
                             "index",
+                            "pt",
+                            "btagPNetQvG",
+                            "eta",
+                            "btagPNetB",
+                            "phi"
+                        ],
+                    ),
+                    ColOut(
+                        "JetVBF_generalSelection_matched",
+                        [
+                            "index",
+                            "pt",
+                            "btagPNetQvG",
+                            "eta",
+                            "btagPNetB",
+                            "phi",
+                        ],
+                    ),
+                    ColOut(
+                        "quarkVBF_generalSelection_matched",
+                        [
+                            "index",
+                            "pt",
+                            "eta",
+                            "phi",
                         ],
                     ),
                 ]

@@ -169,7 +169,7 @@ def VBF_cuts(events, params, **args):
 
     mask = at_least_two_vbf & mask_delta_eta
 
-    return mask 
+    return ak.where(ak.is_none(mask), False, mask)
 
 def VBFtight_cuts(events, params, **args):
     mask_pt = events.JetGoodVBF_matched.pt > params["pt"]
@@ -184,8 +184,8 @@ def VBFtight_cuts(events, params, **args):
 
     mask_at_least_two_vbf = nJetMasked >= params["njet_vbf"]
     jetMaskedTwoVBF = ak.mask(jetMasked, mask_at_least_two_vbf)
-    mask_opposite_eta = (jetMaskedTwoVBF.eta[:, 0] *
-                          jetMaskedTwoVBF.eta[:, 1] < 
+    mask_opposite_eta = ((jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1]) / 
+                          (abs(jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1])) < 
                           params["eta_product"])
     
     mjj = (jetMaskedTwoVBF[:,0]+jetMaskedTwoVBF[:,1]).mass
@@ -201,7 +201,7 @@ def VBFtight_cuts(events, params, **args):
     # print(f"Cut in opposite eta : {mask_efficiency(mask_opposite_eta, False)}")
     # print(f"Cut in m_jj = {params['mjj']} : {mask_efficiency(mask_jj_mass, False)}", "\n")
 
-    return mask 
+    return ak.where(ak.is_none(mask), False, mask)
 
 def VBF_generalSelection_cuts(events, params, **kwargs):
     at_least_two_jets = events.nJetVBF_generalSelection >= params["njet_vbf"]
@@ -228,11 +228,11 @@ def VBF_generalSelection_cuts(events, params, **kwargs):
 
     mask = mask_pt & mask_no_same_side & mask_mass
 
-    return mask
+    return ak.where(ak.is_none(mask), False, mask)
 
 def qvg_cuts(events, params, **kwargs):
     JetGoodVBF_padded = ak.pad_none(events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
     mask = ak.Array((JetGoodVBF_padded.btagPNetQvG[:, 0] > params["qvg_cut"]) &
            (JetGoodVBF_padded.btagPNetQvG[:, 1] > params["qvg_cut"]))
 
-    return mask
+    return ak.where(ak.is_none(mask), False, mask)

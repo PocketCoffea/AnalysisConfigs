@@ -145,8 +145,8 @@ VBFtight_params = {
 no_cuts_params = {
     "njet_vbf": 2,
     "eta_product": 2,
-    "mjj": 0,
-    "pt": 0,
+    "mjj": -1,
+    "pt": -1,
     "eta": 20,
     "btag": 2
 }
@@ -170,7 +170,8 @@ def generate_dictionaries(VBFtight_params, no_cuts_params):
 
 # Generate the array of dictionaries
 ab = generate_dictionaries(VBFtight_params, no_cuts_params)
-for i in range(len(ab)):
+print(len(ab))
+for i in range(0, len(ab)):
     print(list(no_cuts_params.keys())[i], ab[i], "\n")
 
 qvg_regions = {}
