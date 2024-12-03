@@ -24,10 +24,10 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
-            self.events.Jet.pt
+            ak.where(self.events.Jet.PNetRegPtRawCorr > 0, self.events.Jet.pt
             * (1 - self.events.Jet.rawFactor)
             * self.events.Jet.PNetRegPtRawCorr
-            * self.events.Jet.PNetRegPtRawCorrNeutrino,
+            * self.events.Jet.PNetRegPtRawCorrNeutrino, self.events.Jet.pt),
             "pt",
         )
         self.events["Jet"] = ak.with_field(
@@ -280,18 +280,41 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             dr_min=self.dr_min,
         )
 
+
         maskNotNone = ~ak.is_none(matched_vbf_jets, axis=1)
         self.events["JetGoodVBF_matched"] = matched_vbf_jets[maskNotNone]
 
+
         self.events["JetGoodVBF_matched"] = ak.with_field(
             self.events.JetGoodVBF_matched,
-            self.events.JetGoodVBF_matched.pt
-            / self.events.JetGoodVBF_matched.PNetRegPtRawCorrNeutrino,
+            ak.where(self.events.JetGoodVBF_matched.PNetRegPtRawCorr > 0, self.events.JetGoodVBF_matched.pt
+            / self.events.JetGoodVBF_matched.PNetRegPtRawCorrNeutrino, self.events.JetGoodVBF_matched.pt),
             "pt",
         )
 
-        maskNotNone = ~ak.is_none(matched_vbf_quarks, axis=1)
         self.events["quarkVBF_matched"] = matched_vbf_quarks[maskNotNone]
+
+        self.events["quarkVBF"] = vbf_quark_last
+
+        # general Selection
+        matched_vbf_quarks_generalSelection, matched_vbf_jets_generalSelection, deltaR_matched_vbf = object_matching(
+            vbf_quark_last,
+            self.events.JetVBF_generalSelection,
+            dr_min=self.dr_min,
+        )
+        maskNotNone_genSel = ~ak.is_none(matched_vbf_jets_generalSelection, axis=1)
+        
+        self.events["JetVBF_generalSelection_matched"] = matched_vbf_jets_generalSelection[maskNotNone_genSel]
+
+        self.events["JetVBF_generalSelection_matched"] = ak.with_field(
+            self.events.JetVBF_generalSelection_matched,
+            ak.where(self.events.JetVBF_generalSelection_matched.PNetRegPtRawCorr > 0, self.events.JetVBF_generalSelection_matched.pt
+            / self.events.JetVBF_generalSelection_matched.PNetRegPtRawCorrNeutrino, self.events.JetVBF_generalSelection_matched.pt),
+            "pt",
+        )
+
+        self.events["quarkVBF_generalSelection_matched"] = matched_vbf_quarks_generalSelection[maskNotNone_genSel]
+
 
     def dummy_provenance(self):
         self.events["JetGoodHiggs"] = ak.with_field(
@@ -441,12 +464,19 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             ).mass
 
             self.do_vbf_parton_matching(which_bquark=self.which_bquark)
-            # print(self.events.JetGoodVBF_matched)
-            # sum = 0
-            # for i in range(len(self.events.JetGoodVBF_matched)):
-            #     if len(self.events.JetGoodVBF_matched[i]) < 2:
-            #         sum += 1
-            # print(sum, len(self.events.JetGoodVBF_matched), sum/len(self.events.JetGoodVBF_matched))
+            
+            # num_JetGoodVBF_matched = ak.num(self.events.JetGoodVBF_matched)
+            # num_eventsTwoVBF = ak.sum((num_JetGoodVBF_matched == 2))
+
+            # num_eventsOneVBF = ak.sum((num_JetGoodVBF_matched == 1))
+            # num_eventsZeroVBF = ak.sum((num_JetGoodVBF_matched == 0))
+            # print(len(self.events))
+            # print("Two", num_eventsTwoVBF/len(self.events.JetGoodVBF_matched))
+            # print("One", num_eventsOneVBF/len(self.events.JetGoodVBF_matched))
+            # print("Zero", num_eventsZeroVBF/len(self.events.JetGoodVBF_matched))
+            # print(ak.sum(num_JetGoodVBF_matched) / (len(self.events) * 2))
+
+            self.events["nJetVBF_matched"] = ak.num(self.events.JetGoodVBF_matched, axis=1)
 
             # Create new variable delta eta and invariant mass of the jets
             JetGoodVBF_matched_padded = ak.pad_none(
