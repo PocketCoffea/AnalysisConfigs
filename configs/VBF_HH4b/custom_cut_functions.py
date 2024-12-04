@@ -109,7 +109,7 @@ def jet_btag_all(events, params, **kwargs):
 
 def hh4b_presel_cuts(events, params, **kwargs):
 
-    mask_6_jets = ak.num(events.Jet) >= 6 #HERE
+    mask_6_jets = ak.num(events.Jet) >= 6  # HERE
     at_least_four_jets = events.nJetGood >= params["njet"]
     no_electron = events.nElectronGood == 0
     no_muon = events.nMuonGood == 0
@@ -134,9 +134,8 @@ def hh4b_presel_cuts(events, params, **kwargs):
     mask_pt = ak.where(ak.is_none(mask_pt_none), False, mask_pt_none)
 
     mask_btag = (
-        (jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]) / 2
-        > params["mean_pnet_jet"]
-    )
+        jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]
+    ) / 2 > params["mean_pnet_jet"]
 
     mask_btag = ak.where(ak.is_none(mask_btag), False, mask_btag)
 
@@ -144,6 +143,7 @@ def hh4b_presel_cuts(events, params, **kwargs):
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
+
 
 def hh4b_2b_cuts(events, params, **kwargs):
     jets_btag_order = events.JetGoodHiggs
@@ -155,6 +155,7 @@ def hh4b_2b_cuts(events, params, **kwargs):
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
 
+
 def hh4b_4b_cuts(events, params, **kwargs):
     jets_btag_order = events.JetGoodHiggs
 
@@ -165,6 +166,7 @@ def hh4b_4b_cuts(events, params, **kwargs):
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
 
+
 def VBF_cuts(events, params, **args):
     at_least_two_vbf = events.nJetGoodVBF >= params["njet_vbf"]
     mask_delta_eta = events.deltaEta > params["delta_eta"]
@@ -172,6 +174,7 @@ def VBF_cuts(events, params, **args):
     mask = at_least_two_vbf & mask_delta_eta
 
     return ak.where(ak.is_none(mask), False, mask)
+
 
 def VBFtight_cuts(events, params, **args):
     mask_pt = events.JetGoodVBF_matched.pt > params["pt"]
@@ -186,11 +189,11 @@ def VBFtight_cuts(events, params, **args):
 
     mask_at_least_two_vbf = nJetMasked >= params["njet_vbf"]
     jetMaskedTwoVBF = ak.mask(jetMasked, mask_at_least_two_vbf)
-    mask_opposite_eta = ((jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1]) / 
-                          (abs(jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1])) < 
-                          params["eta_product"])
+    mask_opposite_eta = (jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1]) / (
+        abs(jetMaskedTwoVBF.eta[:, 0] * jetMaskedTwoVBF.eta[:, 1])
+    ) < params["eta_product"]
 
-    mjj = (jetMaskedTwoVBF[:,0]+jetMaskedTwoVBF[:,1]).mass
+    mjj = (jetMaskedTwoVBF[:, 0] + jetMaskedTwoVBF[:, 1]).mass
 
     mask_opposite_eta = ak.fill_none(mask_opposite_eta, False)
 
@@ -205,6 +208,7 @@ def VBFtight_cuts(events, params, **args):
 
     return ak.where(ak.is_none(mask), False, mask)
 
+
 def VBF_generalSelection_cuts(events, params, **kwargs):
     at_least_two_jets = events.nJetVBF_generalSelection >= params["njet_vbf"]
     mask_two_vbf_jets = ak.mask(at_least_two_jets, at_least_two_jets)
@@ -214,27 +218,32 @@ def VBF_generalSelection_cuts(events, params, **kwargs):
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
     ]
 
-    mask_VBF_pt_none = (
-        (jets_pt_order.pt[:, 0] > params["pt_VBFjet0"])
-    )
+    mask_VBF_pt_none = jets_pt_order.pt[:, 0] > params["pt_VBFjet0"]
 
     # convert none to false
     mask_pt = ak.where(ak.is_none(mask_VBF_pt_none), False, mask_VBF_pt_none)
 
-    #No jets on the same side
-    mask_no_same_side = (events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 0] *
-                          events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 1] <
-                          params["eta_product"])
+    # No jets on the same side
+    mask_no_same_side = (
+        events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 0]
+        * events[mask_two_vbf_jets].JetVBF_generalSelection.eta[:, 1]
+        < params["eta_product"]
+    )
 
-    mask_mass = (events.jj_mass > params["mjj"])
+    mask_mass = events.jj_mass > params["mjj"]
 
     mask = mask_pt & mask_no_same_side & mask_mass
 
     return ak.where(ak.is_none(mask), False, mask)
 
+
 def qvg_cuts(events, params, **kwargs):
-    JetGoodVBF_padded = ak.pad_none(events.JetGoodVBF, 2) #Adds none jets to events that have less than 2 jets
-    mask = ak.Array((JetGoodVBF_padded.btagPNetQvG[:, 0] > params["qvg_cut"]) &
-           (JetGoodVBF_padded.btagPNetQvG[:, 1] > params["qvg_cut"]))
+    JetGoodVBF_padded = ak.pad_none(
+        events.JetGoodVBF, 2
+    )  # Adds none jets to events that have less than 2 jets
+    mask = ak.Array(
+        (JetGoodVBF_padded.btagPNetQvG[:, 0] > params["qvg_cut"])
+        & (JetGoodVBF_padded.btagPNetQvG[:, 1] > params["qvg_cut"])
+    )
 
     return ak.where(ak.is_none(mask), False, mask)

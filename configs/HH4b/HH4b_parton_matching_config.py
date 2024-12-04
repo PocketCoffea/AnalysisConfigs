@@ -20,7 +20,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = False
+CLASSIFICATION = True
 TIGHT_CUTS = False
 
 print("CLASSIFICATION ", CLASSIFICATION)

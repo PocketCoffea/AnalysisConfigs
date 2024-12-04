@@ -1,10 +1,15 @@
 import awkward as ak
 
 
-def add_4vec_features(collection):
-    collection=ak.with_field(collection, collection.pt, "pt")
-    collection=ak.with_field(collection, collection.eta, "eta")
-    collection=ak.with_field(collection, collection.phi, "phi")
-    collection=ak.with_field(collection, collection.mass, "mass")
+def add_fields(collection, fields=["pt", "eta", "phi", "mass"], four_vec=True):
+    if four_vec:
+        fields_dict = {field: getattr(collection, field) for field in fields}
+        collection = ak.zip(
+            fields_dict,
+            with_name="PtEtaPhiMLorentzVector",
+        )
+    else:
+        for field in fields:
+            collection = ak.with_field(collection, getattr(collection, field), field)
 
     return collection

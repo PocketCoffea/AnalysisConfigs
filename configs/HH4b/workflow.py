@@ -11,7 +11,12 @@ from custom_cuts import *
 sys.path.append("../../")
 from utils.parton_matching_function import get_parton_last_copy
 from utils.spanet_evaluation_functions import get_pairing_information, get_best_pairings
-from utils.basic_functions import add_4vec_features
+from utils.basic_functions import add_fields
+from utils.reconstruct_higgs_candidates import (
+    reconstruct_higgs_from_provenance,
+    reconstruct_higgs_from_idx,
+)
+
 
 class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
@@ -27,18 +32,26 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
-            self.events.Jet.pt
-            * (1 - self.events.Jet.rawFactor)
-            * self.events.Jet.PNetRegPtRawCorr
-            * self.events.Jet.PNetRegPtRawCorrNeutrino,
+            ak.where(
+                self.events.Jet.PNetRegPtRawCorr > 0,
+                self.events.Jet.pt
+                * (1 - self.events.Jet.rawFactor)
+                * self.events.Jet.PNetRegPtRawCorr
+                * self.events.Jet.PNetRegPtRawCorrNeutrino,
+                self.events.Jet.pt,
+            ),
             "pt",
         )
         self.events["Jet"] = ak.with_field(
             self.events.Jet,
-            self.events.Jet.mass
-            * (1 - self.events.Jet.rawFactor)
-            * self.events.Jet.PNetRegPtRawCorr
-            * self.events.Jet.PNetRegPtRawCorrNeutrino,
+            ak.where(
+                self.events.Jet.PNetRegPtRawCorr > 0,
+                self.events.Jet.mass
+                * (1 - self.events.Jet.rawFactor)
+                * self.events.Jet.PNetRegPtRawCorr
+                * self.events.Jet.PNetRegPtRawCorrNeutrino,
+                self.events.Jet.mass,
+            ),
             "mass",
         )
         self.events["JetGood"] = jet_selection_nopu(
@@ -66,55 +79,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 (self.events["JetGoodHiggs"], self.events["JetGoodNoHiggsPt"]), axis=1
             )
 
-    def reconstruct_higgs_candidates(self, matched_jets_higgs):
-
-        jet_higgs1 = matched_jets_higgs[matched_jets_higgs.provenance == 1]
-        jet_higgs2 = matched_jets_higgs[matched_jets_higgs.provenance == 2]
-
-        higgs_lead = jet_higgs1[:, 0] + jet_higgs1[:, 1]
-        higgs_sub = jet_higgs2[:, 0] + jet_higgs2[:, 1]
-
-        higgs_lead=add_4vec_features(higgs_lead)
-        higgs_sub=add_4vec_features(higgs_sub)
-
-        return higgs_lead, higgs_sub
-
-    def reconstruct_higgs(self, jet_collection, idx_collection):
-        higgs_1 = ak.unflatten(
-            jet_collection[np.arange(len(idx_collection)), idx_collection[:, 0, 0]]
-            + jet_collection[np.arange(len(idx_collection)), idx_collection[:, 0, 1]],
-            1,
-        )
-        higgs_2 = ak.unflatten(
-            jet_collection[np.arange(len(idx_collection)), idx_collection[:, 1, 0]]
-            + jet_collection[np.arange(len(idx_collection)), idx_collection[:, 1, 1]],
-            1,
-        )
-
-
-        higgs_leading_index = ak.where(higgs_1.pt > higgs_2.pt, 0, 1)
-
-        higgs_lead = ak.where(higgs_leading_index == 0, higgs_1, higgs_2)
-        higgs_sub = ak.where(higgs_leading_index == 0, higgs_2, higgs_1)
-
-        higgs_leading_index_expanded = higgs_leading_index[
-            :, np.newaxis
-        ] * np.ones((2, 2))
-        # print("\nhiggs_leading_index_expanded", higgs_leading_index_expanded, len(higgs_leading_index_expanded), len(higgs_leading_index_expanded[0]), len(higgs_leading_index_expanded[1]))
-        idx_ordered = ak.where(
-            higgs_leading_index_expanded == 0, idx_collection, idx_collection[:, ::-1]
-        )
-
-        #flatten
-        higgs_lead = ak.flatten(higgs_lead)
-        higgs_sub = ak.flatten(higgs_sub)
-
-        higgs_lead=add_4vec_features(higgs_lead)
-        higgs_sub=add_4vec_features(higgs_sub)
-
-        return higgs_lead, higgs_sub, idx_ordered
-
-    def do_parton_matching(self, which_bquark):  # -> ak.Array:
+    def get_jet_higgs_provenance(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
         self.events.GenPart = ak.with_field(
             self.events.GenPart, ak.local_index(self.events.GenPart, axis=1), "index"
@@ -283,11 +248,9 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood, axis=1)
         self.events["nJetGoodHiggs"] = ak.num(self.events.JetGoodHiggs, axis=1)
 
-
-
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.classification:
-            self.do_parton_matching(which_bquark=self.which_bquark)
+            self.get_jet_higgs_provenance(which_bquark=self.which_bquark)
             # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
 
             self.events["nbQuarkHiggsMatched"] = ak.num(
@@ -296,9 +259,11 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["nbQuarkMatched"] = ak.num(self.events.bQuarkMatched, axis=1)
 
             # reconstruct the higgs candidates
-            self.events["HiggsLeading"], self.events["HiggsSubLeading"] = (
-                self.reconstruct_higgs_candidates(self.events.JetGoodHiggsMatched)
-            )
+            (
+                self.events["HiggsLeading"],
+                self.events["HiggsSubLeading"],
+                self.events["JetGoodFromHiggsOrdered"],
+            ) = reconstruct_higgs_from_provenance(self.events.JetGoodHiggsMatched)
 
         elif self.classification:
             self.dummy_provenance()
@@ -384,33 +349,21 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             (
                 self.events["HiggsLeading"],
                 self.events["HiggsSubLeading"],
-                pairing_predictions_ordered,
-            ) = self.reconstruct_higgs(self.events.JetGood, pairing_predictions)
+                self.events["JetGoodFromHiggsOrdered"],
+            ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
             # Angular separation (∆R) between b jets for each H candidate
             self.events["HiggsLeading"] = ak.with_field(
                 self.events.HiggsLeading,
-                self.events.JetGood[
-                    np.arange(len(pairing_predictions_ordered)),
-                    pairing_predictions_ordered[:, 0, 0],
-                ].delta_r(
-                    self.events.JetGood[
-                        np.arange(len(pairing_predictions_ordered)),
-                        pairing_predictions_ordered[:, 0, 1],
-                    ]
+                self.events["JetGoodFromHiggsOrdered"][:, 0].delta_r(
+                    self.events["JetGoodFromHiggsOrdered"][:, 1]
                 ),
                 "dR",
             )
             self.events["HiggsSubLeading"] = ak.with_field(
                 self.events.HiggsSubLeading,
-                self.events.JetGood[
-                    np.arange(len(pairing_predictions_ordered)),
-                    pairing_predictions_ordered[:, 1, 0],
-                ].delta_r(
-                    self.events.JetGood[
-                        np.arange(len(pairing_predictions_ordered)),
-                        pairing_predictions_ordered[:, 1, 1],
-                    ]
+                self.events["JetGoodFromHiggsOrdered"][:, 2].delta_r(
+                    self.events["JetGoodFromHiggsOrdered"][:, 3]
                 ),
                 "dR",
             )
@@ -430,12 +383,8 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             # di-Higgs system
             # pT , η, and mass of HH system
-            self.events["HH"] = self.events.HiggsLeading + self.events.HiggsSubLeading
-
-            self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.pt, "pt")
-            self.events["HH"] = ak.with_field(self.events.HH, self.events.HH.eta, "eta")
-            self.events["HH"] = ak.with_field(
-                self.events.HH, self.events.HH.mass, "mass"
+            self.events["HH"] = add_fields(
+                self.events.HiggsLeading + self.events.HiggsSubLeading
             )
 
             # TODO change the definition
