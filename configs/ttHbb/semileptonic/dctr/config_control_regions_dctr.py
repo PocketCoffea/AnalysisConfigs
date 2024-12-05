@@ -44,7 +44,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
-                                                  f"{localdir}/params/plotting_style.yaml",
+                                                  f"{localdir}/params/plotting_style_dctr.yaml",
                                                   f"{localdir}/params/ml_models_T3_CH_PSI.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
