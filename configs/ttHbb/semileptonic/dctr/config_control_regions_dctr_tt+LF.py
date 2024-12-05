@@ -17,7 +17,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_ttlf_calib
 from params.axis_settings import axis_settings
 
 import os
@@ -44,6 +44,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
+                                                  f"{localdir}/params/ttlf_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
                                                   f"{localdir}/params/ml_models_T3_CH_PSI.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
@@ -66,18 +67,8 @@ cfg = Configurator(
         "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
                   ],
         "filter" : {
-            "samples": ["ttHTobb",
-                        "ttHTobb_ttToSemiLep",
-                        "TTbbSemiLeptonic",
+            "samples": [
                         "TTToSemiLeptonic",
-                        "TTTo2L2Nu",
-                        "SingleTop",
-                        "WJetsToLNu_HT",
-                        "DYJetsToLL",
-                        "VV",
-                        "TTV",
-                        "DATA_SingleEle",
-                        "DATA_SingleMuon"
                         ],
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
@@ -87,34 +78,8 @@ cfg = Configurator(
                      ] #All the years
         },
         "subsamples": {
-            'DATA_SingleEle'  : {
-                'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]
-            },
-            'DATA_SingleMuon' : {
-                'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
-                                     get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
-            },
-            'TTbbSemiLeptonic' : {
-                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
-                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
-                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
-                'TTbbSemiLeptonic_tt+B_4j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][0])],
-                'TTbbSemiLeptonic_tt+B_4j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][1])],
-                'TTbbSemiLeptonic_tt+B_4j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][2])],
-                'TTbbSemiLeptonic_tt+B_5j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][0])],
-                'TTbbSemiLeptonic_tt+B_5j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][1])],
-                'TTbbSemiLeptonic_tt+B_5j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][2])],
-                'TTbbSemiLeptonic_tt+B_6j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][0])],
-                'TTbbSemiLeptonic_tt+B_6j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][1])],
-                'TTbbSemiLeptonic_tt+B_6j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][2])],
-                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][0])],
-                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][1])],
-                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][2])],
-            },
             'TTToSemiLeptonic' : {
-                #'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
-                'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
-                'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+                'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
             },
         }
     },
@@ -156,7 +121,7 @@ cfg = Configurator(
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_ttlf_calib],
     weights= {
         "common": {
             "inclusive": [
@@ -167,7 +132,7 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId", "sf_top_pt"
             ],
-            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate },
         },
         "bysample": {},
     },
@@ -180,7 +145,7 @@ cfg = Configurator(
                               "sf_btag",
                               "sf_jet_puId", "sf_top_pt"
                               ],
-                "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate }
+                "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate }
             },
             "bysample": {}
         },
