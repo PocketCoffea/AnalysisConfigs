@@ -321,15 +321,15 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         )
 
         maskNotNone = ~ak.is_none(matched_vbf_jets, axis=1)
-        self.events["JetGoodVBF_matched"] = matched_vbf_jets[maskNotNone]
+        self.events["JetVBF_matched"] = matched_vbf_jets[maskNotNone]
 
-        self.events["JetGoodVBF_matched"] = ak.with_field(
-            self.events.JetGoodVBF_matched,
+        self.events["JetVBF_matched"] = ak.with_field(
+            self.events.JetVBF_matched,
             ak.where(
-                self.events.JetGoodVBF_matched.PNetRegPtRawCorr > 0,
-                self.events.JetGoodVBF_matched.pt
-                / self.events.JetGoodVBF_matched.PNetRegPtRawCorrNeutrino,
-                self.events.JetGoodVBF_matched.pt,
+                self.events.JetVBF_matched.PNetRegPtRawCorr > 0,
+                self.events.JetVBF_matched.pt
+                / self.events.JetVBF_matched.PNetRegPtRawCorrNeutrino,
+                self.events.JetVBF_matched.pt,
             ),
             "pt",
         )
@@ -401,14 +401,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     self.events["JetGoodFromHiggsOrdered"],
                 ) = reconstruct_higgs_from_provenance(self.events.JetGoodMatched)
 
-                # self.events["JetNotFromHiggs"] = self.events.Jet[
-                #     ~ak.is_none(self.events.JetGoodMatched.index, axis=1)
-                # ]
-                pairing_predictions = self.events.JetGoodMatched.index[
-                    ak.argsort(self.events.JetGoodMatched.pt, axis=1, ascending=False)
-                ]
-                matched_jet_higgs_idx_not_none = pairing_predictions[
-                    ~ak.is_none(pairing_predictions, axis=1)
+                matched_jet_higgs_idx_not_none = self.events.JetGoodMatched.index[
+                    ~ak.is_none(self.events.JetGoodMatched.index, axis=1)
                 ]
             else:
                 # apply spanet model to get the pairing prediction for the b-jets from Higgs
@@ -467,7 +461,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     self.events["JetGoodFromHiggsOrdered"],
                 ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
-                matched_jet_higgs_idx_not_none = ak.flatten(pairing_predictions, axis=2)
+                matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
+
 
             jet_offsets = np.concatenate(
                 [
@@ -490,16 +485,15 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 ak.unflatten(jets_no_higgs_idx, ak.num(self.events.Jet, axis=1))
                 - jet_offsets[:-1]
             )
-            self.events["JetNotFromHiggs"] = self.events.Jet[
+            self.events["JetVBFNotFromHiggs"] = self.events.Jet[
                 jets_no_higgs_idx_unflat >= 0
             ]
-            # self.events["JetNotFromHiggs"] = ak.pad_none(
-            #     self.events.Jet[jets_no_higgs_idx_unflat >= 0], 2
-            # )
+            # apply selection to the jets not from Higgs
+            self.events["JetVBFNotFromHiggs"]=jet_selection_nopu(self.events, "JetVBFNotFromHiggs", self.params)
 
             # order in pt
-            self.events["JetNotFromHiggs"] = self.events.JetNotFromHiggs[
-                ak.argsort(self.events.JetNotFromHiggs.pt, axis=1, ascending=False)
+            self.events["JetVBFNotFromHiggs"] = self.events.JetVBFNotFromHiggs[
+                ak.argsort(self.events.JetVBFNotFromHiggs.pt, axis=1, ascending=False)
             ]
 
             self.events["HH"] = add_fields(
@@ -508,28 +502,28 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             self.do_vbf_parton_matching(which_bquark=self.which_bquark)
 
-            # num_JetGoodVBF_matched = ak.num(self.events.JetGoodVBF_matched)
-            # num_eventsTwoVBF = ak.sum((num_JetGoodVBF_matched == 2))
+            # num_JetVBF_matched = ak.num(self.events.JetVBF_matched)
+            # num_eventsTwoVBF = ak.sum((num_JetVBF_matched == 2))
 
-            # num_eventsOneVBF = ak.sum((num_JetGoodVBF_matched == 1))
-            # num_eventsZeroVBF = ak.sum((num_JetGoodVBF_matched == 0))
+            # num_eventsOneVBF = ak.sum((num_JetVBF_matched == 1))
+            # num_eventsZeroVBF = ak.sum((num_JetVBF_matched == 0))
             # print(len(self.events))
-            # print("Two", num_eventsTwoVBF/len(self.events.JetGoodVBF_matched))
-            # print("One", num_eventsOneVBF/len(self.events.JetGoodVBF_matched))
-            # print("Zero", num_eventsZeroVBF/len(self.events.JetGoodVBF_matched))
-            # print(ak.sum(num_JetGoodVBF_matched) / (len(self.events) * 2))
+            # print("Two", num_eventsTwoVBF/len(self.events.JetVBF_matched))
+            # print("One", num_eventsOneVBF/len(self.events.JetVBF_matched))
+            # print("Zero", num_eventsZeroVBF/len(self.events.JetVBF_matched))
+            # print(ak.sum(num_JetVBF_matched) / (len(self.events) * 2))
 
             self.events["nJetVBF_matched"] = ak.num(
-                self.events.JetGoodVBF_matched, axis=1
+                self.events.JetVBF_matched, axis=1
             )
 
             # choose vbf jets as the two jets with the highest pt that are not from higgs decay
-            self.events["JetVBFLeadingPtNotFromHiggs"] = self.events.JetNotFromHiggs[
+            self.events["JetVBFLeadingPtNotFromHiggs"] = self.events.JetVBFNotFromHiggs[
                 :, :2
             ]
 
             # choose higgs jets as the two jets with the highest mjj that are not from higgs decay
-            jet_combinations = ak.combinations(self.events.JetNotFromHiggs, 2)
+            jet_combinations = ak.combinations(self.events.JetVBFNotFromHiggs, 2)
             jet_combinations_mass = (jet_combinations["0"] + jet_combinations["1"]).mass
             jet_combinations_mass_max_idx = ak.to_numpy(
                 ak.argsort(jet_combinations_mass, axis=1, ascending=False)[:, 0]
@@ -551,25 +545,6 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 ]
             )
 
-            # vbf_jet_leading_mjj = ak.concatenate(
-            #     [vbf_jets_max_mass_0, vbf_jets_max_mass_1], axis=1
-            # )
-            # # create the 4-vec
-            # self.events["JetVBFLeadingMjjNotFromHiggs"] = ak.zip(
-            #     {
-            #         "pt": vbf_jet_leading_mjj.pt,
-            #         "eta": vbf_jet_leading_mjj.eta,
-            #         "phi": vbf_jet_leading_mjj.phi,
-            #         "mass": vbf_jet_leading_mjj.mass,
-            #     },
-            #     with_name="PtEtaPhiMLorentzVector",
-            # )
-            # self.events["JetVBFLeadingMjjNotFromHiggs"] = ak.with_field(
-            #     self.events["JetVBFLeadingMjjNotFromHiggs"],
-            #     vbf_jet_leading_mjj.index,
-            #     "index",
-            # )
-
             vbf_jet_leading_mjj = ak.with_name(
                 ak.concatenate([vbf_jets_max_mass_0, vbf_jets_max_mass_1], axis=1),
                 name="PtEtaPhiMCandidate",
@@ -585,26 +560,26 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
 
             # Create new variable delta eta and invariant mass of the jets
-            JetGoodVBF_matched_padded = ak.pad_none(
-                self.events.JetGoodVBF_matched, 2
+            JetVBF_matched_padded = ak.pad_none(
+                self.events.JetVBF_matched, 2
             )  # Adds none jets to events that have less than 2 jets
 
             self.events["deltaEta_matched"] = abs(
-                JetGoodVBF_matched_padded.eta[:, 0]
-                - JetGoodVBF_matched_padded.eta[:, 1]
+                JetVBF_matched_padded.eta[:, 0]
+                - JetVBF_matched_padded.eta[:, 1]
             )
 
             self.events["jj_mass_matched"] = (
-                JetGoodVBF_matched_padded[:, 0] + JetGoodVBF_matched_padded[:, 1]
+                JetVBF_matched_padded[:, 0] + JetVBF_matched_padded[:, 1]
             ).mass
 
             # This product will give only -1 or 1 values, as it's needed to see if the two jets are in the same side or not
             self.events["etaProduct"] = (
-                JetGoodVBF_matched_padded.eta[:, 0]
-                * JetGoodVBF_matched_padded.eta[:, 1]
+                JetVBF_matched_padded.eta[:, 0]
+                * JetVBF_matched_padded.eta[:, 1]
             ) / abs(
-                JetGoodVBF_matched_padded.eta[:, 0]
-                * JetGoodVBF_matched_padded.eta[:, 1]
+                JetVBF_matched_padded.eta[:, 0]
+                * JetVBF_matched_padded.eta[:, 1]
             )
 
         else:

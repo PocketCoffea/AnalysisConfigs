@@ -98,18 +98,20 @@ cfg = Configurator(
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
-    preselections=[hh4b_presel],
+    preselections=[vbf_hh4b_presel],
     categories={
         **{"4b_region": [hh4b_4b_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
-        **{
-            f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
-                hh4b_4b_region,
-                vbf_wrapper(ab[i]),
-            ]
-            for i in range(0, 6)
-        },
+        #
+        #THIS **{
+        #     f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
+        #         hh4b_4b_region,
+        #         vbf_wrapper(ab[i]),
+        #     ]
+        #     for i in range(0, 6)
+        # },
+        #
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
@@ -150,7 +152,7 @@ cfg = Configurator(
         #
         #
         # **create_HistConf(
-        #     "JetGoodVBF_matched",
+        #     "JetVBF_matched",
         #     "eta",
         #     bins=60,
         #     start=-5,
@@ -166,7 +168,7 @@ cfg = Configurator(
         #     label="JetVBF_matched_eta_product",
         # ),
         # **create_HistConf(
-        #     "JetGoodVBF_matched",
+        #     "JetVBF_matched",
         #     "pt",
         #     bins=100,
         #     start=0,
@@ -174,7 +176,7 @@ cfg = Configurator(
         #     label="JetVBF_matched_pt",
         # ),
         # **create_HistConf(
-        #     "JetGoodVBF_matched",
+        #     "JetVBF_matched",
         #     "btagPNetQvG",
         #     pos=0,
         #     bins=60,
@@ -183,7 +185,7 @@ cfg = Configurator(
         #     label="JetVBF_matchedQvG_0",
         # ),
         # **create_HistConf(
-        #     "JetGoodVBF_matched",
+        #     "JetVBF_matched",
         #     "btagPNetQvG",
         #     pos=1,
         #     bins=60,
@@ -208,7 +210,7 @@ cfg = Configurator(
         #     label="quarkVBF_matched_pt",
         # ),
         # **create_HistConf(
-        #     "JetGoodVBF_matched",
+        #     "JetVBF_matched",
         #     "btagPNetB",
         #     bins=100,
         #     start=0,
@@ -241,6 +243,10 @@ cfg = Configurator(
                         jet_info,
                     ),
                     ColOut(
+                        "JetVBFNotFromHiggs",
+                        jet_info,
+                    ),
+                    ColOut(
                         "JetGoodFromHiggsOrdered",
                         jet_info,
                     ),
@@ -249,7 +255,7 @@ cfg = Configurator(
                         jet_info,
                     ),
                     ColOut(
-                        "JetGoodVBF_matched",
+                        "JetVBF_matched",
                         jet_info,
                     ),
                     ColOut(
