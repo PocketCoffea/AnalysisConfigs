@@ -36,7 +36,7 @@ def get_sf_top_pt(events, metadata):
     else:
         return np.ones(len(events), dtype=np.float64)
 
-def sf_ttlf_calib(params, sample, subsamples, year, njets, jetsHt):
+def sf_ttlf_calib(params, sample, year, njets, jetsHt):
     '''Correction to tt+LF background computed by correcting tt+LF to data minus the other backgrounds in 2D:
     njets-JetsHT bins. Each year has a different correction stored in the correctionlib format.'''
     assert sample == "TTToSemiLeptonic", "This weight is only for TTToSemiLeptonic sample"
@@ -59,7 +59,6 @@ class SF_ttlf_calib(WeightWrapper):
         jetsHt = ak.sum(events[self.jet_coll].pt, axis=1)
         out = sf_ttlf_calib(self._params,
                             sample=self._metadata["sample"],
-                            subsamples=self._metadata["subsamples"],
                             year=self._metadata["year"],
                             # Assuming n*JetCollection* is defined
                             njets=events[f"n{self.jet_coll}"],
