@@ -31,10 +31,12 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-spanet_model = None
-spanet_model = (
-    "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
-)
+SPANET_MODEL = None
+# SPANET_MODEL = (
+#     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+# )
+VBF_PARTON_MATCHING = True
+
 
 # TODO: spostare queste funzioni?
 
@@ -93,7 +95,8 @@ cfg = Configurator(
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
         "which_bquark": "last",
-        "spanet_model": spanet_model,
+        "spanet_model": SPANET_MODEL,
+        "vbf_parton_matching": VBF_PARTON_MATCHING,
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -104,7 +107,7 @@ cfg = Configurator(
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
         #
-        #THIS **{
+        # THIS **{
         #     f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
         #         hh4b_4b_region,
         #         vbf_wrapper(ab[i]),
@@ -233,9 +236,6 @@ cfg = Configurator(
                         "events",
                         [
                             "etaProduct",
-                            "deltaEta_matched",
-                            "jj_mass_matched",
-                            "nJetVBF_matched",
                         ],
                     ),
                     ColOut(
@@ -255,14 +255,6 @@ cfg = Configurator(
                         jet_info,
                     ),
                     ColOut(
-                        "JetVBF_matched",
-                        jet_info,
-                    ),
-                    ColOut(
-                        "JetVBF_generalSelection_matched",
-                        jet_info,
-                    ),
-                    ColOut(
                         "JetVBFLeadingPtNotFromHiggs",
                         jet_info,
                     ),
@@ -270,6 +262,12 @@ cfg = Configurator(
                         "JetVBFLeadingMjjNotFromHiggs",
                         jet_info,
                     ),
+                    ColOut(
+                        "HH",
+                        ["pt", "eta", "phi", "mass"],
+                    ),
+                ]
+                + [
                     ColOut(
                         "quarkVBF_matched",
                         [
@@ -298,10 +296,24 @@ cfg = Configurator(
                         ],
                     ),
                     ColOut(
-                        "HH",
-                        ["pt", "eta", "phi", "mass"],
+                        "JetVBF_matched",
+                        jet_info,
+                    ),
+                    ColOut(
+                        "JetVBF_generalSelection_matched",
+                        jet_info,
+                    ),
+                    ColOut(
+                        "events",
+                        [
+                            "deltaEta_matched",
+                            "jj_mass_matched",
+                            "nJetVBF_matched",
+                        ],
                     ),
                 ]
+                if VBF_PARTON_MATCHING
+                else []
             ),
         },
         "bysample": {},

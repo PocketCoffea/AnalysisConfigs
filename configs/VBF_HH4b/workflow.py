@@ -26,6 +26,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
         self.spanet_model = self.workflow_options["spanet_model"]
+        self.vbf_parton_matching = self.workflow_options["vbf_parton_matching"]
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -500,7 +501,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events.HiggsLeading + self.events.HiggsSubLeading
             )
 
-            self.do_vbf_parton_matching(which_bquark=self.which_bquark)
+            if self.vbf_parton_matching:
+                self.do_vbf_parton_matching(which_bquark=self.which_bquark)
 
             # num_JetVBF_matched = ak.num(self.events.JetVBF_matched)
             # num_eventsTwoVBF = ak.sum((num_JetVBF_matched == 2))
