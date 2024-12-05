@@ -63,19 +63,11 @@ with open(parameters["dctr"]["weight_cuts"]["inclusive"]["file"]) as f:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
+        "jsons": [f"{localdir}/datasets/DATA_SingleEle_local.json",
+                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
                   ],
         "filter" : {
-            "samples": ["ttHTobb",
-                        "ttHTobb_ttToSemiLep",
-                        "TTbbSemiLeptonic",
-                        "TTToSemiLeptonic",
-                        "TTTo2L2Nu",
-                        "SingleTop",
-                        "WJetsToLNu_HT",
-                        "DYJetsToLL",
-                        "VV",
-                        "TTV",
+            "samples": [
                         "DATA_SingleEle",
                         "DATA_SingleMuon"
                         ],
