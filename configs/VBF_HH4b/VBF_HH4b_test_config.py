@@ -236,8 +236,16 @@ cfg = Configurator(
                         [
                             "etaProduct",
                             "deltaEta_matched",
+                            "JetVBFLeadingPtNotFromHiggs_deltaEta",
+                            "JetVBFLeadingMjjNotFromHiggs_deltaEta",
                             "jj_mass_matched",
+                            "JetVBFLeadingPtNotFromHiggs_jjMass",
+                            "JetVBFLeadingMjjNotFromHiggs_jjMass",
                             "nJetVBF_matched",
+                            "HH",
+                            "HH_centrality",
+                            "HH_deltaR",
+                            # "JetVBFLeadingPtNotFromHiggs_deltaR",
                         ],
                     ),
                     ColOut(
@@ -259,10 +267,14 @@ cfg = Configurator(
                     ColOut(
                         "JetVBFLeadingPtNotFromHiggs",
                         jet_info,
+                        # "deltaEta",
+                        # "jjMass",
                     ),
                     ColOut(
                         "JetVBFLeadingMjjNotFromHiggs",
                         jet_info,
+                        # "deltaEta",
+                        # "jjMass",
                     ),
                     ColOut(
                         "HH",
