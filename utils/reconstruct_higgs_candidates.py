@@ -39,6 +39,7 @@ def reconstruct_higgs_from_idx(jet_collection, idx_collection):
         1,
     )
 
+
     higgs_leading_index = ak.where(higgs_1.pt > higgs_2.pt, 0, 1)
 
     higgs_lead = ak.where(higgs_leading_index == 0, higgs_1, higgs_2)
@@ -50,37 +51,37 @@ def reconstruct_higgs_from_idx(jet_collection, idx_collection):
         higgs_leading_index_expanded == 0, idx_collection, idx_collection[:, ::-1]
     )
 
-    higgs1_jet1 = ak.singletons(
+    higgs1_jet1 = ak.unflatten(
         ak.where(
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 0]].pt
             > jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 1]].pt,
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 0]],
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 1]],
-        )
+        ),1
     )
-    higgs1_jet2 = ak.singletons(
+    higgs1_jet2 = ak.unflatten(
         ak.where(
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 0]].pt
             > jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 1]].pt,
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 1]],
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 0, 0]],
-        )
+        ),1
     )
-    higgs2_jet1 = ak.singletons(
+    higgs2_jet1 = ak.unflatten(
         ak.where(
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 0]].pt
             > jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 1]].pt,
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 0]],
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 1]],
-        )
+        ),1
     )
-    higgs2_jet2 = ak.singletons(
+    higgs2_jet2 = ak.unflatten(
         ak.where(
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 0]].pt
             > jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 1]].pt,
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 1]],
             jet_collection[np.arange(len(idx_collection)), idx_ordered[:, 1, 0]],
-        )
+        ),1
     )
 
     jets_ordered = ak.with_name(

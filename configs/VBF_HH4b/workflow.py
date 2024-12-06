@@ -534,17 +534,17 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             jets_max_mass = jet_combinations[
                 ak.local_index(jet_combinations, axis=0), jet_combinations_mass_max_idx
             ]
-            vbf_jets_max_mass_0 = ak.singletons(
+            vbf_jets_max_mass_0 = ak.unflatten(
                 self.events.Jet[
                     ak.local_index(self.events.Jet, axis=0),
                     ak.to_numpy(jets_max_mass["0"].index),
-                ]
+                ],1
             )
-            vbf_jets_max_mass_1 = ak.singletons(
+            vbf_jets_max_mass_1 = ak.unflatten(
                 self.events.Jet[
                     ak.local_index(self.events.Jet, axis=0),
                     ak.to_numpy(jets_max_mass["1"].index),
-                ]
+                ],1
             )
 
             vbf_jet_leading_mjj = ak.with_name(

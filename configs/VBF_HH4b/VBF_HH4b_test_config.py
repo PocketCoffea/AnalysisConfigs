@@ -31,10 +31,10 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-SPANET_MODEL = None
-# SPANET_MODEL = (
-#     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
-# )
+SPANET_MODEL = (
+    "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
+)
+HIGGS_PARTON_MATCHING=False
 VBF_PARTON_MATCHING = True
 
 
@@ -95,7 +95,7 @@ cfg = Configurator(
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
         "which_bquark": "last",
-        "spanet_model": SPANET_MODEL,
+        "spanet_model": SPANET_MODEL if not HIGGS_PARTON_MATCHING else None,
         "vbf_parton_matching": VBF_PARTON_MATCHING,
     },
     skim=[
