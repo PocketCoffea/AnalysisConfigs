@@ -1,6 +1,7 @@
 import awkward as ak
 from dask.distributed import get_worker
 import sys
+import numpy as np
 
 from pocket_coffea.workflows.base import BaseProcessorABC
 from pocket_coffea.lib.deltaR_matching import object_matching
@@ -571,8 +572,28 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 - JetVBF_matched_padded.eta[:, 1]
             )
 
+            self.events["JetVBFLeadingPtNotFromHiggs_deltaEta"] = abs(
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] -
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
+            )
+            
+            self.events["JetVBFLeadingMjjNotFromHiggs_deltaEta"] = abs(
+                self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,0] -
+                self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,1]
+            )
+            
             self.events["jj_mass_matched"] = (
                 JetVBF_matched_padded[:, 0] + JetVBF_matched_padded[:, 1]
+            ).mass
+
+            self.events["JetVBFLeadingPtNotFromHiggs_jjMass"] = (
+                self.events.JetVBFLeadingPtNotFromHiggs[:,0] + 
+                self.events.JetVBFLeadingPtNotFromHiggs[:,1]
+            ).mass
+
+            self.events["JetVBFLeadingMjjNotFromHiggs_jjMass"] = (
+                self.events.JetVBFLeadingMjjNotFromHiggs[:,0] + 
+                self.events.JetVBFLeadingMjjNotFromHiggs[:,1]
             ).mass
 
             # This product will give only -1 or 1 values, as it's needed to see if the two jets are in the same side or not
@@ -583,6 +604,40 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 JetVBF_matched_padded.eta[:, 0]
                 * JetVBF_matched_padded.eta[:, 1]
             )
+
+
+            self.events["HH_deltaR"] = (
+                    self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading)
+            )
+            print(self.events.HH_deltaR)
+
+            JetVBFLeadingPtNotFromHiggs_etaAverage = (
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] + 
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
+                ) / 2
+            
+            self.events["HH_centrality"] = (
+                np.exp(
+                    -(((self.events.HiggsLeading.eta - JetVBFLeadingPtNotFromHiggs_etaAverage)**2 
+                        -(self.events.HiggsSubLeading.eta - JetVBFLeadingPtNotFromHiggs_etaAverage)**2
+                    ) / (self.events.JetVBFLeadingPtNotFromHiggs_deltaEta)**2
+                    )
+                )
+            )
+
+            # JetVBFLeadingMjjNotFromHiggs_etaAverage = (
+            #     self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,0] + 
+            #     self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,1]
+            #     ) / 2
+
+            # self.events["HH_centrality"] = (
+            #     np.exp(
+            #         -(((self.events.HiggsLeading.eta - JetVBFLeadingMjjNotFromHiggs_etaAverage)**2 
+            #             -(self.events.HiggsSubLeading.eta - JetVBFLeadingMjjNotFromHiggs_etaAverage)**2
+            #         ) / (self.events.JetVBFLeadingMjjNotFromHiggs_deltaEta)**2
+            #         )
+            #     )
+            # )
 
         else:
             self.dummy_provenance()

@@ -45,12 +45,11 @@ jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 
 # Combine jet_hists from position start to position end
 def jet_hists_dict(coll="JetGood", start=1, end=5):
-    """Combina i dizionari creati da jet_hists per ogni posizione da start a stop (inclusi)."""
     combined_dict = {}
     for pos in range(start, end + 1):
         combined_dict.update(
             jet_hists(coll=coll, pos=pos)
-        )  # Unisce ogni dizionario al precedente
+        )
     return combined_dict
 
 
@@ -107,13 +106,13 @@ cfg = Configurator(
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
         #
-        # THIS **{
-        #     f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
-        #         hh4b_4b_region,
-        #         vbf_wrapper(ab[i]),
-        #     ]
-        #     for i in range(0, 6)
-        # },
+        **{
+            f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
+                hh4b_4b_region,
+                vbf_wrapper(ab[i]),
+            ]
+            for i in range(0, 6)
+        },
         #
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
@@ -236,6 +235,9 @@ cfg = Configurator(
                         "events",
                         [
                             "etaProduct",
+                            "deltaEta_matched",
+                            "jj_mass_matched",
+                            "nJetVBF_matched",
                         ],
                     ),
                     ColOut(
@@ -257,10 +259,14 @@ cfg = Configurator(
                     ColOut(
                         "JetVBFLeadingPtNotFromHiggs",
                         jet_info,
+                        # "deltaEta",
+                        # "jjMass",
                     ),
                     ColOut(
                         "JetVBFLeadingMjjNotFromHiggs",
                         jet_info,
+                        # "deltaEta",
+                        # "jjMass",
                     ),
                     ColOut(
                         "HH",
