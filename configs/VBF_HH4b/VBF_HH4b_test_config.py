@@ -259,14 +259,10 @@ cfg = Configurator(
                     ColOut(
                         "JetVBFLeadingPtNotFromHiggs",
                         jet_info,
-                        # "deltaEta",
-                        # "jjMass",
                     ),
                     ColOut(
                         "JetVBFLeadingMjjNotFromHiggs",
                         jet_info,
-                        # "deltaEta",
-                        # "jjMass",
                     ),
                     ColOut(
                         "HH",

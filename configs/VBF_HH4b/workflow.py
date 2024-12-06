@@ -609,7 +609,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["HH_deltaR"] = (
                     self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading)
             )
-            print(self.events.HH_deltaR)
+
+            # TODO altri deltaR
 
             JetVBFLeadingPtNotFromHiggs_etaAverage = (
                 self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] + 
