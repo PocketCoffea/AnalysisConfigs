@@ -4,85 +4,20 @@ import awkward as ak
 
 import custom_cut_functions as cuts_f
 from pocket_coffea.lib.cut_definition import Cut
+from vbf_matching import mask_efficiency
 
-lepton_veto_presel = Cut(
-    name="lepton_veto",
-    params={},
-    function=cuts_f.lepton_veto,
-)
-
-four_jet_presel = Cut(
-    name="four_jet",
-    params={
-        "njet": 4,
-    },
-    function=cuts_f.four_jet,
-)
-jet_pt_presel = Cut(
-    name="jet_pt_sel",
-    params={
-        "njet": 4,
-        "pt_jet0": 80,
-        "pt_jet1": 60,
-        "pt_jet2": 45,
-        "pt_jet3": 35,
-    },
-    function=cuts_f.jet_pt,
-)
-jet_btag_lead_presel = Cut(
-    name="jet_btag_lead_sel",
-    params={
-        "njet": 4,
-        "pt_jet0": 80,
-        "pt_jet1": 60,
-        "pt_jet2": 45,
-        "pt_jet3": 35,
-        "mean_pnet_jet": 0.65,
-    },
-    function=cuts_f.jet_btag_lead,
-)
-jet_btag_medium_presel = Cut(
-    name="jet_btag_medium_sel",
-    params={
-        "njet": 4,
-        "pt_jet0": 80,
-        "pt_jet1": 60,
-        "pt_jet2": 45,
-        "pt_jet3": 35,
-        "mean_pnet_jet": 0.65,
-        "third_pnet_jet": 0.2605,
-        "fourth_pnet_jet": 0.2605,
-    },
-    function=cuts_f.jet_btag_all,
-)
-jet_btag_loose_presel = Cut(
-    name="jet_btag_loose_sel",
-    params={
-        "njet": 4,
-        "pt_jet0": 80,
-        "pt_jet1": 60,
-        "pt_jet2": 45,
-        "pt_jet3": 35,
-        "mean_pnet_jet": 0.65,
-        "third_pnet_jet": 0.0499,
-        "fourth_pnet_jet": 0.0499,
-    },
-    function=cuts_f.jet_btag_all,
-)
-
-hh4b_presel = Cut(
+vbf_hh4b_presel = Cut(
     name="hh4b",
     params={
-        "njet": 4,
+        "njetgood": 4,
+        "njetvbf": 6,
         "pt_jet0": 80,
         "pt_jet1": 60,
         "pt_jet2": 45,
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
-        # "third_pnet_jet": 0.2605,
-        # "fourth_pnet_jet": 0.2605,
     },
-    function=cuts_f.hh4b_presel_cuts,
+    function=cuts_f.vbf_hh4b_presel_cuts,
 )
 
 hh4b_2b_region = Cut(
@@ -102,6 +37,88 @@ hh4b_4b_region = Cut(
     function=cuts_f.hh4b_4b_cuts,
 )
 
+VBF_region = Cut(
+    name="VBF",
+    params={
+        "njet_vbf": 2,
+        "delta_eta": 5,
+    },
+    function=cuts_f.VBF_cuts,
+)
+
+VBF_generalSelection_region = Cut(
+    name="4b_VBF_genSel",
+    params={
+        "njet_vbf": 2,
+        "pt_VBFjet0": 30,
+        "eta_product": 0,
+        "mjj": 250,
+    },
+    function=cuts_f.VBF_generalSelection_cuts,
+)
+
+# VBFtight_region = Cut(
+#     name="4b_VBFtight",
+#     params={
+#         "njet_vbf": 2,
+#         "eta_product": 0,
+#         "mjj": 350,
+#     },
+#     function=cuts_f.VBFtight_cuts,
+# )
+
+# Default parameters dictionary
+VBFtight_params = {
+    "njet_vbf": 2,
+    "eta_product": 0,
+    "mjj": 350,
+    "pt": 10,
+    "eta": 4.7,
+    "btag": 0.2605
+}
+
+# Different parameters dictionary
+no_cuts_params = {
+    "njet_vbf": 2,
+    "eta_product": 2,
+    "mjj": -1,
+    "pt": -1,
+    "eta": 20,
+    "btag": 2
+}
+
+def vbf_wrapper(params = VBFtight_params):
+    return Cut(
+        name="4b_VBFtight",
+        params=params,
+        function=cuts_f.VBFtight_cuts,
+        )
+
+def generate_dictionaries(VBFtight_params, no_cuts_params):
+    dict_array = []
+    for key in no_cuts_params.keys():
+        temp_dict = no_cuts_params.copy()
+        temp_dict[key] = VBFtight_params[key]
+        dict_array.append(temp_dict)
+
+
+    return dict_array
+
+# Generate the array of dictionaries
+ab = generate_dictionaries(VBFtight_params, no_cuts_params)
+print(len(ab))
+for i in range(0, len(ab)):
+    print(list(no_cuts_params.keys())[i], ab[i], "\n")
+
+qvg_regions = {}
+for i in range(5, 10):
+    qvg_regions[f'qvg_0{i}_region'] = Cut(
+        name=f'qvg0{i}',
+        params={
+            "qvg_cut": i/10
+        },
+        function=cuts_f.qvg_cuts,
+)
 
 def lepton_selection(events, lepton_flavour, params):
     leptons = events[lepton_flavour]
@@ -144,22 +161,27 @@ def lepton_selection(events, lepton_flavour, params):
     return leptons[good_leptons]
 
 
-def jet_selection_nopu(events, jet_type, params, leptons_collection=""):
+def jet_selection_nopu(events, jet_type, params):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
+    # print(jet_type, cuts)
+
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
-    mask_presel = (
-        (jets.pt > cuts["pt"])
-        & (np.abs(jets.eta) < cuts["eta"])
-        & (jets.jetId >= cuts["jetId"])
-        & (jets.btagPNetB > cuts["btagPNetB"])
-    )
-    # Lepton cleaning
-    if leptons_collection != "":
-        dR_jets_lep = jets.metric_table(events[leptons_collection])
-        mask_lepton_cleaning = ak.prod(dR_jets_lep > cuts["dr_lepton"], axis=2) == 1
+    if "eta_min" in cuts.keys():
+        mask_jets = (
+            (jets.pt > cuts["pt"])
+            & (np.abs(jets.eta) > cuts["eta_min"])
+            & (np.abs(jets.eta) < cuts["eta_max"])
+            & (jets.jetId >= cuts["jetId"])
+            & (jets.btagPNetB >= cuts["btagPNetB"])
+        )
+    else:
+        mask_jets = (
+            (jets.pt > cuts["pt"])
+            & (np.abs(jets.eta) < cuts["eta"])
+            & (jets.jetId >= cuts["jetId"])
+            & (jets.btagPNetB >= cuts["btagPNetB"])
+        )
 
-    mask_good_jets = mask_presel  # & mask_lepton_cleaning
-
-    return jets[mask_good_jets]
+    return jets[mask_jets]

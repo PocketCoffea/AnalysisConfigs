@@ -1,7 +1,7 @@
 from pocket_coffea.executors.executors_T3_CH_PSI import DaskExecutorFactory
 from dask.distributed import WorkerPlugin, Worker, Client
 
-from configs.VBF_HH4b.VBF_HH4b_test_config import spanet_model
+from VBF_HH4b_test_config import SPANET_MODEL
 
 
 class WorkerInferenceSessionPlugin(WorkerPlugin):
@@ -13,16 +13,17 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         sess_options.graph_optimization_level = (
             ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         )
+        sess_options.intra_op_num_threads = 1
 
         session = ort.InferenceSession(
-            spanet_model, sess_options=sess_options, providers=["CPUExecutionProvider"]
+            SPANET_MODEL, sess_options=sess_options, providers=["CPUExecutionProvider"]
         )
 
         worker.data["model_session"] = session
 
 
 # Create an instance of the plugin
-inference_session_plugin = WorkerInferenceSessionPlugin()
+# inference_session_plugin = WorkerInferenceSessionPlugin()
 
 
 class OnnxExecutorFactory(DaskExecutorFactory):

@@ -227,6 +227,26 @@
                 ]
             }
         ]
+    },
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00": {
+        "sample": "GluGlutoHHto4B",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.02964,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
+                ]
+            }
+        ]
     }
-
 }
