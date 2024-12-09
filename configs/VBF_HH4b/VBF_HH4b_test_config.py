@@ -35,7 +35,7 @@ SPANET_MODEL = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
 HIGGS_PARTON_MATCHING=False
-VBF_PARTON_MATCHING = True
+VBF_PARTON_MATCHING = False
 
 
 # TODO: spostare queste funzioni?
@@ -80,7 +80,7 @@ cfg = Configurator(
             "samples": (
                 [
                     "VBF_HHto4B",
-                    # "GluGlutoHHto4B",
+                    "GluGlutoHHto4B",
                     # TODO qcd
                 ]
             ),
@@ -106,13 +106,13 @@ cfg = Configurator(
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
         #
-        **{
-            f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
-                hh4b_4b_region,
-                vbf_wrapper(ab[i]),
-            ]
-            for i in range(0, 6)
-        },
+        # **{
+        #     f"4b_VBFtight_{list(ab[0].keys())[i]}_region": [
+        #         hh4b_4b_region,
+        #         vbf_wrapper(ab[i]),
+        #     ]
+        #     for i in range(0, 6)
+        # },
         #
         # **{"4b_VBF_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region]},
         # **{"4b_VBF_region": [hh4b_4b_region, VBF_region]},
@@ -235,17 +235,18 @@ cfg = Configurator(
                         "events",
                         [
                             "etaProduct",
-                            "deltaEta_matched",
                             "JetVBFLeadingPtNotFromHiggs_deltaEta",
                             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
-                            "jj_mass_matched",
                             "JetVBFLeadingPtNotFromHiggs_jjMass",
                             "JetVBFLeadingMjjNotFromHiggs_jjMass",
-                            "nJetVBF_matched",
                             "HH",
                             "HH_centrality",
                             "HH_deltaR",
-                            # "JetVBFLeadingPtNotFromHiggs_deltaR",
+                            "jj_deltaR",
+                            "H1j1_deltaR",
+                            "H1j2_deltaR",
+                            "H2j1_deltaR",
+                            "H2j2_deltaR",
                         ],
                     ),
                     ColOut(
@@ -267,14 +268,10 @@ cfg = Configurator(
                     ColOut(
                         "JetVBFLeadingPtNotFromHiggs",
                         jet_info,
-                        # "deltaEta",
-                        # "jjMass",
                     ),
                     ColOut(
                         "JetVBFLeadingMjjNotFromHiggs",
                         jet_info,
-                        # "deltaEta",
-                        # "jjMass",
                     ),
                     ColOut(
                         "HH",
@@ -327,7 +324,39 @@ cfg = Configurator(
                     ),
                 ]
                 if VBF_PARTON_MATCHING
-                else []
+                else [
+                    ColOut(
+                        "events",
+                        [
+                            "HH_deltaR", 
+                            "H1j1_deltaR", 
+                            "H1j2_deltaR", 
+                            "H2j1_deltaR", 
+                            "H2j2_deltaR",
+                            "HH_centrality",
+                        ],
+                    ),
+                    ColOut(
+                        "HiggsLeading",
+                        ["pt", "eta", "phi", "mass"]
+                    ),
+                    ColOut(
+                        "HiggsSubLeading",
+                        ["pt", "eta", "phi", "mass"]
+                    ),
+                    ColOut(
+                        "Jet",
+                        jet_info,
+                    ),
+                    ColOut(
+                        "JetVBFLeadingPtNotFromHiggs",
+                        jet_info,
+                    ),
+                    ColOut(
+                        "HH",
+                        ["pt", "eta", "phi", "mass"],
+                    ),
+                ]
             ),
         },
         "bysample": {},
