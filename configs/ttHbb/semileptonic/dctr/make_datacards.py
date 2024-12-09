@@ -1,7 +1,7 @@
 import os
 import argparse
 from coffea.util import load
-from pocket_coffea.utils.datacard import Datacard
+from pocket_coffea.utils.datacard import Datacard, combine_datacards
 from pocket_coffea.utils.processes import Process
 from pocket_coffea.utils.systematics import SystematicUncertainty
 
@@ -57,6 +57,7 @@ histograms_dict = {
     "SR" : df["variables"]["spanet_tthbb_transformed"],
 }
 
+datacards = {}
 for cat, histograms in histograms_dict.items():
     print(f"Creating datacard for category: {cat}")
     datacard = Datacard(
@@ -68,5 +69,9 @@ for cat, histograms in histograms_dict.items():
         year=args.year,
         category=cat,
     )
-    datacard.dump(directory=args.output, card_name=f"datacard_{cat}.txt", shapes_filename=f"shapes_{cat}.root")
-    print(f"Datacard saved in {os.path.abspath(os.path.join(args.output, f'datacard_{cat}.txt'))}")
+    datacard.dump(directory=args.output, card_name=f"datacard_{cat}_{args.year}.txt", shapes_filename=f"shapes_{cat}_{args.year}.root")
+    datacards[f'datacard_{cat}_{args.year}.txt'] = datacard
+    print(f"Datacard saved in {os.path.abspath(os.path.join(args.output, f'datacard_{cat}_{args.year}.txt'))}")
+
+# Combine datacards
+combine_datacards(datacards, directory=args.output)
