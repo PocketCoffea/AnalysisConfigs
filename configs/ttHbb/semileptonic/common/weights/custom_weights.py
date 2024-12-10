@@ -1,7 +1,8 @@
-from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
+import yaml
 import numpy as np
 import awkward as ak
 import correctionlib
+from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
 
 samples_top = ["TTbbSemiLeptonic", "TTToSemiLeptonic", "TTTo2L2Nu"]
 
@@ -47,6 +48,25 @@ def sf_ttlf_calib(params, sample, year, njets, jetsHt):
     w = corr.evaluate(ak.to_numpy(njets), ak.to_numpy(jetsHt))
     return w
 
+def get_njet_reweighting(events, reweighting_map_njet, mask=None):
+    njet = ak.num(events.JetGood)
+    w_nj = np.ones(len(events))
+    if mask is None:
+        mask = np.ones(len(events), dtype=bool)
+    for nj in range(4,7):
+        mask_nj = (njet == nj)
+        w_nj = np.where(mask & mask_nj, reweighting_map_njet[nj], w_nj)
+    for nj in range(7,21):
+        w_nj = np.where(mask & (njet >= 7), reweighting_map_njet[nj], w_nj)
+    return w_nj
+
+DCTR_weight = WeightLambda.wrap_func(
+    name="dctr_weight",
+    function=lambda params, metadata, events, size, shape_variations:
+            events.dctr_output.weight,
+    has_variations=False
+    )
+
 class SF_ttlf_calib(WeightWrapper):
     name = "sf_ttlf_calib"
     has_variations = False
@@ -70,3 +90,24 @@ class SF_ttlf_calib(WeightWrapper):
             #up = out[1],
             #down = out[2]
             )
+
+class SF_njet_reweighting(WeightWrapper):
+    '''Correction to tt+bb background computed to match data/MC in the number of jets.
+    The corection applied during training of the DCTR model is stored in a yaml file.'''
+    name = "sf_njet_reweighting"
+    has_variations = False
+
+    def __init__(self, params, metadata):
+        super().__init__(params, metadata)
+        assert metadata["sample"] == "TTbbSemiLeptonic", "This weight is only for TTbbSemiLeptonic sample"
+        params_njet_reweighting = params.dctr["njet_reweighting"]
+        file, key = params_njet_reweighting["file"], params_njet_reweighting["key"]
+        with open(file, "r") as f:
+            self.reweighting_map_njet = yaml.safe_load(f)[key]
+
+    def compute(self, events, size, shape_variation):
+        out = get_njet_reweighting(events, self.reweighting_map_njet)
+        return WeightData(
+            name = self.name,
+            nominal = out
+        )
