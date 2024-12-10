@@ -18,3 +18,6 @@ dctr:
       file: "${config_dir:}/dctr/weight_cuts_tthbb_0p40To0p60.json"
     by_njet:
       file: "${config_dir:}/dctr/weight_cuts_by_njet_tthbb_0p40To0p60.json"
+  njet_reweighting:
+    file: "${config_dir:}/dctr/njet_reweighting_tthbb0p40To0p60_ttlf0p30.yaml"
+    key: tthbb0p40To0p60_ttlf0p30
