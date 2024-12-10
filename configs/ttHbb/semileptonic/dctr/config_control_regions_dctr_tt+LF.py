@@ -3,7 +3,7 @@ from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.lib.weights.common.common import common_weights
-from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger
+from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_QCD_renorm_scale, SF_QCD_factor_scale
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -50,7 +50,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
+categories_to_calibrate = ["semilep_calibrated", f"ttlf0p{int(100*ttlf_wp)}", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
@@ -101,7 +101,7 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         "semilep_calibrated": [passthrough],
-        "ttlf0p60": [get_ttlf_max(ttlf_wp)],
+        f"ttlf0p{int(100*ttlf_wp)}": [get_ttlf_max(ttlf_wp)],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
@@ -121,7 +121,7 @@ cfg = Configurator(
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_ttlf_calib],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_ttlf_calib],
     weights= {
         "common": {
             "inclusive": [
@@ -130,11 +130,12 @@ cfg = Configurator(
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag",
-                "sf_jet_puId", "sf_top_pt"
+                "sf_jet_puId", "sf_top_pt",
+                "sf_psweight_isr", "sf_psweight_fsr",
             ],
             "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate },
         },
-        "bysample": {},
+        "bysample": { "TTToSemiLeptonic": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] },
     },
     variations = {
         "weights": {
@@ -143,12 +144,18 @@ cfg = Configurator(
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag",
-                              "sf_jet_puId", "sf_top_pt"
+                              "sf_jet_puId", "sf_top_pt",
+                              "sf_psweight_isr", "sf_psweight_fsr",
                               ],
                 "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate }
             },
-            "bysample": {}
+            "bysample": { "TTToSemiLeptonic": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] },
         },
+        "shape": {
+            "common": {
+                "inclusive" : ["JES_Total_AK4PFchs", "JER_AK4PFchs"]
+            }
+        }
     },
     
     variables = {
