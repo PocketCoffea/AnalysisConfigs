@@ -53,7 +53,6 @@ categories_to_calibrate = ["semilep_calibrated", f"ttlf0p{int(100*ttlf_wp)}", "C
 samples = [
            "TTbbSemiLeptonic",
            ]
-samples_with_qcd = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"]]
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
@@ -152,13 +151,12 @@ cfg = Configurator(
                 "sf_btag",
                 "sf_jet_puId", "sf_top_pt",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
+                "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                 "sf_njet_reweighting", "dctr_weight"
             ],
             "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
-        "bysample": {
-            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
-        },
+        "bysample": {},
     },
     variations = {
         "weights": {
@@ -168,13 +166,12 @@ cfg = Configurator(
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag",
                               "sf_jet_puId", "sf_top_pt",
+                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
                 "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate }
             },
-            "bysample": {
-                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
-            },
+            "bysample": {},
         },
         "shape": {
             "common": {

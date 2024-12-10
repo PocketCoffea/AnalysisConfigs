@@ -131,11 +131,12 @@ cfg = Configurator(
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag",
                 "sf_jet_puId", "sf_top_pt",
+                "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
             "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate },
         },
-        "bysample": { "TTToSemiLeptonic": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] },
+        "bysample": {},
     },
     variations = {
         "weights": {
@@ -145,11 +146,12 @@ cfg = Configurator(
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag",
                               "sf_jet_puId", "sf_top_pt",
+                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
                 "bycategory": { cat : ["sf_btag_calib", "sf_ttlf_calib"] for cat in categories_to_calibrate }
             },
-            "bysample": { "TTToSemiLeptonic": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] },
+            "bysample": {},
         },
         "shape": {
             "common": {
