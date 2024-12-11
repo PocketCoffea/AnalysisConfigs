@@ -3,7 +3,7 @@ from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
 from pocket_coffea.lib.weights.common.common import common_weights
-from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_QCD_renorm_scale, SF_QCD_factor_scale
+from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
@@ -49,21 +49,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", f"ttlf0p{int(100*ttlf_wp)}", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
-samples = ["ttHTobb",
-           "ttHTobb_ttToSemiLep",
-           "TTbbSemiLeptonic",
-           "TTToSemiLeptonic",
-           "TTTo2L2Nu",
-           "SingleTop",
-           "WJetsToLNu_HT",
-           "DYJetsToLL",
-           "VV",
-           "TTV",
-           "DATA_SingleEle",
-           "DATA_SingleMuon"
-           ]
-samples_with_qcd = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+categories_to_calibrate = ["semilep_calibrated", "ttlf0p60", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
 
@@ -77,10 +63,14 @@ with open(parameters["dctr"]["weight_cuts"]["inclusive"]["file"]) as f:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
+        "jsons": [f"{localdir}/datasets/DATA_SingleEle_local.json",
+                  f"{localdir}/datasets/DATA_SingleMuon_local.json",
                   ],
         "filter" : {
-            "samples": samples,
+            "samples": [
+                        "DATA_SingleEle",
+                        "DATA_SingleMuon"
+                        ],
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
                      "2016_PostVFP",
@@ -114,7 +104,7 @@ cfg = Configurator(
                 'TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][2])],
             },
             'TTToSemiLeptonic' : {
-                #'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
                 'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
                 'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
             },
@@ -138,7 +128,7 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         "semilep_calibrated": [passthrough],
-        f"ttlf0p{int(100*ttlf_wp)}": [get_ttlf_max(ttlf_wp)],
+        "ttlf0p60": [get_ttlf_max(ttlf_wp)],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
         "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
         "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
@@ -158,7 +148,7 @@ cfg = Configurator(
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt],
     weights= {
         "common": {
             "inclusive": [
@@ -167,14 +157,11 @@ cfg = Configurator(
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag",
-                "sf_jet_puId", "sf_top_pt",
-                "sf_partonshower_isr", "sf_partonshower_fsr",
+                "sf_jet_puId", "sf_top_pt"
             ],
             "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
         },
-        "bysample": {
-            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
-        },
+        "bysample": {},
     },
     variations = {
         "weights": {
@@ -183,20 +170,12 @@ cfg = Configurator(
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag",
-                              "sf_jet_puId", "sf_top_pt",
-                              "sf_partonshower_isr", "sf_partonshower_fsr",
+                              "sf_jet_puId", "sf_top_pt"
                               ],
                 "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate }
             },
-            "bysample": {
-                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
-            },
+            "bysample": {}
         },
-        "shape": {
-            "common": {
-                "inclusive" : ["JES_Total_AK4PFchs", "JER_AK4PFchs"]
-            }
-        }
     },
     
     variables = {

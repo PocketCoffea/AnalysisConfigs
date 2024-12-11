@@ -8,8 +8,14 @@ plotting_style:
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: "$t\\bar{t}$+B (4FS)"
     TTTo2L2Nu : "$t\\bar{t}$ dilepton"
     SingleTop : "Single t"
-    WJetsToLNu_HT : "W+jets"
     ttHTobb: "$t\\bar{t}H$"
+    TTV: "$t\\bar{t}$+V"
+    VV: "VV"
+
+  samples_groups:
+    "V+jets":
+      - WJetsToLNu_HT
+      - DYJetsToLL
 
   colors_mc:
     ttHTobb: CMS_red
@@ -18,7 +24,10 @@ plotting_style:
     TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: CMS_blue
     TTTo2L2Nu: CMS_brown
     SingleTop: CMS_gray
-    WJetsToLNu_HT: CMS_purple
+    "V+jets": CMS_purple
+    TTV: CMS_light_blue
+    VV: CMS_beige
+
 
   exclude_samples:
     - ttHTobb_ttToSemiLep

@@ -62,7 +62,7 @@ cfg = Configurator(
 
     workflow = ttHbbPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
+                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
     
     skim = [get_nPVgood(1),
             eventFlags,
