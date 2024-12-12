@@ -627,14 +627,20 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
                 ) / 2
             
-            self.events["HH_centrality"] = (
-                np.exp(
-                    -(((self.events.HiggsLeading.eta - JetVBFLeadingPtNotFromHiggs_etaAverage)
-                      / self.events.JetVBFLeadingPtNotFromHiggs_deltaEta)**2
-                        -((self.events.HiggsSubLeading.eta - JetVBFLeadingPtNotFromHiggs_etaAverage)
-                        / self.events.JetVBFLeadingPtNotFromHiggs_deltaEta)**2
+            self.events["HH_centrality"] = np.exp(
+                (
+                    -(
+                        (
+                            self.events.HiggsLeading.eta
+                            - JetVBFLeadingPtNotFromHiggs_etaAverage
+                        )**2
                     )
+                    - (
+                        self.events.HiggsSubLeading.eta
+                        - JetVBFLeadingPtNotFromHiggs_etaAverage
+                    )**2
                 )
+                / (self.events.JetVBFLeadingPtNotFromHiggs_deltaEta)**2
             )
 
         else:
