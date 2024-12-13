@@ -166,6 +166,13 @@ def hh4b_4b_cuts(events, params, **kwargs):
     mask = (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"]) & (
         jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"]
     )
+    
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def dhh_cuts(events, params, **kwargs):
+
+    mask = (events.delta_dhh > params["delta_dhh_cut"])
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)

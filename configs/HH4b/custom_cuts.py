@@ -121,6 +121,14 @@ hh4b_4b_region = Cut(
     },
     function=cuts_f.hh4b_4b_cuts,
 )
+dhh_above_30 = Cut(
+    name="hh4b",
+    params={
+        "delta_dhh_cut": 30,
+    },
+    function=cuts_f.dhh_cuts,
+)
+
 
 
 def lepton_selection(events, lepton_flavour, params):

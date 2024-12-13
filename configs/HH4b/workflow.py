@@ -2,6 +2,8 @@ import awkward as ak
 from dask.distributed import get_worker
 import sys
 
+from math import sqrt
+
 from pocket_coffea.workflows.base import BaseProcessorABC
 from pocket_coffea.lib.deltaR_matching import object_matching
 
@@ -16,7 +18,6 @@ from utils.reconstruct_higgs_candidates import (
     reconstruct_higgs_from_provenance,
     reconstruct_higgs_from_idx,
 )
-
 
 
 class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
@@ -230,6 +231,118 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "pdgId",
         )
 
+    def possible_higgs_reco(self, jets, idx_collection):
+        """
+        Currently `jets` is "JetsGoodHiggs", I just wanted to keep it modular.
+
+        But basically this function just combines the 4 jets into every possible combination of Higgses.
+        There are 6 different higgses that are combined to 3 different HH pairs.
+
+        idx_collection is defining what the possible invariant combinations are.
+        comb_idx = [[(0, 1), (2, 3)], [(0, 2), (1, 3)], [(0, 3), (1, 2)]] This has to be the same always...
+        """
+        if len(jets) == 0:
+            higgs_candidates_unflatten_order = ak.Array(
+                [[[], []], [[], []], [[], []]]
+            )
+            return higgs_candidates_unflatten_order
+
+        # pairing jet 0 and jet 1
+        higgs_01 = ak.unflatten(
+            jets[:, idx_collection[0][0][0]]
+            + jets[:, idx_collection[0][0][1]],
+            1,
+        )
+        # pairing jet 2 and jet 3
+        higgs_23 = ak.unflatten(
+            jets[:, idx_collection[0][1][0]]
+            + jets[:, idx_collection[0][1][1]],
+            1,
+        )
+        # pairing jet 0 and jet 2
+        higgs_02 = ak.unflatten(
+            jets[:, idx_collection[1][0][0]]
+            + jets[:, idx_collection[1][0][1]],
+            1,
+        )
+        # pairing jet 1 and jet 3
+        higgs_13 = ak.unflatten(
+            jets[:, idx_collection[1][1][0]]
+            + jets[:, idx_collection[1][1][1]],
+            1,
+        )
+        # pairing jet 0 and jet 3
+        higgs_03 = ak.unflatten(
+            jets[:, idx_collection[2][0][0]]
+            + jets[:, idx_collection[2][0][1]],
+            1,
+        )
+        # pairing jet 1 and jet 2
+        higgs_12 = ak.unflatten(
+            jets[:, idx_collection[2][1][0]]
+            + jets[:, idx_collection[2][1][1]],
+            1,
+        )
+
+        higgs_pair_0 = ak.concatenate([higgs_01, higgs_23], axis=1)
+        higgs_pair_1 = ak.concatenate([higgs_02, higgs_13], axis=1)
+        higgs_pair_2 = ak.concatenate([higgs_03, higgs_12], axis=1)
+
+        higgs_candidates = ak.concatenate(
+            [higgs_pair_0, higgs_pair_1, higgs_pair_2], axis=1
+        )
+        higgs_candidates_unflatten = ak.unflatten(higgs_candidates, 2, axis=1)
+
+        # order the higgs candidates by pt
+        higgs_candidates_unflatten_order_idx = ak.argsort(
+            higgs_candidates_unflatten.pt, axis=2, ascending=False
+        )
+        higgs_candidates_unflatten_order = higgs_candidates_unflatten[
+            higgs_candidates_unflatten_order_idx
+        ]
+        return higgs_candidates_unflatten_order
+
+    def distance_func(self, higgs_pair, k):
+        if len(higgs_pair[0, 0]) == 0:
+            return np.array([])
+        higgs1 = higgs_pair[:, :, 0]
+        higgs2 = higgs_pair[:, :, 1]
+        dist = abs(higgs1.mass - higgs2.mass * k) / sqrt(1 + k**2)
+        return dist
+
+    def run2_matching_algorithm(self):
+        # implement the Run 2 pairing algorithm
+        # TODO: extend to 5 jets cases (more comb idx)
+        comb_idx = [[(0, 1), (2, 3)], [(0, 2), (1, 3)], [(0, 3), (1, 2)]]
+
+        higgs_candidates_unflatten_order = self.possible_higgs_reco(
+            self.events["JetGoodHiggs"], comb_idx
+        )
+        distance = self.distance_func(
+            higgs_candidates_unflatten_order,
+            1.04,
+        )
+
+        dist_order_idx = ak.argsort(distance, axis=1, ascending=True)
+        dist_order = ak.sort(distance, axis=1, ascending=True)
+
+        # if the distance between the two best candidates is less than 30, we do not consider the event
+        min_idx = dist_order_idx[:, 0]
+        sec_idx = dist_order_idx[:, 1]
+
+        return (
+            dist_order[:, 0] - dist_order[:, 1],
+            higgs_candidates_unflatten_order[
+                np.arange(len(self.events.JetGoodHiggs)), min_idx
+                ][:,0],
+            higgs_candidates_unflatten_order[
+                np.arange(len(self.events.JetGoodHiggs)), min_idx
+                ][:,1],
+            self.events["JetGoodHiggs"][
+                ak.Array([np.reshape(comb_idx[best], 4) for best in min_idx])
+            ],
+        )
+
     def dummy_provenance(self):
         self.events["JetGoodHiggs"] = ak.with_field(
             self.events.JetGoodHiggs,
@@ -352,6 +465,24 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events["HiggsSubLeading"],
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
+
+            (
+                self.events["delta_dhh"],
+                self.events["HiggsLeadingRun2"],
+                self.events["HiggsSubLeadingRun2"],
+                self.events["JetGoodFromHiggsOrderedRun2"],
+            ) = self.run2_matching_algorithm()
+            self.events["HiggsLeadingRun2"] = ak.with_field(self.events["HiggsLeadingRun2"], self.events["HiggsLeadingRun2"].pt, "pt")
+            self.events["HiggsSubLeadingRun2"] = ak.with_field(self.events["HiggsSubLeadingRun2"], self.events["HiggsSubLeadingRun2"].pt, "pt")
+            self.events["HiggsLeadingRun2"] = ak.with_field(self.events["HiggsLeadingRun2"], self.events["HiggsLeadingRun2"].eta, "eta")
+            self.events["HiggsSubLeadingRun2"] = ak.with_field(self.events["HiggsSubLeadingRun2"], self.events["HiggsSubLeadingRun2"].eta, "eta")
+            self.events["HiggsLeadingRun2"] = ak.with_field(self.events["HiggsLeadingRun2"], self.events["HiggsLeadingRun2"].phi, "phi")
+            self.events["HiggsSubLeadingRun2"] = ak.with_field(self.events["HiggsSubLeadingRun2"], self.events["HiggsSubLeadingRun2"].phi, "phi")
+            self.events["HiggsLeadingRun2"] = ak.with_field(self.events["HiggsLeadingRun2"], self.events["HiggsLeadingRun2"].mass, "mass")
+            self.events["HiggsSubLeadingRun2"] = ak.with_field(self.events["HiggsSubLeadingRun2"], self.events["HiggsSubLeadingRun2"].mass, "mass")
+
+            print(self.events["HiggsLeadingRun2"].mass)
+            print(self.events["HiggsSubLeadingRun2"].mass)
 
             # Angular separation (∆R) between b jets for each H candidate
             self.events["HiggsLeading"] = ak.with_field(
