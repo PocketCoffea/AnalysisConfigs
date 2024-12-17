@@ -7,20 +7,19 @@ from pocket_coffea.lib.cut_functions import (
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
+from pocket_coffea.parameters import defaults
 
 from workflow import HH4bbQuarkMatchingProcessor
 from custom_cut_functions import *
 from custom_cuts import *
-
 
 import os
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
-from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS = False
 
 print("CLASSIFICATION ", CLASSIFICATION)
@@ -41,7 +40,7 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-spanet_model = (
+SPANET_MODEL = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
 
@@ -82,7 +81,7 @@ cfg = Configurator(
         "max_num_jets": 5,
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
-        "spanet_model": spanet_model,
+        "spanet_model": SPANET_MODEL,
         "tight_cuts": TIGHT_CUTS,
         "fifth_jet": "btag",
     },

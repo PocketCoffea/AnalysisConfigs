@@ -48,7 +48,7 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 # spanet_model="params/spanet_5jets_ptreg_ATLAS.onnx"
-spanet_model = (
+SPANET_MODEL = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
 
@@ -88,7 +88,7 @@ cfg = Configurator(
         "max_num_jets": 5,
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
-        "spanet_model": spanet_model,
+        "spanet_model": SPANET_MODEL,
         "tight_cuts" : TIGHT_CUTS,
         "fifth_jet" : "btag",
     },

@@ -5,6 +5,7 @@ from pocket_coffea.lib.cut_functions import (
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
+from pocket_coffea.parameters import defaults
 
 from workflow import VBFHH4bbQuarkMatchingProcessor
 from custom_cut_functions import *
@@ -15,7 +16,6 @@ import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
-from pocket_coffea.parameters import defaults
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -34,6 +34,8 @@ parameters = defaults.merge_parameters_from_files(
 SPANET_MODEL = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
+DNN_MODEL="/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
+
 HIGGS_PARTON_MATCHING=False
 VBF_PARTON_MATCHING = False
 
@@ -95,6 +97,7 @@ cfg = Configurator(
         "max_num_jets": 5,
         "which_bquark": "last",
         "spanet_model": SPANET_MODEL if not HIGGS_PARTON_MATCHING else None,
+        "DNN_model": DNN_MODEL,
         "vbf_parton_matching": VBF_PARTON_MATCHING,
     },
     skim=[
@@ -422,10 +425,10 @@ cfg = Configurator(
                             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
                             "JetVBFLeadingPtNotFromHiggs_jjMass",
                             "JetVBFLeadingMjjNotFromHiggs_jjMass",
-                            "HH_deltaR", 
-                            "H1j1_deltaR", 
-                            "H1j2_deltaR", 
-                            "H2j1_deltaR", 
+                            "HH_deltaR",
+                            "H1j1_deltaR",
+                            "H1j2_deltaR",
+                            "H2j1_deltaR",
                             "H2j2_deltaR",
                             "HH_centrality",
                         ],

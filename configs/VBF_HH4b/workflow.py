@@ -28,6 +28,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.which_bquark = self.workflow_options["which_bquark"]
         self.spanet_model = self.workflow_options["spanet_model"]
         self.vbf_parton_matching = self.workflow_options["vbf_parton_matching"]
+        self.DNN_model = self.workflow_options["DNN_model"]
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -412,10 +413,8 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
                 try:
                     worker = get_worker()
-                    # print("found worker", worker)
                 except ValueError:
                     worker = None
-                    # print("     >>>>>>>>>>   NOT found worker", worker)
 
                 if worker is None:
                     import onnxruntime as ort
@@ -424,31 +423,33 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     sess_options.graph_optimization_level = (
                         ort.GraphOptimizationLevel.ORT_ENABLE_ALL
                     )
-                    model_session = ort.InferenceSession(
+                    model_session_spanet = ort.InferenceSession(
                         self.spanet_model,
                         sess_options=sess_options,
                         providers=["CPUExecutionProvider"],
                     )
-                    # input_name = [input.name for input in model_session.get_inputs()]
-                    # output_name = [output.name for output in model_session.get_outputs()]
-                    # print("     >>>>>>>>>>   initialize new worker", worker)
-                else:
-                    model_session = worker.data["model_session"]
-                    # input_name = worker.data['input_name']
-                    # output_name = worker.data['output_name']
-                    # print("get info from old worker", worker)
+                    model_session_DNN = ort.InferenceSession(
+                        self.DNN_model,
+                        sess_options=sess_options,
+                        providers=["CPUExecutionProvider"],
+                    )
 
-                input_name = [input.name for input in model_session.get_inputs()]
-                output_name = [output.name for output in model_session.get_outputs()]
-                # print(model_session)
+                else:
+                    model_session_spanet = worker.data["model_session_spanet"]
+                    model_session_DNN = worker.data["model_session_DNN"]
+
+                input_name_spanet = [input.name for input in model_session_spanet.get_inputs()]
+                output_name_spanet = [output.name for output in model_session_spanet.get_outputs()]
+
+                input_name_DNN = [input.name for input in model_session_DNN.get_inputs()]
+                output_name_DNN = [output.name for output in model_session_DNN.get_outputs()]
+                # print(input_name_DNN)
+                # print(output_name_DNN)
+
 
                 # compute the pairing information using the spanet model
                 outputs = get_pairing_information(
-                    model_session,
-                    input_name,
-                    output_name,
-                    self.events,
-                    self.max_num_jets,
+                    model_session_spanet, input_name_spanet, output_name_spanet, self.events, self.max_num_jets
                 )
 
                 (
@@ -518,11 +519,11 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     JetVBF_matched_padded.eta[:, 0]
                     - JetVBF_matched_padded.eta[:, 1]
                 )
-                
+
                 self.events["jj_mass_matched"] = (
                     JetVBF_matched_padded[:, 0] + JetVBF_matched_padded[:, 1]
                 ).mass
-                
+
                 # This product will give only -1 or 1 values, as it's needed to see if the two jets are in the same side or not
                 self.events["etaProduct"] = (
                     JetVBF_matched_padded.eta[:, 0]
@@ -579,20 +580,20 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] -
                 self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
             )
-            
+
             self.events["JetVBFLeadingMjjNotFromHiggs_deltaEta"] = abs(
                 self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,0] -
                 self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,1]
             )
-            
+
 
             self.events["JetVBFLeadingPtNotFromHiggs_jjMass"] = (
-                self.events.JetVBFLeadingPtNotFromHiggs[:,0] + 
+                self.events.JetVBFLeadingPtNotFromHiggs[:,0] +
                 self.events.JetVBFLeadingPtNotFromHiggs[:,1]
             ).mass
 
             self.events["JetVBFLeadingMjjNotFromHiggs_jjMass"] = (
-                self.events.JetVBFLeadingMjjNotFromHiggs[:,0] + 
+                self.events.JetVBFLeadingMjjNotFromHiggs[:,0] +
                 self.events.JetVBFLeadingMjjNotFromHiggs[:,1]
             ).mass
 
@@ -609,7 +610,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events["H1j1_deltaR"] = (
                     self.events.HiggsLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,0])
             )
-            
+
             self.events["H1j2_deltaR"] = (
                     self.events.HiggsLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,1])
             )
@@ -623,10 +624,10 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             )
 
             JetVBFLeadingPtNotFromHiggs_etaAverage = (
-                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] + 
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] +
                 self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
                 ) / 2
-            
+
             self.events["HH_centrality"] = np.exp(
                 (
                     -(
