@@ -14,18 +14,18 @@ from configs.ttHbb.semileptonic.common.executors import onnx_executor as onnx_ex
 import configs.ttHbb.semileptonic.common.params.quantile_transformer as quantile_transformer
 from configs.ttHbb.semileptonic.common.params.quantile_transformer import WeightedQuantileTransformer
 
-import custom_cut_functions
-import custom_cuts
-import custom_weights
-from custom_cut_functions import *
-from custom_cuts import *
-from custom_weights import SF_top_pt
+import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
+import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
+from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
+from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt
+
 from params.axis_settings import axis_settings
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Define SPANet model path for inference
-spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+spanet_model_path = "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -45,8 +45,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_TTbb.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_TTbb_local.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar_local.json",
                   ],
         "filter" : {
             "samples": ["TTbbSemiLeptonic",
@@ -76,7 +76,7 @@ cfg = Configurator(
 
     workflow = SpanetInferenceProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://eoshome-m.cern.ch//eos/user/m/mmarcheg/ttHbb/dask_jobs/ntuples_dctr/output_ntuples_dctr_ttbar_top_pt_reweighting",
+                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/output_columns_spanet_inference_ttbar_top_pt_reweighting",
                         "spanet_model": spanet_model_path},
     
     skim = [get_nPVgood(1),
@@ -90,8 +90,7 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
     },
-    weights_classes = common_weights + [SF_top_pt],
-    weights_classes = common_weights + [SF_ele_trigger],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt],
     weights= {
         "common": {
             "inclusive": [
@@ -240,6 +239,5 @@ import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
-cloudpickle.register_pickle_by_value(custom_weights)
 cloudpickle.register_pickle_by_value(quantile_transformer)
 cloudpickle.register_pickle_by_value(onnx_executor)
