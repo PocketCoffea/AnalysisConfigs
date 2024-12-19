@@ -5,7 +5,7 @@
             "sample": "GluGlutoHHto4B_poisson",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "100000",
             "size": "224369283"
@@ -73,7 +73,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1496000",
             "size": "3364401910"
@@ -253,7 +253,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1481887",
             "size": "3237013796"
@@ -275,10 +275,10 @@
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_15.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_33.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_11.root",
+            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_10.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_16.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_8.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_18.root",
-            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_10.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_47.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_5.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-m2p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075718/0000/nanoaodStep_46.root",
@@ -328,7 +328,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1492007",
             "size": "3279525523"
@@ -403,7 +403,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1481492",
             "size": "3375377247"
@@ -429,6 +429,7 @@
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_33.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_23.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_14.root",
+            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_49.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_38.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_12.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_58.root",
@@ -437,9 +438,8 @@
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_44.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_17.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_19.root",
-            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_6.root",
-            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_49.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_9.root",
+            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_6.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_10.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_46.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-0p50_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075741/0000/nanoaodStep_8.root",
@@ -478,7 +478,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1496675",
             "size": "3528098879"
@@ -553,7 +553,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1452768",
             "size": "3456514936"
@@ -627,7 +627,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1438592",
             "size": "3195302155"
@@ -658,8 +658,8 @@
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_45.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_16.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_19.root",
-            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_15.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_36.root",
+            "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_15.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_7.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_12.root",
             "root://xrootd-cms.infn.it///store/user/rgerosa/PrivateMC/Run3Summer22EENanoAODV12/ggHHto4B_kl-3p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/240408_075813/0000/nanoaodStep_47.root",
@@ -700,7 +700,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1459373",
             "size": "3065382644"
@@ -773,7 +773,7 @@
             "sample": "GluGlutoHHto4B",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "7391383",
             "size": "16401238988"
@@ -840,7 +840,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "7391383",
             "size": "16401238988"
@@ -1043,7 +1043,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1481887",
             "size": "3237013796"
@@ -1118,7 +1118,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1492007",
             "size": "3279525523"
@@ -1193,7 +1193,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1481492",
             "size": "3375377247"
@@ -1268,7 +1268,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1496675",
             "size": "3528098879"
@@ -1343,7 +1343,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1452768",
             "size": "3456514936"
@@ -1417,7 +1417,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1438592",
             "size": "3195302155"
@@ -1490,7 +1490,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1459373",
             "size": "3065382644"
@@ -1564,7 +1564,7 @@
             "sample": "GluGlutoHHto4B_private",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1434223",
             "size": "3075668246"
@@ -1638,7 +1638,7 @@
             "sample": "GluGlutoHHto4B_spanet",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "",
             "nevents": "1434223",
             "size": "3075668246"
