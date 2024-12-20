@@ -64,7 +64,7 @@ cfg = Configurator(
 
     workflow = ttHbbPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/spanet_v2/output_columns_spanet_input",
+                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/ntuples/spanet_v2/output_columns_spanet_input_tt+LF",
                         },
     
     skim = [get_nPVgood(1),
@@ -95,9 +95,9 @@ cfg = Configurator(
         },
         "bysample": {
             "TTToSemiLeptonic": {
-                "bycategory": {
-                    "semilep_calibrated": ["sf_ttlf_calib"],
-                }
+                "inclusive": [
+                    "sf_ttlf_calib"
+                ],
             }
         },
     },
@@ -146,47 +146,45 @@ cfg = Configurator(
                     "semilep_LHE": [
                         ColOut(
                             "Parton",
-                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"]
+                            ["pt", "eta", "phi", "mass", "pdgId", "provenance"],
+                            flatten=False
                         ),
                         ColOut(
                             "PartonMatched",
                             ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGood",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btagDeepFlavCvL", "btagDeepFlavCvB", "btag_L", "btag_M", "btag_H"],
+                            flatten=False
                         ),
                         ColOut(
                             "JetGoodMatched",
-                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                            ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB", "btagDeepFlavCvL", "btagDeepFlavCvB", "btag_L", "btag_M", "btag_H", "dRMatchedJet"],
+                            flatten=False
                         ),
                         ColOut("LeptonGood",
                                ["pt","eta","phi", "pdgId", "charge", "mvaTTH"],
-                               pos_end=1, store_size=False),
-                        ColOut("MET", ["phi","pt","significance"]),
-                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
-                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"]),
+                               pos_end=1,
+                               flatten=False
+                        ),
+                        ColOut("MET",
+                               ["phi","pt","significance"],
+                               flatten=False
+                        ),
+                        ColOut("Generator",
+                               ["x1","x2","id1","id2","xpdf1","xpdf2"],
+                               flatten=False
+                        ),
+                        ColOut("LeptonParton",
+                               ["pt","eta","phi","mass","pdgId"],
+                               flatten=False
+                        ),
                     ]
             }
         },
-        "bysample": {
-            "ttHTobb": {
-                "bycategory": {
-                    "semilep_LHE": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
-                    ]
-                }
-            },
-            "ttHTobb_ttToSemiLep": {
-                "bycategory": {
-                    "semilep_LHE": [
-                        ColOut("HiggsParton",
-                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
-                    ]
-                }
-            }
-        },
+        "bysample": {},
     },
 )
 
