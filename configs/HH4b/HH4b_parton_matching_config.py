@@ -20,7 +20,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS = False
 
 print("CLASSIFICATION ", CLASSIFICATION)
@@ -41,7 +41,9 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 spanet_model = (
-    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
+    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
 
 cfg = Configurator(
@@ -63,12 +65,12 @@ cfg = Configurator(
                 [
                     # "GluGlutoHHto4B",
                     # "QCD-4Jets",
-                    "DATA_JetMET_JMENano",
+                    #"DATA_JetMET_JMENano",
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    # "GluGlutoHHto4B_spanet",
+                    "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 else ["GluGlutoHHto4B"]
@@ -88,7 +90,10 @@ cfg = Configurator(
         "spanet_model": spanet_model,
         "tight_cuts": TIGHT_CUTS,
         "fifth_jet": "pt",
-        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano/"
+        "random_pt": True,
+        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/GluGlutoHHto4B_spanet_loose"
+#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
+#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_no_btag"
 #        "dump_columns_as_arrays_per_chunk": "/work/tharte/datasets/mass_sculpting_data/testing/arrays/"
     },
     skim=[
@@ -116,8 +121,9 @@ cfg = Configurator(
         #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
         # ],
         "4b_region": [hh4b_4b_region],  # HERE
-        "delta_Dhh_above_30": [hh4b_4b_region, dhh_above_30],
-        # "2b_region": [hh4b_2b_region],
+        # "4b_delta_Dhh_above_30": [hh4b_4b_region, dhh_above_30],
+        "2b_region": [hh4b_2b_region],
+        # "2b_delta_Dhh_above_30": [hh4b_2b_region, dhh_above_30],
     },
     weights={
         "common": {
@@ -156,10 +162,10 @@ cfg = Configurator(
         # **jet_hists(coll="JetGoodHiggsPtOrder", pos=1),
         # **jet_hists(coll="JetGoodHiggsPtOrder", pos=2),
         # **jet_hists(coll="JetGoodHiggsPtOrder", pos=3),
-        # **jet_hists(coll="JetGoodHiggs", pos=0),
-        # **jet_hists(coll="JetGoodHiggs", pos=1),
-        # **jet_hists(coll="JetGoodHiggs", pos=2),
-        # **jet_hists(coll="JetGoodHiggs", pos=3),
+        **jet_hists(coll="JetGoodHiggs", pos=0),
+        **jet_hists(coll="JetGoodHiggs", pos=1),
+        **jet_hists(coll="JetGoodHiggs", pos=2),
+        **jet_hists(coll="JetGoodHiggs", pos=3),
         # **parton_hists(coll="bQuarkHiggsMatched", pos=0),
         # **parton_hists(coll="bQuarkHiggsMatched", pos=1),
         # **parton_hists(coll="bQuarkHiggsMatched", pos=2),
@@ -169,7 +175,6 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodHiggsMatched", pos=1),
         # **parton_hists(coll="JetGoodHiggsMatched", pos=2),
         # **parton_hists(coll="JetGoodHiggsMatched", pos=3),
-        # **parton_hists(coll="JetGoodHiggsMatched"),
         # **parton_hists(coll="bQuarkMatched", pos=0),
         # **parton_hists(coll="bQuarkMatched", pos=1),
         # **parton_hists(coll="bQuarkMatched", pos=2),
@@ -180,57 +185,72 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodMatched", pos=2),
         # **parton_hists(coll="JetGoodMatched", pos=3),
         # **parton_hists(coll="JetGoodMatched"),
-        **{
-            f"RecoHiggs1Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"HiggsLeading",
-                        field="mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=r"$M_{H_1}$ SPANet",
-                    ),
-                    Axis(
-                        coll=f"HiggsLeadingRun2",
-                        field="mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=r"$M_{H_1}$ $D_{HH}$",
-                    )
-                ],
+        #"Random_pt_Factor": HistConf(
+        #    [
+        #        Axis(
+        #            coll=f"events",
+        #            field="random_pt_weights",
+        #            bins=50,
+        #            start=0,
+        #            stop=2,
+        #            label=r"$pT$",
+        #        )
+        #    ],
+        #),
+        "RecoHiggs1Mass": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsLeading",
+                    field="mass",
+                    bins=140,
+                    start=60,
+                    stop=200,
+                    label=r"$M_{H_1}$ SPANet",
+                )
+            ],
 
-            )
-        },
-        **{
-            f"RecoHiggs2Mass": HistConf(
-                [
-                    Axis(
-                        coll=f"HiggsSubLeading",
-                        field="mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=r"$M_{H_2}$ SPANet",
-                    ),
-                    Axis(
-                        coll=f"HiggsSubLeadingRun2",
-                        field="mass",
-                        bins=30,
-                        start=60,
-                        stop=200,
-                        label=r"$M_{H_2}$ $D_{HH}$",
-                    )
-                ],
-
-            )
-        },
+        ),
+        # "RecoHiggs1Mass_Dhh": HistConf(
+        #     [
+        #         Axis(
+        #             coll=f"HiggsLeadingRun2",
+        #             field="mass",
+        #             bins=140,
+        #             start=60,
+        #             stop=200,
+        #             label=r"$M_{H_1}$ $D_{HH}$",
+        #         )
+        #     ],
+        # ),
+        "RecoHiggs2Mass": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsSubLeading",
+                    field="mass",
+                    bins=140,
+                    start=60,
+                    stop=200,
+                    label=r"$M_{H_2}$ SPANet",
+                )
+            ],
+        ),
+        # "RecoHiggs2Mass_Dhh": HistConf(
+        #     [
+        #         Axis(
+        #             coll=f"HiggsSubLeadingRun2",
+        #             field="mass",
+        #             bins=140,
+        #             start=60,
+        #             stop=200,
+        #             label=r"$M_{H_2}$ $D_{HH}$",
+        #         )
+        #     ],
+        # )
     },
     columns={
         "common": {
             "inclusive": (
-                # [
+                [
                     # ColOut(
                     #     "bQuarkHiggsMatched",
                     #     [
@@ -295,37 +315,34 @@ cfg = Configurator(
                     #         # "hadronFlavour",
                     #     ],
                     # ),
-                    # ColOut(
-                    #     "JetGoodHiggs",
-                    #     [
-                    #         "provenance",
-                    #         "pt",
-                    #         "eta",
-                    #         "phi",
-                    #         # "cosPhi",
-                    #         # "sinPhi",
-                    #         "mass",
-                    #         "btagPNetB",
-                    #         # "hadronFlavour",
-                    #     ],
-                    # ),
-                    # ColOut(
-                    #     "JetGood",
-                    #     [
-                    #         "provenance",
-                    #         "pt",
-                    #         "eta",
-                    #         "phi",
-                    #         # "cosPhi",
-                    #         # "sinPhi",
-                    #         "mass",
-                    #         "btagPNetB",
-                    #         # "hadronFlavour",
-                    #     ],
-                    # ),
-                # ]
-                # + (
-                    [
+                    ColOut(
+                        "JetGoodHiggs",
+                        [
+                            "provenance",
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
+                    ColOut(
+                        "JetGood",
+                        [
+                            "provenance",
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                    ),
                         ColOut(
                             "HiggsLeading",
                             [
@@ -348,28 +365,28 @@ cfg = Configurator(
                                 # "cos_theta",
                             ],
                         ),
-                        ColOut(
-                            "HiggsLeadingRun2",
-                            [
-                                "pt",
-                                "eta",
-                                "phi",
-                                "mass",
-                                # "dR",
-                                # "cos_theta",
-                            ],
-                        ),
-                        ColOut(
-                            "HiggsSubLeadingRun2",
-                            [
-                                "pt",
-                                "eta",
-                                "phi",
-                                "mass",
-                                # "dR",
-                                # "cos_theta",
-                            ],
-                        ),
+                        # ColOut(
+                        #     "HiggsLeadingRun2",
+                        #     [
+                        #         "pt",
+                        #         "eta",
+                        #         "phi",
+                        #         "mass",
+                        #         # "dR",
+                        #         # "cos_theta",
+                        #     ],
+                        # ),
+                        # ColOut(
+                        #     "HiggsSubLeadingRun2",
+                        #     [
+                        #         "pt",
+                        #         "eta",
+                        #         "phi",
+                        #         "mass",
+                        #         # "dR",
+                        #         # "cos_theta",
+                        #     ],
+                        # ),
                        # ColOut(
                        #     "JetGoodFromHiggsOrderedRun2",
                        #     [
@@ -390,19 +407,19 @@ cfg = Configurator(
                        #         "btagPNetB",
                        #     ],
                        # ),
-                        ColOut(
-                            "HH",
-                            [
-                                "pt",
-                                "eta",
-                                "phi",
-                                "mass",
-                                # "cos_theta_star",
-                                # "dR",
-                                # "dPhi",
-                                # "dEta",
-                            ],
-                        ),
+                       #  ColOut(
+                       #      "HH",
+                       #      [
+                       #          "pt",
+                       #          "eta",
+                       #          "phi",
+                       #          "mass",
+                       #          # "cos_theta_star",
+                       #          # "dR",
+                       #          # "dPhi",
+                       #          # "dEta",
+                       #      ],
+                       #  ),
                         ColOut(
                             "events",
                             [
