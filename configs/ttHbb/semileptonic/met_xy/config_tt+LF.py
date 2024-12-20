@@ -9,9 +9,6 @@ from pocket_coffea.parameters.histograms import *
 
 import workflow
 from workflow import METxyProcessor
-from configs.ttHbb.semileptonic.common.executors import onnx_executor as onnx_executor
-import configs.ttHbb.semileptonic.common.params.quantile_transformer as quantile_transformer
-from configs.ttHbb.semileptonic.common.params.quantile_transformer import WeightedQuantileTransformer
 
 import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
@@ -150,5 +147,3 @@ import cloudpickle
 cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
-cloudpickle.register_pickle_by_value(quantile_transformer)
-cloudpickle.register_pickle_by_value(onnx_executor)
