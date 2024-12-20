@@ -1,0 +1,13 @@
+ttlf_calibration:
+  2016_PreVFP:
+    name: ttlf_background_correction
+    file: "${config_dir:}/ttlf_calibration/ttlf_background_correction_2016_PreVFP.json"
+  2016_PostVFP:
+    name: ttlf_background_correction
+    file: "${config_dir:}/ttlf_calibration/ttlf_background_correction_2016_PostVFP.json"
+  '2017':
+    name: ttlf_background_correction
+    file: "${config_dir:}/ttlf_calibration/ttlf_background_correction_2017.json"
+  '2018':
+    name: ttlf_background_correction
+    file: "${config_dir:}/ttlf_calibration/ttlf_background_correction_2018.json"
