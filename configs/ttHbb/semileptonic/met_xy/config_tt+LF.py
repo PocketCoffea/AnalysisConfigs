@@ -39,18 +39,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   update=True)
 
-samples = ["ttHTobb",
-           "ttHTobb_ttToSemiLep",
-           "TTbbSemiLeptonic",
+samples = [
            "TTToSemiLeptonic",
-           "TTTo2L2Nu",
-           "SingleTop",
-           "WJetsToLNu_HT",
-           "DYJetsToLL",
-           "VV",
-           "TTV",
-           "DATA_SingleMuon",
-           "DATA_SingleEle",
            ]
 
 cfg = Configurator(
@@ -68,22 +58,10 @@ cfg = Configurator(
                      ] #All the years
         },
         "subsamples": {
-            'DATA_SingleEle'  : {
-                'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]
-            },
-            'DATA_SingleMuon' : {
-                'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
-                                     get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
-            },
-            'TTbbSemiLeptonic' : {
-                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
-                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
-                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
-            },
             'TTToSemiLeptonic' : {
-                #'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
-                'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
-                'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+                'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                #'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                #'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
             },
         }
     },
@@ -118,7 +96,13 @@ cfg = Configurator(
             ],
             "bycategory": {},
         },
-        "bysample": {},
+        "bysample": {
+            "TTToSemiLeptonic": {
+                "bycategory": {
+                    "semilep_calibrated": ["sf_ttlf_calib"],
+                }
+            }
+        },
     },
     variations = {
         "weights": {
