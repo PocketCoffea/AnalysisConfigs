@@ -263,27 +263,48 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                         "random_pt_weights",
                         )
                 print(self.events.random_pt_weights)
-                for collection in [self.events["JetGood"], self.events["JetGoodHiggs"]]:
-                    collection = ak.with_field(
-                            collection,
-                            collection["pt"],
-                            "pt_orig",
-                            ) 
-                    collection = ak.with_field(
-                            collection,
-                            collection["pt"]*random_weights,
-                            "pt",
-                            )
-                    collection = ak.with_field(
-                            collection,
-                            collection["mass"],
-                            "mass_orig",
-                            ) 
-                    collection = ak.with_field(
-                            collection,
-                            collection["mass"]*random_weights,
-                            "mass",
-                            )
+                print(self.events.JetGood.pt)
+                self.events.JetGoodHiggs = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.mass,
+                        "mass_orig",
+                        )
+                self.events.JetGoodHiggs = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.mass*random_weights,
+                        "mass",
+                        )
+                self.events.JetGoodHiggs = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.pt,
+                        "pt_orig",
+                        )
+                self.events.JetGoodHiggs = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.pt*random_weights,
+                        "pt",
+                        )
+                self.events.JetGood = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.mass,
+                        "mass_orig",
+                        )
+                self.events.JetGood = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.mass*random_weights,
+                        "mass",
+                        )
+                self.events.JetGood = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.pt,
+                        "pt_orig",
+                        )
+                self.events.JetGood = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.pt*random_weights,
+                        "pt",
+                        )
+                print(self.events.JetGood.pt)
 
 
             self.get_jet_higgs_provenance(which_bquark=self.which_bquark)

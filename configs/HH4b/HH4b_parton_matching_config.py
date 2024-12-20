@@ -185,18 +185,18 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodMatched", pos=2),
         # **parton_hists(coll="JetGoodMatched", pos=3),
         # **parton_hists(coll="JetGoodMatched"),
-        #"Random_pt_Factor": HistConf(
-        #    [
-        #        Axis(
-        #            coll=f"events",
-        #            field="random_pt_weights",
-        #            bins=50,
-        #            start=0,
-        #            stop=2,
-        #            label=r"$pT$",
-        #        )
-        #    ],
-        #),
+        "Random_pt_Factor": HistConf(
+            [
+                Axis(
+                    coll=f"events",
+                    field="random_pt_weights",
+                    bins=50,
+                    start=0,
+                    stop=2,
+                    label=r"$pT$",
+                )
+            ],
+        ),
         "RecoHiggs1Mass": HistConf(
             [
                 Axis(
