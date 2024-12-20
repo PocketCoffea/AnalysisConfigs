@@ -1,7 +1,7 @@
 import awkward as ak
 
 from configs.ttHbb.semileptonic.common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
-from pocket_coffea.lib.jets import met_xy_correction
+from pocket_coffea.objects.jets import met_xy_correction
 
 class METxyProcessor(ttHbbPartonMatchingProcessor):
     def apply_object_preselection(self, variation):
