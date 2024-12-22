@@ -1,5 +1,6 @@
 import awkward as ak
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
+from pocket_coffea.lib.objects import met_xy_correction
 from pocket_coffea.lib.deltaR_matching import metric_eta, metric_phi
 from pocket_coffea.lib.deltaR_matching import object_matching
 from pocket_coffea.lib.parton_provenance import get_partons_provenance_ttHbb, get_partons_provenance_ttbb4F, get_partons_provenance_tt5F
@@ -22,6 +23,22 @@ class ttbarPartonMatchingProcessor(ttHbbBaseProcessor):
 
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation=variation)
+
+        # MET xy correction
+        met_pt_corr, met_phi_corr = met_xy_correction(self.params, self.events, self._year, self._era)
+
+        # Overwrite the MET collection with the corrected MET
+        self.events["MET"] = ak.with_field(
+            self.events.MET,
+            met_pt_corr,
+            "pt"
+        )
+        self.events["MET"] = ak.with_field(
+            self.events.MET,
+            met_phi_corr,
+            "phi"
+        )
+
         if self._isMC:
             # Apply the GenJet acceptance cuts
             mask_pt = self.events["GenJet"].pt > 20.
