@@ -24,7 +24,7 @@ defaults.register_configuration_dir("config_dir", localdir + "/params")
 year = "2022_postEE"
 parameters = defaults.merge_parameters_from_files(
     default_parameters,
-    f"{localdir}/params/object_preselection.yaml",
+    f"{localdir}/params/object_preselectionSemiTight.yaml",
     f"{localdir}/params/triggers.yaml",
     f"{localdir}/params/jets_calibration.yaml",
     # f"{localdir}/params/plotting_style.yaml",
@@ -103,6 +103,9 @@ cfg = Configurator(
     preselections=[vbf_hh4b_presel],
     categories={
         **{"4b_region": [hh4b_4b_region]},
+        **{f"4b_semiTight_LeadingPt_region": [hh4b_4b_region, semiTight_leadingPt]},
+        **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]},
+        # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]}
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
         #

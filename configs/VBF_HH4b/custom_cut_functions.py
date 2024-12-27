@@ -62,6 +62,23 @@ def hh4b_4b_cuts(events, params, **kwargs):
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
 
+def semiTight_leadingPt(events, params, **kwargs):
+    mask_mjj = (events.JetVBFLeadingPtNotFromHiggs_jjMass > params['mjj'])
+    mask_deltaEta_jj = (events.JetVBFLeadingPtNotFromHiggs_deltaEta > params['deltaEta_jj'])
+    
+    mask = mask_mjj & mask_deltaEta_jj
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
+
+def semiTight_leadingMjj(events, params, **kwargs):
+    mask_mjj = (events.JetVBFLeadingMjjNotFromHiggs_jjMass > params['mjj'])
+    mask_deltaEta_jj = (events.JetVBFLeadingMjjNotFromHiggs_deltaEta > params['deltaEta_jj'])
+
+    mask = mask_mjj & mask_deltaEta_jj
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
 
 def VBF_cuts(events, params, **args):
     at_least_two_vbf = events.nJetGoodVBF >= params["njet_vbf"]
