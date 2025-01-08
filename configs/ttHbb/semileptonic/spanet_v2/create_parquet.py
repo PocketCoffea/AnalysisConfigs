@@ -20,6 +20,8 @@ def create_parquet_metadata(dataset, category):
         for subfolder in subfolders:
             print(f"Processing {dataset}/{subfolder}")
             dataset_path = os.path.join(args.input, dataset, subfolder, category)
+            if not os.path.exists(dataset_path):
+                raise ValueError(f"The path {dataset_path} does not exist.")
             if os.path.exists(os.path.join(dataset_path, "_metadata")) and not args.overwrite:
                 print(f"Metadata already exists for {dataset}/{subfolder}")
                 return
@@ -44,5 +46,9 @@ def create_parquet_metadata(dataset, category):
 
 datasets =os.listdir(args.input)
 # Parallelize the code: one process per dataset
-with Pool(args.workers) as pool:
-    pool.map(partial(create_parquet_metadata, category=args.cat), datasets)
+if args.workers == 1:
+    for dataset in datasets:
+        create_parquet_metadata(dataset, args.cat)
+else:
+    with Pool(args.workers) as pool:
+        pool.map(partial(create_parquet_metadata, category=args.cat), datasets)
