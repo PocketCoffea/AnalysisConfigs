@@ -15,7 +15,8 @@ args = parser.parse_args()
 error_filename = "error_parquet_metadata.log"
 
 def create_parquet_metadata(dataset, category):
-    if dataset.startswith("TTToSemiLeptonic") or dataset.startswith("TTbbSemiLeptonic"):
+    # The datasets with subsamples have subfolders
+    if dataset.startswith("TTToSemiLeptonic") or dataset.startswith("TTbbSemiLeptonic") or dataset.startswith("DATA"):
         subfolders = os.listdir(os.path.join(args.input, dataset))
         for subfolder in subfolders:
             print(f"Processing {dataset}/{subfolder}")
