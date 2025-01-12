@@ -73,7 +73,7 @@ class SpanetInferenceProcessor(ttHbbPartonMatchingProcessor):
                              ak.to_numpy(self.events.LeptonGood[:,0].is_electron).astype(np.int32),
                              ], axis=1)[:,None,:].astype(np.float32)
 
-        ht_array = np.log(self.events.JetGood_Ht[:,None, None]).astype(np.float32)
+        ht_array = ak.to_numpy(np.log(self.events.JetGood_Ht[:,None, None])).astype(np.float32)
 
         mask_global = np.ones(shape=[met_data.shape[0], 1]) == 1
 

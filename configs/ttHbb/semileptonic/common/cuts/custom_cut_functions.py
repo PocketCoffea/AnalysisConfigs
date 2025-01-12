@@ -75,14 +75,7 @@ def spanet_sr(events, params, year, sample, **kwargs):
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
 
-def spanet_cr1(events, params, year, sample, **kwargs):
-
-    mask = events.spanet_output.tthbb_transformed < params["tthbb_transformed_wp"]
-
-    # Pad None values with False
-    return ak.where(ak.is_none(mask), False, mask)
-
-def spanet_cr2(events, params, year, sample, **kwargs):
+def spanet_cr(events, params, year, sample, **kwargs):
 
     mask = (
         (events.spanet_output.tthbb_transformed >= params["tthbb_transformed_wp_lo"]) &

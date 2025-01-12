@@ -8,6 +8,8 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         super().__init__()
         self.model_path = model_path
         self.session_name = session_name
+        if self.model_path is None:
+            raise ValueError(f"{self.session_name}: No path to the ONNX model specified.")
 
     async def setup(self, worker: Worker):
         if os.path.exists("/afs/cern.ch/work"):
