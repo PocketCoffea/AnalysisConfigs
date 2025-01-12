@@ -29,7 +29,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 #dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
-tthbb_L = 0.6
+tthbb_L = 0.4
 tthbb_M = 0.75
 ttlf_wp = 0.3
 
@@ -49,7 +49,6 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
-categories_to_calibrate = ["semilep_calibrated", f"ttlf0p{int(100*ttlf_wp)}", "CR1", "CR2", "CR", "SR", "4jCR1", "4jCR2", "4jSR", "5jCR1", "5jCR2", "5jSR", "6jCR1", "6jCR2", "6jSR", ">=7jCR1", ">=7jCR2", ">=7jSR"]
 samples = [
            "TTbbSemiLeptonic",
            ]
@@ -119,24 +118,22 @@ cfg = Configurator(
     preselections = [semileptonic_presel],
     categories = {
         "semilep": [passthrough],
-        "semilep_calibrated": [passthrough],
         f"ttlf0p{int(100*ttlf_wp)}": [get_ttlf_max(ttlf_wp)],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
-        "CR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L)],
-        "CR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M)],
-        "CR": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_M)],
+        f"CR_tthbb0p00To0p{int(100*tthbb_L)}": [get_ttlf_max(ttlf_wp), get_CR(0., tthbb_L)],
+        "CR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
-        "4jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(4, coll="JetGood")],
-        "4jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(4, coll="JetGood")],
+        f"4jCR_tthbb0p00To0p{int(100*tthbb_L)}": [get_ttlf_max(ttlf_wp), get_CR(0., tthbb_L), get_nObj_eq(4, coll="JetGood")],
+        "4jCR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M), get_nObj_eq(4, coll="JetGood")],
         "4jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(4, coll="JetGood")],
-        "5jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(5, coll="JetGood")],
-        "5jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(5, coll="JetGood")],
+        f"5jCR_tthbb0p00To0p{int(100*tthbb_L)}": [get_ttlf_max(ttlf_wp), get_CR(0., tthbb_L), get_nObj_eq(5, coll="JetGood")],
+        "5jCR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M), get_nObj_eq(5, coll="JetGood")],
         "5jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(5, coll="JetGood")],
-        "6jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_eq(6, coll="JetGood")],
-        "6jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_eq(6, coll="JetGood")],
+        f"6jCR_tthbb0p00To0p{int(100*tthbb_L)}": [get_ttlf_max(ttlf_wp), get_CR(0., tthbb_L), get_nObj_eq(6, coll="JetGood")],
+        "6jCR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M), get_nObj_eq(6, coll="JetGood")],
         "6jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_eq(6, coll="JetGood")],
-        ">=7jCR1": [get_ttlf_max(ttlf_wp), get_CR1(tthbb_L), get_nObj_min(7, coll="JetGood")],
-        ">=7jCR2": [get_ttlf_max(ttlf_wp), get_CR2(tthbb_L, tthbb_M), get_nObj_min(7, coll="JetGood")],
+        f">=7jCR_tthbb0p00To0p{int(100*tthbb_L)}": [get_ttlf_max(ttlf_wp), get_CR(0., tthbb_L), get_nObj_min(7, coll="JetGood")],
+        ">=7jCR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M), get_nObj_min(7, coll="JetGood")],
         ">=7jSR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(7, coll="JetGood")],
     },
 
@@ -148,13 +145,13 @@ cfg = Configurator(
                 "pileup",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                "sf_btag",
+                "sf_btag", "sf_btag_calib",
                 "sf_jet_puId", "sf_top_pt",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
                 "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                 "sf_njet_reweighting", "dctr_weight"
             ],
-            "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate },
+            "bycategory": {},
         },
         "bysample": {},
     },
@@ -164,12 +161,12 @@ cfg = Configurator(
                 "inclusive": ["pileup",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                              "sf_btag",
+                              "sf_btag", "sf_btag_calib",
                               "sf_jet_puId", "sf_top_pt",
                               "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
-                "bycategory": { cat : ["sf_btag_calib"] for cat in categories_to_calibrate }
+                "bycategory": {}
             },
             "bysample": {},
         },
