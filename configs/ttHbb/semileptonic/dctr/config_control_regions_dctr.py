@@ -29,7 +29,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 #dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
-tthbb_L = 0.6
+tthbb_L = 0.4
 tthbb_M = 0.75
 ttlf_wp = 0.3
 
