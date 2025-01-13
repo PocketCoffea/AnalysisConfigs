@@ -7,6 +7,7 @@ from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
+import configs
 import configs.ttHbb.semileptonic.common.workflows.workflow_dctr as workflow
 from configs.ttHbb.semileptonic.common.workflows.workflow_dctr import DCTRInferenceProcessor
 from configs.ttHbb.semileptonic.common.executors import onnx_executor as onnx_executor
@@ -45,7 +46,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
-                                                  f"{localdir}/params/ml_models_T3_CH_PSI.yaml",
+                                                  f"{localdir}/params/ml_models.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
@@ -198,6 +199,19 @@ cfg = Configurator(
           [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
         ),
+        "jets_Ht_coarsebins" : HistConf(
+          [Axis(coll="events", field="JetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500,2000,2500], start=0, stop=2500,
+                label="Jets $H_T$ [GeV]")]
+        ),
+        "jets_Ht_coarsebins2" : HistConf(
+          [Axis(coll="events", field="JetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500], start=0, stop=1500,
+                label="Jets $H_T$ [GeV]")]
+        ),
+        "jets_Ht_finerbins" : HistConf(
+          [Axis(coll="events", field="JetGood_Ht", type="variable",
+                bins=[0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1250,1500,2000,2500], start=0, stop=2500,
+                label="Jets $H_T$ [GeV]")]
+        ),
         "bjets_Ht" : HistConf(
           [Axis(coll="events", field="BJetGood_Ht", bins=25, start=0, stop=2500,
                 label="B-Jets $H_T$ [GeV]")]
@@ -248,6 +262,15 @@ cfg = Configurator(
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0, stop=1, label="tthbb SPANet transformed score")],
         ),
+        "spanet_tthbb_transformed_binning0p025" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=40, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p04" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=25, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p05" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=20, start=0, stop=1, label="tthbb SPANet transformed score")],
+        ),
         "spanet_ttbb" : HistConf(
             [Axis(coll="spanet_output", field="ttbb", bins=50, start=0, stop=1, label="ttbb SPANet score")],
         ),
@@ -276,3 +299,4 @@ cloudpickle.register_pickle_by_value(custom_cut_functions)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(quantile_transformer)
 cloudpickle.register_pickle_by_value(onnx_executor)
+cloudpickle.register_pickle_by_value(configs)
