@@ -14,7 +14,7 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
     async def setup(self, worker: Worker):
         if os.path.exists("/afs/cern.ch/work"):
             import sys
-            sys.path.append("/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/inference/lib/python3.9/site-packages/")
+            sys.path.append("/afs/cern.ch/work/m/mmarcheg/ttHbb/envs/configs/lib/python3.11/site-packages/")
         import onnxruntime as ort
 
         sess_options = ort.SessionOptions()
