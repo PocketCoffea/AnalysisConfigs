@@ -1,7 +1,7 @@
 spanet:
-  file: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
+  file: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/spanet_v2/multiple_binary_classifiers_btag_LMH/spanet_output/version_epoch62/spanet.onnx"
 dctr:
-  file: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/scan_tthbb/tthbb_0p40To0p60/features_8/binary_classifier_full_Run2_batch8092_lr2e-3/lightning_logs/version_0/model.onnx"
+  file: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/spanet_v2/tthbb_0p40To0p75/features_8/binary_classifier_full_Run2_batch8092_lr5e-3/lightning_logs/version_0/model.onnx"
   input_features:
     - njet
     - nbjet
@@ -12,12 +12,12 @@ dctr:
     - mbb_closest
     - bjet_pt_3
   standard_scaler:
-    file: "${config_dir:}/standard_scaler/features_8/standard_scaler_tthbb_0p40To0p60_train_1013153.pkl"
+    file: "${config_dir:}/standard_scaler/features_8/standard_scaler_tthbb_0p40To0p75_train_1841832.pkl"
   weight_cuts:
     inclusive:
-      file: "${config_dir:}/dctr/weight_cuts_tthbb_0p40To0p60.json"
+      file: "${config_dir:}/dctr/weight_cuts_tthbb_0p40To0p75.json"
     by_njet:
-      file: "${config_dir:}/dctr/weight_cuts_by_njet_tthbb_0p40To0p60.json"
+      file: "${config_dir:}/dctr/weight_cuts_by_njet_tthbb_0p40To0p75.json"
   njet_reweighting:
-    file: "${config_dir:}/dctr/njet_reweighting_tthbb0p40To0p60_ttlf0p30.yaml"
-    key: tthbb0p40To0p60_ttlf0p30
+    file: "${config_dir:}/dctr/reweighting_map_1d_ttlf0p30.yaml"
+    key: tthbb0p40To1p00_ttlf0p30
