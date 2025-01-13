@@ -18,16 +18,12 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_ttlf_calib
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_ttlf_calib
 from params.axis_settings import axis_settings
 
 import os
 import json
 localdir = os.path.dirname(os.path.abspath(__file__))
-
-# Define SPANet model path for inference
-#spanet_model_path = "/eos/user/m/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"
-#dctr_model_path = "/eos/user/m/mmarcheg/ttHbb/dctr/training/reweigh_njet_v2/binary_classifier_26features_full_Run2_batch8092_lr5e-4_decay1e-3/lightning_logs/version_1/model_epoch700.onnx"
 
 # Define tthbb working points for SPANet
 tthbb_L = 0.4
@@ -47,7 +43,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/ttlf_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
-                                                  f"{localdir}/params/ml_models.yaml",
+                                                  f"{localdir}/params/ml_models_T3_CH_PSI.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
@@ -129,7 +125,7 @@ cfg = Configurator(
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag", "sf_btag_calib", "sf_ttlf_calib",
                 "sf_jet_puId", "sf_top_pt",
-                "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
+                "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
             "bycategory": {},
@@ -144,7 +140,7 @@ cfg = Configurator(
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag", "sf_btag_calib", "sf_ttlf_calib",
                               "sf_jet_puId", "sf_top_pt",
-                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale",
+                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
                 "bycategory": {}
