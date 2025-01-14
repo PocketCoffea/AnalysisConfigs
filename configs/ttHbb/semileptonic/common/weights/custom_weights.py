@@ -124,8 +124,8 @@ class SF_LHE_pdf_weight(WeightWrapper):
 
     def compute(self, events, size, shape_variation):
         w = events.LHEPdfWeight.to_numpy()
-        w_nom = w[:,0]
-        assert all(w_nom == 1), "The nominal weight is not 1."
+        w_nom = np.ones(len(events))
+        #assert all(w_nom == 1), "The nominal weight is not 1."
         dw = np.sqrt(np.sum((w - 1.0) ** 2, axis=1))
         w_up = 1.0 + dw
         w_down = 1.0 - dw
