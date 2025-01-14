@@ -180,7 +180,6 @@ cfg = Configurator(
                               "sf_btag", "sf_btag_calib",
                               "sf_jet_puId", "sf_top_pt",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
-                              "sf_lhe_pdf_weight"
                               ],
                 "bycategory": {}
             },
