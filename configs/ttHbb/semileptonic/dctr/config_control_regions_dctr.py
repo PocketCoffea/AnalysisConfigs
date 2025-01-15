@@ -60,6 +60,7 @@ samples = ["ttHTobb",
            "DATA_SingleMuon"
            ]
 samples_with_qcd = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+samples_with_pdf = [s for s in samples if s not in ["SingleTop", "VV", "DATA_SingleEle", "DATA_SingleMuon"]]
 
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
@@ -168,7 +169,9 @@ cfg = Configurator(
             "bycategory": {},
         },
         "bysample": {
-            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
+        } | {
+            s : { "inclusive": ["sf_lhe_pdf_weight"] } for s in samples_with_pdf
         },
     },
     variations = {
@@ -184,7 +187,9 @@ cfg = Configurator(
                 "bycategory": {}
             },
             "bysample": {
-                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
+            } | {
+                s : { "inclusive": ["sf_lhe_pdf_weight"] } for s in samples_with_pdf
             },
         },
         "shape": {
