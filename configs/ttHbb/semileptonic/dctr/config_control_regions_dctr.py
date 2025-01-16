@@ -59,8 +59,13 @@ samples = ["ttHTobb",
            "DATA_SingleEle",
            "DATA_SingleMuon"
            ]
-samples_with_qcd = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"]]
-samples_with_pdf = [s for s in samples if s not in ["SingleTop", "VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+samples_with_qcd_and_pdf = [s for s in samples if s not in ["SingleTop", "VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+samples_with_qcd_only = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"] if s not in samples_with_qcd_and_pdf]
+
+print("samples_with_qcd_and_pdf: ", samples_with_qcd_and_pdf)
+print("samples_with_qcd_only: ", samples_with_qcd_only)
+
+assert len(set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)) == 0, f"Samples with QCD only and QCD+PDF overlap: {set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)}"
 
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
@@ -169,9 +174,9 @@ cfg = Configurator(
             "bycategory": {},
         },
         "bysample": {
-            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
         } | {
-            s : { "inclusive": ["sf_lhe_pdf_weight"] } for s in samples_with_pdf
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
         },
     },
     variations = {
@@ -187,9 +192,9 @@ cfg = Configurator(
                 "bycategory": {}
             },
             "bysample": {
-                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
             } | {
-                s : { "inclusive": ["sf_lhe_pdf_weight"] } for s in samples_with_pdf
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
             },
         },
         "shape": {
