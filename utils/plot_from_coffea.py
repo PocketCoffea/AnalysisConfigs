@@ -8,13 +8,14 @@ import matplotlib.pyplot as plt
 hep.style.use(hep.style.CMS)
 
 path = sys.argv[1]
+trained = sys.argv[2]
 cfile = coffea.util.load(path)
 
 data_categories = [
     "4b_region",
-#    "4b_delta_Dhh_above_30",
+    "4b_delta_Dhh_above_30",
     "2b_region",
-#    "2b_delta_Dhh_above_30",
+    "2b_delta_Dhh_above_30",
 ]
 
 
@@ -43,7 +44,7 @@ print(higgs1)
 print(higgs2)
 
 for cat in data_categories:
-    for higgs, plotname in zip([higgs1, higgs2, pt_matched[0:-1]], ["Higgs1", "Higgs2", "pT jets"]):
+    for higgs, plotname in zip([higgs1, higgs2, pt_matched[0:]], ["Higgs1", "Higgs2", "pT jets"]):
         fig, ax = plt.subplots(figsize=(10, 8))
         print_cat = cat.split('_')
         print_cat = ' '.join(print_cat)
@@ -51,11 +52,19 @@ for cat in data_categories:
 
         hep.cms.label(loc=0, data=True, label="Preliminary", lumi=26.67, com=13.6)
         for higgs_axis in higgs:
-            values = higgs_axis[{"cat": cat}][{"variation": "nominal"}].values()
-            # values = [value/sum(values) for value in values]
-            edges = higgs_axis[{"cat": cat}][{"variation": "nominal"}].axes[0].edges
-            name = higgs_axis[{"cat": cat}][{"variation": "nominal"}].axes[0].name
+            if trained:
+                values = higgs_axis[{"cat": cat}].values()
+                # values = [value/sum(values) for value in values]
+                edges = higgs_axis[{"cat": cat}].axes[0].edges
+                name = higgs_axis[{"cat": cat}].axes[0].name
+            else:
+                values = higgs_axis[{"cat": cat}][{"variation": "nominal"}].values()
+                ## values = [value/sum(values) for value in values]
+                edges = higgs_axis[{"cat": cat}][{"variation": "nominal"}].axes[0].edges
+                name = higgs_axis[{"cat": cat}][{"variation": "nominal"}].axes[0].name
             print(name)
+            print(values)
+            print(edges)
             hep.histplot(
                 (values, edges),
                 stack=False,
