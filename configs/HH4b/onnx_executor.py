@@ -1,7 +1,7 @@
 from pocket_coffea.executors.executors_T3_CH_PSI import DaskExecutorFactory
 from dask.distributed import WorkerPlugin, Worker, Client
 
-from HH4b_parton_matching_config import spanet_model
+from HH4b_parton_matching_config_onnx import spanet_model
 
 
 class WorkerInferenceSessionPlugin(WorkerPlugin):
