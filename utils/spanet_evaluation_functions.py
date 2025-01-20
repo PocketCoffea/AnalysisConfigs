@@ -70,8 +70,9 @@ def get_pairing_information(session, input_name, output_name, events, max_num_je
         dtype=np.bool_,
     )
 
-    #inputs = np.stack((pt, eta, phi, btag), axis=-1)
-    inputs = np.stack((pt, eta, phi), axis=-1)
+    inputs = np.stack((pt, eta, phi, btag), axis=-1)
+    #inputs = np.stack((pt, eta, phi), axis=-1)
+    #inputs = np.stack((eta, phi, btag), axis=-1)
     inputs_complete = {input_name[0]: inputs, input_name[1]: mask}
 
     outputs = session.run(output_name, inputs_complete)

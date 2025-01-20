@@ -256,7 +256,9 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.classification:
             if self.random_pt: ## TODO implement random_pt
-                random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))+0.5)
+                #random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))+0.5) #[0.5,1.5]
+                #random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*1.4+0.3) #[0.3,1.7]
+                random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*9.9+0.1) #[0.3,1.7]
                 self.events = ak.with_field(
                         self.events,
                         random_weights,
@@ -264,42 +266,42 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                         )
                 print(self.events.random_pt_weights)
                 print(self.events.JetGood.pt)
-                self.events.JetGoodHiggs = ak.with_field(
+                self.events["JetGoodHiggs"] = ak.with_field(
                         self.events.JetGoodHiggs,
                         self.events.JetGoodHiggs.mass,
                         "mass_orig",
                         )
-                self.events.JetGoodHiggs = ak.with_field(
+                self.events["JetGoodHiggs"] = ak.with_field(
                         self.events.JetGoodHiggs,
                         self.events.JetGoodHiggs.mass*random_weights,
                         "mass",
                         )
-                self.events.JetGoodHiggs = ak.with_field(
+                self.events["JetGoodHiggs"] = ak.with_field(
                         self.events.JetGoodHiggs,
                         self.events.JetGoodHiggs.pt,
                         "pt_orig",
                         )
-                self.events.JetGoodHiggs = ak.with_field(
+                self.events["JetGoodHiggs"] = ak.with_field(
                         self.events.JetGoodHiggs,
                         self.events.JetGoodHiggs.pt*random_weights,
                         "pt",
                         )
-                self.events.JetGood = ak.with_field(
+                self.events["JetGood"] = ak.with_field(
                         self.events.JetGood,
                         self.events.JetGood.mass,
                         "mass_orig",
                         )
-                self.events.JetGood = ak.with_field(
+                self.events["JetGood"] = ak.with_field(
                         self.events.JetGood,
                         self.events.JetGood.mass*random_weights,
                         "mass",
                         )
-                self.events.JetGood = ak.with_field(
+                self.events["JetGood"] = ak.with_field(
                         self.events.JetGood,
                         self.events.JetGood.pt,
                         "pt_orig",
                         )
-                self.events.JetGood = ak.with_field(
+                self.events["JetGood"] = ak.with_field(
                         self.events.JetGood,
                         self.events.JetGood.pt*random_weights,
                         "pt",
