@@ -1,0 +1,52 @@
+{
+  "DATA_JetMET_JMENano_2022_postEE_EraE": {
+    "metadata": {
+      "das_names": "['/JetMET/Run2022E-JMENano12p5-v1/NANOAOD']",
+      "sample": "DATA_JetMET_JMENano_skimmed",
+      "year": "2022_postEE",
+      "isMC": "False",
+      "primaryDataset": "JetMET",
+      "era": "E",
+      "nevents": "13361807",
+      "size": "35775068672",
+      "skim_efficiency": "0.09615254864639405",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_29.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_30.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_31.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_32.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_33.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed//DATA_JetMET_JMENano_2022_postEE_EraE/DATA_JetMET_JMENano_2022_postEE_EraE_34.root"
+    ]
+  }
+}
