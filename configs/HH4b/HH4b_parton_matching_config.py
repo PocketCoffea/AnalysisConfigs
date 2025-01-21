@@ -20,11 +20,13 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 
-CLASSIFICATION = False
+CLASSIFICATION = True
 TIGHT_CUTS = False
+RANDOM_PT = False
 
 print("CLASSIFICATION ", CLASSIFICATION)
 print("TIGHT_CUTS ", TIGHT_CUTS)
+print("RANDOM_PT ", RANDOM_PT)
 
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir + "/params")
@@ -41,118 +43,19 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 spanet_model = (
-#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
-    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_loose_btag.onnx"
+    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_loose_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_tight_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_wide_loose_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_wide_onlylog_loose_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_01_10_loose_btag.onnx"
+#    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptnone_loose_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_wide_tight_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
 
-cfg = Configurator(
-     save_skimmed_files="root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed",
-    parameters=parameters,
-    datasets={
-        "jsons": [
-            # f"{localdir}/datasets/DATA_JetMET.json",
-            # f"{localdir}/datasets/QCD.json",
-            # f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b.json",
-            f"{localdir}/datasets/DATA_JetMET.json",
-            f"{localdir}/datasets/DATA_JetMET_skimmed.json",
-            f"{localdir}/datasets/QCD.json",
-            f"{localdir}/datasets/SPANet_classification.json",
-            f"{localdir}/datasets/signal_ggF_HH4b_local.json",
-            f"{localdir}/datasets/signal_VBF_HH4b_local.json",
-        ],
-        "filter": {
-            "samples": (
-                [
-                    # "GluGlutoHHto4B",
-                    # "QCD-4Jets",
-                    #"DATA_JetMET_JMENano",
-                    # "SPANet_classification",
-                    # "SPANet_classification_data",
-                    # "GluGlutoHHto4B_poisson",
-                    # "GluGlutoHHto4B_private",
-                    "GluGlutoHHto4B_spanet",
-                ]
-                if CLASSIFICATION
-                else ["DATA_JetMet_JMENano_skimmed"]
-                # else ["GluGlutoHHto4B_spanet"]
-                # else ["GluGlutoHHto4B"]
-            ),
-            "samples_exclude": [],
-            "year": [year],
-        },
-        "subsamples": {},
-    },
-    workflow=HH4bbQuarkMatchingProcessor,
-    workflow_options={
-        "parton_jet_min_dR": 0.4,
-        "max_num_jets": 5,
-        "which_bquark": "last",
-        "classification": CLASSIFICATION,  # HERE
-        "spanet_model": spanet_model,
-        "tight_cuts": TIGHT_CUTS,
-        "fifth_jet": "pt",
-        "random_pt": True,
-        #"dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/GluGlutoHHto4B_spanet_loose"
-#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
-#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_no_btag"
-#        "dump_columns_as_arrays_per_chunk": "/work/tharte/datasets/mass_sculpting_data/testing/arrays/"
-    },
-    skim=[
-        get_HLTsel(primaryDatasets=["JetMET"]),
-    ],
-    preselections=[
-        # lepton_veto_presel,
-        # four_jet_presel,
-        # jet_pt_presel,
-        # jet_btag_presel,
-        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
-    ],
-    categories={
-        # "baseline":[passthrough],
-        # "lepton_veto": [lepton_veto_presel],
-        # "four_jet": [four_jet_presel],
-        # "jet_pt": [jet_pt_presel],
-        # "jet_btag_lead": [jet_btag_lead_presel],
-        # "jet_pt_copy": [jet_pt_presel],
-        # "jet_btag_medium": [jet_btag_medium_presel],
-        # "jet_pt_copy2": [jet_pt_presel],
-        # "jet_btag_loose": [jet_btag_loose_presel],
-        # "full_parton_matching": [
-        #    jet_btag_medium,
-        #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
-        # ],
-        "4b_region": [hh4b_4b_region],  # HERE
-        # "4b_delta_Dhh_above_30": [hh4b_4b_region, dhh_above_30],
-        "2b_region": [hh4b_2b_region],
-        # "2b_delta_Dhh_above_30": [hh4b_2b_region, dhh_above_30],
-    },
-    weights={
-        "common": {
-            "inclusive": [
-                "genWeight",
-                "lumi",
-                "XS",
-            ],
-            "bycategory": {},
-        },
-        "bysample": {},
-    },
-    variations={
-        "weights": {
-            "common": {
-                "inclusive": [],
-                "bycategory": {},
-            },
-            "bysample": {},
-        }
-    },
-    variables={
+variables_dict = {
         # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
         # **count_hist(coll="JetGoodHiggs", bins=10, start=0, stop=10),
         # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
@@ -192,6 +95,61 @@ cfg = Configurator(
         # **parton_hists(coll="JetGoodMatched", pos=2),
         # **parton_hists(coll="JetGoodMatched", pos=3),
         # **parton_hists(coll="JetGoodMatched"),
+        }
+if CLASSIFICATION:
+    variables_dict.update({
+        "RecoHiggs1Mass": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsLeading",
+                    field="mass",
+                    bins=240,
+                    start=0,
+                    stop=240,
+                    label=r"$M_{H_1}$ SPANet",
+                )
+            ],
+
+        ),
+        "RecoHiggs1Mass_Dhh": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsLeadingRun2",
+                    field="mass",
+                    bins=240,
+                    start=0,
+                    stop=240,
+                    label=r"$M_{H_1}$ $D_{HH}$",
+                )
+            ],
+        ),
+        "RecoHiggs2Mass": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsSubLeading",
+                    field="mass",
+                    bins=240,
+                    start=0,
+                    stop=240,
+                    label=r"$M_{H_2}$ SPANet",
+                )
+            ],
+        ),
+        "RecoHiggs2Mass_Dhh": HistConf(
+            [
+                Axis(
+                    coll=f"HiggsSubLeadingRun2",
+                    field="mass",
+                    bins=240,
+                    start=0,
+                    stop=240,
+                    label=r"$M_{H_2}$ $D_{HH}$",
+                )
+            ],
+        )
+    })
+if RANDOM_PT:
+    variables_dict.update({
         "Random_pt_Factor": HistConf(
             [
                 Axis(
@@ -204,56 +162,113 @@ cfg = Configurator(
                 )
             ],
         ),
-        "RecoHiggs1Mass": HistConf(
-            [
-                Axis(
-                    coll=f"HiggsLeading",
-                    field="mass",
-                    bins=200,
-                    start=0,
-                    stop=200,
-                    label=r"$M_{H_1}$ SPANet",
-                )
-            ],
+    })
 
-        ),
-        # "RecoHiggs1Mass_Dhh": HistConf(
-        #     [
-        #         Axis(
-        #             coll=f"HiggsLeadingRun2",
-        #             field="mass",
-        #             bins=140,
-        #             start=60,
-        #             stop=200,
-        #             label=r"$M_{H_1}$ $D_{HH}$",
-        #         )
-        #     ],
-        # ),
-        "RecoHiggs2Mass": HistConf(
-            [
-                Axis(
-                    coll=f"HiggsSubLeading",
-                    field="mass",
-                    bins=200,
-                    start=0,
-                    stop=200,
-                    label=r"$M_{H_2}$ SPANet",
-                )
-            ],
-        ),
-        # "RecoHiggs2Mass_Dhh": HistConf(
-        #     [
-        #         Axis(
-        #             coll=f"HiggsSubLeadingRun2",
-        #             field="mass",
-        #             bins=140,
-        #             start=60,
-        #             stop=200,
-        #             label=r"$M_{H_2}$ $D_{HH}$",
-        #         )
-        #     ],
-        # )
+
+cfg = Configurator(
+    # save_skimmed_files="root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_skimmed",
+    parameters=parameters,
+    datasets={
+        "jsons": [
+            # f"{localdir}/datasets/DATA_JetMET.json",
+            # f"{localdir}/datasets/QCD.json",
+            # f"{localdir}/datasets/SPANet_classification.json",
+            f"{localdir}/datasets/signal_ggF_HH4b.json",
+            f"{localdir}/datasets/DATA_JetMET.json",
+            f"{localdir}/datasets/DATA_JetMET_skimmed.json",
+            f"{localdir}/datasets/QCD.json",
+            f"{localdir}/datasets/SPANet_classification.json",
+            f"{localdir}/datasets/signal_ggF_HH4b_local.json",
+            f"{localdir}/datasets/signal_VBF_HH4b_local.json",
+        ],
+        "filter": {
+            "samples": (
+                [
+                    # "GluGlutoHHto4B",
+                    # "QCD-4Jets",
+                    #"DATA_JetMET_JMENano",
+                    "DATA_JetMET_JMENano_skimmed",
+                    # "SPANet_classification",
+                    # "SPANet_classification_data",
+                    # "GluGlutoHHto4B_poisson",
+                    # "GluGlutoHHto4B_private",
+                    #"GluGlutoHHto4B_spanet",
+                ]
+                if CLASSIFICATION
+                # else ["DATA_JetMET_JMENano"]
+                else ["GluGlutoHHto4B_spanet"]
+                # else ["GluGlutoHHto4B"]
+            ),
+            "samples_exclude": [],
+            "year": [year],
+        },
+        "subsamples": {},
     },
+    workflow=HH4bbQuarkMatchingProcessor,
+    workflow_options={
+        "parton_jet_min_dR": 0.4,
+        "max_num_jets": 5,
+        "which_bquark": "last",
+        "classification": CLASSIFICATION,  # HERE
+        "spanet_model": spanet_model,
+        "tight_cuts": TIGHT_CUTS,
+        "fifth_jet": "pt",
+        "random_pt": RANDOM_PT,
+        #"dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/GluGlutoHHto4B_spanet_loose"
+#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
+#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_no_btag"
+#        "dump_columns_as_arrays_per_chunk": "/work/tharte/datasets/mass_sculpting_data/testing/arrays/"
+    },
+    skim=[
+        get_HLTsel(primaryDatasets=["JetMET"]),
+    ],
+    preselections=[
+        # lepton_veto_presel,
+        # four_jet_presel,
+        # jet_pt_presel,
+        # jet_btag_presel,
+        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
+    ],
+    categories={
+        # "baseline":[passthrough],
+        # "lepton_veto": [lepton_veto_presel],
+        # "four_jet": [four_jet_presel],
+        # "jet_pt": [jet_pt_presel],
+        # "jet_btag_lead": [jet_btag_lead_presel],
+        # "jet_pt_copy": [jet_pt_presel],
+        # "jet_btag_medium": [jet_btag_medium_presel],
+        # "jet_pt_copy2": [jet_pt_presel],
+        # "jet_btag_loose": [jet_btag_loose_presel],
+        # "full_parton_matching": [
+        #    jet_btag_medium,
+        #     get_nObj_eq(4, coll="bQuarkHiggsMatched"),
+        # ],
+        "4b_region": [hh4b_4b_region],  # HERE
+        "4b_delta_Dhh_above_30": [hh4b_4b_region, dhh_above_30],
+        "2b_region": [hh4b_2b_region],
+        "2b_delta_Dhh_above_30": [hh4b_2b_region, dhh_above_30],
+    },
+    weights={
+        "common": {
+            "inclusive": [
+                "genWeight",
+                "lumi",
+                "XS",
+            ],
+            "bycategory": {},
+        },
+        "bysample": {},
+    },
+    variations={
+        "weights": {
+            "common": {
+                "inclusive": [],
+                "bycategory": {},
+            },
+            "bysample": {},
+        }
+    },
+    variables=variables_dict
     columns={
         "common": {
             "inclusive": (
@@ -327,13 +342,13 @@ cfg = Configurator(
                         [
                             "provenance",
                             "pt",
-                            "pt_orig",
+                            #"pt_orig",
                             "eta",
                             "phi",
                             # "cosPhi",
                             # "sinPhi",
                             "mass",
-                            "mass_orig",
+                            #"mass_orig",
                             "btagPNetB",
                             # "hadronFlavour",
                         ],
@@ -343,13 +358,13 @@ cfg = Configurator(
                         [
                             "provenance",
                             "pt",
-                            "pt_orig",
+                            #"pt_orig",
                             "eta",
                             "phi",
                             # "cosPhi",
                             # "sinPhi",
                             "mass",
-                            "mass_orig",
+                            #"mass_orig",
                             "btagPNetB",
                             # "hadronFlavour",
                         ],
