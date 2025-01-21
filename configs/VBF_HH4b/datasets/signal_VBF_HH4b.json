@@ -45,7 +45,7 @@
             "sample": "VBF_HHto4B",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.001906",
+            "xsec": "0.000641",
             "part": "CV_1_C2V_1_C3_1",
             "nevents": "3460727",
             "size": "7245324150"

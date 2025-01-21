@@ -329,10 +329,8 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
             try:
                 worker = get_worker()
-                # print("found worker", worker)
             except ValueError:
                 worker = None
-                # print("     >>>>>>>>>>   NOT found worker", worker)
 
             if worker is None:
                 import onnxruntime as ort
@@ -341,27 +339,21 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 sess_options.graph_optimization_level = (
                     ort.GraphOptimizationLevel.ORT_ENABLE_ALL
                 )
-                model_session = ort.InferenceSession(
+                model_session_spanet = ort.InferenceSession(
                     self.spanet_model,
                     sess_options=sess_options,
                     providers=["CPUExecutionProvider"],
                 )
-                # input_name = [input.name for input in model_session.get_inputs()]
-                # output_name = [output.name for output in model_session.get_outputs()]
-                # print("     >>>>>>>>>>   initialize new worker", worker)
-            else:
-                model_session = worker.data["model_session"]
-                # input_name = worker.data['input_name']
-                # output_name = worker.data['output_name']
-                # print("get info from old worker", worker)
 
-            input_name = [input.name for input in model_session.get_inputs()]
-            output_name = [output.name for output in model_session.get_outputs()]
-            # print(model_session)
+            else:
+                model_session_spanet = worker.data["model_session_spanet"]
+
+            input_name_spanet = [input.name for input in model_session_spanet.get_inputs()]
+            output_name_spanet = [output.name for output in model_session_spanet.get_outputs()]
 
             # compute the pairing information using the spanet model
             outputs = get_pairing_information(
-                model_session, input_name, output_name, self.events, self.max_num_jets
+                model_session_spanet, input_name_spanet, output_name_spanet, self.events, self.max_num_jets
             )
 
             (

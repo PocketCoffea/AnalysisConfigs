@@ -1,9 +1,9 @@
-scaleout: 5
+scaleout: 10
 cores-per-worker: 1
-mem-per-worker: "15GB"
+mem-per-worker: "2GB"
 disk-per-worker: "1GB"
-queue: "standard"
-walltime: "02:00:00"
+queue: "short"
+walltime: "00:45:00"
 chunk: 100000
 ignore-grid-certificate: true
 voms-proxy: null

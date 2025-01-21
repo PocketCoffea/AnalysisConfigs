@@ -1659,7 +1659,7 @@
             "sample": "SPANet_classification",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "GluGlutoHHto4B_kl-1p00",
             "nevents": "7391383",
             "size": "16401238988"
@@ -1894,7 +1894,7 @@
             "sample": "SPANet_classification_data",
             "year": "2022_postEE",
             "isMC": "True",
-            "xsec": "0.02964",
+            "xsec": "0.01167",
             "part": "GluGlutoHHto4B_kl-1p00",
             "nevents": "7391383",
             "size": "16401238988"

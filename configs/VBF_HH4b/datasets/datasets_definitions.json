@@ -63,7 +63,7 @@
     "VBFHHto4B": {
         "sample": "VBF_HHto4B",
         "json_output": "datasets/signal_VBF_HH4b.json",
-        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-5p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8 is 0.001906, while the new one is taken from https://icms.cern.ch/tools-api/restplus/relay/piggyback/notes/AN/2023/184/files/13/download",
         "files": [
             {
                 "das_names": [
@@ -72,11 +72,32 @@
                 "metadata": {
                     "year": "2022_postEE",
                     "isMC": true,
-                    "xsec": 0.001906,
+                    "xsec": 0.0006410,
                     "part": "CV_1_C2V_1_C3_1"
                 },
                 "das_parents_names": [
                     "/VBFHHto4B_CV_1_C2V_1_C3_1_TuneCP5_13p6TeV_madgraph-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v3/MINIAODSIM"
+                ]
+            }
+        ]
+    },
+    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00": {
+        "sample": "GluGlutoHHto4B",
+        "json_output": "datasets/signal_ggF_HH4b.json",
+        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8 is 0.02964, while the new one is taken from https://icms.cern.ch/tools-api/restplus/relay/piggyback/notes/AN/2023/184/files/13/download",
+        "files": [
+            {
+                "das_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
+                ],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 0.01167,
+                    "part": ""
+                },
+                "das_parents_names": [
+                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
                 ]
             }
         ]
@@ -224,27 +245,6 @@
                 },
                 "das_parents_names": [
                     "/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v2/MINIAODSIM"
-                ]
-            }
-        ]
-    },
-    "GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00": {
-        "sample": "GluGlutoHHto4B",
-        "json_output": "datasets/signal_ggF_HH4b.json",
-        "description": "Cross-section taken from https://xsdb-temp.app.cern.ch/xsdb/?columns=67108863&currentPage=0&pageSize=10&searchQuery=process_name%3DGluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8",
-        "files": [
-            {
-                "das_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v1/NANOAODSIM"
-                ],
-                "metadata": {
-                    "year": "2022_postEE",
-                    "isMC": true,
-                    "xsec": 0.02964,
-                    "part": ""
-                },
-                "das_parents_names": [
-                    "/GluGlutoHHto4B_kl-1p00_kt-1p00_c2-0p00_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22EEMiniAODv4-130X_mcRun3_2022_realistic_postEE_v6-v1/"
                 ]
             }
         ]

@@ -37,6 +37,24 @@ hh4b_4b_region = Cut(
     function=cuts_f.hh4b_4b_cuts,
 )
 
+semiTight_leadingPt = Cut(
+    name="semiTight_leadingPt",
+    params={
+        "mjj": 400,
+        "deltaEta_jj": 3.5,
+    },
+    function=cuts_f.semiTight_leadingPt,
+    )
+
+semiTight_leadingMjj = Cut(
+    name="semiTight_leadingMjj",
+    params={
+        "mjj": 400,
+        "deltaEta_jj": 3.5,
+    },
+    function=cuts_f.semiTight_leadingMjj,
+    )
+
 VBF_region = Cut(
     name="VBF",
     params={
