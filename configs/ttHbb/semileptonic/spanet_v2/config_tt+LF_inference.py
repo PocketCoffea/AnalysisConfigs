@@ -7,8 +7,8 @@ from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import configs.ttHbb.semileptonic.common.workflows.workflow_spanet_v2 as workflow
-from configs.ttHbb.semileptonic.common.workflows.workflow_spanet_v2 import SpanetInferenceProcessor
+import configs.ttHbb.semileptonic.common.workflows.workflow_spanet as workflow
+from configs.ttHbb.semileptonic.common.workflows.workflow_spanet import SpanetInferenceProcessor
 
 import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts

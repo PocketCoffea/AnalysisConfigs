@@ -111,3 +111,27 @@ class SF_njet_reweighting(WeightWrapper):
             name = self.name,
             nominal = out
         )
+
+class SF_LHE_pdf_weight(WeightWrapper):
+    '''Weight corresponding to the LHEPdfWeight in the LHE event.
+    The up and down variations are computed as the sum in quadrature of the differences
+    the alternative weights with respect to the nominal weight.'''
+    name = "sf_lhe_pdf_weight"
+    has_variations = True
+
+    def __init__(self, params, metadata):
+        super().__init__(params, metadata)
+
+    def compute(self, events, size, shape_variation):
+        w = events.LHEPdfWeight.to_numpy()
+        w_nom = np.ones(len(events))
+        #assert all(w_nom == 1), "The nominal weight is not 1."
+        dw = np.sqrt(np.sum((w - 1.0) ** 2, axis=1))
+        w_up = 1.0 + dw
+        w_down = 1.0 - dw
+        return WeightData(
+            name = self.name,
+            nominal = w_nom,
+            up = w_up,
+            down = w_down
+        )
