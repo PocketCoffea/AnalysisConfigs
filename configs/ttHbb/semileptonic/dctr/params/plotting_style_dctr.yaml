@@ -71,6 +71,6 @@ plotting_style:
   blind_hists:
     categories: [semilep, SR, 4jSR, 5jSR, '>=6jSR']
     histograms:
-      spanet_tthbb_transformed: [0.6, 1.0]
-      spanet_tthbb: [0.6, 1.0]
-      spanet_ttlf: [0.0, 0.2]
+      spanet_tthbb_transformed: [0.75, 1.0]
+      spanet_tthbb: [0.75, 1.0]
+      spanet_ttlf: [0.0, 0.3]

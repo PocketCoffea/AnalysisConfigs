@@ -52,4 +52,4 @@ plotting_style:
     histograms:
       spanet_tthbb_transformed: [0.6, 1.0]
       spanet_tthbb: [0.6, 1.0]
-      spanet_ttlf: [0.0, 0.2]
+      spanet_ttlf: [0.0, 0.3]
