@@ -30,6 +30,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.classification = self.workflow_options["classification"]
         self.spanet_model = self.workflow_options["spanet_model"]
         self.random_pt = self.workflow_options["random_pt"]
+        self.rand_type = self.workflow_options["rand_type"]
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -256,9 +257,14 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.classification:
             if self.random_pt: ## TODO implement random_pt
-                #random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))+0.5) #[0.5,1.5]
-                #random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*1.4+0.3) #[0.3,1.7]
-                random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*9.9+0.1) #[0.3,1.7]
+                if self.rand_type == 0.5:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))+0.5) #[0.5,1.5]
+                elif self.rand_type == 0.3:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*1.4+0.3) #[0.3,1.7]
+                elif self.rand_type == 0.1:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*9.9+0.1) #[0.3,1.7]
+                else:
+                    raise ValueError(f"Invalid input. self.rand_type {self.rand_type} not known.")
                 self.events = ak.with_field(
                         self.events,
                         random_weights,
