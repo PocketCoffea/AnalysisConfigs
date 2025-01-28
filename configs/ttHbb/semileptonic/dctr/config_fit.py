@@ -18,7 +18,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_btag_withcalib_complete
 from params.axis_settings import axis_settings
 
 import os
@@ -29,6 +29,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 tthbb_L = 0.4
 tthbb_M = 0.75
 ttlf_wp = 0.3
+ttcc_wp = 0.5
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -141,11 +142,12 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
+        "CR_ttcc": [get_ttlf_max(ttlf_wp), get_CR(0, tthbb_L), get_ttcc_min(ttcc_wp)],
         "CR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_btag_withcalib_complete],
     weights= {
         "common": {
             "inclusive": [
@@ -153,7 +155,7 @@ cfg = Configurator(
                 "pileup",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                "sf_btag", "sf_btag_calib",
+                "sf_btag_withcalib_complete",
                 "sf_jet_puId", "sf_top_pt",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
@@ -171,7 +173,7 @@ cfg = Configurator(
                 "inclusive": ["pileup",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                              "sf_btag", "sf_btag_calib",
+                              "sf_btag_withcalib_complete",
                               "sf_jet_puId", "sf_top_pt",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
@@ -214,6 +216,12 @@ cfg = Configurator(
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=13, start=0.74, stop=1, label="tthbb SPANet transformed score")],
         ),
+        "spanet_tthbb_transformed_binning0p00625" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=40, start=0.75, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p0125" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=20, start=0.75, stop=1, label="tthbb SPANet transformed score")],
+        ),
         "spanet_tthbb_transformed_binning0p025" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=10, start=0.75, stop=1, label="tthbb SPANet transformed score")],
         ),
@@ -224,10 +232,10 @@ cfg = Configurator(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=5, start=0.75, stop=1, label="tthbb SPANet transformed score")],
         ),
         "dctr_score" : HistConf(
-            [Axis(coll="dctr_output", field="score", bins=20, start=0.4, stop=0.6, label="DCTR score")],
+            [Axis(coll="dctr_output", field="score", bins=10, start=0.45, stop=0.55, label="DCTR score")],
         ),
         "dctr_weight" : HistConf(
-            [Axis(coll="dctr_output", field="weight", bins=60, start=0.7, stop=1.3, label="DCTR weight")],
+            [Axis(coll="dctr_output", field="weight", bins=40, start=0.8, stop=1.2, label="DCTR weight")],
         ),
         "dctr_index" : HistConf(
             [Axis(coll="dctr_output", field="index", bins=12, start=1, stop=13, label="DCTR index")],
