@@ -15,8 +15,6 @@ dctr_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/span
 group-samples:
   ttHTobb:
     - "ttHTobb"
-  SingleTop:
-    - "SingleTop"
   WJets:
     - "WJetsToLNu_HT"
   ZJets:
