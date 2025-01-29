@@ -18,7 +18,8 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_btag_withcalib_complete
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
+from configs.ttHbb.semileptonic.common.weights.custom_btag_calib import SF_btag_withcalib_complete
 from params.axis_settings import axis_settings
 
 import os
@@ -48,7 +49,6 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   update=True)
 
 samples = ["ttHTobb",
-           "ttHTobb_ttToSemiLep",
            "TTbbSemiLeptonic",
            "TTToSemiLeptonic",
            "TTTo2L2Nu",
