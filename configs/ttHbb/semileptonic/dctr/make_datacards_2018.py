@@ -41,6 +41,7 @@ samples_ttbb = [
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M',
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'
 ]
+
 for sample in samples_ttbb:
     process_name = "ttbb" + sample.split("tt+B")[1].replace("_DCTR", "").replace(">=", "ge")
     processes.append(Process(name=process_name, samples=[sample], years=years, is_signal=False))
@@ -58,9 +59,9 @@ common_systematics = [
     "sf_ele_trigger_era", "sf_ele_trigger_ht",
     "sf_ele_trigger_pileup", "sf_ele_trigger_stat",
     "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-    "sf_btag_cferr1", "sf_btag_cferr2",
-    "sf_btag_hf", "sf_btag_hfstats1", "sf_btag_hfstats2",
-    "sf_btag_lf", "sf_btag_lfstats1", "sf_btag_lfstats2",
+    "sf_btag_withcalib_complete_cferr1", "sf_btag_withcalib_complete_cferr2",
+    "sf_btag_withcalib_complete_hf", "sf_btag_withcalib_complete_hfstats1", "sf_btag_withcalib_complete_hfstats2",
+    "sf_btag_withcalib_complete_lf", "sf_btag_withcalib_complete_lfstats1", "sf_btag_withcalib_complete_lfstats2",
     "sf_jet_puId",
     "JES_Total_AK4PFchs", "JER_AK4PFchs"
 ]
