@@ -8,7 +8,6 @@ import hist
 parser = argparse.ArgumentParser(description="Rescale nuisances")
 parser.add_argument("-i", "--input", help="Coffea input file with histograms", required=True)
 parser.add_argument("-o", "--output", help="Coffea output file with rescaled nuisances", default=None, required=False)
-parser.add_argument("-n", "--nuisances", nargs="+", help="Nuisances to rescale", default=None, required=False)
 parser.add_argument("-v", "--verbose", help="Print debug information", action="store_true")
 args = parser.parse_args()
 
@@ -27,9 +26,41 @@ samples_to_rescale = [
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_H',
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_L',
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M',
-    'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'
+    'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H',
+    'TTToSemiLeptonic__TTToSemiLeptonic_tt+LF',
+    'TTToSemiLeptonic__TTToSemiLeptonic_tt+C'
 ]
 
+nuisances = [
+    'JER_AK4PFchs',
+    'JES_Total_AK4PFchs',
+    'pileup',
+    'sf_jet_puId',
+    'sf_ele_id',
+    'sf_ele_reco',
+    'sf_ele_trigger_era',
+    'sf_ele_trigger_ht',
+    'sf_ele_trigger_pileup',
+    'sf_ele_trigger_stat',
+    'sf_mu_id',
+    'sf_mu_iso',
+    'sf_mu_trigger',
+    'sf_btag_withcalib_complete_cferr1',
+    'sf_btag_withcalib_complete_cferr2',
+    'sf_btag_withcalib_complete_hf',
+    'sf_btag_withcalib_complete_hfstats1',
+    'sf_btag_withcalib_complete_hfstats2',
+    'sf_btag_withcalib_complete_lf',
+    'sf_btag_withcalib_complete_lfstats1',
+    'sf_btag_withcalib_complete_lfstats2',
+    'sf_lhe_pdf_weight',
+    'sf_partonshower_fsr',
+    'sf_partonshower_isr',
+    'sf_qcd_factor_scale',
+    'sf_qcd_renorm_scale'
+]
+
+#categories_analysis = ["CR", "CR_ttlf", "CR_ttcc", "SR"]
 categories_analysis = ["CR", "CR_ttlf", "SR"]
 df = load(args.input)
 years = list(df["datasets_metadata"]["by_datataking_period"].keys())
@@ -42,13 +73,13 @@ year = "2018"
 rescaling_factor = defaultdict(dict)
 for year in years:
     rescaling_factor[year] = defaultdict(dict)
-    for nuisance in args.nuisances:
+    for nuisance in nuisances:
         for sample in samples_to_rescale:
             datasets = df["datasets_metadata"]["by_datataking_period"][year][sample]
             for dataset in datasets:
                 h = histo[sample][dataset]
                 axis_cat = h.axes[0]
-                for systematic in args.nuisances:
+                for systematic in nuisances:
                     for shift in ["Up", "Down"]:
                         variation = systematic + shift
                         # Rescale the varied shape such that the integral of the nominal shape is preserved
