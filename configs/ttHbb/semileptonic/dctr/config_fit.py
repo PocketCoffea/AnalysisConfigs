@@ -19,7 +19,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
 from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
-from configs.ttHbb.semileptonic.common.weights.custom_btag_calib import SF_btag_withcalib_complete
+from configs.ttHbb.semileptonic.common.weights.custom_btag_calib_total import SF_btag_withcalib_complete_ttsplit
 from params.axis_settings import axis_settings
 
 import os
@@ -30,7 +30,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 tthbb_L = 0.4
 tthbb_M = 0.75
 ttlf_wp = 0.3
-ttcc_wp = 0.5
+ttcc_wp = 0.65
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -142,6 +142,7 @@ cfg = Configurator(
     categories = {
         "semilep": [passthrough],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
+        "CR_ttlf_0p60": [get_ttlf_min(0.6)],
         "CR_ttcc": [get_ttlf_max(ttlf_wp), get_CR(0, tthbb_L), get_ttcc_min(ttcc_wp)],
         "CR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M)],
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
@@ -155,7 +156,7 @@ cfg = Configurator(
                 "pileup",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                "sf_btag_withcalib_complete",
+                "sf_btag_withcalib_complete_ttsplit",
                 "sf_jet_puId", "sf_top_pt",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
