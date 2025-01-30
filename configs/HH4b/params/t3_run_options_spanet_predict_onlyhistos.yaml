@@ -1,7 +1,9 @@
-scaleout: 1
+scaleout: 5
 cores-per-worker: 1
-mem-per-worker: "100GB"
+mem-per-worker: "15GB"
 disk-per-worker: "1GB"
 queue: "standard"
 walltime: "12:00:00"
-chunksize: 400000
+adaptive: false
+chunk: 400000
+retries: 3

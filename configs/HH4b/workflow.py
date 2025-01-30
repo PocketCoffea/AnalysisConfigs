@@ -15,6 +15,7 @@ from utils.basic_functions import add_fields
 from utils.reconstruct_higgs_candidates import (
     reconstruct_higgs_from_provenance,
     reconstruct_higgs_from_idx,
+    run2_matching_algorithm,
 )
 
 
@@ -28,6 +29,8 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.tight_cuts = self.workflow_options["tight_cuts"]
         self.classification = self.workflow_options["classification"]
         self.spanet_model = self.workflow_options["spanet_model"]
+        self.random_pt = self.workflow_options["random_pt"]
+        self.rand_type = self.workflow_options["rand_type"]
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -71,13 +74,15 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
         # Trying to reshuffle jets 4 and above by pt instead of b-tag score
         if self.fifth_jet == "pt":
-            self.events["JetGoodNoHiggs"] = self.events["JetGood"][:, 4:]
-            self.events["JetGoodNoHiggsPt"] = self.events.JetGoodNoHiggs[
-                ak.argsort(self.events.JetGoodNoHiggs.pt, axis=1, ascending=False)
+            jets5plus = self.events["JetGood"][:, 4:]
+            jets5plus_pt = jets5plus[
+                ak.argsort(jets5plus.pt, axis=1, ascending=False)
             ]
             self.events["JetGood"] = ak.concatenate(
-                (self.events["JetGoodHiggs"], self.events["JetGoodNoHiggsPt"]), axis=1
+                (self.events["JetGoodHiggs"], jets5plus_pt), axis=1
             )
+            del jets5plus
+            del jets5plus_pt
 
     def get_jet_higgs_provenance(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
@@ -229,6 +234,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
             "pdgId",
         )
 
+
     def dummy_provenance(self):
         self.events["JetGoodHiggs"] = ak.with_field(
             self.events.JetGoodHiggs,
@@ -250,6 +256,65 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.classification:
+            if self.random_pt: ## TODO implement random_pt
+                if self.rand_type == 0.5:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))+0.5) #[0.5,1.5]
+                elif self.rand_type == 0.3:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*1.4+0.3) #[0.3,1.7]
+                elif self.rand_type == 0.1:
+                    random_weights = ak.Array(np.random.rand((len(self.events["nJetGood"])))*9.9+0.1) #[0.3,1.7]
+                else:
+                    raise ValueError(f"Invalid input. self.rand_type {self.rand_type} not known.")
+                self.events = ak.with_field(
+                        self.events,
+                        random_weights,
+                        "random_pt_weights",
+                        )
+                print(self.events.random_pt_weights)
+                print(self.events.JetGood.pt)
+                self.events["JetGoodHiggs"] = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.mass,
+                        "mass_orig",
+                        )
+                self.events["JetGoodHiggs"] = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.mass*random_weights,
+                        "mass",
+                        )
+                self.events["JetGoodHiggs"] = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.pt,
+                        "pt_orig",
+                        )
+                self.events["JetGoodHiggs"] = ak.with_field(
+                        self.events.JetGoodHiggs,
+                        self.events.JetGoodHiggs.pt*random_weights,
+                        "pt",
+                        )
+                self.events["JetGood"] = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.mass,
+                        "mass_orig",
+                        )
+                self.events["JetGood"] = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.mass*random_weights,
+                        "mass",
+                        )
+                self.events["JetGood"] = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.pt,
+                        "pt_orig",
+                        )
+                self.events["JetGood"] = ak.with_field(
+                        self.events.JetGood,
+                        self.events.JetGood.pt*random_weights,
+                        "pt",
+                        )
+                print(self.events.JetGood.pt)
+
+
             self.get_jet_higgs_provenance(which_bquark=self.which_bquark)
             # NOTE:  ak.num counts even the None values, while ak.count counts only the non-None values
 
@@ -263,7 +328,7 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events["HiggsLeading"],
                 self.events["HiggsSubLeading"],
                 self.events["JetGoodFromHiggsOrdered"],
-            ) = reconstruct_higgs_from_provenance(self.events.JetGoodHiggsMatched)
+            ) = reconstruct_higgs_from_provenance(self.events.JetGoodMatched)
 
         elif self.classification:
             self.dummy_provenance()
@@ -344,6 +409,16 @@ class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
+            (
+                self.events["delta_dhh"],
+                self.events["HiggsLeadingRun2"],
+                self.events["HiggsSubLeadingRun2"],
+                self.events["JetGoodFromHiggsOrderedRun2"],
+            ) = run2_matching_algorithm(self.events["JetGoodHiggs"])
+            
+            print(self.events["delta_dhh"])
+            print(self.events["HiggsLeadingRun2"].mass)
+            print(self.events["HiggsSubLeadingRun2"].mass)
             # Angular separation (∆R) between b jets for each H candidate
             self.events["HiggsLeading"] = ak.with_field(
                 self.events.HiggsLeading,
