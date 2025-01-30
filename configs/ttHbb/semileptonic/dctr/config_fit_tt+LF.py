@@ -45,7 +45,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/ttlf_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
-                                                  f"{localdir}/params/ml_models_T3_CH_PSI.yaml",
+                                                  f"{localdir}/params/ml_models_T3_CH_PSI_work.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
 
@@ -105,7 +105,7 @@ cfg = Configurator(
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete_ttsplit],
     weights= {
         "common": {
             "inclusive": [
@@ -128,7 +128,7 @@ cfg = Configurator(
                 "inclusive": ["pileup",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                              "sf_btag_withcalib_complete", "sf_ttlf_calib",
+                              "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
                               "sf_jet_puId", "sf_top_pt",
                               "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
