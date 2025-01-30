@@ -1,11 +1,12 @@
 import numpy as np
 import awkward as ak
 import correctionlib
-
+from custom_cut_functions import eq_genTtbarId_100
+from collections import defaultdict
 from pocket_coffea.lib.weights import WeightWrapper, WeightLambda, WeightData, WeightDataMultiVariation
 
 
-def sf_btag_withcalibration(params, sample, jets, year, njets, jetsHt, variations=["central"]):
+def sf_btag_withcalibration_ttsplit(events, params, sample, jets, year, njets, jetsHt, variations=["central"]):
     '''
     DeepJet (or other taggers) AK4 btagging SF.
     See https://cms-nanoaod-integration.web.cern.ch/commonJSONSFs/summaries/BTV_2018_UL_btagging.html
@@ -25,10 +26,19 @@ def sf_btag_withcalibration(params, sample, jets, year, njets, jetsHt, variation
     cset = correctionlib.CorrectionSet.from_file(btagSF.file)
     corr = cset[btagSF.name]
 
-    cset_calib = correctionlib.CorrectionSet.from_file(
-        params.btagSF_calibration[year]["file"]
-    )
-    corr_calib = cset_calib[params.btagSF_calibration[year]["name"]]
+    ttbar_sample = False
+    if sample in ["TTbbSemiLeptonic", "TTToSemiLeptonic"]:
+        ttbar_sample = True
+        cset_calib = correctionlib.CorrectionSet.from_file(
+            params.btagSF_calibration_ttsplit[year]["file"]
+        )
+        ## CAREFUL: This is the calibration file specific for the ttbar split
+        corr_calib = cset_calib[params.btagSF_calibration_ttsplit[year]["name"]]
+    else:
+        cset_calib = correctionlib.CorrectionSet.from_file(
+            params.btagSF_calibration[year]["file"]
+        )
+        corr_calib = cset_calib[params.btagSF_calibration[year]["name"]]
 
     flavour = ak.to_numpy(ak.flatten(jets.hadronFlavour))
     abseta = np.abs(ak.to_numpy(ak.flatten(jets.eta)))
@@ -38,6 +48,7 @@ def sf_btag_withcalibration(params, sample, jets, year, njets, jetsHt, variation
     jetsHt = ak.to_numpy(jetsHt)
 
     central_SF_byjet = corr.evaluate("central", flavour, abseta, pt, discr)
+
 
     def _get_sf_variation_with_mask(variation, mask):
         index = (np.indices(discr.shape)).flatten()[mask]
@@ -95,26 +106,63 @@ def sf_btag_withcalibration(params, sample, jets, year, njets, jetsHt, variation
                 ]
     # now multiplying by the calibration
     output_final = {}
-    for var, sf in output.items():
-        if var =="central":
-            output_final[var] = [sf[0]*corr_calib.evaluate(sample,
+
+    if ttbar_sample:
+        # need to split events in ttbar parts
+        lf_mask = eq_genTtbarId_100(events, params={"genTtbarId": [0]}, year=year, sample=sample)
+        cc_mask = eq_genTtbarId_100(events, params={"genTtbarId": [41, 42, 43, 44, 45, 46]}, year=year, sample=sample)
+        bb_mask = eq_genTtbarId_100(events, params={"genTtbarId": [51, 52, 53, 54, 55, 56]}, year=year, sample=sample)
+
+        output_by_flavour = defaultdict(dict)
+        subsamples = ["tt+LF", "tt+C", "tt+B"]
+
+        for var, sf in output.items():
+            if var =="central":
+                for subsample in subsamples:
+                    output_by_flavour[subsample][var] = [sf[0]*corr_calib.evaluate(f"{sample}__{sample}_{subsample}",
+                                                                "nominal",
+                                                                njets, jetsHt)]
+
+            else:
+                for subsample in subsamples:
+                    output_by_flavour[subsample][var] = [
+                        sf[0], #nominal
+                        sf[1] * corr_calib.evaluate(f"{sample}__{sample}_{subsample}", f"sf_btag_{var}Up",njets, jetsHt), #up
+                        sf[2] * corr_calib.evaluate(f"{sample}__{sample}_{subsample}", f"sf_btag_{var}Down", njets, jetsHt) #down
+                    ]
+
+        # Now using the maskes
+        for var in output:
+            if var == "central":
+                output_final[var] = [lf_mask*output_by_flavour["tt+LF"][var][0] + 
+                                     cc_mask*output_by_flavour["tt+C"][var][0] + 
+                                     bb_mask*output_by_flavour["tt+B"][var][0]]
+
+            else:
+                output_final[var] = [
+                    sf[0], #nominal
+                    lf_mask*output_by_flavour["tt+LF"][var][1] + cc_mask*output_by_flavour["tt+C"][var][1] + bb_mask*output_by_flavour["tt+B"][var][1],
+                    lf_mask*output_by_flavour["tt+LF"][var][2] + cc_mask*output_by_flavour["tt+C"][var][2] + bb_mask*output_by_flavour["tt+B"][var][2]
+                ]
+    else:
+        for var, sf in output.items():
+            if var =="central":
+                output_final[var] = [sf[0]*corr_calib.evaluate(sample,
                                                           "nominal",
                                                           njets, jetsHt)]
-        else:
-            output_final[var] = [
-                sf[0], #nominal
-                sf[1] * corr_calib.evaluate(sample, f"sf_btag_{var}Up",njets, jetsHt), #up
-                sf[2] * corr_calib.evaluate(sample, f"sf_btag_{var}Down", njets, jetsHt) #down
-            ]
+            else:
+                output_final[var] = [
+                    sf[0], #nominal
+                    sf[1] * corr_calib.evaluate(sample, f"sf_btag_{var}Up",njets, jetsHt), #up
+                    sf[2] * corr_calib.evaluate(sample, f"sf_btag_{var}Down", njets, jetsHt) #down
+                ]
 
     return output_final
 
+###############
 
-
-########################
-
-class SF_btag_withcalib_complete(WeightWrapper):
-    name = "sf_btag_withcalib_complete"
+class SF_btag_withcalib_complete_ttsplit(WeightWrapper):
+    name = "sf_btag_withcalib_complete_ttsplit"
     has_variations = True
 
     def __init__(self, params, metadata):
@@ -127,7 +175,7 @@ class SF_btag_withcalib_complete(WeightWrapper):
         jetsHt = ak.sum(events[self.jet_coll].pt, axis=1)
         
         if shape_variation == "nominal":
-            out = sf_btag_withcalibration(self._params,
+            out = sf_btag_withcalibration_ttsplit(events, self._params,
                           sample=self._metadata["sample"], 
                           jets=events[self.jet_coll],
                           year=self._metadata["year"],
@@ -146,7 +194,7 @@ class SF_btag_withcalib_complete(WeightWrapper):
             )
 
         elif shape_variation.startswith("JES"):
-            out = sf_btag_withcalibration(self._params,
+            out = sf_btag_withcalibration_ttsplit(events, self._params,
                                 sample=self._metadata["sample"],
                                 jets=events[self.jet_coll],
                                 year=self._metadata["year"],
@@ -161,7 +209,7 @@ class SF_btag_withcalib_complete(WeightWrapper):
                 )       
             
         else:
-            out = sf_btag_withcalibration(self._params,
+            out = sf_btag_withcalibration_ttsplit(events, self._params,
                           sample=self._metadata["sample"],
                           jets=events[self.jet_coll],
                           year=self._metadata["year"],
