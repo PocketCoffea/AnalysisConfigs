@@ -22,6 +22,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 CLASSIFICATION = False
 TIGHT_CUTS = False
 RANDOM_PT = True
+SAVE_CHUNK = True
 
 print("CLASSIFICATION ", CLASSIFICATION)
 print("TIGHT_CUTS ", TIGHT_CUTS)
@@ -53,6 +54,23 @@ SPANET_MODEL = (
 #    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
 #    "/work/tharte/datasets/mass_sculpting_data/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
+
+workflow_options ={
+        "parton_jet_min_dR": 0.4,
+        "max_num_jets": 5,
+        "which_bquark": "last",
+        "classification": CLASSIFICATION,  # HERE
+        "spanet_model": SPANET_MODEL,
+        "tight_cuts": TIGHT_CUTS,
+        "fifth_jet": "pt",
+        "random_pt": RANDOM_PT,
+        "rand_type": 0.3
+    }
+if SAVE_CHUNK:
+    workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/training_samples/GluGlutoHHto4B_spanet_loose_03_17"
+    # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
+    # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_no_btag"
+
 
 variables_dict = {
         # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
@@ -204,21 +222,7 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=HH4bbQuarkMatchingProcessor,
-    workflow_options={
-        "parton_jet_min_dR": 0.4,
-        "max_num_jets": 5,
-        "which_bquark": "last",
-        "classification": CLASSIFICATION,  # HERE
-        "spanet_model": SPANET_MODEL,
-        "tight_cuts": TIGHT_CUTS,
-        "fifth_jet": "pt",
-        "random_pt": RANDOM_PT,
-        "rand_type": 0.3
-        #"dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/GluGlutoHHto4B_spanet_loose"
-#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
-#        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_no_btag"
-#        "dump_columns_as_arrays_per_chunk": "/work/tharte/datasets/mass_sculpting_data/testing/arrays/"
-    },
+    workflow_options=workflow_options,
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
@@ -283,6 +287,7 @@ cfg = Configurator(
                     #         "phi",
                     #         "mass",
                     #     ],
+                    #     flatten=not SAVE_CHUNK,
                     # ),
                     # ColOut(
                     #     "bQuarkMatched",
@@ -294,6 +299,7 @@ cfg = Configurator(
                     #         "phi",
                     #         "mass",
                     #     ],
+                    #     flatten=not SAVE_CHUNK,
                     # ),
                     # ColOut(
                     #     "bQuark",
@@ -304,23 +310,25 @@ cfg = Configurator(
                     #         "phi",
                     #         "mass",
                     #     ],
+                    #     flatten=not SAVE_CHUNK,
                     # ),
-                    #ColOut(
-                    #    "JetGoodHiggsMatched",
-                    #    [
-                    #        "provenance",
-                    #        # "pdgId",
-                    #        # "dRMatchedJet",
-                    #        "pt",
-                    #        "eta",
-                    #        "phi",
-                    #        # "cosPhi",
-                    #        # "sinPhi",
-                    #        "mass",
-                    #        "btagPNetB",
-                    #        # "hadronFlavour",
-                    #    ],
-                    #),
+                    ColOut(
+                        "JetGoodHiggsMatched",
+                        [
+                            "provenance",
+                            # "pdgId",
+                            # "dRMatchedJet",
+                            "pt",
+                            "eta",
+                            "phi",
+                            # "cosPhi",
+                            # "sinPhi",
+                            "mass",
+                            "btagPNetB",
+                            # "hadronFlavour",
+                        ],
+                        flatten=not SAVE_CHUNK,
+                    ),
                     ColOut(
                         "JetGoodMatched",
                         [
@@ -336,6 +344,7 @@ cfg = Configurator(
                             "btagPNetB",
                             # "hadronFlavour",
                         ],
+                        flatten=not SAVE_CHUNK,
                     ),
                     ColOut(
                         "JetGoodHiggs",
@@ -352,6 +361,7 @@ cfg = Configurator(
                             "btagPNetB",
                             # "hadronFlavour",
                         ],
+                        flatten=not SAVE_CHUNK,
                     ),
                     ColOut(
                         "JetGood",
@@ -368,6 +378,7 @@ cfg = Configurator(
                             "btagPNetB",
                             # "hadronFlavour",
                         ],
+                        flatten=not SAVE_CHUNK,
                     ),
                     ]
                     + ([
@@ -381,6 +392,7 @@ cfg = Configurator(
                         #        # "dR",
                         #        # "cos_theta",
                         #    ],
+                        #flatten=not SAVE_CHUNK,
                         #),
                         #ColOut(
                         #    "HiggsSubLeading",
@@ -392,6 +404,7 @@ cfg = Configurator(
                         #        # "dR",
                         #        # "cos_theta",
                         #    ],
+                        #flatten=not SAVE_CHUNK,
                         #),
                         # ColOut(
                         #     "HiggsLeadingRun2",
@@ -403,6 +416,7 @@ cfg = Configurator(
                         #         # "dR",
                         #         # "cos_theta",
                         #     ],
+                        #flatten=not SAVE_CHUNK,
                         # ),
                         # ColOut(
                         #     "HiggsSubLeadingRun2",
@@ -414,6 +428,7 @@ cfg = Configurator(
                         #         # "dR",
                         #         # "cos_theta",
                         #     ],
+                        #flatten=not SAVE_CHUNK,
                         # ),
                        # ColOut(
                        #     "JetGoodFromHiggsOrderedRun2",
@@ -424,6 +439,7 @@ cfg = Configurator(
                        #         "mass",
                        #         "btagPNetB",
                        #     ],
+                       #flatten=not SAVE_CHUNK,
                        # ),
                        # ColOut(
                        #     "JetGoodFromHiggsOrdered",
@@ -434,6 +450,7 @@ cfg = Configurator(
                        #         "mass",
                        #         "btagPNetB",
                        #     ],
+                        #flatten=not SAVE_CHUNK,
                        # ),
                        #  ColOut(
                        #      "HH",
@@ -447,6 +464,7 @@ cfg = Configurator(
                        #          # "dPhi",
                        #          # "dEta",
                        #      ],
+                        #flatten=not SAVE_CHUNK,
                        #  ),
                         ColOut(
                             "events",
@@ -459,6 +477,7 @@ cfg = Configurator(
                                 # "dR_min",
                                 # "dR_max",
                             ],
+                            flatten=not SAVE_CHUNK,
                         ),
                     ]
                     if CLASSIFICATION
@@ -468,6 +487,7 @@ cfg = Configurator(
                             [
                                 "random_pt_weights",
                             ],
+                            flatten=not SAVE_CHUNK,
                         ),
                     ]
                     if RANDOM_PT
