@@ -1,17 +1,19 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
+from pocket_coffea.lib.weights.common.common import common_weights
+from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 
-import workflow
-from workflow import ttbarBackgroundProcessor
+from configs.ttHbb.semileptonic.common.workflows import workflow_tthbb as workflow
+from configs.ttHbb.semileptonic.common.workflows.workflow_tthbb import ttHbbPartonMatchingProcessor
 
-import custom_cut_functions
-import custom_cuts
-from custom_cut_functions import *
-from custom_cuts import *
+import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
+import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
+from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
+from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -24,6 +26,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection_semileptonic.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
+                                                  f"{localdir}/params/btagging.yaml",
+                                                  f"{localdir}/params/btagSF_calibration.yaml",
                                                   f"{localdir}/params/plotting_style.yaml",
                                                   update=True)
 
@@ -56,11 +60,14 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = ttHbbPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3,
-                        "dump_columns_as_arrays_per_chunk": "root://t3se01.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
+                        "dump_columns_as_arrays_per_chunk": "root://t3dcachedb03.psi.ch:1094//store/user/mmarcheg/ttHbb/ntuples/sig_bkg_ntuples_TTToSemiLeptonic_2018/"},
     
-    skim = [get_nObj_min(4, 15., "Jet"),
+    skim = [get_nPVgood(1),
+            eventFlags,
+            goldenJson,
+            get_nObj_min(4, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
@@ -70,14 +77,15 @@ cfg = Configurator(
         "semilep_LHE": [semilep_lhe]
     },
 
+    weights_classes = common_weights + [SF_ele_trigger],
     weights= {
         "common": {
             "inclusive": [
                 "genWeight", "lumi","XS",
                 "pileup",
-                "sf_ele_reco", "sf_ele_id",
-                "sf_mu_id", "sf_mu_iso",
-                "sf_btag",
+                "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
+                "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
+                "sf_btag", "sf_btag_calib",
                 "sf_jet_puId",
             ],
             "bycategory": {},

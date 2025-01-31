@@ -3,8 +3,8 @@ from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_nObj_
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 
-import workflow
-from workflow import ttbarBackgroundProcessor
+import configs.ttHbb.semileptonic.common.workflows.workflow_ttbar as workflow
+from configs.ttHbb.semileptonic.common.workflows.workflow_ttbar import ttbarPartonMatchingProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -121,7 +121,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = ttbarPartonMatchingProcessor,
     workflow_options = {"parton_jet_min_dR": 0.3},
     
     skim = [get_nObj_min(4, 15., "Jet"),

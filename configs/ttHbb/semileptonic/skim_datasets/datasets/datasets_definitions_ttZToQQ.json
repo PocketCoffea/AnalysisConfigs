@@ -1,0 +1,19 @@
+{
+  "TTZToQQ": {
+    "sample": "TTV",
+    "json_output": "datasets/backgrounds_MC_TTZToQQ_2018.json",
+    "description": "Cross-section taken from AN2019-094_v17",
+    "files": [
+      {
+        "das_names": [
+          "/TTZToQQ_TuneCP5_13TeV_amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 0.6012
+        }
+      }
+    ]
+  }
+}

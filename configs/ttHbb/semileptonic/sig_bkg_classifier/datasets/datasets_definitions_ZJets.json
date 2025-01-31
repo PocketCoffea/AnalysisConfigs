@@ -1,0 +1,410 @@
+{
+  "DYJetsToLL_M-50_HT-70to100": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 199.3161,
+          "part": "70to100"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 199.3161,
+          "part": "70to100"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 199.3161,
+          "part": "70to100"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 199.3161,
+          "part": "70to100"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-100to200": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 167.59380000000002,
+          "part": "100to200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 167.59380000000002,
+          "part": "100to200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 167.59380000000002,
+          "part": "100to200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 167.59380000000002,
+          "part": "100to200"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-200to400": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 46.605630000000005,
+          "part": "200to400"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 46.605630000000005,
+          "part": "200to400"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 46.605630000000005,
+          "part": "200to400"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 46.605630000000005,
+          "part": "200to400"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-400to600": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 6.455886,
+          "part": "400to600"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 6.455886,
+          "part": "400to600"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 6.455886,
+          "part": "400to600"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 6.455886,
+          "part": "400to600"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-600to800": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 1.554279,
+          "part": "600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 1.554279,
+          "part": "600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 1.554279,
+          "part": "600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 1.554279,
+          "part": "600to800"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-800to1200": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 0.7167648,
+          "part": "800to1200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 0.7167648,
+          "part": "800to1200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 0.7167648,
+          "part": "800to1200"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 0.7167648,
+          "part": "800to1200"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-1200to2500": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 0.1721418,
+          "part": "1200to2500"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 0.1721418,
+          "part": "1200to2500"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 0.1721418,
+          "part": "1200to2500"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 0.1721418,
+          "part": "1200to2500"
+        }
+      }
+    ]
+  },
+  "DYJetsToLL_M-50_HT-2500toInf": {
+    "sample": "DYJetsToLL",
+    "json_output": "datasets/backgrounds_MC.json",
+    "description": "Cross-section taken from AN2019-094_v17. The LO cross-section is multiplied by a k-factor to obtain the NLO cross-section.",
+    "files": [
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 0.004053405,
+          "part": "2500toInf"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 0.004053405,
+          "part": "2500toInf"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 0.004053405,
+          "part": "2500toInf"
+        }
+      },
+      {
+        "das_names": [
+          "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 0.004053405,
+          "part": "2500toInf"
+        }
+      }
+    ]
+  }
+}

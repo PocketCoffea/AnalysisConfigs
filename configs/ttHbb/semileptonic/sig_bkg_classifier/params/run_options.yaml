@@ -1,6 +1,12 @@
-scaleout: 200
-chunksize: 400000
-mem-per-worker: "6GB"
-disk-per-worker: "2GB"
+scaleout: 300
+chunksize: 50000
+mem-per-worker: "2GB"
+disk-per-worker: "4GB"
 queue: "standard"
 walltime: "6:00:00"
+adaptive: false
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+death-timeout: "3600"
+spanet_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/meanloss_multiclassifier_btag_LMH/spanet_output/version_0/spanet.onnx"

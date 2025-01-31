@@ -7,3 +7,49 @@ plotting_style:
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: "$t\\bar{t}$+C (4FS)"
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: "$t\\bar{t}$+B (4FS)"
     TTTo2L2Nu : "$t\\bar{t}$ dilepton"
+    SingleTop : "Single t"
+    WJetsToLNu_HT : "W+jets"
+    ttHTobb: "$t\\bar{t}H$"
+
+  colors_mc:
+    ttHTobb: CMS_red
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: CMS_dark_orange
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+C: CMS_orange
+    TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: CMS_blue
+    TTTo2L2Nu: CMS_brown
+    SingleTop: CMS_gray
+    WJetsToLNu_HT: CMS_purple
+
+  exclude_samples:
+    - ttHTobb_ttToSemiLep
+    - TTToSemiLeptonic__TTToSemiLeptonic_tt+B
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C
+
+  rescale_samples:
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: 0.7465542103437566
+
+  opts_figure:
+    datamc:
+      figsize: [12,9]
+
+  opts_ylim:
+    datamc:
+      ylim_log:
+        lo: 1.0
+        hi: 1e7
+
+  opts_sig:
+    histtype: "step"
+    stack: false
+    flow: "sum"
+    edges: true
+    linestyle: solid
+    linewidth: 1
+
+  blind_hists:
+    categories: [semilep, SR, 4jSR, 5jSR, '>=6jSR']
+    histograms:
+      spanet_tthbb_transformed: [0.6, 1.0]
+      spanet_tthbb: [0.6, 1.0]
+      spanet_ttlf: [0.0, 0.2]

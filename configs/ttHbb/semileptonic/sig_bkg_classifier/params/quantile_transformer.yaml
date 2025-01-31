@@ -1,0 +1,17 @@
+quantile_transformer:
+  2016_PreVFP:
+    n_quantiles: 1000000
+    output_distribution: uniform
+    file: "${config_dir:}/quantile_transformer/quantiles_regressed_2016_PreVFP.pkl"
+  2016_PostVFP:
+    n_quantiles: 1000000
+    output_distribution: uniform
+    file: "${config_dir:}/quantile_transformer/quantiles_regressed_2016_PostVFP.pkl"
+  '2017':
+    n_quantiles: 1000000
+    output_distribution: uniform
+    file: "${config_dir:}/quantile_transformer/quantiles_regressed_2017.pkl"
+  '2018':
+    n_quantiles: 1000000
+    output_distribution: uniform
+    file: "${config_dir:}/quantile_transformer/quantiles_regressed_2018.pkl"

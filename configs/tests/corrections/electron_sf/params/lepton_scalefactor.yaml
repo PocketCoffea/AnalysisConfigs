@@ -1,0 +1,4 @@
+# overwrite the default config
+
+lepton_scale_factors:
+  electron_sf:

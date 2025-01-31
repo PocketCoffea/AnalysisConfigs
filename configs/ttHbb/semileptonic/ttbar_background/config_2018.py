@@ -3,8 +3,7 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel, get_nBtagM
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 
-import workflow
-from workflow import ttbarBackgroundProcessor
+from configs.ttHbb.semileptonic.common.workflows.workflow_ttbar import ttbarPartonMatchingProcessor
 
 import custom_cut_functions
 import custom_cuts
@@ -57,7 +56,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = ttbarBackgroundProcessor,
+    workflow = ttbarPartonMatchingProcessor,
     
     skim = [get_nObj_min(4, 15., "Jet"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],

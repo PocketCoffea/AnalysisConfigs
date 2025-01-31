@@ -10,12 +10,12 @@
             "size": "14010425389"
         },
         "files": [
-            "root://rdr.echo.stfc.ac.uk///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/51FC9429-42C3-BB4A-883A-D8B5D51DC2A3.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/7F69DD15-DAE6-E74E-9E7B-B501CF89502B.root",
-            "root://rdr.echo.stfc.ac.uk///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/849B2C61-9352-AA4D-941E-CA766E51DF64.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/9B37B105-474B-6942-87AE-B3163782CD94.root",
-            "root://rdr.echo.stfc.ac.uk///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/A578687F-E801-D747-9EDB-5E3CF99A9C5A.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/CA1B2277-49DB-C54E-853B-2CE7B9449FDB.root"
+            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/51FC9429-42C3-BB4A-883A-D8B5D51DC2A3.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/7F69DD15-DAE6-E74E-9E7B-B501CF89502B.root",
+            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/849B2C61-9352-AA4D-941E-CA766E51DF64.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/9B37B105-474B-6942-87AE-B3163782CD94.root",
+            "root://rdr.echo.stfc.ac.uk//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/A578687F-E801-D747-9EDB-5E3CF99A9C5A.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL16NanoAODAPVv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/60000/CA1B2277-49DB-C54E-853B-2CE7B9449FDB.root"
         ]
     },
     "ttHTobb_ttToSemiLep_2016_PostVFP": {
@@ -70,18 +70,18 @@
             "size": "28457466661"
         },
         "files": [
-            "root://ccxrdcms.in2p3.fr:1094/pnfs/in2p3.fr/data/cms/disk/data//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/065C6A3B-A033-4843-956B-798F242C73B8.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/15A49F9F-41C8-4C47-A87F-C9BF0354ADCC.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/16A4EC02-55D5-684F-ABC5-A88AF93244B6.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/1A7C328E-0CFB-2444-8635-B820EDC7E21C.root",
-            "root://ccxrdcms.in2p3.fr:1094/pnfs/in2p3.fr/data/cms/disk/data//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/308B59C1-E6D7-0741-ACA8-31D9C7CE0479.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/4BD7E025-2A41-AF44-AB20-7503E9511DA0.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/50B163A9-6773-2042-ACFC-18AE34FE7BAB.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/8692EC45-8419-F64E-B9C7-58680FFE44AE.root",
-            "root://ccxrdcms.in2p3.fr:1094/pnfs/in2p3.fr/data/cms/disk/data//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/99C7C5C2-6D0D-5444-A0C7-ADC09260020F.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/A6C4770C-CCD8-6041-B362-83D3F6FEB34D.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/BA79316F-C5BE-FE4C-99DA-F0C525EA359B.root",
-            "root://cmsxrootd-kit-disk.gridka.de:1094///store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/CE2F7A2D-315E-7A45-8FB8-4A51BF90397E.root"
+            "root://ccxrdcms.in2p3.fr:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/065C6A3B-A033-4843-956B-798F242C73B8.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/15A49F9F-41C8-4C47-A87F-C9BF0354ADCC.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/16A4EC02-55D5-684F-ABC5-A88AF93244B6.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/1A7C328E-0CFB-2444-8635-B820EDC7E21C.root",
+            "root://ccxrdcms.in2p3.fr:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/308B59C1-E6D7-0741-ACA8-31D9C7CE0479.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/4BD7E025-2A41-AF44-AB20-7503E9511DA0.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/50B163A9-6773-2042-ACFC-18AE34FE7BAB.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/8692EC45-8419-F64E-B9C7-58680FFE44AE.root",
+            "root://ccxrdcms.in2p3.fr:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/99C7C5C2-6D0D-5444-A0C7-ADC09260020F.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/A6C4770C-CCD8-6041-B362-83D3F6FEB34D.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/BA79316F-C5BE-FE4C-99DA-F0C525EA359B.root",
+            "root://cmsdcache-kit-disk.gridka.de:1094//store/mc/RunIISummer20UL18NanoAODv9/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/CE2F7A2D-315E-7A45-8FB8-4A51BF90397E.root"
         ]
     }
 }
