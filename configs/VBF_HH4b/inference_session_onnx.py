@@ -16,10 +16,12 @@ class WorkerInferenceSessionPlugin(WorkerPlugin):
         )
         sess_options.intra_op_num_threads = 1
 
-        session = ort.InferenceSession(
+        model_session = ort.InferenceSession(
             self.model_path,
             sess_options=sess_options,
             providers=["CPUExecutionProvider"],
         )
 
-        worker.data[f"model_session_{self.session_name}"] = session
+        worker.data[f"model_session_{self.session_name}"] = model_session
+        worker.data[f"input_name_{self.session_name}"] = [input.name for input in model_session.get_inputs()]
+        worker.data[f"output_name_{self.session_name}"] = [output.name for output in model_session.get_outputs()]

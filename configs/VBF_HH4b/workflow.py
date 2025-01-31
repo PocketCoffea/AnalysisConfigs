@@ -17,6 +17,7 @@ from utils.reconstruct_higgs_candidates import (
     reconstruct_higgs_from_provenance,
     reconstruct_higgs_from_idx,
 )
+from utils.inference_session_onnx import get_model_session
 from vbf_matching import get_jets_no_higgs
 
 
@@ -26,9 +27,11 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
         self.max_num_jets = self.workflow_options["max_num_jets"]
         self.which_bquark = self.workflow_options["which_bquark"]
-        self.spanet_model = self.workflow_options["spanet_model"]
+        self.SPANET_MODEL = self.workflow_options["SPANET_MODEL"]
         self.vbf_parton_matching = self.workflow_options["vbf_parton_matching"]
-        self.DNN_model = self.workflow_options["DNN_model"]
+        self.VBF_GGF_DNN_MODEL = self.workflow_options["VBF_GGF_DNN_MODEL"]
+        self.BKG_MORPHING_DNN_MODEL = self.workflow_options["BKG_MORPHING_DNN_MODEL"]
+        self.fifth_jet = self.workflow_options["fifth_jet"]
 
     def apply_object_preselection(self, variation):
         self.events["Jet"] = ak.with_field(
@@ -108,6 +111,16 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         self.events["JetGoodHiggsPtOrder"] = self.events.JetGoodHiggs[
             ak.argsort(self.events.JetGoodHiggs.pt, axis=1, ascending=False)
         ]
+
+        # Trying to reshuffle jets 4 and above by pt instead of b-tag score
+        if self.fifth_jet == "pt":
+            jets5plus = self.events["JetGood"][:, 4:]
+            jets5plus_pt = jets5plus[ak.argsort(jets5plus.pt, axis=1, ascending=False)]
+            self.events["JetGood"] = ak.concatenate(
+                (self.events["JetGoodHiggs"], jets5plus_pt), axis=1
+            )
+            del jets5plus
+            del jets5plus_pt
 
     def get_jet_higgs_provenance(self, which_bquark):  # -> ak.Array:
         # Select b-quarks at Gen level, coming from H->bb decay
@@ -385,9 +398,138 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
             self.events.JetVBF_generalSelection, axis=1
         )
 
+    def HelicityCosTheta(self, higgs, jet):
+        print("jet px",jet.px)
+        print("higgs px",higgs.px)
+        print("jet theta",jet.theta)
+        higgs_velocity = higgs.to_beta3()
+        jet = jet.boost_beta3(-higgs_velocity)
+        print("jet px",jet.px)
+        print("jet theta",jet.theta)
+        return np.cos(jet.theta)
+
+    def Costhetastar_CS(self, higgs1_vec, hh_vec):
+        print("px",higgs1_vec.px)
+        print("theta",higgs1_vec.theta)
+        hh_velocity = hh_vec.to_beta3()
+        higgs1_vec = higgs1_vec.boost_beta3(-hh_velocity)
+        print("px",higgs1_vec.px)
+        print("theta",higgs1_vec.theta)
+        return abs(np.cos(higgs1_vec.theta))
+
+    def define_bkg_morphing_variables(self):
+        ########################
+        # ADDITIONAL VARIABLES #
+        ########################
+
+        self.events["era"] = ak.ones_like(self.events.Jet.pt)
+
+        # HT : scalar sum of all jets with pT > 25 GeV inside | η | < 2.5
+        self.events["HT"] = ak.sum(self.events.JetGood.pt, axis=1)
+
+        # Minimum ∆R ( jj ) among all possible pairings of the leading b-tagged jets
+        # Maximum ∆R( jj ) among all possible pairings of the leading b-tagged jets
+        _, JetGood2 = ak.unzip(
+            ak.cartesian(
+                [
+                    self.events.JetGood[:, :4],
+                    self.events.JetGood[:, :4],
+                ],
+                nested=True,
+            )
+        )
+        dR = self.events.JetGood[:, :4].delta_r(JetGood2)
+        # remove dR between the same jets
+        dR = ak.mask(dR, dR > 0)
+        # flatten the last 2 dimension of the dR array  to get an array for each event
+        dR = ak.flatten(dR, axis=2)
+        self.events["dR_min"] = ak.min(dR, axis=1)
+        self.events["dR_max"] = ak.max(dR, axis=1)
+
+        # Leading-pT H candidate pT , η, φ, and mass
+        # Subleading-pT H candidate pT , η, φ, and mass
+        # Angular separation (∆R) between b jets for each H candidate
+        self.events["HiggsLeading"] = ak.with_field(
+            self.events.HiggsLeading,
+            self.events["JetGoodFromHiggsOrdered"][:, 0].delta_r(
+                self.events["JetGoodFromHiggsOrdered"][:, 1]
+            ),
+            "dR",
+        )
+        self.events["HiggsSubLeading"] = ak.with_field(
+            self.events.HiggsSubLeading,
+            self.events["JetGoodFromHiggsOrdered"][:, 2].delta_r(
+                self.events["JetGoodFromHiggsOrdered"][:, 3]
+            ),
+            "dR",
+        )
+
+        # helicity | cos θ | for each H candidate
+        self.events["HiggsLeading"] = ak.with_field(
+            self.events.HiggsLeading,
+            abs(
+                self.HelicityCosTheta(
+                    self.events.HiggsLeading, self.events.JetGoodFromHiggsOrdered[:, 0]
+                )
+            ),
+            "helicityCosTheta",
+        )
+        self.events["HiggsSubLeading"] = ak.with_field(
+            self.events.HiggsSubLeading,
+            abs(
+                self.HelicityCosTheta(
+                    self.events.HiggsSubLeading,
+                    self.events.JetGoodFromHiggsOrdered[:, 2],
+                )
+            ),
+            "helicityCosTheta",
+        )
+
+        # di-Higgs system
+        # pT , η, and mass of HH system
+        self.events["HH"] = add_fields(
+            self.events.HiggsLeading + self.events.HiggsSubLeading
+        )
+
+        # | cos θ ∗ | of HH system
+        self.events["HH"] = ak.with_field(
+            self.events.HH, self.Costhetastar_CS(self.events.HiggsLeading, self.events.HH),
+            "cos_theta_star"
+        )
+
+        # Angular separation (∆R, ∆η, ∆φ) between H candidates
+        self.events["HH"] = ak.with_field(
+            self.events.HH,
+            self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading),
+            "dR",
+        )
+        self.events["HH"] = ak.with_field(
+            self.events.HH,
+            abs(self.events.HiggsLeading.eta - self.events.HiggsSubLeading.eta),
+            "dEta",
+        )
+        self.events["HH"] = ak.with_field(
+            self.events.HH,
+            self.events.HiggsLeading.delta_phi(self.events.HiggsSubLeading),
+            "dPhi",
+        )
+
+        # TODO: Implement the sigma mbb calculation
+        
+        # jet1_up = jet1*(1+jet_pnet_ptres_b.at(j1_index));
+        # jet2_up = jet2*(1+jet_pnet_ptres_b.at(j2_index));
+
+        # jet1_dn = jet1*(1-jet_pnet_ptres_b.at(j1_index));
+        # jet2_dn = jet2*(1-jet_pnet_ptres_b.at(j2_index));
+
+        # Float_t sigma_hbbCand_A = std::max( fabs((jet1+jet2).M() - (jet1_up + jet2).M()),fabs((jet1+jet2).M() - (jet1_dn + jet2).M()));
+        # Float_t sigma_hbbCand_B = std::max( fabs((jet1+jet2).M() - (jet1 + jet2_up).M()),fabs((jet1+jet2).M() - (jet1 + jet2_dn).M()));
+
+        # Float_t sigma_mbb = (sqrt(sigma_hbbCand_A*sigma_hbbCand_A + sigma_hbbCand_B*sigma_hbbCand_B));
+
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC:
-            if not self.spanet_model:
+            if not self.SPANET_MODEL:
                 # do truth matching to get b-jet from Higgs
                 self.get_jet_higgs_provenance(which_bquark=self.which_bquark)
                 self.events["nbQuarkHiggsMatched"] = ak.num(
@@ -411,52 +553,48 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 # apply spanet model to get the pairing prediction for the b-jets from Higgs
                 self.dummy_provenance()
 
-                try:
-                    worker = get_worker()
-                except ValueError:
-                    worker = None
+                model_session_SPANET, input_name_SPANET, output_name_SPANET = (
+                    get_model_session(self.SPANET_MODEL, "SPANET")
+                )
 
-                if worker is None:
-                    import onnxruntime as ort
+                # try:
+                #     worker = get_worker()
+                # except ValueError:
+                #     worker = None
 
-                    sess_options = ort.SessionOptions()
-                    sess_options.graph_optimization_level = (
-                        ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-                    )
-                    model_session_spanet = ort.InferenceSession(
-                        self.spanet_model,
-                        sess_options=sess_options,
-                        providers=["CPUExecutionProvider"],
-                    )
-                    model_session_DNN = ort.InferenceSession(
-                        self.DNN_model,
-                        sess_options=sess_options,
-                        providers=["CPUExecutionProvider"],
-                    )
+                # if worker is None:
+                #     import onnxruntime as ort
 
-                else:
-                    model_session_spanet = worker.data["model_session_spanet"]
-                    model_session_DNN = worker.data["model_session_DNN"]
+                #     sess_options = ort.SessionOptions()
+                #     sess_options.graph_optimization_level = (
+                #         ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+                #     )
+                #     model_session_SPANET = ort.InferenceSession(
+                #         self.SPANET_MODEL,
+                #         sess_options=sess_options,
+                #         providers=["CPUExecutionProvider"],
+                #     )
 
-                input_name_spanet = [input.name for input in model_session_spanet.get_inputs()]
-                output_name_spanet = [output.name for output in model_session_spanet.get_outputs()]
+                # else:
+                #     model_session_SPANET = worker.data["model_session_SPANET"]
 
-                input_name_DNN = [input.name for input in model_session_DNN.get_inputs()]
-                output_name_DNN = [output.name for output in model_session_DNN.get_outputs()]
-                # print(input_name_DNN)
-                # print(output_name_DNN)
+                # input_name_SPANET = [input.name for input in model_session_SPANET.get_inputs()]
+                # output_name_SPANET = [output.name for output in model_session_SPANET.get_outputs()]
 
-
-                # compute the pairing information using the spanet model
-                outputs = get_pairing_information(
-                    model_session_spanet, input_name_spanet, output_name_spanet, self.events, self.max_num_jets
+                # compute the pairing information using the SPANET model
+                pairing_outputs = get_pairing_information(
+                    model_session_SPANET,
+                    input_name_SPANET,
+                    output_name_SPANET,
+                    self.events,
+                    self.max_num_jets,
                 )
 
                 (
                     pairing_predictions,
                     self.events["best_pairing_probability"],
                     self.events["second_best_pairing_probability"],
-                ) = get_best_pairings(outputs)
+                ) = get_best_pairings(pairing_outputs)
 
                 (
                     self.events["HiggsLeading"],
@@ -464,8 +602,71 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                     self.events["JetGoodFromHiggsOrdered"],
                 ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
-                matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
+                matched_jet_higgs_idx_not_none = (
+                    self.events.JetGoodFromHiggsOrdered.index
+                )
 
+            if self.VBF_GGF_DNN_MODEL:
+                (
+                    model_session_VBF_GGF_DNN,
+                    input_name_VBF_GGF_DNN,
+                    output_name_VBF_GGF_DNN,
+                ) = get_model_session(self.VBF_GGF_DNN_MODEL, "VBF_GGF_DNN")
+                # try:
+                #     worker = get_worker()
+                # except ValueError:
+                #     worker = None
+
+                # if worker is None:
+                #     import onnxruntime as ort
+
+                #     sess_options = ort.SessionOptions()
+                #     sess_options.graph_optimization_level = (
+                #         ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+                #     )
+                #     model_session_VBF_GGF_DNN = ort.InferenceSession(
+                #         self.VBF_GGF_DNN_MODEL,
+                #         sess_options=sess_options,
+                #         providers=["CPUExecutionProvider"],
+                #     )
+                # else:
+                #     model_session_VBF_GGF_DNN = worker.data["model_session_VBF_GGF_DNN"]
+
+                # input_name_VBF_GGF_DNN = [input.name for input in model_session_VBF_GGF_DNN.get_inputs()]
+                # output_name_VBF_GGF_DNN = [output.name for output in model_session_VBF_GGF_DNN.get_outputs()]
+
+            if self.BKG_MORPHING_DNN_MODEL:
+                (
+                    model_session_BKG_MORPHING_DNN,
+                    input_name_BKG_MORPHING_DNN,
+                    output_name_BKG_MORPHING_DNN,
+                ) = get_model_session(self.BKG_MORPHING_DNN_MODEL, "BKG_MORPHING_DNN")
+
+                self.define_bkg_morphing_variables()
+                # try:
+                #     worker = get_worker()
+                # except ValueError:
+                #     worker = None
+
+                # if worker is None:
+                #     import onnxruntime as ort
+
+                #     sess_options = ort.SessionOptions()
+                #     sess_options.graph_optimization_level = (
+                #         ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+                #     )
+
+                #     model_session_BKG_MORPHING_DNN = ort.InferenceSession(
+                #         self.BKG_MORPHING_DNN_MODEL,
+                #         sess_options=sess_options,
+                #         providers=["CPUExecutionProvider"],
+                #     )
+
+                # else:
+                #     model_session_BKG_MORPHING_DNN = worker.data["model_session_BKG_MORPHING_DNN"]
+
+                # input_name_BKG_MORPHING_DNN = [input.name for input in model_session_BKG_MORPHING_DNN.get_inputs()]
+                # output_name_BKG_MORPHING_DNN = [output.name for output in model_session_BKG_MORPHING_DNN.get_outputs()]
 
             jet_offsets = np.concatenate(
                 [
@@ -492,7 +693,9 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 jets_no_higgs_idx_unflat >= 0
             ]
             # apply selection to the jets not from Higgs
-            self.events["JetVBFNotFromHiggs"]=jet_selection_nopu(self.events, "JetVBFNotFromHiggs", self.params)
+            self.events["JetVBFNotFromHiggs"] = jet_selection_nopu(
+                self.events, "JetVBFNotFromHiggs", self.params
+            )
 
             # order in pt
             self.events["JetVBFNotFromHiggs"] = self.events.JetVBFNotFromHiggs[
@@ -516,8 +719,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 )  # Adds none jets to events that have less than 2 jets
 
                 self.events["deltaEta_matched"] = abs(
-                    JetVBF_matched_padded.eta[:, 0]
-                    - JetVBF_matched_padded.eta[:, 1]
+                    JetVBF_matched_padded.eta[:, 0] - JetVBF_matched_padded.eta[:, 1]
                 )
 
                 self.events["jj_mass_matched"] = (
@@ -526,11 +728,9 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
 
                 # This product will give only -1 or 1 values, as it's needed to see if the two jets are in the same side or not
                 self.events["etaProduct"] = (
-                    JetVBF_matched_padded.eta[:, 0]
-                    * JetVBF_matched_padded.eta[:, 1]
+                    JetVBF_matched_padded.eta[:, 0] * JetVBF_matched_padded.eta[:, 1]
                 ) / abs(
-                    JetVBF_matched_padded.eta[:, 0]
-                    * JetVBF_matched_padded.eta[:, 1]
+                    JetVBF_matched_padded.eta[:, 0] * JetVBF_matched_padded.eta[:, 1]
                 )
 
             # choose vbf jets as the two jets with the highest pt that are not from higgs decay
@@ -552,13 +752,15 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 self.events.Jet[
                     ak.local_index(self.events.Jet, axis=0),
                     ak.to_numpy(jets_max_mass["0"].index),
-                ],1
+                ],
+                1,
             )
             vbf_jets_max_mass_1 = ak.unflatten(
                 self.events.Jet[
                     ak.local_index(self.events.Jet, axis=0),
                     ak.to_numpy(jets_max_mass["1"].index),
-                ],1
+                ],
+                1,
             )
 
             vbf_jet_leading_mjj = ak.with_name(
@@ -575,58 +777,54 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                 vbf_jet_leading_mjj, vbf_jet_leading_mjj_fields_dict
             )
 
-
             self.events["JetVBFLeadingPtNotFromHiggs_deltaEta"] = abs(
-                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] -
-                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:, 0]
+                - self.events.JetVBFLeadingPtNotFromHiggs.eta[:, 1]
             )
 
             self.events["JetVBFLeadingMjjNotFromHiggs_deltaEta"] = abs(
-                self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,0] -
-                self.events.JetVBFLeadingMjjNotFromHiggs.eta[:,1]
+                self.events.JetVBFLeadingMjjNotFromHiggs.eta[:, 0]
+                - self.events.JetVBFLeadingMjjNotFromHiggs.eta[:, 1]
             )
 
-
             self.events["JetVBFLeadingPtNotFromHiggs_jjMass"] = (
-                self.events.JetVBFLeadingPtNotFromHiggs[:,0] +
-                self.events.JetVBFLeadingPtNotFromHiggs[:,1]
+                self.events.JetVBFLeadingPtNotFromHiggs[:, 0]
+                + self.events.JetVBFLeadingPtNotFromHiggs[:, 1]
             ).mass
 
             self.events["JetVBFLeadingMjjNotFromHiggs_jjMass"] = (
-                self.events.JetVBFLeadingMjjNotFromHiggs[:,0] +
-                self.events.JetVBFLeadingMjjNotFromHiggs[:,1]
+                self.events.JetVBFLeadingMjjNotFromHiggs[:, 0]
+                + self.events.JetVBFLeadingMjjNotFromHiggs[:, 1]
             ).mass
 
-
-
-            self.events["HH_deltaR"] = (
-                    self.events.HiggsLeading.delta_r(self.events.HiggsSubLeading)
+            self.events["HH_deltaR"] = self.events.HiggsLeading.delta_r(
+                self.events.HiggsSubLeading
             )
 
-            self.events["jj_deltaR"] = (
-                    self.events.JetVBFLeadingPtNotFromHiggs[:,0].delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,1])
+            self.events["jj_deltaR"] = self.events.JetVBFLeadingPtNotFromHiggs[
+                :, 0
+            ].delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:, 1])
+
+            self.events["H1j1_deltaR"] = self.events.HiggsLeading.delta_r(
+                self.events.JetVBFLeadingPtNotFromHiggs[:, 0]
             )
 
-            self.events["H1j1_deltaR"] = (
-                    self.events.HiggsLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,0])
+            self.events["H1j2_deltaR"] = self.events.HiggsLeading.delta_r(
+                self.events.JetVBFLeadingPtNotFromHiggs[:, 1]
             )
 
-            self.events["H1j2_deltaR"] = (
-                    self.events.HiggsLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,1])
+            self.events["H2j1_deltaR"] = self.events.HiggsSubLeading.delta_r(
+                self.events.JetVBFLeadingPtNotFromHiggs[:, 0]
             )
 
-            self.events["H2j1_deltaR"] = (
-                    self.events.HiggsSubLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,0])
-            )
-
-            self.events["H2j2_deltaR"] = (
-                    self.events.HiggsSubLeading.delta_r(self.events.JetVBFLeadingPtNotFromHiggs[:,1])
+            self.events["H2j2_deltaR"] = self.events.HiggsSubLeading.delta_r(
+                self.events.JetVBFLeadingPtNotFromHiggs[:, 1]
             )
 
             JetVBFLeadingPtNotFromHiggs_etaAverage = (
-                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,0] +
-                self.events.JetVBFLeadingPtNotFromHiggs.eta[:,1]
-                ) / 2
+                self.events.JetVBFLeadingPtNotFromHiggs.eta[:, 0]
+                + self.events.JetVBFLeadingPtNotFromHiggs.eta[:, 1]
+            ) / 2
 
             self.events["HH_centrality"] = np.exp(
                 (
@@ -634,14 +832,16 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
                         (
                             self.events.HiggsLeading.eta
                             - JetVBFLeadingPtNotFromHiggs_etaAverage
-                        )**2
+                        )
+                        ** 2
                     )
                     - (
                         self.events.HiggsSubLeading.eta
                         - JetVBFLeadingPtNotFromHiggs_etaAverage
-                    )**2
+                    )
+                    ** 2
                 )
-                / (self.events.JetVBFLeadingPtNotFromHiggs_deltaEta)**2
+                / (self.events.JetVBFLeadingPtNotFromHiggs_deltaEta) ** 2
             )
 
         else:
