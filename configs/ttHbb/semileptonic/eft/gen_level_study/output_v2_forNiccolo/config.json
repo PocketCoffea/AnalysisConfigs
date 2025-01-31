@@ -1,0 +1,1803 @@
+{
+  "datasets": {
+    "names": [
+      "ttHTobb_p1j_EFTcenter_madspin_tbarlnutqq_reweightall_5F_negwilson_2018"
+    ],
+    "samples": [
+      "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson"
+    ],
+    "filesets": {
+      "ttHTobb_p1j_EFTcenter_madspin_tbarlnutqq_reweightall_5F_negwilson_2018": {
+        "metadata": {
+          "das_names": "['/ttHbb_EFT_signal_EFTcenter/dvalsecc-SMEFTsim_topU3l_EFT_5F_tbarlnutqq_reweightall_allneg_v1-00000000000000000000000000000000/USER']",
+          "dbs_instance": "prod/phys03",
+          "sample": "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson",
+          "year": "2018",
+          "isMC": "True",
+          "xsec": "0.095",
+          "nevents": "460000",
+          "size": "7684261869"
+        },
+        "files": [
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_36.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_175.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_177.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_170.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_130.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_140.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_48.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_35.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_95.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_108.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_146.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_56.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_77.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_182.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_54.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_79.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_194.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_2.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_38.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_132.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_64.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_71.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_9.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_10.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_25.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_131.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_120.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_111.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_4.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_153.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_167.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_184.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_100.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_192.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_172.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_174.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_147.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_186.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_1.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_160.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_195.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_142.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_159.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_161.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_116.root",
+          "root://eosuser.cern.ch//eos/user/n/nfeci/Research_project_EFT/Data_EFT/ttHbb_EFT_signal_EFTcenter_madspin_tbarlnutqq_5F_negwilson_v1/test_eft_139.root"
+        ]
+      }
+    },
+    "subsamples": {
+      "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson": {
+        "type": "StandardSelection",
+        "categories": {
+          "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson": [
+            {
+              "name": "passthrough",
+              "params": {},
+              "collection": "events",
+              "function": {
+                "name": "passthrough_f",
+                "module": "pocket_coffea.lib.cut_functions",
+                "src_file": "/usr/local/lib/python3.9/site-packages/pocket_coffea/lib/cut_functions.py",
+                "f_hash": 8740089063644
+              },
+              "id": "passthrough__3656292760458421167"
+            }
+          ]
+        },
+        "is_multidim": false,
+        "multidim_collection": null
+      }
+    }
+  },
+  "skim": [
+    {
+      "name": "passthrough",
+      "params": {},
+      "collection": "events",
+      "function": {
+        "name": "passthrough_f",
+        "module": "pocket_coffea.lib.cut_functions",
+        "src_file": "/usr/local/lib/python3.9/site-packages/pocket_coffea/lib/cut_functions.py",
+        "f_hash": 8740089063644
+      },
+      "id": "passthrough__3656292760458421167"
+    }
+  ],
+  "preselections": [
+    {
+      "name": "passthrough",
+      "params": {},
+      "collection": "events",
+      "function": {
+        "name": "passthrough_f",
+        "module": "pocket_coffea.lib.cut_functions",
+        "src_file": "/usr/local/lib/python3.9/site-packages/pocket_coffea/lib/cut_functions.py",
+        "f_hash": 8740089063644
+      },
+      "id": "passthrough__3656292760458421167"
+    }
+  ],
+  "categories": {
+    "type": "StandardSelection",
+    "categories": {
+      "sm": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight1_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight2_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight3_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight4_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight5_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight6_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight7_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight8_-10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight1_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight2_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight3_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight4_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight5_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight6_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight7_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight8_-5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight1_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight2_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight3_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight4_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight5_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight6_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight7_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight8_5": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight1_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight2_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight3_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight4_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight5_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight6_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight7_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ],
+      "weight8_10": [
+        {
+          "name": "",
+          "params": {
+            "j_pt_min": 15.0,
+            "j_eta_max": 5.0,
+            "l_pt_min": 15.0,
+            "l_eta_max": 3.0
+          },
+          "collection": "events",
+          "function": {
+            "name": "cut_ev",
+            "module": "custom_cuts",
+            "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/custom_cuts.py",
+            "f_hash": 8739989240580
+          },
+          "id": "__8023291313000839600"
+        }
+      ]
+    },
+    "is_multidim": false,
+    "multidim_collection": null
+  },
+  "workflow": {
+    "name": "BaseProcessorGen",
+    "workflow_options": {},
+    "srcfile": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/workflow_W2.py"
+  },
+  "weights": {
+    "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson": {
+      "bycategory": {
+        "sm": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989211603
+            }
+          }
+        ],
+        "weight1_-10": [
+          {
+            "name": "SMEFT_weight_-10.0_0.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145968
+            }
+          }
+        ],
+        "weight2_-10": [
+          {
+            "name": "SMEFT_weight_0.0_-10.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145959
+            }
+          }
+        ],
+        "weight3_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_-10.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145950
+            }
+          }
+        ],
+        "weight4_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_-10.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145977
+            }
+          }
+        ],
+        "weight5_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_-10.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146004
+            }
+          }
+        ],
+        "weight6_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_-10.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146013
+            }
+          }
+        ],
+        "weight7_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_-10.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145932
+            }
+          }
+        ],
+        "weight8_-10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_0.0_-10.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989145941
+            }
+          }
+        ],
+        "weight1_-5": [
+          {
+            "name": "SMEFT_weight_-5.0_0.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146049
+            }
+          }
+        ],
+        "weight2_-5": [
+          {
+            "name": "SMEFT_weight_0.0_-5.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146040
+            }
+          }
+        ],
+        "weight3_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_-5.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146067
+            }
+          }
+        ],
+        "weight4_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_-5.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146058
+            }
+          }
+        ],
+        "weight5_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_-5.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146076
+            }
+          }
+        ],
+        "weight6_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_-5.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146085
+            }
+          }
+        ],
+        "weight7_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_-5.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146094
+            }
+          }
+        ],
+        "weight8_-5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_0.0_-5.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739989146103
+            }
+          }
+        ],
+        "weight1_5": [
+          {
+            "name": "SMEFT_weight_5.0_0.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998916
+            }
+          }
+        ],
+        "weight2_5": [
+          {
+            "name": "SMEFT_weight_0.0_5.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998925
+            }
+          }
+        ],
+        "weight3_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_5.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998934
+            }
+          }
+        ],
+        "weight4_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_5.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998943
+            }
+          }
+        ],
+        "weight5_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_5.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998952
+            }
+          }
+        ],
+        "weight6_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_5.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998961
+            }
+          }
+        ],
+        "weight7_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_5.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998970
+            }
+          }
+        ],
+        "weight8_5": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_0.0_5.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998979
+            }
+          }
+        ],
+        "weight1_10": [
+          {
+            "name": "SMEFT_weight_10.0_0.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998988
+            }
+          }
+        ],
+        "weight2_10": [
+          {
+            "name": "SMEFT_weight_0.0_10.0_0.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988998997
+            }
+          }
+        ],
+        "weight3_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_10.0_0.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999006
+            }
+          }
+        ],
+        "weight4_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_10.0_0.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999015
+            }
+          }
+        ],
+        "weight5_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_10.0_0.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999024
+            }
+          }
+        ],
+        "weight6_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_10.0_0.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999033
+            }
+          }
+        ],
+        "weight7_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_10.0_0.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999042
+            }
+          }
+        ],
+        "weight8_10": [
+          {
+            "name": "SMEFT_weight_0.0_0.0_0.0_0.0_0.0_0.0_0.0_10.0",
+            "function": {
+              "name": "<lambda>",
+              "module": "eft_weights",
+              "src_file": "/afs/cern.ch/work/d/dvalsecc/private/ttHbb/AnalysisConfigs/configs/ttHbb/semileptonic/eft/eft_weights.py",
+              "f_hash": 8739988999051
+            }
+          }
+        ]
+      },
+      "inclusive": [
+        "genWeight",
+        "XS"
+      ]
+    }
+  },
+  "variations": {
+    "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson": {
+      "weights": {
+        "sm": [],
+        "weight1_-10": [],
+        "weight2_-10": [],
+        "weight3_-10": [],
+        "weight4_-10": [],
+        "weight5_-10": [],
+        "weight6_-10": [],
+        "weight7_-10": [],
+        "weight8_-10": [],
+        "weight1_-5": [],
+        "weight2_-5": [],
+        "weight3_-5": [],
+        "weight4_-5": [],
+        "weight5_-5": [],
+        "weight6_-5": [],
+        "weight7_-5": [],
+        "weight8_-5": [],
+        "weight1_5": [],
+        "weight2_5": [],
+        "weight3_5": [],
+        "weight4_5": [],
+        "weight5_5": [],
+        "weight6_5": [],
+        "weight7_5": [],
+        "weight8_5": [],
+        "weight1_10": [],
+        "weight2_10": [],
+        "weight3_10": [],
+        "weight4_10": [],
+        "weight5_10": [],
+        "weight6_10": [],
+        "weight7_10": [],
+        "weight8_10": []
+      },
+      "shape": {
+        "sm": [],
+        "weight1_-10": [],
+        "weight2_-10": [],
+        "weight3_-10": [],
+        "weight4_-10": [],
+        "weight5_-10": [],
+        "weight6_-10": [],
+        "weight7_-10": [],
+        "weight8_-10": [],
+        "weight1_-5": [],
+        "weight2_-5": [],
+        "weight3_-5": [],
+        "weight4_-5": [],
+        "weight5_-5": [],
+        "weight6_-5": [],
+        "weight7_-5": [],
+        "weight8_-5": [],
+        "weight1_5": [],
+        "weight2_5": [],
+        "weight3_5": [],
+        "weight4_5": [],
+        "weight5_5": [],
+        "weight6_5": [],
+        "weight7_5": [],
+        "weight8_5": [],
+        "weight1_10": [],
+        "weight2_10": [],
+        "weight3_10": [],
+        "weight4_10": [],
+        "weight5_10": [],
+        "weight6_10": [],
+        "weight7_10": [],
+        "weight8_10": []
+      }
+    }
+  },
+  "variables": {
+    "nGenJet": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "higgs_pt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "higgs_eta": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "higgs_phi": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "deltaR_ht": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "deltaR_hat": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "deltaPhi_tt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "deltaEta_tt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "deltaPt_tt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "sumPt_tt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lep_decay_pt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "q_decay_pt": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "lep_decay_eta": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "q_decay_eta": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "delta_phi_ql_decay": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": null,
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w1": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w2": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w3": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w4": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w5": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w6": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w7": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w8": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w1_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w2_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w3_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w4_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w5_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w6_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w7_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w8_2d": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w1_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w2_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w3_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w4_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w5_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w6_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w7_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    },
+    "LHE_w8_2d_zoom": {
+      "axes": [],
+      "storage": "weight",
+      "autofill": true,
+      "variations": true,
+      "only_variations": null,
+      "exclude_samples": null,
+      "only_samples": null,
+      "exclude_categories": null,
+      "only_categories": [
+        "sm"
+      ],
+      "no_weights": false,
+      "metadata_hist": false
+    }
+  },
+  "columns": {
+    "ttHTobb_p1j_EFTcenter_5F_tbarlnutqq_negwilson": {
+      "sm": [],
+      "weight1_-10": [],
+      "weight2_-10": [],
+      "weight3_-10": [],
+      "weight4_-10": [],
+      "weight5_-10": [],
+      "weight6_-10": [],
+      "weight7_-10": [],
+      "weight8_-10": [],
+      "weight1_-5": [],
+      "weight2_-5": [],
+      "weight3_-5": [],
+      "weight4_-5": [],
+      "weight5_-5": [],
+      "weight6_-5": [],
+      "weight7_-5": [],
+      "weight8_-5": [],
+      "weight1_5": [],
+      "weight2_5": [],
+      "weight3_5": [],
+      "weight4_5": [],
+      "weight5_5": [],
+      "weight6_5": [],
+      "weight7_5": [],
+      "weight8_5": [],
+      "weight1_10": [],
+      "weight2_10": [],
+      "weight3_10": [],
+      "weight4_10": [],
+      "weight5_10": [],
+      "weight6_10": [],
+      "weight7_10": [],
+      "weight8_10": []
+    }
+  }
+}
