@@ -4,6 +4,6 @@ mem-per-worker: "10GB"
 disk-per-worker: "1GB"
 queue: "short"
 walltime: "00:45:00"
-chunk: 100000
+chunksize: 100000
 ignore-grid-certificate: true
 voms-proxy: null
