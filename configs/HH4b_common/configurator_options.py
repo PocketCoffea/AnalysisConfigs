@@ -3,6 +3,8 @@ sys.path.append("../../")
 from utils.variables_helpers import jet_hists_dict, create_HistConf
 
 from pocket_coffea.lib.columns_manager import ColOut
+from pocket_coffea.parameters.histograms import jet_hists
+from pocket_coffea.lib.hist_manager import HistConf, Axis
 
 variables_dict = {
         # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
@@ -294,15 +296,17 @@ variables_dict_vbf={
         # **create_HistConf("events", "JetVBFLeadingMjjNotFromHiggs_jjMass", bins=100, start=0, stop=2000, label="JetVBFLeadingMjjNotFromHiggs_jjMass"),
 }
 
+
 def get_variables_dict(CLASSIFICATION=False, RANDOM_PT=False, VBF_VARIABLES=False):
     if CLASSIFICATION:
         variables_dict.update(variables_dict_higgs_mass)
     if RANDOM_PT:
         variables_dict.update(variables_dict_random_pt)
+    return variables_dict
 
 
 DEFAULT_COLLECTION_COLUMNS = ["JetGoodMatched", "JetGoodHiggsMatched", "JetGood", "JetGoodHiggs"]
-DEFAULT_COLUMN_PARAMS = [["provenance", "pt", "eta", "phi", "mass", "btagPNetB"] for x in range(len(DEFAULT_COLLECTION))]
+DEFAULT_COLUMN_PARAMS = [["provenance", "pt", "eta", "phi", "mass", "btagPNetB"] for x in range(len(DEFAULT_COLLECTION_COLUMNS))]
 DEFAULT_EVENT_COLS = []
 
 
@@ -310,23 +314,16 @@ def get_columns_list(collection_columns=DEFAULT_COLLECTION_COLUMNS, column_param
     ''' Function to create the column definition for the PocketCoffea Configurator().
     If any of the input options is set to `None`, the default option is used. To not save anything, use `[]`.
 
-    :param: collection_columns : The collections that are to be saved. 
+    :param: collection_columns : The collections that are to be saved.
     :param: column_parameters  : The parameters for each collection to be saved. Should be a list of lists.
                                  One list for each collection.
     :param: event_columns      : parameters to be saved in the `event` section / Event-level parameters
     '''
     assert len(collection_columns) == len(column_parameters)
-    if not collection_columns is list and not column_parameters is list and not event_columns is list:
+    if not isinstance(collection_columns, list) or not isinstance(column_parameters, list) or not isinstance(event_columns, list):
         raise TypeError("Inputs must be lists.")
     columns = []
     for collection, params in zip(collection_columns, column_parameters):
         columns.append(ColOut(collection, params, flatten))
-    columns.append("events",event_columns,flatten)
+    columns.append(ColOut("events", event_columns, flatten))
     return columns
-
-
-
-
-
-
-
