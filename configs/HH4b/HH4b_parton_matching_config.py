@@ -1,30 +1,29 @@
 # for spanet evaluation: pocket-coffea run --cfg HH4b_parton_matching_config.py -e dask@T3_CH_PSI --custom-run-options params/t3_run_options.yaml -o /work/mmalucch/out_test --executor-custom-setup onnx_executor.py
+import os
+import sys
 
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
     get_HLTsel,
 )
-from pocket_coffea.parameters.histograms import *
-from pocket_coffea.parameters.cuts import passthrough
-from pocket_coffea.lib.columns_manager import ColOut
+# from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters import defaults
 
 from workflow import HH4bbQuarkMatchingProcessor
-from custom_cut_functions import *
-from custom_cuts import *
 
-from .HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
+sys.path.append("../")
+from HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
+from HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
 
-import os
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 
-CLASSIFICATION = False
+CLASSIFICATION = True
 TIGHT_CUTS = False
 RANDOM_PT = True
-SAVE_CHUNK = True
+SAVE_CHUNK = False
 
 print("CLASSIFICATION ", CLASSIFICATION)
 print("TIGHT_CUTS ", TIGHT_CUTS)
@@ -48,12 +47,14 @@ SPANET_MODEL = (
     "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
 )
 
-workflow_options ={
+workflow_options = {
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
-        "spanet_model": SPANET_MODEL,
+        "SPANET_MODEL": SPANET_MODEL,
+        "BKG_MORPHING_DNN_MODEL": "PLACEHOLDER",
+        "VBF_GGF_DNN_MODEL": "PLACEHOLDER",
         "tight_cuts": TIGHT_CUTS,
         "fifth_jet": "pt",
         "random_pt": RANDOM_PT,
@@ -73,7 +74,7 @@ event_cols = []
 if CLASSIFICATION:
     event_cols += ["best_pairing_probability", "second_best_pairing_probability", "Delta_pairing_probabilities"] 
 if RANDOM_PT:
-    for idx name in enumerate(collection_columns):
+    for idx, name in enumerate(collection_columns):
         if not "Matched" in name:
             column_parameters[idx] += ["pt_orig", "mass_orig"]
     event_cols.append("random_pt_weights")
@@ -99,13 +100,13 @@ cfg = Configurator(
                 [
                     # "GluGlutoHHto4B",
                     # "QCD-4Jets",
-                    #"DATA_JetMET_JMENano",
+                    # "DATA_JetMET_JMENano",
                     "DATA_JetMET_JMENano_skimmed",
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    #"GluGlutoHHto4B_spanet",
+                    # "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 # else ["DATA_JetMET_JMENano"]
@@ -123,7 +124,7 @@ cfg = Configurator(
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
     preselections=[
-        hh4b_presel if TIGHT_CUTS == False else hh4b_presel_tight
+        hh4b_presel if TIGHT_CUTS is False else hh4b_presel_tight
     ],
     categories={
         "4b_region": [hh4b_4b_region],  # HERE
@@ -149,7 +150,7 @@ cfg = Configurator(
             "bysample": {},
         }
     },
-    variables = variables_dict,
+    variables=variables_dict,
     columns={
         "common": {
             "inclusive": column_list
