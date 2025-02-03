@@ -8,7 +8,6 @@ from pocket_coffea.lib.deltaR_matching import object_matching
 from custom_cut_functions import *
 from custom_cuts import *
 
-sys.path.append("../../")
 from utils.parton_matching_function import get_parton_last_copy
 from utils.spanet_evaluation_functions import get_pairing_information, get_best_pairings
 from utils.basic_functions import add_fields

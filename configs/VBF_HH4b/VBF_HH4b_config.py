@@ -1,3 +1,6 @@
+import os
+import sys
+
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import (
     get_HLTsel,
@@ -7,11 +10,12 @@ from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.parameters import defaults
 
-from workflow import VBFHH4bbQuarkMatchingProcessor
-from custom_cut_functions import *
-from custom_cuts import *
+# from workflow import VBFHH4bQuarkMatchingProcessor
+from workflow_child import VBFHH4bProcessor
+# from custom_cut_functions import *
+from custom_cuts import vbf_hh4b_presel
 
-import os
+from configs.HH4b_common.custom_cuts_common import hh4b_2b_region, hh4b_4b_region
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -41,6 +45,8 @@ BKG_MORPHING_DNN_MODEL=""
 
 HIGGS_PARTON_MATCHING=False
 VBF_PARTON_MATCHING = False
+TIGHT_CUTS = False
+CLASSIFICATION = False
 
 jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 
@@ -91,7 +97,7 @@ cfg = Configurator(
         },
         "subsamples": {},
     },
-    workflow=VBFHH4bbQuarkMatchingProcessor,
+    workflow=VBFHH4bProcessor,
     workflow_options={
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
@@ -101,6 +107,9 @@ cfg = Configurator(
         "VBF_GGF_DNN_MODEL": VBF_GGF_DNN_MODEL,
         "BKG_MORPHING_DNN_MODEL": BKG_MORPHING_DNN_MODEL,
         "vbf_parton_matching": VBF_PARTON_MATCHING,
+        "tight_cuts": TIGHT_CUTS,
+        "classification": CLASSIFICATION,  # HERE
+
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),

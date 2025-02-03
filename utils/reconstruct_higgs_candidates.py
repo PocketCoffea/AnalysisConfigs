@@ -4,7 +4,6 @@ import sys
 
 from math import sqrt
 
-sys.path.append("../")
 from utils.basic_functions import add_fields
 
 
@@ -95,7 +94,7 @@ def reconstruct_higgs_from_idx(jet_collection, idx_collection):
     higgs_sub = add_fields(ak.flatten(higgs_sub))
 
     return higgs_lead, higgs_sub, jets_ordered
-    
+
 def possible_higgs_reco(jets, idx_collection):
     """
     Currently `jets` is "JetsGoodHiggs", I just wanted to keep it modular.
@@ -111,7 +110,7 @@ def possible_higgs_reco(jets, idx_collection):
             [[[], []], [[], []], [[], []]]
         )
         return higgs_candidates_unflatten_order
-    
+
     higgs = {}
     # First number indicates to which pairing option the higgs belongs
     # The second number defines, if it is the first or the second higgs
@@ -122,7 +121,7 @@ def possible_higgs_reco(jets, idx_collection):
                         + jets[:, idx_collection[pairing][higgs_pos][1]],
                         1,
                     )
-    # Indices from comb_idx !! NOT CORRESPONDING TO b-jets !! 
+    # Indices from comb_idx !! NOT CORRESPONDING TO b-jets !!
     higgs_pair_0 = ak.concatenate([higgs["00"], higgs["01"]], axis=1)
     higgs_pair_1 = ak.concatenate([higgs["10"], higgs["11"]], axis=1)
     higgs_pair_2 = ak.concatenate([higgs["20"], higgs["21"]], axis=1)
@@ -167,10 +166,10 @@ def run2_matching_algorithm(jet_collection):
 
     # if the distance between the two best candidates is less than 30, we do not consider the event
     min_idx = dist_order_idx[:, 0]
-    
+
     leadingHiggs = higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,0]
     subleadingHiggs = higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,1]
-   
+
     # Needed to be able to plot them
     # These parameters are in principle already part of the jets
     for field in ["pt","eta","phi","mass"]:
