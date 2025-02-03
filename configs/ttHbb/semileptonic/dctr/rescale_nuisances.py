@@ -68,10 +68,11 @@ years = list(df["datasets_metadata"]["by_datataking_period"].keys())
 # In this case, we take the number of jets, but the choice is arbitrary
 histo = df["variables"]["nJets"]
 
-year = "2018"
 rescaling_factor = defaultdict(dict)
 for year in years:
     rescaling_factor[year] = defaultdict(dict)
+    if year == "2017":
+        nuisances.append("sf_L1prefiring")
     for nuisance in nuisances:
         for sample in samples_to_rescale:
             datasets = df["datasets_metadata"]["by_datataking_period"][year][sample]
