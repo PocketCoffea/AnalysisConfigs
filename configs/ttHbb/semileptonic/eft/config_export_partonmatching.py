@@ -8,8 +8,11 @@ from pocket_coffea.lib.weights.common.common import common_weights
 from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_QCD_renorm_scale, SF_QCD_factor_scale
 
 import configs
-import configs.ttHbb.semileptonic.common.workflows.workflow_ttHbb_genmatching_full as workflow
 import eft_weights
+import workflow_EFT
+import custom_cuts
+from custom_cuts import semilep_lhe, semilep_lhe_notau
+from workflow_EFT import ttHbbEFTProcessor
 import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut_functions
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
@@ -30,7 +33,12 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
+                                                  f"{localdir}/params/eft_params.yaml",
                                                   update=True)
+
+# Weight for SM
+SMEFT_SM_weight = eft_weights.getSMEFTweight([0.,0.,0.,0.,0.,0.,0.,0.], "SMEFT_toSM")
+
 
 cfg = Configurator(
     parameters = parameters,
@@ -52,7 +60,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = workflow.ttHbbPartonMatchingProcessorFull,
+    workflow = ttHbbEFTProcessor,
     workflow_options = {"parton_jet_max_dR": 0.3,
                         "parton_jet_max_dR_postfsr": 1.0,
                         "dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/ntuples/EFT_export/"},
@@ -67,8 +75,7 @@ cfg = Configurator(
     
     preselections = [semileptonic_presel],
     categories = {
-        "baseline": [passthrough],
-        #"semilep_LHE": [semilep_lhe]
+        "baseline": [semilep_lhe],
     },
 
     weights= {
@@ -84,9 +91,13 @@ cfg = Configurator(
             ],
             "bycategory": {},
         },
-        "bysample": {},
+        "bysample": {
+            "ttHTobb_EFT": {
+                "inclusive" : ["SMEFT_toSM"]
+            },
+        }
     },
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt,SMEFT_SM_weight],
     variations = {
         "weights": {"common": {"inclusive": [], "bycategory": {}}, "bysample": {}},
     },
@@ -143,8 +154,7 @@ cfg = Configurator(
 )
 
 import cloudpickle
-cloudpickle.register_pickle_by_value(workflow)
-cloudpickle.register_pickle_by_value(custom_cut_functions)
+cloudpickle.register_pickle_by_value(workflow_EFT)
 cloudpickle.register_pickle_by_value(custom_cuts)
 cloudpickle.register_pickle_by_value(configs)
-
+cloudpickle.register_pickle_by_value(eft_weights)

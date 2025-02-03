@@ -5,7 +5,7 @@ import awkward as ak
 import vector
 vector.register_numba()
 vector.register_awkward()
-
+from coffea.util import load
 import os
 import argparse
 
@@ -15,14 +15,21 @@ args.add_argument("--input", type=str, required=True)
 args.add_argument("--output", type=str, required=True)
 args.add_argument("--only-datasets", type=str, nargs="+", default=None)
 args.add_argument("--only-categories", type=str, nargs="+", default=None)
+args.add_argument("--dataset-metadata-output", type=str, required=True)
 args = args.parse_args()
 
 os.makedirs(args.output, exist_ok=True)
 basedir= args.input
 datasets =os.listdir(basedir)
 
+# Create the metadata file
+metadata = load(args.dataset_metadata_output)
+sumgenweight = metadata["sum_genweights"]
+
+
 pq_datasets = []
 for d in datasets:
+    print(d)
     if args.only_datasets is not None:
         if d not in args.only_datasets:
             continue
@@ -36,9 +43,9 @@ for d in datasets:
 
 
 # Now we read back the parquet dataset and extract the info we need in a single parquet file
-for dataset in pq_datasets:
+for dataset, pq_dataset in zip(datasets, pq_datasets):
     print(f"Preparing {dataset}")
-    cs = ak.from_parquet(dataset, use_threads=4)
+    cs = ak.from_parquet(pq_dataset, use_threads=4)
     
     partons_initial = ak.zip({"pt": cs["PartonInitial_pt"],
                     "eta": cs["PartonInitial_eta"],
@@ -68,7 +75,7 @@ for dataset in pq_datasets:
                                   "eta": cs["JetGood_eta"],
                                   "phi": cs["JetGood_phi"],
                                   "btag": cs["JetGood_btagDeepFlavB"],
-                                  "m": ak.zeros_like(cs["JetGood_btagDeepFlavB"])},
+                                  "mass": ak.zeros_like(cs["JetGood_btagDeepFlavB"])},
                              with_name='Momentum4D')
 
     jets_matched = ak.zip({"pt": cs["JetGoodMatched_pt"],
@@ -76,7 +83,7 @@ for dataset in pq_datasets:
                                   "phi": cs["JetGoodMatched_phi"],
                                   "btag": cs["JetGoodMatched_btagDeepFlavB"],
                                   "prov": cs["PartonLastCopyMatched_provenance"],
-                                  "m": ak.zeros_like(cs["PartonLastCopyMatched_provenance"])},
+                                  "mass": ak.zeros_like(cs["PartonLastCopyMatched_provenance"])},
                              with_name='Momentum4D')
 
 
@@ -98,20 +105,20 @@ for dataset in pq_datasets:
     lepton_reco = ak.zip({"pt": cs["LeptonGood_pt"],
                                   "eta": cs["LeptonGood_eta"],
                                   "phi": cs["LeptonGood_phi"],
-                                  "m": ak.zeros_like(cs["LeptonGood_pt"])},
+                                  "mass": ak.zeros_like(cs["LeptonGood_pt"])},
                              with_name='Momentum4D')
 
 
     met = ak.zip({"pt": cs["MET_pt"],
                   "eta":  ak.zeros_like(cs["MET_pt"]),
                   "phi": cs["MET_phi"],
-                  "m": ak.zeros_like(cs["MET_pt"])},
+                  "mass": ak.zeros_like(cs["MET_pt"])},
              with_name='Momentum4D')
 
     higgs = ak.zip({"pt": cs["HiggsGen_pt"],
                     "eta": cs["HiggsGen_eta"],
                     "phi": cs["HiggsGen_phi"],
-                    "m": cs["HiggsGen_mass"]},
+                    "mass": cs["HiggsGen_mass"]},
                    with_name='Momentum4D')
 
 
@@ -150,15 +157,14 @@ for dataset in pq_datasets:
             "partons_initial": partons_initial,
             "partons_lastcopy": partons_lastcopy,
             "generator_info": generator_info,
-            "lepton_gen":lepton_partons,
+            "lepton_gen":lepton_gen,
             "lepton_reco": lepton_reco,
             "met": met,
             "higgs": higgs,
             "top": top,
             "antitop": antitop,
           #  "isr": isr,
-            "weight": cs["weight"]
+            "weight": cs["weight"] / sumgenweight[dataset]
             }, depth_limit=1)
 
-
-    ak.to_parquet(dfout, f"{args.out}/{dataset}_{name}.parquet")
+    ak.to_parquet(dfout, f"{args.output}/{dataset}_{args.name}.parquet")

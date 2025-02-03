@@ -1,6 +1,6 @@
 import awkward as ak
 import numpy as np
-from pocket_coffea.lib.weights_manager import WeightCustom
+from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
 
 #This function can be used only for the EFT center simulation, since in the SM center one you have one LHEReweightingweight
 #less, since in the SMc simulationthe weight 0,0,..,0 is not calculated since that is already where the simulation is centered 
@@ -58,17 +58,19 @@ class EFTStructure:
         return (self.A_matrix_inv @ weights[:,:,None]).squeeze()
 
 
-        
-def getSMEFTweight(wilson_coeff):
+          
+def getSMEFTweight(wilson_coeff, name=None):
     """
     Get the weight for the i-th SMEFT parameter point
     """
-    name = f"SMEFT_weight_{'_'.join([str(x) for x in wilson_coeff])}"
+    if name is None:
+        name = f"SMEFT_weight_{'_'.join([str(x) for x in wilson_coeff])}"
     wilson_vector = EFTStructure.get_wilson_vector(wilson_coeff)
-    return WeightCustom(
-        name = name,
-        function = lambda params, events,size, metadata, shape_variation: [
-            (name, ak.to_numpy(events["EFT_struct"]) @ wilson_vector) ]
-    )    
-
+    print("Wilson vector: ", wilson_vector)
+    return WeightLambda.wrap_func(
+        name=name,
+        function=lambda params, metadata, events,size, shape_variation:
+               (ak.to_numpy(events["EFT_struct"]) @ wilson_vector),
+        has_variations = False
+    )
 

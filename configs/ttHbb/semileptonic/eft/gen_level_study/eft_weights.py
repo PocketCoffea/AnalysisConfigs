@@ -2,6 +2,8 @@ import awkward as ak
 import numpy as np
 from pocket_coffea.lib.weights_manager import WeightCustom
 
+
+
 #This function can be used only for the EFT center simulation, since in the SM center one you have one LHEReweightingweight
 #less, since in the SMc simulationthe weight 0,0,..,0 is not calculated since that is already where the simulation is centered 
 
@@ -58,7 +60,7 @@ class EFTStructure:
         return (self.A_matrix_inv @ weights[:,:,None]).squeeze()
 
 
-        
+
 def getSMEFTweight(wilson_coeff):
     """
     Get the weight for the i-th SMEFT parameter point
