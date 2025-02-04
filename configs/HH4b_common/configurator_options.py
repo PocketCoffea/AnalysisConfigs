@@ -1,5 +1,4 @@
 import sys
-sys.path.append("../../")
 from utils.variables_helpers import jet_hists_dict, create_HistConf
 
 from pocket_coffea.lib.columns_manager import ColOut

@@ -2,7 +2,6 @@ import numpy as np
 import awkward as ak
 import sys
 
-sys.path.append("../")
 from utils.prediction_selection import extract_predictions
 
 

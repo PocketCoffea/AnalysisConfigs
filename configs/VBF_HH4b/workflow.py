@@ -9,7 +9,6 @@ from pocket_coffea.lib.deltaR_matching import object_matching
 from custom_cut_functions import *
 from custom_cuts import *
 
-sys.path.append("../../")
 from utils.parton_matching_function import get_parton_last_copy
 from utils.spanet_evaluation_functions import get_pairing_information, get_best_pairings
 from utils.basic_functions import add_fields
@@ -18,10 +17,10 @@ from utils.reconstruct_higgs_candidates import (
     reconstruct_higgs_from_idx,
 )
 from utils.inference_session_onnx import get_model_session
-from vbf_matching import get_jets_no_higgs
+from utils.vbf_matching import get_jets_no_higgs
 
 
-class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
+class VBFHH4bQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         self.dr_min = self.workflow_options["parton_jet_min_dR"]
@@ -515,7 +514,7 @@ class VBFHH4bbQuarkMatchingProcessor(BaseProcessorABC):
         )
 
         # TODO: Implement the sigma mbb calculation
-        
+
         # jet1_up = jet1*(1+jet_pnet_ptres_b.at(j1_index));
         # jet2_up = jet2*(1+jet_pnet_ptres_b.at(j2_index));
 

@@ -1,12 +1,11 @@
 import awkward as ak
-from dask.distributed import get_worker
 import sys
 import numpy as np
 
 from pocket_coffea.workflows.base import BaseProcessorABC
 from pocket_coffea.lib.deltaR_matching import object_matching
 
-from custom_cuts_common import lepton_selection, jet_selection_nopu
+from .custom_cut_functions_common import lepton_selection, jet_selection_nopu
 
 sys.path.append("../../")
 from utils.parton_matching_function import get_parton_last_copy
@@ -15,9 +14,9 @@ from utils.basic_functions import add_fields
 from utils.reconstruct_higgs_candidates import (
     reconstruct_higgs_from_provenance,
     reconstruct_higgs_from_idx,
+    run2_matching_algorithm,
 )
 from utils.inference_session_onnx import get_model_session
-from vbf_matching import get_jets_no_higgs
 
 
 class HH4bCommonProcessor(BaseProcessorABC):
@@ -490,6 +489,9 @@ class HH4bCommonProcessor(BaseProcessorABC):
 
         # Float_t sigma_mbb = (sqrt(sigma_hbbCand_A*sigma_hbbCand_A + sigma_hbbCand_B*sigma_hbbCand_B));
 
+        # traslate the commmeted snippet above to python awkward array
+        # jet1_up = self.events.JetGoodFromHiggsOrdered[:, 0] * (
+
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.SPANET_MODEL:
             # do truth matching to get b-jet from Higgs
@@ -506,7 +508,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_provenance(self.events.JetGoodMatched)
 
-            matched_jet_higgs_idx_not_none = self.events.JetGoodMatched.index[
+            self.matched_jet_higgs_idx_not_none = self.events.JetGoodMatched.index[
                 ~ak.is_none(self.events.JetGoodMatched.index, axis=1)
             ]
         else:
@@ -544,7 +546,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
-            matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
+            self.matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
 
         self.events["nJetGoodHiggsMatched"] = ak.num(
             self.events.JetGoodHiggsMatched, axis=1

@@ -5,8 +5,7 @@ import numpy as np
 sys.path.append("../")
 from HH4b_common.workflow_common import HH4bCommonProcessor
 
-
-class HH4bbQuarkMatchingProcessor(HH4bCommonProcessor):
+class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         self.random_pt = self.workflow_options["random_pt"]
@@ -75,4 +74,3 @@ class HH4bbQuarkMatchingProcessor(HH4bCommonProcessor):
                         self.events.JetGood.pt*random_weights,
                         "pt",
                         )
-    

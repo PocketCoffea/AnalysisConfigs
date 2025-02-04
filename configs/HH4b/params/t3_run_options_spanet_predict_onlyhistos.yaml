@@ -5,5 +5,5 @@ disk-per-worker: "1GB"
 queue: "standard"
 walltime: "12:00:00"
 adaptive: false
-chunk: 400000
+chunksize: 400000
 retries: 3

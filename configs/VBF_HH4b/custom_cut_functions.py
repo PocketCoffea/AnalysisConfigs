@@ -1,6 +1,5 @@
 from collections.abc import Iterable
 import awkward as ak
-from vbf_matching import mask_efficiency
 
 
 def vbf_hh4b_presel_cuts(events, params, **kwargs):
@@ -41,31 +40,10 @@ def vbf_hh4b_presel_cuts(events, params, **kwargs):
     return ak.where(ak.is_none(mask), False, mask)
 
 
-def hh4b_2b_cuts(events, params, **kwargs):
-    jets_btag_order = events.JetGoodHiggs
-
-    mask = (jets_btag_order.btagPNetB[:, 2] < params["third_pnet_jet"]) & (
-        jets_btag_order.btagPNetB[:, 3] < params["fourth_pnet_jet"]
-    )
-
-    # Pad None values with False
-    return ak.where(ak.is_none(mask), False, mask)
-
-
-def hh4b_4b_cuts(events, params, **kwargs):
-    jets_btag_order = events.JetGoodHiggs
-
-    mask = (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"]) & (
-        jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"]
-    )
-
-    # Pad None values with False
-    return ak.where(ak.is_none(mask), False, mask)
-
 def semiTight_leadingPt(events, params, **kwargs):
     mask_mjj = (events.JetVBFLeadingPtNotFromHiggs_jjMass > params['mjj'])
     mask_deltaEta_jj = (events.JetVBFLeadingPtNotFromHiggs_deltaEta > params['deltaEta_jj'])
-    
+
     mask = mask_mjj & mask_deltaEta_jj
 
     # Pad None values with False
