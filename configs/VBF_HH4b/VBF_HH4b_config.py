@@ -11,8 +11,7 @@ from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.parameters import defaults
 
 # from workflow import VBFHH4bQuarkMatchingProcessor
-from workflow_child import VBFHH4bProcessor
-# from custom_cut_functions import *
+from workflow import VBFHH4bProcessor
 from custom_cuts import vbf_hh4b_presel
 
 from configs.HH4b_common.custom_cuts_common import hh4b_2b_region, hh4b_4b_region
