@@ -13,9 +13,5 @@ class ttHbbEFTProcessor(ttHbbPartonMatchingProcessorFull):
     def process_extra_after_presel(self, variation):
         super().process_extra_after_presel(variation=variation)
         if self._sample == "ttHTobb_EFT":
-            self.events = ak.with_field(self.events,self.eft_structure.get_structure_constants(ak.to_numpy(self.events["LHEReweightingWeight"])), "EFT_struct")
+            self.events["EFT_struct"] = ak.Array(self.eft_structure.get_structure_constants(ak.to_numpy(self.events["LHEReweightingWeight"])))
             
-            print("EFT struct: ", self.events["EFT_struct"])
-            print("structure constants: ", self.eft_structure.get_structure_constants(ak.to_numpy(self.events["LHEReweightingWeight"])))
-            breakpoint()
-
