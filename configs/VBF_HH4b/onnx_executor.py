@@ -1,6 +1,6 @@
 from VBF_HH4b_config import SPANET_MODEL, VBF_GGF_DNN_MODEL, BKG_MORPHING_DNN_MODEL
 
-from configs.HH4b_common.onnx_executor_common import OnnxExecutorFactory
+from utils.onnx_executor_common import OnnxExecutorFactory
 
 onnx_model_dict={
     "SPANET": SPANET_MODEL,

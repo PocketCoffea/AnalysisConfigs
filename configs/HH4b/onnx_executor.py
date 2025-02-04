@@ -1,6 +1,6 @@
 from HH4b_parton_matching_config import SPANET_MODEL
 
-from configs.HH4b_common.onnx_executor_common import OnnxExecutorFactory
+from utils.onnx_executor_common import OnnxExecutorFactory
 
 onnx_model_dict={
     "SPANET": SPANET_MODEL,

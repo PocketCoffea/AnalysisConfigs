@@ -1,6 +1,6 @@
 from pocket_coffea.executors.executors_T3_CH_PSI import DaskExecutorFactory
 
-from .inference_session_onnx import WorkerInferenceSessionPlugin
+from utils.inference_session_onnx import WorkerInferenceSessionPlugin
 
 
 class OnnxExecutorFactory(DaskExecutorFactory):

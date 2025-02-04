@@ -2,7 +2,6 @@ import awkward as ak
 import sys
 import numpy as np
 
-sys.path.append("../")
 from HH4b_common.workflow_common import HH4bCommonProcessor
 
 class HH4bbQuarkMatchingProcessor(BaseProcessorABC):

@@ -324,5 +324,6 @@ def get_columns_list(collection_columns=DEFAULT_COLLECTION_COLUMNS, column_param
     columns = []
     for collection, params in zip(collection_columns, column_parameters):
         columns.append(ColOut(collection, params, flatten))
-    columns.append(ColOut("events", event_columns, flatten))
+    if event_columns:
+        columns.append(ColOut("events", event_columns, flatten))
     return columns
