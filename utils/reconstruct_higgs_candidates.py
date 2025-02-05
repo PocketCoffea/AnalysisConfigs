@@ -167,14 +167,8 @@ def run2_matching_algorithm(jet_collection):
     # if the distance between the two best candidates is less than 30, we do not consider the event
     min_idx = dist_order_idx[:, 0]
 
-    leadingHiggs = higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,0]
-    subleadingHiggs = higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,1]
-
-    # Needed to be able to plot them
-    # These parameters are in principle already part of the jets
-    for field in ["pt","eta","phi","mass"]:
-        leadingHiggs = ak.with_field(leadingHiggs, getattr(leadingHiggs, field), field)
-        subleadingHiggs = ak.with_field(subleadingHiggs, getattr(subleadingHiggs, field), field)
+    leadingHiggs = add_fields(higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,0])
+    subleadingHiggs = add_fields(higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,1])
 
     return (
         abs(dist_order[:, 0] - dist_order[:, 1]),

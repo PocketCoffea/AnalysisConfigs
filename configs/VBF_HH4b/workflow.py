@@ -76,10 +76,6 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
                 ak.argsort(self.events.JetVBFNotFromHiggs.pt, axis=1, ascending=False)
             ]
 
-            self.events["HH"] = add_fields(
-                self.events.HiggsLeading + self.events.HiggsSubLeading
-            )
-
             if self.vbf_parton_matching:
                 self.do_vbf_parton_matching(which_bquark=self.which_bquark)
 
@@ -217,4 +213,3 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
                 )
                 / (self.events.JetVBFLeadingPtNotFromHiggs_deltaEta) ** 2
             )
-            print("HH_centrality", self.events.HH_centrality)
