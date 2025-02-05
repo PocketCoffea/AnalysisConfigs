@@ -18,17 +18,17 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
 
         self.events["JetVBF_matching"] = self.events.Jet
         self.events["JetVBF_matching"] = jet_selection_nopu(
-            self.events, "JetVBF_matching", self.params
+            self.events, "JetVBF_matching", self.params, tight_cuts=self.tight_cuts
         )
 
         self.events["JetGoodVBF"] = self.events.Jet
         self.events["JetGoodVBF"] = jet_selection_nopu(
-            self.events, "JetGoodVBF", self.params
+            self.events, "JetGoodVBF", self.params, tight_cuts=self.tight_cuts
         )
 
         self.events["JetVBF_generalSelection"] = self.events.Jet
         self.events["JetVBF_generalSelection"] = jet_selection_nopu(
-            self.events, "JetVBF_generalSelection", self.params
+            self.events, "JetVBF_generalSelection", self.params, tight_cuts=self.tight_cuts
         )
 
     def count_objects(self, variation):
@@ -68,7 +68,7 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
             ]
             # apply selection to the jets not from Higgs
             self.events["JetVBFNotFromHiggs"] = jet_selection_nopu(
-                self.events, "JetVBFNotFromHiggs", self.params
+                self.events, "JetVBFNotFromHiggs", self.params, tight_cuts=self.tight_cuts
             )
 
             # order in pt

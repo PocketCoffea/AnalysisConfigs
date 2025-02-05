@@ -15,6 +15,22 @@ vbf_hh4b_presel = Cut(
         "pt_jet2": 45,
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
+        "tight_cuts": False,
+    },
+    function=cuts_f.vbf_hh4b_presel_cuts,
+)
+
+vbf_hh4b_presel_tight = Cut(
+    name="hh4b",
+    params={
+        "njetgood": 4,
+        "njetvbf": 6,
+        "pt_jet0": 80,
+        "pt_jet1": 60,
+        "pt_jet2": 45,
+        "pt_jet3": 35,
+        "mean_pnet_jet": 0.65,
+        "tight_cuts": True,
     },
     function=cuts_f.vbf_hh4b_presel_cuts,
 )

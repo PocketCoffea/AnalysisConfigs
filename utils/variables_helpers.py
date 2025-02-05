@@ -1,3 +1,6 @@
+from pocket_coffea.parameters.histograms import jet_hists
+from pocket_coffea.lib.hist_manager import HistConf, Axis
+
 # Combine jet_hists from position start to position end
 def jet_hists_dict(coll="JetGood", start=1, end=5):
     combined_dict = {}

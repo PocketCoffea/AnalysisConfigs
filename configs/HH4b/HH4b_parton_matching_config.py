@@ -11,9 +11,8 @@ from pocket_coffea.parameters import defaults
 
 from workflow import HH4bbQuarkMatchingProcessor
 
-sys.path.append("../")
-from HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
-from HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
+from configs.HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
+from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
 
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -53,8 +52,8 @@ workflow_options = {
         "which_bquark": "last",
         "classification": CLASSIFICATION,  # HERE
         "SPANET_MODEL": SPANET_MODEL,
-        "BKG_MORPHING_DNN_MODEL": "PLACEHOLDER",
-        "VBF_GGF_DNN_MODEL": "PLACEHOLDER",
+        "BKG_MORPHING_DNN_MODEL": "",
+        "VBF_GGF_DNN_MODEL": "",
         "tight_cuts": TIGHT_CUTS,
         "fifth_jet": "pt",
         "random_pt": RANDOM_PT,
@@ -72,7 +71,7 @@ collection_columns = ["JetGoodMatched", "JetGoodHiggsMatched", "JetGood", "JetGo
 column_parameters = DEFAULT_COLUMN_PARAMS
 event_cols = []
 if CLASSIFICATION:
-    event_cols += ["best_pairing_probability", "second_best_pairing_probability", "Delta_pairing_probabilities"] 
+    event_cols += ["best_pairing_probability", "second_best_pairing_probability", "Delta_pairing_probabilities"]
 if RANDOM_PT:
     for idx, name in enumerate(collection_columns):
         if not "Matched" in name:

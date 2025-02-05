@@ -12,10 +12,11 @@ from pocket_coffea.parameters import defaults
 from pocket_coffea.lib.weights.common.common import common_weights
 
 from workflow import VBFHH4bProcessor
-from custom_cuts import vbf_hh4b_presel
+from custom_cuts import vbf_hh4b_presel, vbf_hh4b_presel_tight
 
 from configs.HH4b_common.custom_cuts_common import hh4b_2b_region, hh4b_4b_region
 from configs.HH4b_common.custom_weights import bkg_morphing_dnn_weight
+from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -47,31 +48,35 @@ HIGGS_PARTON_MATCHING = False
 VBF_PARTON_MATCHING = False
 TIGHT_CUTS = False
 CLASSIFICATION = False
+SAVE_CHUNK = False
+
+workflow_options = {
+        "parton_jet_min_dR": 0.4,
+        "max_num_jets": 5,
+        "which_bquark": "last",
+        "classification": CLASSIFICATION,  # HERE
+        "SPANET_MODEL": SPANET_MODEL,
+        "BKG_MORPHING_DNN_MODEL": BKG_MORPHING_DNN_MODEL,
+        "VBF_GGF_DNN_MODEL": VBF_GGF_DNN_MODEL,
+        "tight_cuts": TIGHT_CUTS,
+        "fifth_jet": "pt",
+        "donotscale_sumgenweights": True,
+        "vbf_parton_matching": VBF_PARTON_MATCHING
+
+    }
+if SAVE_CHUNK:
+    # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/training_samples/GluGlutoHHto4B_spanet_loose_03_17"
+    pass
 
 jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 
+variables_dict = get_variables_dict(CLASSIFICATION, False, False)
 
-# Combine jet_hists from position start to position end
-def jet_hists_dict(coll="JetGood", start=1, end=5):
-    combined_dict = {}
-    for pos in range(start, end + 1):
-        combined_dict.update(jet_hists(coll=coll, pos=pos))
-    return combined_dict
+collection_columns = ["JetGoodMatched", "JetGoodHiggsMatched", "JetGood", "JetGoodHiggs"]
+column_parameters = DEFAULT_COLUMN_PARAMS
+event_cols = []
 
-
-# Helper function to create HistConf() for a specific configuration
-def create_HistConf(coll, field, pos=None, bins=60, start=0, stop=1, label=None):
-    axis_params = {
-        "coll": coll,
-        "field": field,
-        "bins": bins,
-        "start": start,
-        "stop": stop,
-        "label": label if label else field,
-    }
-    if pos is not None:
-        axis_params["pos"] = pos
-    return {label: HistConf([Axis(**axis_params)])}
+column_list = get_columns_list(collection_columns, column_parameters, event_cols, SAVE_CHUNK)
 
 
 cfg = Configurator(
@@ -81,13 +86,14 @@ cfg = Configurator(
             f"{localdir}/datasets/QCD.json",
             f"{localdir}/datasets/signal_VBF_HH4b.json",
             f"{localdir}/datasets/signal_ggF_HH4b_local.json",
+            f"{localdir}/datasets/DATA_JetMET_skimmed.json",
         ],
         "filter": {
             "samples": (
                 [
                     "VBF_HHto4B",
+                    # "DATA_JetMET_JMENano_skimmed",
                     # "GluGlutoHHto4B",
-                    # TODO qcd
                 ]
             ),
             "samples_exclude": [],
@@ -96,22 +102,11 @@ cfg = Configurator(
         "subsamples": {},
     },
     workflow=VBFHH4bProcessor,
-    workflow_options={
-        "parton_jet_min_dR": 0.4,
-        "max_num_jets": 5,
-        "which_bquark": "last",
-        "fifth_jet": "btag",
-        "SPANET_MODEL": SPANET_MODEL if not HIGGS_PARTON_MATCHING else None,
-        "VBF_GGF_DNN_MODEL": VBF_GGF_DNN_MODEL,
-        "BKG_MORPHING_DNN_MODEL": BKG_MORPHING_DNN_MODEL,
-        "vbf_parton_matching": VBF_PARTON_MATCHING,
-        "tight_cuts": TIGHT_CUTS,
-        "classification": CLASSIFICATION,  # HERE
-    },
+    workflow_options=workflow_options,
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
-    preselections=[vbf_hh4b_presel],
+    preselections=[vbf_hh4b_presel if TIGHT_CUTS is False else vbf_hh4b_presel_tight],
     categories={
         **{"4b_region": [hh4b_4b_region]},
         # **{f"4b_semiTight_LeadingPt_region": [hh4b_4b_region, semiTight_leadingPt]},
@@ -156,181 +151,15 @@ cfg = Configurator(
             "bysample": {},
         }
     },
-    variables={
-        # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
-        # **jet_hists_dict(coll="JetGood", start=1, end=5),
-        # **create_HistConf("JetGoodVBF", "eta", bins=60, start=-5, stop=5, label="JetGoodVBFeta"),
-        # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetGoodVBFQvG_0"),
-        # **create_HistConf("JetGoodVBF", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetGoodVBFQvG_1"),
-        # **create_HistConf("events", "deltaEta", bins=60, start=5, stop=10, label="JetGoodVBFdeltaEta"),
-        # **create_HistConf("JetVBF_generalSelection", "eta", bins=60, start=-5, stop=5, label="JetVBFgeneralSelectionEta"),
-        # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=0, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_0"),
-        # **create_HistConf("JetVBF_generalSelection", "btagPNetQvG", pos=1, bins=60, start=0, stop=1, label="JetVBFgeneralSelectionQvG_1"),
-        #
-        #
-        # **create_HistConf(
-        #     "JetVBF_matched",
-        #     "eta",
-        #     bins=60,
-        #     start=-5,
-        #     stop=5,
-        #     label="JetVBF_matched_eta",
-        # ),
-        # **create_HistConf(
-        #     "events",
-        #     "etaProduct",
-        #     bins=5,
-        #     start=-2.5,
-        #     stop=2.5,
-        #     label="JetVBF_matched_eta_product",
-        # ),
-        # **create_HistConf(
-        #     "JetVBF_matched",
-        #     "pt",
-        #     bins=100,
-        #     start=0,
-        #     stop=1000,
-        #     label="JetVBF_matched_pt",
-        # ),
-        # **create_HistConf(
-        #     "JetVBF_matched",
-        #     "btagPNetQvG",
-        #     pos=0,
-        #     bins=60,
-        #     start=0,
-        #     stop=1,
-        #     label="JetVBF_matchedQvG_0",
-        # ),
-        # **create_HistConf(
-        #     "JetVBF_matched",
-        #     "btagPNetQvG",
-        #     pos=1,
-        #     bins=60,
-        #     start=0,
-        #     stop=1,
-        #     label="JetVBF_matchedQvG_1",
-        # ),
-        # **create_HistConf(
-        #     "quarkVBF_matched",
-        #     "eta",
-        #     bins=60,
-        #     start=-5,
-        #     stop=5,
-        #     label="quarkVBF_matched_Eta",
-        # ),
-        # **create_HistConf(
-        #     "quarkVBF_matched",
-        #     "pt",
-        #     bins=100,
-        #     start=0,
-        #     stop=1000,
-        #     label="quarkVBF_matched_pt",
-        # ),
-        # **create_HistConf(
-        #     "JetVBF_matched",
-        #     "btagPNetB",
-        #     bins=100,
-        #     start=0,
-        #     stop=1,
-        #     label="JetGoodVBF_matched_btag",
-        # ),
-        # **create_HistConf(
-        #     "events", "deltaEta_matched", bins=100, start=0, stop=10, label="deltaEta"
-        # ),
-        # **create_HistConf(
-        #     "events", "jj_mass_matched", bins=100, start=0, stop=5000, label="jj_mass"
-        # ),
-        # **create_HistConf("HH", "mass", bins=100, start=0, stop=2500, label="HH_mass"),
-        # variables from renato
-        # **create_HistConf("events", "HH_deltaR", bins=50, start=0, stop=8, label="HH_deltaR"),
-        # **create_HistConf("events", "H1j1_deltaR", bins=50, start=0, stop=8, label="H1j1_deltaR"),
-        # **create_HistConf("events", "H1j2_deltaR", bins=50, start=0, stop=8, label="H1j2_deltaR"),
-        # **create_HistConf("events", "H2j1_deltaR", bins=50, start=0, stop=8, label="H2j1_deltaR"),
-        # **create_HistConf("events", "HH_centrality", bins=50, start=0, stop=1, label="HH_centrality"),
-        # **create_HistConf("HH", "pt", bins=100, start=0, stop=800, label="HH_pt"),
-        # **create_HistConf("HH", "eta", bins=60, start=-6, stop=6, label="HH_eta"),
-        # **create_HistConf("HH", "phi", bins=60, start=-5, stop=5, label="HH_phi"),
-        # **create_HistConf("HH", "mass", bins=100, start=0, stop=2200, label="HH_mass"),
-        # **create_HistConf("HiggsLeading", "pt", bins=100, start=0, stop=800, label="HiggsLeading_pt"),
-        # **create_HistConf("HiggsLeading", "eta", bins=60, start=-5, stop=5, label="HiggsLeading_eta"),
-        # **create_HistConf("HiggsLeading", "phi", bins=60, start=-5, stop=5, label="HiggsLeading_phi"),
-        # **create_HistConf("HiggsLeading", "mass", bins=100, start=0, stop=500, label="HiggsLeading_mass"),
-        # **create_HistConf("HiggsSubLeading", "pt", bins=100, start=0, stop=800, label="HiggsSubLeading_pt"),
-        # **create_HistConf("HiggsSubLeading", "eta", bins=60, start=-5, stop=5, label="HiggsSubLeading_eta"),
-        # **create_HistConf("HiggsSubLeading", "phi", bins=60, start=-5, stop=5, label="HiggsSubLeading_phi"),
-        # **create_HistConf("HiggsSubLeading", "mass", bins=100, start=0, stop=500, label="HiggsSubLeading_mass"),
-        # **create_HistConf("Jet", "pt", bins=100, pos=0, start=0, stop=800, label="Jet_pt0"),
-        # **create_HistConf("Jet", "pt", bins=100, pos=1, start=0, stop=800, label="Jet_pt1"),
-        # **create_HistConf("Jet", "eta", bins=60, pos=0, start=-5, stop=5, label="Jet_eta0"),
-        # **create_HistConf("Jet", "eta", bins=60, pos=1, start=-5, stop=5, label="Jet_eta1"),
-        # **create_HistConf("Jet", "phi", bins=60, pos=0, start=-5, stop=5, label="Jet_phi0"),
-        # **create_HistConf("Jet", "phi", bins=60, pos=1, start=-5, stop=5, label="Jet_phi1"),
-        # **create_HistConf("Jet", "mass", bins=100, pos=0, start=0, stop=150, label="Jet_mass0"),
-        # **create_HistConf("Jet", "mass", bins=100, pos=1, start=0, stop=150, label="Jet_mass1"),
-        # **create_HistConf("Jet", "btagPNetB", pos=0, bins=100, start=0, stop=1, label="Jet_btagPNetB0"),
-        # **create_HistConf("Jet", "btagPNetB", pos=1, bins=100, start=0, stop=1, label="Jet_btagPNetB1"),
-        # **create_HistConf("Jet", "btagPNetQvG", pos=0, bins=100, start=0, stop=1, label="Jet_btagPNetQvG0"),
-        # **create_HistConf("Jet", "btagPNetQvG", pos=1, bins=100, start=0, stop=1, label="Jet_btagPNetQvG1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "pt", bins=100, pos=0, start=0, stop=700, label="JetGoodFromHiggsOrdered_pt0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "eta", bins=60, pos=0, start=-5, stop=5, label="JetGoodFromHiggsOrdered_eta0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "phi", bins=60, pos=0, start=-5, stop=5, label="JetGoodFromHiggsOrdered_phi0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "mass", bins=100, pos=0, start=0, stop=80, label="JetGoodFromHiggsOrdered_mass0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetB", bins=100, pos=0, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetB0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetQvG", bins=100, pos=0, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetQvG0"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "pt", bins=100, pos=1, start=0, stop=700, label="JetGoodFromHiggsOrdered_pt1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "eta", bins=60, pos=1, start=-5, stop=5, label="JetGoodFromHiggsOrdered_eta1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "phi", bins=60, pos=1, start=-5, stop=5, label="JetGoodFromHiggsOrdered_phi1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "mass", bins=100, pos=1, start=0, stop=80, label="JetGoodFromHiggsOrdered_mass1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetB", bins=100, pos=1, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetB1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetQvG", bins=100, pos=1, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetQvG1"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "pt", bins=100, pos=2, start=0, stop=700, label="JetGoodFromHiggsOrdered_pt2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "eta", bins=60, pos=2, start=-5, stop=5, label="JetGoodFromHiggsOrdered_eta2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "phi", bins=60, pos=2, start=-5, stop=5, label="JetGoodFromHiggsOrdered_phi2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "mass", bins=100, pos=2, start=0, stop=80, label="JetGoodFromHiggsOrdered_mass2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetB", bins=100, pos=2, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetB2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetQvG", bins=100, pos=2, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetQvG2"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "pt", bins=100, pos=3, start=0, stop=700, label="JetGoodFromHiggsOrdered_pt3"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "eta", bins=60, pos=3, start=-5, stop=5, label="JetGoodFromHiggsOrdered_eta3"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "phi", bins=60, pos=3, start=-5, stop=5, label="JetGoodFromHiggsOrdered_phi3"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "mass", bins=100, pos=3, start=0, stop=80, label="JetGoodFromHiggsOrdered_mass3"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetB", bins=100, pos=3, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetB3"),
-        # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetQvG", bins=100, pos=3, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetQvG3"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "pt", bins=100, pos=0, start=0, stop=700, label="JetVBFLeadingPtNotFromHiggs_pt0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "eta", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_eta0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "phi", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_phi0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "mass", bins=100, pos=0, start=0, stop=75, label="JetVBFLeadingPtNotFromHiggs_mass0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetB", bins=100, pos=0, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetB0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetQvG", bins=100, pos=0, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetQvG0"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "pt", bins=100, pos=1, start=0, stop=700, label="JetVBFLeadingPtNotFromHiggs_pt1"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "eta", bins=60, pos=1, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_eta1"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "phi", bins=60, pos=1, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_phi1"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "mass", bins=100, pos=1, start=0, stop=75, label="JetVBFLeadingPtNotFromHiggs_mass1"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetB", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetB1"),
-        # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetQvG", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetQvG1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "pt", bins=100, pos=0, start=0, stop=700, label="JetVBFLeadingMjjNotFromHiggs_pt0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "eta", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_eta0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "phi", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_phi0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "mass", bins=100, pos=0, start=0, stop=75, label="JetVBFLeadingMjjNotFromHiggs_mass0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetB", bins=100, pos=0, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetB0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetQvG", bins=100, pos=0, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetQvG0"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "pt", bins=100, pos=1, start=0, stop=700, label="JetVBFLeadingMjjNotFromHiggs_pt1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "eta", bins=60, pos=1, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_eta1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "phi", bins=60, pos=1, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_phi1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "mass", bins=100, pos=1, start=0, stop=75, label="JetVBFLeadingMjjNotFromHiggs_mass1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetB", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetB1"),
-        # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetQvG", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetQvG1"),
-        # **create_HistConf("events", "JetVBFLeadingPtNotFromHiggs_deltaEta", bins=11, start=0, stop=10, label="JetVBFLeadingPtNotFromHiggs_deltaEta"),
-        # **create_HistConf("events", "JetVBFLeadingMjjNotFromHiggs_deltaEta", bins=11, start=0, stop=10, label="JetVBFLeadingMjjNotFromHiggs_deltaEta"),
-        # **create_HistConf("events", "JetVBFLeadingPtNotFromHiggs_jjMass", bins=100, start=0, stop=2000, label="JetVBFLeadingPtNotFromHiggs_jjMass"),
-        # **create_HistConf("events", "JetVBFLeadingMjjNotFromHiggs_jjMass", bins=100, start=0, stop=2000, label="JetVBFLeadingMjjNotFromHiggs_jjMass"),
-    },
+    variables=variables_dict
+    ,
     columns={
         "common": {
             "inclusive": (
                 [
-                    #     ColOut(
-                    #         "events",
-                    #         [
+                        ColOut(
+                            "events",
+                            ["bkg_morphing_dnn_weight"])
                     #             "etaProduct",
                     #             "JetVBFLeadingPtNotFromHiggs_deltaEta",
                     #             "JetVBFLeadingMjjNotFromHiggs_deltaEta",

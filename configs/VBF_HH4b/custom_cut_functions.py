@@ -13,7 +13,11 @@ def vbf_hh4b_presel_cuts(events, params, **kwargs):
 
     # convert false to None
     mask_6jet_nolep_none = ak.mask(mask_6jet_nolep, mask_6jet_nolep)
-    jets_btag_order = events[mask_6jet_nolep_none].JetGood  # HERE_OLD_CUTS JetGoodHiggs
+    jets_btag_order = (
+        events[mask_6jet_nolep_none].JetGood
+        if not params["tight_cuts"]
+        else events[mask_6jet_nolep_none].JetGoodHiggs
+    )
 
     jets_pt_order = jets_btag_order[
         ak.argsort(jets_btag_order.pt, axis=1, ascending=False)
