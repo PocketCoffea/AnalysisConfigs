@@ -69,7 +69,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
         self.events["JetGood"] = self.events.Jet
 
         self.events["JetGood"] = jet_selection_nopu(
-            self.events, "JetGood", self.params, tight_cuts=self.tight_cuts
+            self.events, "Jet", self.params, tight_cuts=self.tight_cuts
         )
 
         self.events["ElectronGood"] = lepton_selection(

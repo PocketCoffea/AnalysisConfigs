@@ -4,7 +4,7 @@ import numpy as np
 
 from HH4b_common.workflow_common import HH4bCommonProcessor
 
-class HH4bbQuarkMatchingProcessor(BaseProcessorABC):
+class HH4bbQuarkMatchingProcessor(HH4bCommonProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         self.random_pt = self.workflow_options["random_pt"]

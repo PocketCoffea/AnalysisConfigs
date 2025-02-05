@@ -43,8 +43,12 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 SPANET_MODEL = (
-    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
+    ""
+    # "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
 )
+
+VBF_GGF_DNN_MODEL="/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
+BKG_MORPHING_DNN_MODEL="/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx"
 
 workflow_options = {
         "parton_jet_min_dR": 0.4,
