@@ -9,12 +9,13 @@ from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.parameters import defaults
+from pocket_coffea.lib.weights.common.common import common_weights
 
-# from workflow import VBFHH4bQuarkMatchingProcessor
 from workflow import VBFHH4bProcessor
 from custom_cuts import vbf_hh4b_presel
 
 from configs.HH4b_common.custom_cuts_common import hh4b_2b_region, hh4b_4b_region
+from configs.HH4b_common.custom_weights import bkg_morphing_dnn_weight
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,12 +38,12 @@ parameters = defaults.merge_parameters_from_files(
 SPANET_MODEL = (
     "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx"
 )
-VBF_GGF_DNN_MODEL="/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
-BKG_MORPHING_DNN_MODEL="/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx"
-VBF_GGF_DNN_MODEL=""
-BKG_MORPHING_DNN_MODEL=""
+VBF_GGF_DNN_MODEL = "/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
+BKG_MORPHING_DNN_MODEL = "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx"
+VBF_GGF_DNN_MODEL = ""
+# BKG_MORPHING_DNN_MODEL=""
 
-HIGGS_PARTON_MATCHING=False
+HIGGS_PARTON_MATCHING = False
 VBF_PARTON_MATCHING = False
 TIGHT_CUTS = False
 CLASSIFICATION = False
@@ -54,9 +55,7 @@ jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 def jet_hists_dict(coll="JetGood", start=1, end=5):
     combined_dict = {}
     for pos in range(start, end + 1):
-        combined_dict.update(
-            jet_hists(coll=coll, pos=pos)
-        )
+        combined_dict.update(jet_hists(coll=coll, pos=pos))
     return combined_dict
 
 
@@ -108,7 +107,6 @@ cfg = Configurator(
         "vbf_parton_matching": VBF_PARTON_MATCHING,
         "tight_cuts": TIGHT_CUTS,
         "classification": CLASSIFICATION,  # HERE
-
     },
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
@@ -118,10 +116,6 @@ cfg = Configurator(
         **{"4b_region": [hh4b_4b_region]},
         # **{f"4b_semiTight_LeadingPt_region": [hh4b_4b_region, semiTight_leadingPt]},
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]},
-
-
-
-
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]}
         # **{"4b_VBFtight_region": [hh4b_4b_region, VBFtight_region]},
         # **{"4b_VBFtight_region": [hh4b_4b_region, vbf_wrapper()]},
@@ -140,12 +134,14 @@ cfg = Configurator(
         # **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # "2b_region": [hh4b_2b_region],
     },
+    weights_classes=common_weights + [bkg_morphing_dnn_weight],
     weights={
         "common": {
             "inclusive": [
-                "genWeight",
-                "lumi",
-                "XS",
+                # "genWeight",
+                # "lumi",
+                # "XS",
+                "bkg_morphing_dnn_weight",
             ],
             "bycategory": {},
         },
@@ -245,30 +241,24 @@ cfg = Configurator(
         #     "events", "jj_mass_matched", bins=100, start=0, stop=5000, label="jj_mass"
         # ),
         # **create_HistConf("HH", "mass", bins=100, start=0, stop=2500, label="HH_mass"),
-
-
         # variables from renato
         # **create_HistConf("events", "HH_deltaR", bins=50, start=0, stop=8, label="HH_deltaR"),
         # **create_HistConf("events", "H1j1_deltaR", bins=50, start=0, stop=8, label="H1j1_deltaR"),
         # **create_HistConf("events", "H1j2_deltaR", bins=50, start=0, stop=8, label="H1j2_deltaR"),
         # **create_HistConf("events", "H2j1_deltaR", bins=50, start=0, stop=8, label="H2j1_deltaR"),
         # **create_HistConf("events", "HH_centrality", bins=50, start=0, stop=1, label="HH_centrality"),
-
         # **create_HistConf("HH", "pt", bins=100, start=0, stop=800, label="HH_pt"),
         # **create_HistConf("HH", "eta", bins=60, start=-6, stop=6, label="HH_eta"),
         # **create_HistConf("HH", "phi", bins=60, start=-5, stop=5, label="HH_phi"),
         # **create_HistConf("HH", "mass", bins=100, start=0, stop=2200, label="HH_mass"),
-
         # **create_HistConf("HiggsLeading", "pt", bins=100, start=0, stop=800, label="HiggsLeading_pt"),
         # **create_HistConf("HiggsLeading", "eta", bins=60, start=-5, stop=5, label="HiggsLeading_eta"),
         # **create_HistConf("HiggsLeading", "phi", bins=60, start=-5, stop=5, label="HiggsLeading_phi"),
         # **create_HistConf("HiggsLeading", "mass", bins=100, start=0, stop=500, label="HiggsLeading_mass"),
-
         # **create_HistConf("HiggsSubLeading", "pt", bins=100, start=0, stop=800, label="HiggsSubLeading_pt"),
         # **create_HistConf("HiggsSubLeading", "eta", bins=60, start=-5, stop=5, label="HiggsSubLeading_eta"),
         # **create_HistConf("HiggsSubLeading", "phi", bins=60, start=-5, stop=5, label="HiggsSubLeading_phi"),
         # **create_HistConf("HiggsSubLeading", "mass", bins=100, start=0, stop=500, label="HiggsSubLeading_mass"),
-
         # **create_HistConf("Jet", "pt", bins=100, pos=0, start=0, stop=800, label="Jet_pt0"),
         # **create_HistConf("Jet", "pt", bins=100, pos=1, start=0, stop=800, label="Jet_pt1"),
         # **create_HistConf("Jet", "eta", bins=60, pos=0, start=-5, stop=5, label="Jet_eta0"),
@@ -281,7 +271,6 @@ cfg = Configurator(
         # **create_HistConf("Jet", "btagPNetB", pos=1, bins=100, start=0, stop=1, label="Jet_btagPNetB1"),
         # **create_HistConf("Jet", "btagPNetQvG", pos=0, bins=100, start=0, stop=1, label="Jet_btagPNetQvG0"),
         # **create_HistConf("Jet", "btagPNetQvG", pos=1, bins=100, start=0, stop=1, label="Jet_btagPNetQvG1"),
-
         # **create_HistConf("JetGoodFromHiggsOrdered", "pt", bins=100, pos=0, start=0, stop=700, label="JetGoodFromHiggsOrdered_pt0"),
         # **create_HistConf("JetGoodFromHiggsOrdered", "eta", bins=60, pos=0, start=-5, stop=5, label="JetGoodFromHiggsOrdered_eta0"),
         # **create_HistConf("JetGoodFromHiggsOrdered", "phi", bins=60, pos=0, start=-5, stop=5, label="JetGoodFromHiggsOrdered_phi0"),
@@ -306,7 +295,6 @@ cfg = Configurator(
         # **create_HistConf("JetGoodFromHiggsOrdered", "mass", bins=100, pos=3, start=0, stop=80, label="JetGoodFromHiggsOrdered_mass3"),
         # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetB", bins=100, pos=3, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetB3"),
         # **create_HistConf("JetGoodFromHiggsOrdered", "btagPNetQvG", bins=100, pos=3, start=0, stop=1, label="JetGoodFromHiggsOrdered_btagPNetQvG3"),
-
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "pt", bins=100, pos=0, start=0, stop=700, label="JetVBFLeadingPtNotFromHiggs_pt0"),
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "eta", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_eta0"),
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "phi", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingPtNotFromHiggs_phi0"),
@@ -319,7 +307,6 @@ cfg = Configurator(
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "mass", bins=100, pos=1, start=0, stop=75, label="JetVBFLeadingPtNotFromHiggs_mass1"),
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetB", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetB1"),
         # **create_HistConf("JetVBFLeadingPtNotFromHiggs", "btagPNetQvG", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingPtNotFromHiggs_btagPNetQvG1"),
-
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "pt", bins=100, pos=0, start=0, stop=700, label="JetVBFLeadingMjjNotFromHiggs_pt0"),
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "eta", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_eta0"),
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "phi", bins=60, pos=0, start=-5, stop=5, label="JetVBFLeadingMjjNotFromHiggs_phi0"),
@@ -332,7 +319,6 @@ cfg = Configurator(
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "mass", bins=100, pos=1, start=0, stop=75, label="JetVBFLeadingMjjNotFromHiggs_mass1"),
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetB", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetB1"),
         # **create_HistConf("JetVBFLeadingMjjNotFromHiggs", "btagPNetQvG", bins=100, pos=1, start=0, stop=1, label="JetVBFLeadingMjjNotFromHiggs_btagPNetQvG1"),
-
         # **create_HistConf("events", "JetVBFLeadingPtNotFromHiggs_deltaEta", bins=11, start=0, stop=10, label="JetVBFLeadingPtNotFromHiggs_deltaEta"),
         # **create_HistConf("events", "JetVBFLeadingMjjNotFromHiggs_deltaEta", bins=11, start=0, stop=10, label="JetVBFLeadingMjjNotFromHiggs_deltaEta"),
         # **create_HistConf("events", "JetVBFLeadingPtNotFromHiggs_jjMass", bins=100, start=0, stop=2000, label="JetVBFLeadingPtNotFromHiggs_jjMass"),
@@ -342,144 +328,144 @@ cfg = Configurator(
         "common": {
             "inclusive": (
                 [
-                #     ColOut(
-                #         "events",
-                #         [
-                #             "etaProduct",
-                #             "JetVBFLeadingPtNotFromHiggs_deltaEta",
-                #             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
-                #             "JetVBFLeadingPtNotFromHiggs_jjMass",
-                #             "JetVBFLeadingMjjNotFromHiggs_jjMass",
-                #             "HH",
-                #             "HH_centrality",
-                #             "HH_deltaR",
-                #             "jj_deltaR",
-                #             "H1j1_deltaR",
-                #             "H1j2_deltaR",
-                #             "H2j1_deltaR",
-                #             "H2j2_deltaR",
-                #         ],
-                #     ),
-                #     ColOut(
-                #         "Jet",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBFNotFromHiggs",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetGoodFromHiggsOrdered",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBF_matching",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBFLeadingPtNotFromHiggs",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBFLeadingMjjNotFromHiggs",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "HH",
-                #         ["pt", "eta", "phi", "mass"],
-                #     ),
-                # ]
-                # + [
-                #     ColOut(
-                #         "quarkVBF_matched",
-                #         [
-                #             "index",
-                #             "pt",
-                #             "eta",
-                #             "phi",
-                #         ],
-                #     ),
-                #     ColOut(
-                #         "quarkVBF",
-                #         [
-                #             "index",
-                #             "pt",
-                #             "eta",
-                #             "phi",
-                #         ],
-                #     ),
-                #     ColOut(
-                #         "quarkVBF_generalSelection_matched",
-                #         [
-                #             "index",
-                #             "pt",
-                #             "eta",
-                #             "phi",
-                #         ],
-                #     ),
-                #     ColOut(
-                #         "JetVBF_matched",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBF_generalSelection_matched",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "events",
-                #         [
-                #             "deltaEta_matched",
-                #             "jj_mass_matched",
-                #             "nJetVBF_matched",
-                #         ],
-                #     ),
-                # ]
-                # if VBF_PARTON_MATCHING
-                # else [
-                #     ColOut(
-                #         "events",
-                #         [
-                #             "HH",
-                #             "JetVBFLeadingPtNotFromHiggs_deltaEta",
-                #             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
-                #             "JetVBFLeadingPtNotFromHiggs_jjMass",
-                #             "JetVBFLeadingMjjNotFromHiggs_jjMass",
-                #             "HH_deltaR",
-                #             "H1j1_deltaR",
-                #             "H1j2_deltaR",
-                #             "H2j1_deltaR",
-                #             "H2j2_deltaR",
-                #             "HH_centrality",
-                #         ],
-                #     ),
-                #     ColOut(
-                #         "HiggsLeading",
-                #         ["pt", "eta", "phi", "mass"]
-                #     ),
-                #     ColOut(
-                #         "HiggsSubLeading",
-                #         ["pt", "eta", "phi", "mass"]
-                #     ),
-                #     ColOut(
-                #         "Jet",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetGoodFromHiggsOrdered",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBFLeadingPtNotFromHiggs",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "JetVBFLeadingMjjNotFromHiggs",
-                #         jet_info,
-                #     ),
-                #     ColOut(
-                #         "HH",
-                #         ["pt", "eta", "phi", "mass"],
-                #     ),
+                    #     ColOut(
+                    #         "events",
+                    #         [
+                    #             "etaProduct",
+                    #             "JetVBFLeadingPtNotFromHiggs_deltaEta",
+                    #             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
+                    #             "JetVBFLeadingPtNotFromHiggs_jjMass",
+                    #             "JetVBFLeadingMjjNotFromHiggs_jjMass",
+                    #             "HH",
+                    #             "HH_centrality",
+                    #             "HH_deltaR",
+                    #             "jj_deltaR",
+                    #             "H1j1_deltaR",
+                    #             "H1j2_deltaR",
+                    #             "H2j1_deltaR",
+                    #             "H2j2_deltaR",
+                    #         ],
+                    #     ),
+                    #     ColOut(
+                    #         "Jet",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBFNotFromHiggs",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetGoodFromHiggsOrdered",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBF_matching",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBFLeadingPtNotFromHiggs",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBFLeadingMjjNotFromHiggs",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "HH",
+                    #         ["pt", "eta", "phi", "mass"],
+                    #     ),
+                    # ]
+                    # + [
+                    #     ColOut(
+                    #         "quarkVBF_matched",
+                    #         [
+                    #             "index",
+                    #             "pt",
+                    #             "eta",
+                    #             "phi",
+                    #         ],
+                    #     ),
+                    #     ColOut(
+                    #         "quarkVBF",
+                    #         [
+                    #             "index",
+                    #             "pt",
+                    #             "eta",
+                    #             "phi",
+                    #         ],
+                    #     ),
+                    #     ColOut(
+                    #         "quarkVBF_generalSelection_matched",
+                    #         [
+                    #             "index",
+                    #             "pt",
+                    #             "eta",
+                    #             "phi",
+                    #         ],
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBF_matched",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBF_generalSelection_matched",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "events",
+                    #         [
+                    #             "deltaEta_matched",
+                    #             "jj_mass_matched",
+                    #             "nJetVBF_matched",
+                    #         ],
+                    #     ),
+                    # ]
+                    # if VBF_PARTON_MATCHING
+                    # else [
+                    #     ColOut(
+                    #         "events",
+                    #         [
+                    #             "HH",
+                    #             "JetVBFLeadingPtNotFromHiggs_deltaEta",
+                    #             "JetVBFLeadingMjjNotFromHiggs_deltaEta",
+                    #             "JetVBFLeadingPtNotFromHiggs_jjMass",
+                    #             "JetVBFLeadingMjjNotFromHiggs_jjMass",
+                    #             "HH_deltaR",
+                    #             "H1j1_deltaR",
+                    #             "H1j2_deltaR",
+                    #             "H2j1_deltaR",
+                    #             "H2j2_deltaR",
+                    #             "HH_centrality",
+                    #         ],
+                    #     ),
+                    #     ColOut(
+                    #         "HiggsLeading",
+                    #         ["pt", "eta", "phi", "mass"]
+                    #     ),
+                    #     ColOut(
+                    #         "HiggsSubLeading",
+                    #         ["pt", "eta", "phi", "mass"]
+                    #     ),
+                    #     ColOut(
+                    #         "Jet",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetGoodFromHiggsOrdered",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBFLeadingPtNotFromHiggs",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "JetVBFLeadingMjjNotFromHiggs",
+                    #         jet_info,
+                    #     ),
+                    #     ColOut(
+                    #         "HH",
+                    #         ["pt", "eta", "phi", "mass"],
+                    #     ),
                 ]
             ),
         },

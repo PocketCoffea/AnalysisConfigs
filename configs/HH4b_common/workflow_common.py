@@ -2,10 +2,15 @@ import awkward as ak
 import sys
 import numpy as np
 
+import vector
+
+vector.register_awkward()
+
 from pocket_coffea.workflows.base import BaseProcessorABC
 from pocket_coffea.lib.deltaR_matching import object_matching
 
 from .custom_cut_functions_common import lepton_selection, jet_selection_nopu
+from .dnn_input_variables import dnn_input_variables
 
 from utils.parton_matching_function import get_parton_last_copy
 from utils.spanet_evaluation_functions import get_pairing_information, get_best_pairings
@@ -16,6 +21,7 @@ from utils.reconstruct_higgs_candidates import (
     run2_matching_algorithm,
 )
 from utils.inference_session_onnx import get_model_session
+from utils.dnn_evaluation_functions import get_dnn_prediction
 
 
 class HH4bCommonProcessor(BaseProcessorABC):
@@ -359,33 +365,54 @@ class HH4bCommonProcessor(BaseProcessorABC):
         self.events["nJetGoodHiggs"] = ak.num(self.events.JetGoodHiggs, axis=1)
 
     def HelicityCosTheta(self, higgs, jet):
-        print("jet px", jet.px)
-        print("higgs px", higgs.px)
-        print("jet theta", jet.theta)
+        higgs = add_fields(higgs, four_vec="Momentum4D")
         higgs_velocity = higgs.to_beta3()
+        jet = add_fields(jet, four_vec="Momentum4D")
         jet = jet.boost_beta3(-higgs_velocity)
-        print("jet px", jet.px)
-        print("jet theta", jet.theta)
         return np.cos(jet.theta)
 
     def Costhetastar_CS(self, higgs1_vec, hh_vec):
-        print("px", higgs1_vec.px)
-        print("theta", higgs1_vec.theta)
+        hh_vec = add_fields(hh_vec, four_vec="Momentum4D")
         hh_velocity = hh_vec.to_beta3()
+        higgs1_vec = add_fields(higgs1_vec, four_vec="Momentum4D")
         higgs1_vec = higgs1_vec.boost_beta3(-hh_velocity)
-        print("px", higgs1_vec.px)
-        print("theta", higgs1_vec.theta)
         return abs(np.cos(higgs1_vec.theta))
+
+    def get_sigma_mbb(self, jet1, jet2):
+        jet1 = add_fields(jet1)
+        jet2 = add_fields(jet2)
+
+        jet1_up = jet1 * (1 + jet1.PNetRegPtRawRes)
+        jet2_up = jet2 * (1 + jet2.PNetRegPtRawRes)
+
+        jet1_down = jet1 * (1 - jet1.PNetRegPtRawRes)
+        jet2_down = jet2 * (1 - jet2.PNetRegPtRawRes)
+
+        jet1_up_sigma = ak.singletons(abs((jet1 + jet2).mass - (jet1_up + jet2).mass))
+        jet1_down_sigma = ak.singletons(
+            abs((jet1 + jet2).mass - (jet1_down + jet2).mass)
+        )
+        jet1_sigma_conc = ak.concatenate((jet1_up_sigma, jet1_down_sigma), axis=1)
+        sigma_hbbCand_A = ak.max(jet1_sigma_conc, axis=1)
+
+        jet2_up_sigma = ak.singletons(abs((jet1 + jet2).mass - (jet1 + jet2_up).mass))
+        jet2_down_sigma = ak.singletons(
+            abs((jet1 + jet2).mass - (jet1 + jet2_down).mass)
+        )
+        jet2_sigma_conc = ak.concatenate((jet2_up_sigma, jet2_down_sigma), axis=1)
+        sigma_hbbCand_B = ak.max(jet2_sigma_conc, axis=1)
+
+        return ak.flatten(np.sqrt(sigma_hbbCand_A**2 + sigma_hbbCand_B**2))
 
     def define_bkg_morphing_variables(self):
         ########################
         # ADDITIONAL VARIABLES #
         ########################
 
-        self.events["era"] = ak.ones_like(self.events.Jet.pt)
-
         # HT : scalar sum of all jets with pT > 25 GeV inside | η | < 2.5
         self.events["HT"] = ak.sum(self.events.JetGood.pt, axis=1)
+
+        self.events["era"] = ak.ones_like(self.events.HT)
 
         # Minimum ∆R ( jj ) among all possible pairings of the leading b-tagged jets
         # Maximum ∆R( jj ) among all possible pairings of the leading b-tagged jets
@@ -448,14 +475,14 @@ class HH4bCommonProcessor(BaseProcessorABC):
         # di-Higgs system
         # pT , η, and mass of HH system
         self.events["HH"] = add_fields(
-            self.events.HiggsLeading + self.events.HiggsSubLeading
+            self.events.HiggsLeading + self.events.HiggsSubLeading,
         )
 
         # | cos θ ∗ | of HH system
         self.events["HH"] = ak.with_field(
             self.events.HH,
             self.Costhetastar_CS(self.events.HiggsLeading, self.events.HH),
-            "cos_theta_star",
+            "Costhetastar_CS",
         )
 
         # Angular separation (∆R, ∆η, ∆φ) between H candidates
@@ -475,21 +502,20 @@ class HH4bCommonProcessor(BaseProcessorABC):
             "dPhi",
         )
 
-        # TODO: Implement the sigma mbb calculation
-
-        # jet1_up = jet1*(1+jet_pnet_ptres_b.at(j1_index));
-        # jet2_up = jet2*(1+jet_pnet_ptres_b.at(j2_index));
-
-        # jet1_dn = jet1*(1-jet_pnet_ptres_b.at(j1_index));
-        # jet2_dn = jet2*(1-jet_pnet_ptres_b.at(j2_index));
-
-        # Float_t sigma_hbbCand_A = std::max( fabs((jet1+jet2).M() - (jet1_up + jet2).M()),fabs((jet1+jet2).M() - (jet1_dn + jet2).M()));
-        # Float_t sigma_hbbCand_B = std::max( fabs((jet1+jet2).M() - (jet1 + jet2_up).M()),fabs((jet1+jet2).M() - (jet1 + jet2_dn).M()));
-
-        # Float_t sigma_mbb = (sqrt(sigma_hbbCand_A*sigma_hbbCand_A + sigma_hbbCand_B*sigma_hbbCand_B));
-
-        # traslate the commmeted snippet above to python awkward array
-        # jet1_up = self.events.JetGoodFromHiggsOrdered[:, 0] * (
+        self.events["sigma_over_higgs1_reco_mass"] = (
+            self.get_sigma_mbb(
+                self.events.JetGoodFromHiggsOrdered[:, 0],
+                self.events.JetGoodFromHiggsOrdered[:, 1],
+            )
+            / self.events.HiggsLeading.mass
+        )
+        self.events["sigma_over_higgs2_reco_mass"] = (
+            self.get_sigma_mbb(
+                self.events.JetGoodFromHiggsOrdered[:, 2],
+                self.events.JetGoodFromHiggsOrdered[:, 3],
+            )
+            / self.events.HiggsSubLeading.mass
+        )
 
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         if self._isMC and not self.SPANET_MODEL:
@@ -545,7 +571,9 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
-            self.matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
+            self.matched_jet_higgs_idx_not_none = (
+                self.events.JetGoodFromHiggsOrdered.index
+            )
 
         self.events["nJetGoodHiggsMatched"] = ak.num(
             self.events.JetGoodHiggsMatched, axis=1
@@ -575,4 +603,10 @@ class HH4bCommonProcessor(BaseProcessorABC):
 
             self.define_bkg_morphing_variables()
 
-            # TODO: apply the morhing
+            self.events["bkg_morphing_dnn_weight"] = get_dnn_prediction(
+                model_session_BKG_MORPHING_DNN,
+                input_name_BKG_MORPHING_DNN,
+                output_name_BKG_MORPHING_DNN,
+                self.events,
+                dnn_input_variables,
+            )

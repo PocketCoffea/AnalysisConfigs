@@ -31,6 +31,5 @@ def get_dnn_prediction(session, input_name, output_name, events, variables):
 
     inputs_complete = {input_name[0]: inputs}
 
-    outputs = session.run(output_name, inputs_complete)
-
+    outputs = session.run(output_name, inputs_complete)[0]
     return outputs

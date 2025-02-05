@@ -7,7 +7,6 @@ def add_fields(collection, fields=None, four_vec="PtEtaPhiMLorentzVector"):
         for field in ["pt", "eta", "phi", "mass"]:
             if field not in fields:
                 fields.append(field)
-    print(fields)
     if four_vec=="PtEtaPhiMLorentzVector":
         fields_dict = {field: getattr(collection, field) for field in fields}
         collection = ak.zip(
