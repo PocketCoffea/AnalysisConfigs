@@ -14,7 +14,12 @@ from pocket_coffea.lib.weights.common.common import common_weights
 from workflow import VBFHH4bProcessor
 from custom_cuts import vbf_hh4b_presel, vbf_hh4b_presel_tight
 
-from configs.HH4b_common.custom_cuts_common import hh4b_2b_region, hh4b_4b_region
+from configs.HH4b_common.custom_cuts_common import (
+    hh4b_presel,
+    hh4b_presel_tight,
+    hh4b_2b_region,
+    hh4b_4b_region,
+)
 from configs.HH4b_common.custom_weights import bkg_morphing_dnn_weight
 from configs.HH4b_common.configurator_options import (
     get_variables_dict,
@@ -52,6 +57,7 @@ VBF_PARTON_MATCHING = False
 TIGHT_CUTS = False
 CLASSIFICATION = False
 SAVE_CHUNK = False
+VBF_PRESEL = False
 
 workflow_options = {
     "parton_jet_min_dR": 0.4,
@@ -65,6 +71,7 @@ workflow_options = {
     "fifth_jet": "pt",
     "donotscale_sumgenweights": True,
     "vbf_parton_matching": VBF_PARTON_MATCHING,
+    "vbf_presel": VBF_PRESEL,
 }
 if SAVE_CHUNK:
     # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/training_samples/GluGlutoHHto4B_spanet_loose_03_17"
@@ -72,7 +79,9 @@ if SAVE_CHUNK:
 
 jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 
-variables_dict = get_variables_dict(CLASSIFICATION, False, False)
+variables_dict = get_variables_dict(
+    CLASSIFICATION=CLASSIFICATION, VBF_VARIABLES=False, BKG_MORPHING=True
+)
 
 columns_dict = {
     "HiggsLeading": ["pt", "mass", "dR"],
@@ -83,6 +92,11 @@ columns_dict = {
 
 column_list = get_columns_list(columns_dict, SAVE_CHUNK)
 
+preselection = (
+    [vbf_hh4b_presel if TIGHT_CUTS is False else vbf_hh4b_presel_tight]
+    if VBF_PRESEL
+    else [hh4b_presel if TIGHT_CUTS is False else hh4b_presel_tight]
+)
 
 cfg = Configurator(
     parameters=parameters,
@@ -111,7 +125,7 @@ cfg = Configurator(
     skim=[
         get_HLTsel(primaryDatasets=["JetMET"]),
     ],
-    preselections=[vbf_hh4b_presel if TIGHT_CUTS is False else vbf_hh4b_presel_tight],
+    preselections=preselection,
     categories={
         **{"4b_region": [hh4b_4b_region]},
         **{"2b_region": [hh4b_2b_region]},

@@ -875,7 +875,7 @@ variable_dict_bkg_morphing = {
                 bins=16,
                 start=0,
                 stop=2,
-                label=r"${min \Delta R_{jj}$",
+                label=r"$min \Delta R_{jj}$",
             )
         ],
     ),
@@ -887,7 +887,7 @@ variable_dict_bkg_morphing = {
                 bins=16,
                 start=0,
                 stop=4,
-                label=r"${max \Delta R_{jj}$",
+                label=r"$max \Delta R_{jj}$",
             )
         ],
     ),
