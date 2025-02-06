@@ -12,6 +12,7 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
     def __init__(self, cfg) -> None:
         super().__init__(cfg=cfg)
         self.vbf_parton_matching = self.workflow_options["vbf_parton_matching"]
+        self.vbf_presel = self.workflow_options["vbf_presel"]
 
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation=variation)
@@ -40,8 +41,7 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
 
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         super().process_extra_after_presel(variation=variation)
-
-        if self._isMC:
+        if self.vbf_presel:
             jet_offsets = np.concatenate(
                 [
                     [0],
@@ -76,7 +76,7 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
                 ak.argsort(self.events.JetVBFNotFromHiggs.pt, axis=1, ascending=False)
             ]
 
-            if self.vbf_parton_matching:
+            if self._isMC and self.vbf_parton_matching:
                 self.do_vbf_parton_matching(which_bquark=self.which_bquark)
 
                 self.events["nJetVBF_matched"] = ak.num(

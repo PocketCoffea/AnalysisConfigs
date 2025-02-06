@@ -594,7 +594,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 output_name_VBF_GGF_DNN,
             ) = get_model_session(self.VBF_GGF_DNN_MODEL, "VBF_GGF_DNN")
 
-        if self.BKG_MORPHING_DNN_MODEL:
+        if self.BKG_MORPHING_DNN_MODEL and not self._isMC:
             (
                 model_session_BKG_MORPHING_DNN,
                 input_name_BKG_MORPHING_DNN,
