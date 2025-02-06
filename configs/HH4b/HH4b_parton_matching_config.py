@@ -19,7 +19,7 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS = False
 RANDOM_PT = True
 SAVE_CHUNK = False
@@ -82,7 +82,7 @@ if RANDOM_PT:
             column_parameters[idx] += ["pt_orig", "mass_orig"]
     event_cols.append("random_pt_weights")
 
-column_list = get_columns_list(collection_columns, column_parameters, event_cols, SAVE_CHUNK)
+column_list = get_columns_list(collection_columns, column_parameters, event_cols, not SAVE_CHUNK)
 
 
 cfg = Configurator(
@@ -104,12 +104,12 @@ cfg = Configurator(
                     # "GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
-                    "DATA_JetMET_JMENano_skimmed",
+                    # "DATA_JetMET_JMENano_skimmed",
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    # "GluGlutoHHto4B_spanet",
+                    "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 # else ["DATA_JetMET_JMENano"]
