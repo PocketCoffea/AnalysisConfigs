@@ -69,9 +69,9 @@ workflow_options = {
     "VBF_GGF_DNN_MODEL": VBF_GGF_DNN_MODEL,
     "tight_cuts": TIGHT_CUTS,
     "fifth_jet": "pt",
-    "donotscale_sumgenweights": True,
     "vbf_parton_matching": VBF_PARTON_MATCHING,
     "vbf_presel": VBF_PRESEL,
+    "donotscale_sumgenweights": True,
 }
 if SAVE_CHUNK:
     # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/training_samples/GluGlutoHHto4B_spanet_loose_03_17"
@@ -129,6 +129,7 @@ cfg = Configurator(
     categories={
         **{"4b_region": [hh4b_4b_region]},
         **{"2b_region": [hh4b_2b_region]},
+        **{"2b_region_noWeights": [hh4b_2b_region]},
         # **{f"4b_semiTight_LeadingPt_region": [hh4b_4b_region, semiTight_leadingPt]},
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]},
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]}

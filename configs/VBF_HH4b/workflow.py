@@ -16,28 +16,29 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
 
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation=variation)
+        if self.vbf_presel:
+            self.events["JetVBF_matching"] = self.events.Jet
+            self.events["JetVBF_matching"] = jet_selection_nopu(
+                self.events, "JetVBF_matching", self.params, tight_cuts=self.tight_cuts
+            )
 
-        self.events["JetVBF_matching"] = self.events.Jet
-        self.events["JetVBF_matching"] = jet_selection_nopu(
-            self.events, "JetVBF_matching", self.params, tight_cuts=self.tight_cuts
-        )
+            self.events["JetGoodVBF"] = self.events.Jet
+            self.events["JetGoodVBF"] = jet_selection_nopu(
+                self.events, "JetGoodVBF", self.params, tight_cuts=self.tight_cuts
+            )
 
-        self.events["JetGoodVBF"] = self.events.Jet
-        self.events["JetGoodVBF"] = jet_selection_nopu(
-            self.events, "JetGoodVBF", self.params, tight_cuts=self.tight_cuts
-        )
-
-        self.events["JetVBF_generalSelection"] = self.events.Jet
-        self.events["JetVBF_generalSelection"] = jet_selection_nopu(
-            self.events, "JetVBF_generalSelection", self.params, tight_cuts=self.tight_cuts
-        )
+            self.events["JetVBF_generalSelection"] = self.events.Jet
+            self.events["JetVBF_generalSelection"] = jet_selection_nopu(
+                self.events, "JetVBF_generalSelection", self.params, tight_cuts=self.tight_cuts
+            )
 
     def count_objects(self, variation):
         super().count_objects(variation=variation)
-        self.events["nJetGoodVBF"] = ak.num(self.events.JetGoodVBF, axis=1)
-        self.events["nJetVBF_generalSelection"] = ak.num(
-            self.events.JetVBF_generalSelection, axis=1
-        )
+        if self.vbf_presel:
+            self.events["nJetGoodVBF"] = ak.num(self.events.JetGoodVBF, axis=1)
+            self.events["nJetVBF_generalSelection"] = ak.num(
+                self.events.JetVBF_generalSelection, axis=1
+            )
 
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         super().process_extra_after_presel(variation=variation)
