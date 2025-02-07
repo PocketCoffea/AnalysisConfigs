@@ -11,7 +11,7 @@ from pocket_coffea.parameters import defaults
 
 from workflow import HH4bbQuarkMatchingProcessor
 
-from configs.HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
+from configs.HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region, hh4b_signal_region, hh4b_control_region, run2_signal_region, run2_control_region
 from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMNS
 
 
@@ -130,7 +130,15 @@ cfg = Configurator(
     ],
     categories={
         "4b_region": [hh4b_4b_region],  # HERE
+        "4b_signal_region": [hh4b_4b_region, hh4b_signal_region],  # HERE
+        "4b_control_region": [hh4b_4b_region, hh4b_control_region],  # HERE
+        "4b_signal_region_run2": [hh4b_4b_region, run2_signal_region],  # HERE
+        "4b_control_region_run2": [hh4b_4b_region, run2_control_region],  # HERE
         "2b_region": [hh4b_2b_region],
+        "2b_signal_region": [hh4b_2b_region, hh4b_signal_region],  # HERE
+        "2b_control_region": [hh4b_2b_region, hh4b_control_region],  # HERE
+        "2b_signal_region_run2": [hh4b_2b_region, run2_signal_region],  # HERE
+        "2b_control_region_run2": [hh4b_2b_region, run2_control_region],  # HERE
     },
     weights={
         "common": {

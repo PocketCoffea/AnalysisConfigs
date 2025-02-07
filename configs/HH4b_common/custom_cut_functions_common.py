@@ -127,3 +127,10 @@ def jet_selection_nopu(events, jet_type, params, tight_cuts=False):
         )
 
     return jets[mask_jets]
+
+def hh4b_Rhh(events, params, **kwargs):
+
+    mask = (events.Rhh >= params["radius_min"]) & (events.Rhh < params["radius_max"])
+
+    # Pad None values with False
+    return ak.where(ak.is_none(mask), False, mask)
