@@ -586,6 +586,11 @@ class HH4bCommonProcessor(BaseProcessorABC):
             self.events["HiggsSubLeadingRun2"],
             self.events["JetGoodFromHiggsOrderedRun2"],
         ) = run2_matching_algorithm(self.events["JetGoodHiggs"])
+        
+        # Define distance parameter for selection:
+        self.events["Rhh"] = np.sqrt((self.events.HiggsLeading.mass - 125)**2+(self.events.HiggsSubLeading.mass - 120)**2)
+        self.events["Rhh_Run2"] = np.sqrt((self.events.HiggsLeadingRun2.mass - 125)**2+(self.events.HiggsSubLeadingRun2.mass - 120)**2)
+
 
         if self.VBF_GGF_DNN_MODEL:
             (
