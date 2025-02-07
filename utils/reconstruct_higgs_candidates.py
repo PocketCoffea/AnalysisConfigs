@@ -140,13 +140,25 @@ def possible_higgs_reco(jets, idx_collection):
     ]
     return higgs_candidates_unflatten_order
 
-def distance_func(higgs_pair, k):
+def distance_pt_func(higgs_pair, k):
     if len(higgs_pair[0, 0]) == 0:
         return np.array([])
     higgs1 = higgs_pair[:, :, 0]
     higgs2 = higgs_pair[:, :, 1]
     dist = abs(higgs1.mass - higgs2.mass * k) / sqrt(1 + k**2)
-    return dist
+    max_pt = np.maximum(higgs1.pt,higgs2.pt)
+    return dist, max_pt
+
+#def pt_list(higgs_pair):
+#    if len(higgs_pair[0,0]) == 0:
+#        return np.array([])
+#    higgs1 = higgs_pair[:,:,0]
+#    higgs2 = higgs_pair[:,:,1]
+#    # Find maximal pt for each higgs_pairing and just give it back as a nested list 
+#    # (then we can do the same as with the distance term):
+#    #max_pt = [[max(h1_comb.pt,h2_comb.pt) for h1_comb,h2_comb in zip(h1,h2)] for h1,h2 in zip(higgs1,higgs2)]
+#    return max_pt
+
 
 def run2_matching_algorithm(jet_collection):
     # implement the Run 2 pairing algorithm
@@ -156,22 +168,31 @@ def run2_matching_algorithm(jet_collection):
     higgs_candidates_unflatten_order = possible_higgs_reco(
         jet_collection, comb_idx
     )
-    distance = distance_func(
+    distance, max_pt = distance_pt_func(
         higgs_candidates_unflatten_order,
         1.04,
     )
 
+    # order by distance and find the index of the smallest distance
     dist_order_idx = ak.argsort(distance, axis=1, ascending=True)
     dist_order = ak.sort(distance, axis=1, ascending=True)
 
-    # if the distance between the two best candidates is less than 30, we do not consider the event
-    min_idx = dist_order_idx[:, 0]
+    delta_dhh = abs(dist_order[:, 0] - dist_order[:, 1])
+
+    # Do the pt ordering for all events and fill later only the ones where the dhh is smaller than 30
+    pt_order_idx = ak.argsort(max_pt, axis=1, ascending=False)
+    # pt_order = ak.sort(max_pt_list, axis=1, ascending=False)  # Maybe useful for debugging
+    
+    # Find idxes where the delta_dhh is smaller than 30 and if so, fill in by pt ordering.
+    min_idx = ak.where(delta_dhh > 30, dist_order_idx[:,0], pt_order_idx[:,0])
+            
+    # min_idx = dist_order_idx[:, 0]
 
     leadingHiggs = add_fields(higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,0])
     subleadingHiggs = add_fields(higgs_candidates_unflatten_order[np.arange(len(jet_collection)), min_idx][:,1])
 
     return (
-        abs(dist_order[:, 0] - dist_order[:, 1]),
+        delta_dhh,
         leadingHiggs,
         subleadingHiggs,
         jet_collection[

@@ -12,14 +12,14 @@ from pocket_coffea.parameters import defaults
 from workflow import HH4bbQuarkMatchingProcessor
 
 from configs.HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
-from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
+from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMNS
 
 
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
 
-CLASSIFICATION = True
+CLASSIFICATION = False
 TIGHT_CUTS = False
 RANDOM_PT = True
 SAVE_CHUNK = False
@@ -43,8 +43,12 @@ parameters = defaults.merge_parameters_from_files(
 )
 
 SPANET_MODEL = (
-    "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s101_no_btag.onnx"
+    ""
+    # "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
 )
+
+VBF_GGF_DNN_MODEL="/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
+BKG_MORPHING_DNN_MODEL="/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx"
 
 workflow_options = {
         "parton_jet_min_dR": 0.4,
@@ -67,18 +71,17 @@ if SAVE_CHUNK:
 
 variables_dict = get_variables_dict(CLASSIFICATION, RANDOM_PT, False)
 
-collection_columns = ["JetGoodMatched", "JetGoodHiggsMatched", "JetGood", "JetGoodHiggs"]
-column_parameters = DEFAULT_COLUMN_PARAMS
+column_dict = DEFAULT_COLUMNS
 event_cols = []
 if CLASSIFICATION:
     event_cols += ["best_pairing_probability", "second_best_pairing_probability", "Delta_pairing_probabilities"]
 if RANDOM_PT:
-    for idx, name in enumerate(collection_columns):
-        if not "Matched" in name:
-            column_parameters[idx] += ["pt_orig", "mass_orig"]
-    event_cols.append("random_pt_weights")
+    for key in column_dict.keys():
+        if not "Matched" in key:
+            column_dict[key] += ["pt_orig", "mass_orig"]
+    column_dict["events"] = ["random_pt_weights"]
 
-column_list = get_columns_list(collection_columns, column_parameters, event_cols, SAVE_CHUNK)
+column_list = get_columns_list(column_dict, not SAVE_CHUNK)
 
 
 cfg = Configurator(
@@ -100,12 +103,12 @@ cfg = Configurator(
                     # "GluGlutoHHto4B",
                     # "QCD-4Jets",
                     # "DATA_JetMET_JMENano",
-                    "DATA_JetMET_JMENano_skimmed",
+                    # "DATA_JetMET_JMENano_skimmed",
                     # "SPANet_classification",
                     # "SPANet_classification_data",
                     # "GluGlutoHHto4B_poisson",
                     # "GluGlutoHHto4B_private",
-                    # "GluGlutoHHto4B_spanet",
+                    "GluGlutoHHto4B_spanet",
                 ]
                 if CLASSIFICATION
                 # else ["DATA_JetMET_JMENano"]
