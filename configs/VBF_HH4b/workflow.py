@@ -2,7 +2,7 @@ import awkward as ak
 import sys
 import numpy as np
 
-from configs.HH4b_common.custom_cut_functions_common import jet_selection_nopu
+from configs.HH4b_common.custom_object_preselection_common import jet_selection_nopu
 from configs.HH4b_common.workflow_common import HH4bCommonProcessor
 from utils.vbf_matching import get_jets_no_higgs
 from utils.basic_functions import add_fields

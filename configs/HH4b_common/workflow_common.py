@@ -1,5 +1,4 @@
 import awkward as ak
-import sys
 import numpy as np
 
 import vector
@@ -9,7 +8,7 @@ vector.register_awkward()
 from pocket_coffea.workflows.base import BaseProcessorABC
 from pocket_coffea.lib.deltaR_matching import object_matching
 
-from .custom_cut_functions_common import lepton_selection, jet_selection_nopu
+from .custom_object_preselection_common import lepton_selection, jet_selection_nopu
 from .dnn_input_variables import dnn_input_variables
 
 from utils.parton_matching_function import get_parton_last_copy

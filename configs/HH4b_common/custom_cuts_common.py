@@ -58,7 +58,7 @@ hh4b_signal_region = Cut(
         "radius_min": 0,
         "radius_max": 30,
         },
-    function=cuts_f.hh4b_Rhh,
+    function=cuts_f.hh4b_Rhh_cuts,
 )
 
 hh4b_control_region = Cut(
@@ -68,7 +68,7 @@ hh4b_control_region = Cut(
         "radius_min": 30,
         "radius_max": 55,
         },
-    function=cuts_f.hh4b_Rhh,
+    function=cuts_f.hh4b_Rhh_cuts,
 )
 
 run2_signal_region = Cut(
@@ -78,7 +78,7 @@ run2_signal_region = Cut(
         "radius_min": 0,
         "radius_max": 30,
         },
-    function=cuts_f.hh4b_Rhh,
+    function=cuts_f.hh4b_Rhh_cuts,
 )
 
 run2_control_region = Cut(
@@ -88,5 +88,5 @@ run2_control_region = Cut(
         "radius_min": 30,
         "radius_max": 55,
         },
-    function=cuts_f.hh4b_Rhh,
+    function=cuts_f.hh4b_Rhh_cuts,
 )
