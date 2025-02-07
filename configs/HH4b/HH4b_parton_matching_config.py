@@ -12,7 +12,7 @@ from pocket_coffea.parameters import defaults
 from workflow import HH4bbQuarkMatchingProcessor
 
 from configs.HH4b_common.custom_cuts_common import hh4b_presel, hh4b_presel_tight, hh4b_4b_region, hh4b_2b_region
-from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMN_PARAMS
+from configs.HH4b_common.configurator_options import get_variables_dict, get_columns_list, DEFAULT_COLUMNS
 
 
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -71,18 +71,17 @@ if SAVE_CHUNK:
 
 variables_dict = get_variables_dict(CLASSIFICATION, RANDOM_PT, False)
 
-collection_columns = ["JetGoodMatched", "JetGoodHiggsMatched", "JetGood", "JetGoodHiggs"]
-column_parameters = DEFAULT_COLUMN_PARAMS
+column_dict = DEFAULT_COLUMNS
 event_cols = []
 if CLASSIFICATION:
     event_cols += ["best_pairing_probability", "second_best_pairing_probability", "Delta_pairing_probabilities"]
 if RANDOM_PT:
-    for idx, name in enumerate(collection_columns):
-        if not "Matched" in name:
-            column_parameters[idx] += ["pt_orig", "mass_orig"]
-    event_cols.append("random_pt_weights")
+    for key in column_dict.keys():
+        if not "Matched" in key:
+            column_dict[key] += ["pt_orig", "mass_orig"]
+    column_dict["events"] = ["random_pt_weights"]
 
-column_list = get_columns_list(collection_columns, column_parameters, event_cols, not SAVE_CHUNK)
+column_list = get_columns_list(column_dict, not SAVE_CHUNK)
 
 
 cfg = Configurator(
