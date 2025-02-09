@@ -3,6 +3,7 @@ import numpy as np
 import awkward as ak
 import correctionlib
 from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
+from pocket_coffea.lib.scale_factors import sf_L1prefiring
 
 samples_top = ["TTbbSemiLeptonic", "TTToSemiLeptonic", "TTTo2L2Nu"]
 
@@ -135,3 +136,10 @@ class SF_LHE_pdf_weight(WeightWrapper):
             up = w_up,
             down = w_down
         )
+
+SF_L1prefiring = WeightLambda.wrap_func(
+    name="sf_L1prefiring",
+    function=lambda params, metadata, events, size, shape_variations:
+        sf_L1prefiring(events) if metadata["year"] in ["2016_PreVFP", "2016_PostVFP", "2017"] else (np.ones(len(events)), np.ones(len(events)), np.ones(len(events))),
+    has_variations=True
+    )
