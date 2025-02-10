@@ -3,7 +3,7 @@ from pocket_coffea.lib.cut_definition import Cut
 
 
 hh4b_presel = Cut(
-    name="hh4b",
+    name="hh4b_presel",
     params={
         "njet": 4,
         "pt_jet0": 80,
@@ -12,14 +12,12 @@ hh4b_presel = Cut(
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
         "tight_cuts": False,
-        # "third_pnet_jet": 0.2605,
-        # "fourth_pnet_jet": 0.2605,
     },
     function=cuts_f.hh4b_presel_cuts,
 )
 
 hh4b_presel_tight = Cut(
-    name="hh4b",
+    name="hh4b_presel_tight",
     params={
         "njet": 4,
         "pt_jet0": 80,
@@ -28,14 +26,12 @@ hh4b_presel_tight = Cut(
         "pt_jet3": 35,
         "mean_pnet_jet": 0.65,
         "tight_cuts": True,
-        # "third_pnet_jet": 0.2605,
-        # "fourth_pnet_jet": 0.2605,
     },
     function=cuts_f.hh4b_presel_cuts,
 )
 
 hh4b_2b_region = Cut(
-    name="hh4b",
+    name="hh4b_2b_region",
     params={
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
@@ -43,7 +39,7 @@ hh4b_2b_region = Cut(
     function=cuts_f.hh4b_2b_cuts,
 )
 hh4b_4b_region = Cut(
-    name="hh4b",
+    name="hh4b_4b_region",
     params={
         "third_pnet_jet": 0.2605,
         "fourth_pnet_jet": 0.2605,
@@ -52,7 +48,7 @@ hh4b_4b_region = Cut(
 )
 
 hh4b_signal_region = Cut(
-    name="hh4b",
+    name="hh4b_signal_region",
     params={
         "radius": "Rhh",
         "radius_min": 0,
@@ -62,7 +58,7 @@ hh4b_signal_region = Cut(
 )
 
 hh4b_control_region = Cut(
-    name="hh4b",
+    name="hh4b_control_region",
     params={
         "radius": "Rhh",
         "radius_min": 30,
@@ -71,8 +67,8 @@ hh4b_control_region = Cut(
     function=cuts_f.hh4b_Rhh_cuts,
 )
 
-run2_signal_region = Cut(
-    name="hh4b",
+signal_region_run2 = Cut(
+    name="signal_region_run2",
     params={
         "radius": "Rhh_Run2",
         "radius_min": 0,
@@ -81,8 +77,8 @@ run2_signal_region = Cut(
     function=cuts_f.hh4b_Rhh_cuts,
 )
 
-run2_control_region = Cut(
-    name="hh4b",
+control_region_run2 = Cut(
+    name="control_region_run2",
     params={
         "radius": "Rhh_Run2",
         "radius_min": 30,

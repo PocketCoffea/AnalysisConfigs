@@ -7,7 +7,7 @@ from pocket_coffea.lib.hist_manager import HistConf, Axis
 
 from utils.variables_helpers import jet_hists_dict, create_HistConf
 
-variables_dict = {
+variables_dict_default = {
     # **count_hist(coll="JetGood", bins=10, start=0, stop=10),
     # **count_hist(coll="JetGoodHiggs", bins=10, start=0, stop=10),
     # **count_hist(coll="ElectronGood", bins=3, start=0, stop=3),
@@ -783,6 +783,7 @@ variables_dict_vbf = {
 }
 
 variable_dict_bkg_morphing = {
+    # SPANet pairing
     "RecoHiggs1Pt": HistConf(
         [
             Axis(
@@ -867,6 +868,92 @@ variable_dict_bkg_morphing = {
             )
         ],
     ),
+    # Run2 pairing
+    "RecoHiggs1PtRun2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsLeadingRun2",
+                field="pt",
+                bins=24,
+                start=0,
+                stop=600,
+                label=r"$pT_{H_1}$",
+            )
+        ],
+    ),
+    "RecoHiggs2PtRun2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsSubLeadingRun2",
+                field="pt",
+                bins=24,
+                start=0,
+                stop=600,
+                label=r"$pT_{H_2}$",
+            )
+        ],
+    ),
+    "RecoDiHiggsMassRun2": HistConf(
+        [
+            Axis(
+                coll=f"HHRun2",
+                field="mass",
+                bins=16,
+                start=200,
+                stop=1000,
+                label=r"$M_{HH}$",
+            )
+        ]
+    ),
+    "RecoHiggs1MassRun2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsLeadingRun2",
+                field="mass",
+                bins=16,
+                start=80,
+                stop=160,
+                label=r"$M_{H_1}$",
+            )
+        ],
+    ),
+    "RecoHiggs2MassRun2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsSubLeadingRun2",
+                field="mass",
+                bins=16,
+                start=80,
+                stop=160,
+                label=r"$M_{H_2}$",
+            )
+        ]
+    ),
+    "dRHiggs1Run2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsLeadingRun2",
+                field="dR",
+                bins=16,
+                start=0,
+                stop=3,
+                label=r"${H_1} \Delta R_{jj}$",
+            )
+        ],
+    ),
+    "dRHiggs2Run2": HistConf(
+        [
+            Axis(
+                coll=f"HiggsSubLeadingRun2",
+                field="dR",
+                bins=16,
+                start=0,
+                stop=4,
+                label=r"${H_2} \Delta R_{jj}$",
+            )
+        ],
+    ),
+    # common
     "dR_min": HistConf(
         [
             Axis(
@@ -893,11 +980,14 @@ variable_dict_bkg_morphing = {
     ),
 }
 
+variables_dict={}
 
 def get_variables_dict(
-    CLASSIFICATION=False, RANDOM_PT=False, VBF_VARIABLES=False, BKG_MORPHING=False
+    DEFAULT=True, CLASSIFICATION=False, RANDOM_PT=False, VBF_VARIABLES=False, BKG_MORPHING=False
 ):
     """Function to create the variable dictionary for the PocketCoffea Configurator()."""
+    if DEFAULT:
+        variables_dict.update(variables_dict_default)
     if CLASSIFICATION:
         variables_dict.update(variables_dict_higgs_mass)
     if RANDOM_PT:
@@ -920,7 +1010,7 @@ DEFAULT_COLUMNS = {
 
 def get_columns_list(
     columns_dict=DEFAULT_COLUMNS,
-    flatten=False,
+    flatten=True,
 ):
     """Function to create the column definition for the PocketCoffea Configurator().
     If any of the input options is set to `None`, the default option is used. To not save anything, use `[]`.

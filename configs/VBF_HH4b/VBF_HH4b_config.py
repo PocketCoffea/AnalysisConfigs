@@ -17,10 +17,18 @@ from custom_cuts import vbf_hh4b_presel, vbf_hh4b_presel_tight
 from configs.HH4b_common.custom_cuts_common import (
     hh4b_presel,
     hh4b_presel_tight,
-    hh4b_2b_region,
     hh4b_4b_region,
+    hh4b_2b_region,
+    hh4b_signal_region,
+    hh4b_control_region,
+    signal_region_run2,
+    control_region_run2,
 )
-from configs.HH4b_common.custom_weights import bkg_morphing_dnn_weight
+
+from configs.HH4b_common.custom_weights import (
+    bkg_morphing_dnn_weight,
+    bkg_morphing_dnn_weightRun2,
+)
 from configs.HH4b_common.configurator_options import (
     get_variables_dict,
     get_columns_list,
@@ -63,7 +71,7 @@ workflow_options = {
     "parton_jet_min_dR": 0.4,
     "max_num_jets": 5,
     "which_bquark": "last",
-    "classification": CLASSIFICATION,  # HERE
+    "classification": CLASSIFICATION,
     "SPANET_MODEL": SPANET_MODEL,
     "BKG_MORPHING_DNN_MODEL": BKG_MORPHING_DNN_MODEL,
     "VBF_GGF_DNN_MODEL": VBF_GGF_DNN_MODEL,
@@ -80,7 +88,9 @@ if SAVE_CHUNK:
 jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 
 variables_dict = get_variables_dict(
-    CLASSIFICATION=CLASSIFICATION, VBF_VARIABLES=False, BKG_MORPHING=True
+    CLASSIFICATION=CLASSIFICATION,
+    VBF_VARIABLES=False,
+    BKG_MORPHING=True if BKG_MORPHING_DNN_MODEL else False,
 )
 
 columns_dict = {
@@ -90,7 +100,16 @@ columns_dict = {
     "events": ["dR_min", "dR_max", "bkg_morphing_dnn_weight"],
 }
 
-column_list = get_columns_list(columns_dict, SAVE_CHUNK)
+column_list = get_columns_list(columns_dict, not SAVE_CHUNK)
+
+columns_dictRun2 = {
+    "HiggsLeadingRun2": ["pt", "mass", "dR"],
+    "HiggsSubLeadingRun2": ["pt", "mass", "dR"],
+    "HHRun2": ["mass"],
+    "events": ["dR_min", "dR_max", "bkg_morphing_dnn_weightRun2"],
+}
+
+column_listRun2 = get_columns_list(columns_dictRun2, not SAVE_CHUNK)
 
 preselection = (
     [vbf_hh4b_presel if TIGHT_CUTS is False else vbf_hh4b_presel_tight]
@@ -127,9 +146,21 @@ cfg = Configurator(
     ],
     preselections=preselection,
     categories={
-        **{"4b_region": [hh4b_4b_region]},
-        **{"2b_region": [hh4b_2b_region]},
-        **{"2b_region_noWeights": [hh4b_2b_region]},
+        "4b_control_region": [hh4b_4b_region, hh4b_control_region],
+        "2b_control_region_preW": [hh4b_2b_region, hh4b_control_region],
+        "2b_control_region_postW": [hh4b_2b_region, hh4b_control_region],
+        "4b_control_regionRun2": [hh4b_4b_region, control_region_run2],
+        "2b_control_region_preWRun2": [hh4b_2b_region, control_region_run2],
+        "2b_control_region_postWRun2": [hh4b_2b_region, control_region_run2],
+        #
+        #
+        # "4b_region": [hh4b_4b_region],
+        # "4b_signal_region": [hh4b_4b_region, hh4b_signal_region],
+        # "4b_signal_regionRun2": [hh4b_4b_region, signal_region_run2],
+        # "2b_region": [hh4b_2b_region],
+        # "2b_signal_region": [hh4b_2b_region, hh4b_signal_region],
+        # "2b_signal_regionRun2": [hh4b_2b_region, signal_region_run2],
+        ## VBF SPECIFIC REGIONS
         # **{f"4b_semiTight_LeadingPt_region": [hh4b_4b_region, semiTight_leadingPt]},
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]},
         # **{f"4b_semiTight_LeadingMjj_region": [hh4b_4b_region, semiTight_leadingMjj]}
@@ -149,7 +180,8 @@ cfg = Configurator(
         # **{f"4b_VBF_0{i}qvg_region": [hh4b_4b_region, VBF_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
         # **{f"4b_VBF_0{i}qvg_generalSelection_region": [hh4b_4b_region, VBF_generalSelection_region, qvg_regions[f"qvg_0{i}_region"]] for i in range(5, 10)},
     },
-    weights_classes=common_weights + [bkg_morphing_dnn_weight],
+    weights_classes=common_weights
+    + [bkg_morphing_dnn_weight, bkg_morphing_dnn_weightRun2],
     weights={
         "common": {
             "inclusive": [
@@ -163,7 +195,8 @@ cfg = Configurator(
             "DATA_JetMET_JMENano_skimmed": {
                 "inclusive": [],
                 "bycategory": {
-                    "2b_region": ["bkg_morphing_dnn_weight"],
+                    "2b_control_region_postW": ["bkg_morphing_dnn_weight"],
+                    "2b_control_region_postWRun2": ["bkg_morphing_dnn_weightRun2"],
                 },
             },
         },
@@ -323,7 +356,15 @@ cfg = Configurator(
         },
         "bysample": {
             "DATA_JetMET_JMENano_skimmed": {
-                "inclusive": column_list,
+                "inclusive": [],
+                "bycategory": {
+                    "4b_control_region": column_list,
+                    "2b_control_region_preW": column_list,
+                    "2b_control_region_postW": column_list,
+                    "4b_control_regionRun2": column_listRun2,
+                    "2b_control_region_preWRun2": column_listRun2,
+                    "2b_control_region_postWRun2": column_listRun2,
+                },
             },
         },
     },

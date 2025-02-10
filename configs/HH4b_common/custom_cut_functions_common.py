@@ -1,6 +1,4 @@
-from collections.abc import Iterable
 import awkward as ak
-import numpy as np
 
 
 def hh4b_presel_cuts(events, params, **kwargs):
@@ -32,11 +30,8 @@ def hh4b_presel_cuts(events, params, **kwargs):
     mask_pt = ak.where(ak.is_none(mask_pt_none), False, mask_pt_none)
 
     mask_btag = (
-        (jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]) / 2
-        > params["mean_pnet_jet"]
-        # & (jets_btag_order.btagPNetB[:, 2] > params["third_pnet_jet"])
-        # & (jets_btag_order.btagPNetB[:, 3] > params["fourth_pnet_jet"])
-    )
+        jets_btag_order.btagPNetB[:, 0] + jets_btag_order.btagPNetB[:, 1]
+    ) / 2 > params["mean_pnet_jet"]
 
     mask_btag = ak.where(ak.is_none(mask_btag), False, mask_btag)
 
@@ -69,9 +64,10 @@ def hh4b_4b_cuts(events, params, **kwargs):
 
 
 def hh4b_Rhh_cuts(events, params, **kwargs):
-
-    mask = (events.Rhh >= params["radius_min"]) & (events.Rhh < params["radius_max"])
+    print("Radius", params["radius"])
+    mask = (getattr(events, params["radius"]) >= params["radius_min"]) & (
+        getattr(events, params["radius"]) < params["radius_max"]
+    )
 
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
-

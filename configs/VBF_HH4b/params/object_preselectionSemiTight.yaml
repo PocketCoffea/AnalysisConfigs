@@ -1,5 +1,5 @@
 object_preselection:
-  JetGood:
+  Jet:
     pt: 25  
     pt_tight: 35  
     eta: 2.5
