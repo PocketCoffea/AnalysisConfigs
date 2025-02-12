@@ -12,10 +12,11 @@ class MuonProcessor(BaseProcessorABC):
 
     def apply_object_preselection(self, variation):
         '''
-        Cleaning only Electrons
+        Cleaning only Muons
         '''
         muon_mask = ((self.events.Muon.pt >= self.params.object_preselection.Muon.pt) & 
-                    (abs(self.events.Muon.eta) <= self.params.object_preselection.Muon.eta))
+                    (abs(self.events.Muon.eta) <= self.params.object_preselection.Muon.eta) &
+                    self.events.Muon.tightId)
         self.events["MuonGood"] = self.events.Muon[muon_mask]
         
 
