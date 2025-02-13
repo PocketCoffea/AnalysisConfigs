@@ -24,7 +24,7 @@ def get_corr(histo, param):
     return row
 
 def plot_covariance_matrix(cov_matrix, labels=None, title="Covariance", output_folder='.',  cmap='coolwarm'):
-    fig, ax = plt.subplots(figsize=(12, 12))
+    fig, ax = plt.subplots(figsize=(24, 24))
     
     # Plot the covariance matrix with colormap
     cax = ax.matshow(cov_matrix, cmap=cmap, vmin=-1, vmax=1)
@@ -45,7 +45,7 @@ def plot_covariance_matrix(cov_matrix, labels=None, title="Covariance", output_f
     
     plt.title(f'{title} Matrix', fontsize=16)
     filename = os.path.join(output_folder, f"{title.lower()}_matrix.png")
-    plt.savefig(filename, dpi=400)
+    plt.savefig(filename, dpi=300)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Plot covariance matrix from dctr fit")
@@ -68,6 +68,7 @@ if __name__ == "__main__":
         else:
             params = [p for p in histo.axes[0] if p.startswith('SF')] + ['r']
         cov = get_matrix(histo, params)
-        plot_covariance_matrix(cov, params, title=matrix_name, output_folder=args.output)
+        params_nice = [p.replace("withcalib_complete_ttsplit_", "").replace("with_ttcc_variations_", "") for p in params]
+        plot_covariance_matrix(cov, params_nice, title=matrix_name, output_folder=args.output)
     corr_r = get_corr(histo, 'r')
     dict(sorted(corr_r.items(), key=lambda item: item[1], reverse=True))

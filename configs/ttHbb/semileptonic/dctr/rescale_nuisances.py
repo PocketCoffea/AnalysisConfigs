@@ -28,7 +28,8 @@ samples_to_rescale = [
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M',
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H',
     'TTToSemiLeptonic__TTToSemiLeptonic_tt+LF',
-    'TTToSemiLeptonic__TTToSemiLeptonic_tt+C'
+    'TTToSemiLeptonic__TTToSemiLeptonic_tt+C',
+    'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B'
 ]
 
 nuisances = [
@@ -53,6 +54,7 @@ nuisances = [
     'sf_btag_withcalib_complete_ttsplit_lf',
     'sf_btag_withcalib_complete_ttsplit_lfstats1',
     'sf_btag_withcalib_complete_ttsplit_lfstats2',
+    'sf_ttlf_calib_with_ttcc_variations_norm_ttcc',
     'sf_lhe_pdf_weight',
     'sf_partonshower_fsr',
     'sf_partonshower_isr',
@@ -71,8 +73,6 @@ histo = df["variables"]["nJets"]
 rescaling_factor = defaultdict(dict)
 for year in years:
     rescaling_factor[year] = defaultdict(dict)
-    if year == "2017":
-        nuisances.append("sf_L1prefiring")
     for nuisance in nuisances:
         for sample in samples_to_rescale:
             datasets = df["datasets_metadata"]["by_datataking_period"][year][sample]
