@@ -1,6 +1,7 @@
 import numpy as np
 import awkward as ak
 
+
 def lepton_selection(events, lepton_flavour, params):
     leptons = events[lepton_flavour]
     cuts = params.object_preselection[lepton_flavour]
@@ -38,14 +39,23 @@ def lepton_selection(events, lepton_flavour, params):
     return leptons[good_leptons]
 
 
-def jet_selection_nopu(events, jet_type, params, tight_cuts=False):
+def jet_selection_nopu(
+    events, jet_type, params, tight_cuts=False, semi_tight_vbf=False
+):
     jets = events[jet_type]
     cuts = params.object_preselection[jet_type]
     # Only jets that are more distant than dr to ALL leptons are tagged as good jets
     # Mask for  jets not passing the preselection
+
+    pt_cut = "pt"
+    if tight_cuts and "pt_tight" in cuts.keys():
+        pt_cut = "pt_tight"
+    if semi_tight_vbf and "ptSemiTight" in cuts.keys():
+        pt_cut = "ptSemiTight"
+
     if "eta_min" in cuts.keys() and "eta_max" in cuts.keys():
         mask_jets = (
-            (jets.pt > cuts["pt"] if not tight_cuts else jets.pt > cuts["pt_tight"])
+            (jets.pt > cuts[pt_cut])
             & (np.abs(jets.eta) > cuts["eta_min"])
             & (np.abs(jets.eta) < cuts["eta_max"])
             & (jets.jetId >= cuts["jetId"])
@@ -53,7 +63,7 @@ def jet_selection_nopu(events, jet_type, params, tight_cuts=False):
         )
     else:
         mask_jets = (
-            (jets.pt > cuts["pt"] if not tight_cuts else jets.pt > cuts["pt_tight"])
+            (jets.pt > cuts[pt_cut])
             & (np.abs(jets.eta) < cuts["eta"])
             & (jets.jetId >= cuts["jetId"])
             & (jets.btagPNetB > cuts["btagPNetB"])

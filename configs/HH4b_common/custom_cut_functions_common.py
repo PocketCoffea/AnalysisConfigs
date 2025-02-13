@@ -64,7 +64,6 @@ def hh4b_4b_cuts(events, params, **kwargs):
 
 
 def hh4b_Rhh_cuts(events, params, **kwargs):
-    print("Radius", params["radius"])
     mask = (getattr(events, params["radius"]) >= params["radius_min"]) & (
         getattr(events, params["radius"]) < params["radius_max"]
     )
