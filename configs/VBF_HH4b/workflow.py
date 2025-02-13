@@ -4,7 +4,6 @@ import numpy as np
 
 from configs.HH4b_common.custom_object_preselection_common import jet_selection_nopu
 from configs.HH4b_common.workflow_common import HH4bCommonProcessor
-from utils.vbf_matching import get_jets_no_higgs
 from utils.basic_functions import add_fields
 
 
@@ -13,6 +12,8 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
         super().__init__(cfg=cfg)
         self.vbf_parton_matching = self.workflow_options["vbf_parton_matching"]
         self.vbf_presel = self.workflow_options["vbf_presel"]
+        self.semi_tight_vbf = self.workflow_options["semi_tight_vbf"]
+        
 
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation=variation)
@@ -29,7 +30,7 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
 
             self.events["JetVBF_generalSelection"] = self.events.Jet
             self.events["JetVBF_generalSelection"] = jet_selection_nopu(
-                self.events, "JetVBF_generalSelection", self.params, tight_cuts=self.tight_cuts
+                self.events, "JetVBF_generalSelection", self.params, tight_cuts=self.tight_cuts, semi_tight_vbf=self.semi_tight_vbf
             )
 
     def count_objects(self, variation):
@@ -42,34 +43,12 @@ class VBFHH4bProcessor(HH4bCommonProcessor):
 
     def process_extra_after_presel(self, variation):  # -> ak.Array:
         super().process_extra_after_presel(variation=variation)
-        if self.vbf_presel:
-            jet_offsets = np.concatenate(
-                [
-                    [0],
-                    np.cumsum(
-                        ak.to_numpy(ak.num(self.events.Jet, axis=1), allow_missing=True)
-                    ),
-                ]
-            )
-            local_index_all = ak.local_index(self.events.Jet, axis=1)
-            jets_index_all = ak.to_numpy(
-                ak.flatten(local_index_all + jet_offsets[:-1]), allow_missing=True
-            )
-            jets_from_higgs_idx = ak.to_numpy(
-                ak.flatten(self.matched_jet_higgs_idx_not_none + jet_offsets[:-1]),
-                allow_missing=False,
-            )
-            jets_no_higgs_idx = get_jets_no_higgs(jets_index_all, jets_from_higgs_idx)
-            jets_no_higgs_idx_unflat = (
-                ak.unflatten(jets_no_higgs_idx, ak.num(self.events.Jet, axis=1))
-                - jet_offsets[:-1]
-            )
-            self.events["JetVBFNotFromHiggs"] = self.events.Jet[
-                jets_no_higgs_idx_unflat >= 0
-            ]
+        if self.vbf_presel:            
+            self.events["JetVBFNotFromHiggs"] = self.get_jets_no_higgs()
+            
             # apply selection to the jets not from Higgs
             self.events["JetVBFNotFromHiggs"] = jet_selection_nopu(
-                self.events, "JetVBFNotFromHiggs", self.params, tight_cuts=self.tight_cuts
+                self.events, "JetVBFNotFromHiggs", self.params, tight_cuts=self.tight_cuts,  semi_tight_vbf=self.semi_tight_vbf
             )
 
             # order in pt

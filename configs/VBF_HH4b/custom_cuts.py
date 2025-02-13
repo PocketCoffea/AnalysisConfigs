@@ -41,8 +41,8 @@ semiTight_leadingPt = Cut(
         "mjj": 400,
         "deltaEta_jj": 3.5,
     },
-    function=cuts_f.semiTight_leadingPt,
-    )
+    function=cuts_f.semiTight_leadingPt_cuts,
+)
 
 semiTight_leadingMjj = Cut(
     name="semiTight_leadingMjj",
@@ -50,8 +50,8 @@ semiTight_leadingMjj = Cut(
         "mjj": 400,
         "deltaEta_jj": 3.5,
     },
-    function=cuts_f.semiTight_leadingMjj,
-    )
+    function=cuts_f.semiTight_leadingMjj_cuts,
+)
 
 VBF_region = Cut(
     name="VBF",
@@ -90,7 +90,7 @@ VBFtight_params = {
     "mjj": 350,
     "pt": 10,
     "eta": 4.7,
-    "btag": 0.2605
+    "btag": 0.2605,
 }
 
 # Different parameters dictionary
@@ -100,15 +100,17 @@ no_cuts_params = {
     "mjj": -1,
     "pt": -1,
     "eta": 20,
-    "btag": 2
+    "btag": 2,
 }
 
-def vbf_wrapper(params = VBFtight_params):
+
+def vbf_wrapper(params=VBFtight_params):
     return Cut(
         name="4b_VBFtight",
         params=params,
         function=cuts_f.VBFtight_cuts,
-        )
+    )
+
 
 def generate_dictionaries(VBFtight_params, no_cuts_params):
     dict_array = []
@@ -117,8 +119,8 @@ def generate_dictionaries(VBFtight_params, no_cuts_params):
         temp_dict[key] = VBFtight_params[key]
         dict_array.append(temp_dict)
 
-
     return dict_array
+
 
 # Generate the array of dictionaries
 ab = generate_dictionaries(VBFtight_params, no_cuts_params)
@@ -128,10 +130,8 @@ for i in range(0, len(ab)):
 
 qvg_regions = {}
 for i in range(5, 10):
-    qvg_regions[f'qvg_0{i}_region'] = Cut(
-        name=f'qvg0{i}',
-        params={
-            "qvg_cut": i/10
-        },
+    qvg_regions[f"qvg_0{i}_region"] = Cut(
+        name=f"qvg0{i}",
+        params={"qvg_cut": i / 10},
         function=cuts_f.qvg_cuts,
-)
+    )
