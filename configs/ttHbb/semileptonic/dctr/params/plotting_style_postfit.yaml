@@ -1,0 +1,84 @@
+plotting_style:
+  fontsize: 22
+  fontsize_legend: 14
+  experiment_label_loc: 2  # location of CMS label (https://twiki.cern.ch/twiki/bin/viewauth/CMS/Internal/FigGuidelines)
+
+  labels_mc:
+    ttlf: "$t\\bar{t}$+LF (5FS)"
+    ttcc: "$t\\bar{t}$+C (5FS)"
+    #TTToSemiLeptonic__TTToSemiLeptonic_tt+B: "$t\\bar{t}$+B (5FS)"
+    #TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (4FS)"
+    #TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: "$t\\bar{t}$+C (4FS)"
+    ttbb: "$t\\bar{t}$+B (4FS)"
+    tt_dilepton : "$t\\bar{t}$ dilepton"
+    singletop : "Single t"
+    tthbb: "$t\\bar{t}H$"
+    vjets: "V+jets"
+    ttv: "$t\\bar{t}$+V"
+    diboson: "VV"
+    ttbb_4j_L: "$t\\bar{t}$+B (4FS) 4j L"
+    ttbb_4j_M: "$t\\bar{t}$+B (4FS) 4j M"
+    ttbb_4j_H: "$t\\bar{t}$+B (4FS) 4j H"
+    ttbb_5j_L: "$t\\bar{t}$+B (4FS) 5j L"
+    ttbb_5j_M: "$t\\bar{t}$+B (4FS) 5j M"
+    ttbb_5j_H: "$t\\bar{t}$+B (4FS) 5j H"
+    ttbb_6j_L: "$t\\bar{t}$+B (4FS) 6j L"
+    ttbb_6j_M: "$t\\bar{t}$+B (4FS) 6j M"
+    ttbb_6j_H: "$t\\bar{t}$+B (4FS) 6j H"
+    ttbb_ge7j_L: "$t\\bar{t}$+B (4FS) >=7j L"
+    ttbb_ge7j_M: "$t\\bar{t}$+B (4FS) >=7j M"
+    ttbb_ge7j_H: "$t\\bar{t}$+B (4FS) >=7j H"
+
+  #samples_groups:
+  #  "V+jets":
+  #    - WJetsToLNu_HT
+  #    - DYJetsToLL
+
+  colors_mc:
+    tthbb: CMS_red
+    ttbb: CMS_dark_orange
+    ttcc: CMS_orange
+    ttlf: CMS_blue
+    tt_dilepton: CMS_brown
+    singletop: CMS_gray
+    vjets: CMS_purple
+    ttv: CMS_light_blue
+    diboson: CMS_beige
+    ttbb_4j_L: "#db5d00"
+    ttbb_4j_M: "#97501a"
+    ttbb_4j_H: "#b24c00"
+    ttbb_5j_L: "#d9752a"
+    ttbb_5j_M: "#ff7005"
+    ttbb_5j_H: "#ba6220"
+    ttbb_6j_L: "#ff9e56"
+    ttbb_6j_M: "#df8b4d"
+    ttbb_6j_H: "#fe872d"
+    ttbb_ge7j_L: "#ebb892"
+    ttbb_ge7j_M: "#ffb67f"
+    ttbb_ge7j_H: "#e5a26f"
+
+
+  opts_figure:
+    datamc:
+      figsize: [12,9]
+
+  opts_ylim:
+    datamc:
+      ylim_log:
+        lo: 1.0
+        hi: 1e7
+
+  opts_sig:
+    histtype: "step"
+    stack: false
+    flow: "sum"
+    edges: true
+    linestyle: solid
+    linewidth: 1
+
+  blind_hists:
+    categories: [semilep, SR, 4jSR, 5jSR, '>=6jSR']
+    histograms:
+      spanet_tthbb_transformed: [0.75, 1.0]
+      spanet_tthbb: [0.75, 1.0]
+      spanet_ttlf: [0.0, 0.3]
