@@ -57,6 +57,20 @@ plotting_style:
     ttbb_ge7j_M: "#ffb67f"
     ttbb_ge7j_H: "#e5a26f"
 
+  order_mc:
+    - ttbb_ge7j_L
+    - ttbb_ge7j_M
+    - ttbb_ge7j_H
+    - ttbb_6j_L
+    - ttbb_6j_M
+    - ttbb_6j_H
+    - ttbb_5j_L
+    - ttbb_5j_M
+    - ttbb_5j_H
+    - ttbb_4j_L
+    - ttbb_4j_M
+    - ttbb_4j_H
+
   opts_figure:
     datamc:
       figsize: [12,9]
