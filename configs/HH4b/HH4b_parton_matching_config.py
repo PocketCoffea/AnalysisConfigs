@@ -42,27 +42,30 @@ parameters = defaults.merge_parameters_from_files(
     update=True,
 )
 
-SPANET_MODEL = (
-    ""
-    # "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s160_btag.onnx"
-)
+onnx_model_dict={
+    "SPANET_MODEL": "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx",
+    "VBF_GGF_DNN_MODEL":"",
+    # "VBF_GGF_DNN_MODEL":"/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx",
+    "BKG_MORPHING_DNN_MODEL": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx",
+    "SIG_BKG_DNN_MODEL": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_SvsB/model_fold0.onnx",
+}
 
-VBF_GGF_DNN_MODEL="/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx"
-BKG_MORPHING_DNN_MODEL="/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx"
+print(onnx_model_dict)
+
 
 workflow_options = {
         "parton_jet_min_dR": 0.4,
         "max_num_jets": 5,
         "which_bquark": "last",
         "classification": CLASSIFICATION, 
-        "SPANET_MODEL": SPANET_MODEL,
-        "BKG_MORPHING_DNN_MODEL": "",
-        "VBF_GGF_DNN_MODEL": "",
         "tight_cuts": TIGHT_CUTS,
         "fifth_jet": "pt",
         "random_pt": RANDOM_PT,
         "rand_type": 0.3
     }
+workflow_options.update(
+    onnx_model_dict
+)
 if SAVE_CHUNK:
     workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/training_samples/GluGlutoHHto4B_spanet_loose_03_17"
     # workflow_options["dump_columns_as_arrays_per_chunk"] = "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/HH4b/ntuples/DATA_JetMET_JMENano_btag_ordering"
