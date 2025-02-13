@@ -29,18 +29,22 @@ def get_dnn_prediction(session, input_name, output_name, events, variables, run2
             except AttributeError:
                 ak_array = getattr(getattr(events, collection.split(":")[0]), feature)
             pos = int(collection.split(":")[1])
-            ak_array = ak.fill_none(ak.pad_none(ak_array, pos + 1, clip=True), 0)[
+            ak_array = ak.fill_none(ak.pad_none(ak_array, pos + 1, clip=True), -10)[
                 :, pos
             ]
         else:
             try:
-                ak_array = getattr(
-                    getattr(events, f"{collection}Run2" if run2 else collection),
-                    feature,
+                ak_array = ak.fill_none(
+                    getattr(
+                        getattr(events, f"{collection}Run2" if run2 else collection),
+                        feature,
+                    ),
+                    -10,
                 )
             except AttributeError:
-                ak_array = getattr(getattr(events, collection), feature)
-
+                ak_array = ak.fill_none(
+                    getattr(getattr(events, collection), feature), -10
+                )
         variables_array.append(
             np.array(
                 ak.to_numpy(
@@ -54,5 +58,5 @@ def get_dnn_prediction(session, input_name, output_name, events, variables, run2
 
     inputs_complete = {input_name[0]: inputs}
 
-    outputs = session.run(output_name, inputs_complete)[0]
+    outputs = session.run(output_name, inputs_complete)
     return outputs
