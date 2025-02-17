@@ -18,6 +18,9 @@ parser.add_argument("-i", "--input", type=str, required=True, help="Input direct
 parser.add_argument(
     "-o", "--output", type=str, help="Output directory", default="plots_2bVS4b"
 )
+parser.add_argument(
+    "-n", "--normalisation", type=str, help="Type of normalisation (num_events, sum_weights, const_frac)", default="num_events"
+)
 parser.add_argument("-w", "--workers", type=int, default=8, help="Number of workers")
 parser.add_argument(
     "-l", "--linear", action="store_true", help="Linear scale", default=False
@@ -32,7 +35,7 @@ input_dir = args.input
 cfg = os.path.join(input_dir, "parameters_dump.yaml")
 inputfile = os.path.join(input_dir, "output_all.coffea")
 log_scale = not args.linear
-outputdir = os.path.join(input_dir, args.output)
+outputdir = os.path.join(input_dir, args.output)+f"_{args.normalisation}"
 
 cat_dict = {
     "CR": ["4b_control_region", "2b_control_region_preW", "2b_control_region_postW"],
@@ -359,36 +362,36 @@ if __name__ == "__main__":
     if True:
         sample = list(accumulator["columns"].keys())[0]
         dataset = list(accumulator["columns"][sample].keys())[0]
-        category = "2b_signal_region_postWRun2"
+        for category in accumulator["columns"][sample][dataset].keys():
 
-        col = accumulator["columns"][sample][dataset][category]
+            col = accumulator["columns"][sample][dataset][category]
 
-        print(col["events_bkg_morphing_dnn_weightRun2"])
-        print(col["weight"])
+            # print(col["events_bkg_morphing_dnn_weightRun2"])
+            # print(col["weight"])
 
-        assert np.allclose(
-            col["events_bkg_morphing_dnn_weightRun2"],
-            col["weight"],
-            rtol=1e-03,
-            atol=1e-05,
-        )
+            # assert np.allclose(
+            #     col["events_bkg_morphing_dnn_weightRun2"],
+            #     col["weight"],
+            #     rtol=1e-03,
+            #     atol=1e-05,
+            # )
 
-        fig, ax = plt.subplots()
-        ax.hist(col["weight"], bins=100, histtype="step", label="weight")
-        ax.text(
-            0.75,
-            0.9,
-            "mean: {:.2f}\nstd: {:.2f}".format(
-                np.mean(col["weight"]), np.std(col["weight"])
-            ),
-            horizontalalignment="left",
-            verticalalignment="top",
-            transform=ax.transAxes,
-            # ha="center",
-        )
-        ax.set_xscale("log")
-        ax.set_yscale("log")
-        fig.savefig(os.path.join(outputdir, f"weights_{category}.png"))
+            fig, ax = plt.subplots()
+            ax.hist(col["weight"], bins=100, histtype="step", label="weight")
+            ax.text(
+                0.75,
+                0.9,
+                "mean: {:.2f}\nstd: {:.2f}".format(
+                    np.mean(col["weight"]), np.std(col["weight"])
+                ),
+                horizontalalignment="left",
+                verticalalignment="top",
+                transform=ax.transAxes,
+                # ha="center",
+            )
+            ax.set_xscale("log")
+            ax.set_yscale("log")
+            fig.savefig(os.path.join(outputdir, f"weights_{category}.png"))
 
     # Get the normalization factors
     num_4b_CR = accumulator["cutflow"]["4b_control_region"][
@@ -416,6 +419,8 @@ if __name__ == "__main__":
         "DATA_JetMET_JMENano_2022_postEE_EraE"
     ]["DATA_JetMET_JMENano_skimmed"]
 
+    
+    
     norm_factor_dict = {
         "4b_control_region": 1,
         "2b_control_region_preW": num_4b_CR / num_2b_CR,
@@ -430,9 +435,16 @@ if __name__ == "__main__":
         "2b_signal_region_preWRun2": num_4b_CRRun2 / (num_2b_CRRun2),
         "2b_signal_region_postWRun2": num_4b_CRRun2 / (num_2b_CRRun2),
     }
-    
-    norm_factor_dict = {k: 0.018824706 for k in norm_factor_dict.keys() if "2b" in k}
-    print(norm_factor_dict)
+    if args.normalisation== "sum_weights":
+        norm_factor_dict = None
+    elif args.normalisation== "const_frac":
+        norm_factor_dict = {k: (0.018824706 if "2b" in k else 1.) for k in norm_factor_dict.keys() }
+    elif args.normalisation== "num_events":
+        pass
+    else:
+        raise ValueError(f"Normalisation type {args.normalisation} not recognised")
+        
+    print("norm_factor_dict", norm_factor_dict)
     
 
     plot_from_hist(accumulator, norm_factor_dict)
