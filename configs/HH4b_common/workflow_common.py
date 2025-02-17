@@ -409,7 +409,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
 
         return ak.flatten(np.sqrt(sigma_hbbCand_A**2 + sigma_hbbCand_B**2))
 
-    def get_jets_no_higgs(self):
+    def get_jets_no_higgs(self, jet_higgs_idx_per_event):
         jet_offsets = np.concatenate(
             [
                 [0],
@@ -423,7 +423,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
             ak.flatten(local_index_all + jet_offsets[:-1]), allow_missing=True
         )
         jets_from_higgs_idx = ak.to_numpy(
-            ak.flatten(self.matched_jet_higgs_idx_not_none + jet_offsets[:-1]),
+            ak.flatten(jet_higgs_idx_per_event + jet_offsets[:-1]),
             allow_missing=False,
         )
         jets_no_higgs_idx = get_jets_no_higgs_from_idx(
@@ -436,7 +436,9 @@ class HH4bCommonProcessor(BaseProcessorABC):
         jets_not_from_higgs = self.events.Jet[jets_no_higgs_idx_unflat >= 0]
         return jets_not_from_higgs
 
-    def define_dnn_variables(self, higgs1, higgs2, jets_from_higgs, sb_variables):
+    def define_dnn_variables(
+        self, higgs1, higgs2, jets_from_higgs, jet_higgs_idx_per_event, sb_variables
+    ):
         ########################
         # ADDITIONAL VARIABLES #
         ########################
@@ -446,7 +448,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
 
         self.events["era"] = ak.ones_like(self.events.HT)
 
-        self.events["JetNotFromHiggs"] = self.get_jets_no_higgs()
+        self.events["JetNotFromHiggs"] = self.get_jets_no_higgs(jet_higgs_idx_per_event)
 
         self.params.object_preselection.update(
             {"JetNotFromHiggs": self.params.object_preselection["JetGood"]}
@@ -455,11 +457,8 @@ class HH4bCommonProcessor(BaseProcessorABC):
         self.events["JetNotFromHiggs"] = jet_selection_nopu(
             self.events, "JetNotFromHiggs", self.params, tight_cuts=self.tight_cuts
         )
-        print(self.events.JetNotFromHiggs.pt, self.events.JetNotFromHiggs.eta, self.events.JetNotFromHiggs.index)
 
-        # add_jet1pt = ak.pad_none(self.events.JetGood, 5, clip=True)[:, 4]
         add_jet1pt = ak.pad_none(self.events.JetNotFromHiggs, 1, clip=True)[:, 0]
-        print(add_jet1pt.pt, add_jet1pt.eta, add_jet1pt.index)
 
         # Minimum ∆R ( jj ) among all possible pairings of the leading b-tagged jets
         # Maximum ∆R( jj ) among all possible pairings of the leading b-tagged jets
@@ -638,7 +637,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_provenance(self.events.JetGoodMatched)
 
-            self.matched_jet_higgs_idx_not_none = self.events.JetGoodMatched.index[
+            matched_jet_higgs_idx_not_none = self.events.JetGoodMatched.index[
                 ~ak.is_none(self.events.JetGoodMatched.index, axis=1)
             ]
         else:
@@ -676,21 +675,23 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events["JetGoodFromHiggsOrdered"],
             ) = reconstruct_higgs_from_idx(self.events.JetGood, pairing_predictions)
 
-            self.matched_jet_higgs_idx_not_none = (
-                self.events.JetGoodFromHiggsOrdered.index
-            )
-
-        self.events["nJetGoodHiggsMatched"] = ak.num(
-            self.events.JetGoodHiggsMatched, axis=1
-        )
-        self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
-
+        matched_jet_higgs_idx_not_none = self.events.JetGoodFromHiggsOrdered.index
+        # reconstruct the higgs candidates for Run2 method
         (
             self.events["delta_dhh"],
             self.events["HiggsLeadingRun2"],
             self.events["HiggsSubLeadingRun2"],
             self.events["JetGoodFromHiggsOrderedRun2"],
         ) = run2_matching_algorithm(self.events["JetGoodHiggs"])
+
+        matched_jet_higgs_idx_not_noneRun2 = (
+            self.events.JetGoodFromHiggsOrderedRun2.index
+        )
+
+        self.events["nJetGoodHiggsMatched"] = ak.num(
+            self.events.JetGoodHiggsMatched, axis=1
+        )
+        self.events["nJetGoodMatched"] = ak.num(self.events.JetGoodMatched, axis=1)
 
         # Define distance parameter for selection:
         self.events["Rhh"] = np.sqrt(
@@ -721,6 +722,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events.HiggsLeading,
                 self.events.HiggsSubLeading,
                 self.events.JetGoodFromHiggsOrdered,
+                matched_jet_higgs_idx_not_none,
                 sb_variables=True if self.SIG_BKG_DNN_MODEL else False,
             )
             (
@@ -734,6 +736,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 self.events.HiggsLeadingRun2,
                 self.events.HiggsSubLeadingRun2,
                 self.events.JetGoodFromHiggsOrderedRun2,
+                matched_jet_higgs_idx_not_noneRun2,
                 sb_variables=True if self.SIG_BKG_DNN_MODEL else False,
             )
 
@@ -760,7 +763,7 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 bkg_morphing_dnn_input_variables,
                 run2=True,
             )[0]
-            
+
         if self.SIG_BKG_DNN_MODEL:
             (
                 model_session_SIG_BKG_DNN,
@@ -768,11 +771,13 @@ class HH4bCommonProcessor(BaseProcessorABC):
                 output_name_SIG_BKG_DNN,
             ) = get_model_session(self.SIG_BKG_DNN_MODEL, "SIG_BKG_DNN")
 
-            self.events["sig_bkg_dnn_score"] = ak.flatten(get_dnn_prediction(
-                model_session_SIG_BKG_DNN,
-                input_name_SIG_BKG_DNN,
-                output_name_SIG_BKG_DNN,
-                self.events,
-                sig_bkg_dnn_input_variables,
-            )[0])
+            self.events["sig_bkg_dnn_score"] = ak.flatten(
+                get_dnn_prediction(
+                    model_session_SIG_BKG_DNN,
+                    input_name_SIG_BKG_DNN,
+                    output_name_SIG_BKG_DNN,
+                    self.events,
+                    sig_bkg_dnn_input_variables,
+                )[0]
+            )
             print(self.events["sig_bkg_dnn_score"])
