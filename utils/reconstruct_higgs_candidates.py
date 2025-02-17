@@ -203,7 +203,7 @@ def run2_matching_algorithm(jet_collection):
         np.newaxis,
     ] * np.ones((3, 2, 2))
 
-    # expand the comb_idx 
+    # expand the comb_idx
     comb_idx_tile = np.tile(comb_idx, (len(min_idx), 1, 1))
     comb_idx_reshape = np.reshape(comb_idx_tile, (len(min_idx), 3, 2, 2))
     # order indx according to the higgs candidate pt
@@ -226,7 +226,7 @@ def run2_matching_algorithm(jet_collection):
     for i in ((0, 1), (2, 3)):
         for j in (i, i[::-1]):
             jets_list.append(
-                ak.singletons(
+                ak.unflatten(
                     ak.where(
                         jet_collection[
                             np.arange(len(min_idx)), best_idx_expanded[:, i[0]]
@@ -240,13 +240,14 @@ def run2_matching_algorithm(jet_collection):
                         jet_collection[
                             np.arange(len(min_idx)), best_idx_expanded[:, j[1]]
                         ],
-                    )
+                    ),
+                    1,
                 )
             )
     # concatenate the jets
     jets_ordered = ak.with_name(
         ak.concatenate(jets_list, axis=1),
-        name="PtEtaPhiMCandidate",
+        name="PtEtaPhiMLorentzVector",
     )
 
     return (
@@ -283,6 +284,5 @@ if __name__ == "__main__":
     jets = ak.with_field(jets, ak.local_index(jets, axis=1), "index")
     mask_4jets = ak.num(jets) >= 4
     jets = jets[mask_4jets]
-
 
     x = run2_matching_algorithm(jets)

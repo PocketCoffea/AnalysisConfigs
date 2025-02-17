@@ -54,11 +54,13 @@ parameters = defaults.merge_parameters_from_files(
 
 
 onnx_model_dict={
-    "SPANET_MODEL": "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx",
-    "VBF_GGF_DNN_MODEL":"",
-    # "VBF_GGF_DNN_MODEL":"/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx",
-    "BKG_MORPHING_DNN_MODEL": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx",
-    "SIG_BKG_DNN_MODEL": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_SvsB/model_fold0.onnx",
+    "SPANET": "/work/tharte/datasets/mass_sculpting_data/hh4b_5jets_e300_s100_ptvary_wide_loose_btag.onnx",
+    # "SPANET": "params/out_hh4b_5jets_ATLAS_ptreg_c0_lr1e4_wp0_noklininp_oc_300e_kl3p5.onnx",
+    "VBF_GGF_DNN":"",
+    # "VBF_GGF_DNN":"/t3home/rcereghetti/ML_pytorch/out/20241212_223142_SemitTightPtLearningRateConstant/models/model_28.onnx",
+    "BKG_MORPHING_DNN": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_morphing/average_model_from_keras.onnx",
+    "SIG_BKG_DNN": "",
+    # "SIG_BKG_DNN": "/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/keras_models_SvsB/model_fold0.onnx",
 }
 
 print(onnx_model_dict)
@@ -97,7 +99,7 @@ jet_info = ["index", "pt", "btagPNetQvG", "eta", "btagPNetB", "phi", "mass"]
 variables_dict = get_variables_dict(
     CLASSIFICATION=CLASSIFICATION,
     VBF_VARIABLES=False,
-    BKG_MORPHING=True if onnx_model_dict["BKG_MORPHING_DNN_MODEL"] else False,
+    BKG_MORPHING=True if onnx_model_dict["BKG_MORPHING_DNN"] else False,
 )
 
 columns_dict = {
