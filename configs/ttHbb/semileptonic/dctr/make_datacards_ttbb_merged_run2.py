@@ -1,9 +1,10 @@
 import os
 import argparse
 from coffea.util import load
-from pocket_coffea.utils.datacard import Datacard, combine_datacards, create_scripts
-from pocket_coffea.utils.processes import Process
-from pocket_coffea.utils.systematics import SystematicUncertainty
+from pocket_coffea.utils.stat.combine import Datacard, combine_datacards, create_scripts
+from pocket_coffea.utils.stat.processes import Process
+from pocket_coffea.utils.stat.systematics import SystematicUncertainty
+from combine_scripts import create_scripts
 
 parser = argparse.ArgumentParser(description="Make datacards")
 parser.add_argument("-i", "--input", help="Coffea input file with histograms", required=True)
