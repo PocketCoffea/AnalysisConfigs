@@ -91,7 +91,9 @@ def make_plots(input_dir, overwrite_parameters, outputdir, inputfile,
 
     h_dict = {}
     datasets_metadata = {
-        "by_datataking_period": {},
+        "by_datataking_period": {
+            "run2" : defaultdict(set)
+        },
         "by_dataset": defaultdict(dict)
     }
 
@@ -108,34 +110,50 @@ def make_plots(input_dir, overwrite_parameters, outputdir, inputfile,
                 unc_total = np.sqrt(h_total.variances().sum())
                 n_total = h_total.values().sum()
                 for process_name, th1f in shapes_dict.items():
-                    if process_name in ['TotalBkg;1', 'TotalProcs;1', 'TotalSig;1', 'data_obs;1']: continue
-                    sample = process_name.split(f"_{year}")[0]
-                    dataset = f"{sample}_{year}"
-                    datasets_metadata["by_dataset"][dataset] = {'year': year, 'sample': sample, 'isMC' : 'True'}
-                    if year not in datasets_metadata["by_datataking_period"]:
-                        datasets_metadata["by_datataking_period"][year] = defaultdict(set)
-                    datasets_metadata["by_datataking_period"][year][sample].add(dataset)
+                    if process_name in ['TotalBkg;1', 'TotalProcs;1', 'TotalSig;1']: continue
+                    if process_name == 'data_obs;1':
+                        sample = "data_obs"
+                        dataset = "data_obs_run2"
+                        isMC = 'False'
+                    else:
+                        sample = process_name.split(f"_{year}")[0]
+                        dataset = f"{sample}_{year}"
+                        isMC = 'True'
+                    if dataset not in datasets_metadata["by_dataset"]:
+                        datasets_metadata["by_dataset"][dataset] = {'year': 'run2', 'sample': sample, 'isMC' : isMC}
+                    #if year not in datasets_metadata["by_datataking_period"]:
+                    #    datasets_metadata["by_datataking_period"][year] = defaultdict(set)
+                    datasets_metadata["by_datataking_period"]["run2"][sample].add(dataset)
                     if sample not in h_dict[stage][histname]:
                         h_dict[stage][histname][sample] = {}
-                    new_hist = hist.Hist(cat_axis, variations_axis, f[f"{cat}_2018_prefit/ttlf_2018;1"].to_hist().axes[0], storage=hist.storage.Weight())
-                    new_hist_view = new_hist.view()
-                    h = th1f.to_hist()
-                    index_variation = variations_axis.index("nominal")
-                    new_hist_view[index_cat, index_variation, :] += h.view()
+                    if sample == "data_obs":
+                        new_hist = hist.Hist(cat_axis, f[f"{cat}_2018_prefit/ttlf_2018;1"].to_hist().axes[0], storage=hist.storage.Weight())
+                        new_hist_view = new_hist.view()
+                        h = th1f.to_hist()
+                        new_hist_view[index_cat, :] += h.view()
+                    else:
+                        new_hist = hist.Hist(cat_axis, variations_axis, f[f"{cat}_2018_prefit/ttlf_2018;1"].to_hist().axes[0], storage=hist.storage.Weight())
+                        new_hist_view = new_hist.view()
+                        h = th1f.to_hist()
+                        index_variation = variations_axis.index("nominal")
+                        new_hist_view[index_cat, index_variation, :] += h.view()
 
-                    # We compute a normalization factor to define the up and down variations such that the total uncertainty is the same as the one from the TotalProcs histogram
-                    # The up/down variations are defined as follows:
-                    # up = nominal * (1 + normalization_factor)
-                    # down = nominal * (1 - normalization_factor)
-                    # where normalization_factor = unc_total / sqrt(n_total * n_sample)
-                    n_sample = h.values().sum()
-                    normalization_factor = unc_total / np.sqrt(n_total * n_sample)
-                    index_variation_up = variations_axis.index("TotalProcsUp")
-                    new_hist_view[index_cat, index_variation_up, :] += h.view() * (1 + normalization_factor)
-                    index_variation_down = variations_axis.index("TotalProcsDown")
-                    new_hist_view[index_cat, index_variation_down, :] += h.view() * (1 - normalization_factor)
+                        # We compute a normalization factor to define the up and down variations such that the total uncertainty is the same as the one from the TotalProcs histogram
+                        # The up/down variations are defined as follows:
+                        # up = nominal * (1 + normalization_factor)
+                        # down = nominal * (1 - normalization_factor)
+                        # where normalization_factor = unc_total / sqrt(n_total * n_sample)
+                        n_sample = h.values().sum()
+                        normalization_factor = unc_total / np.sqrt(n_total * n_sample)
+                        index_variation_up = variations_axis.index("TotalProcsUp")
+                        new_hist_view[index_cat, index_variation_up, :] += h.view() * (1 + normalization_factor)
+                        index_variation_down = variations_axis.index("TotalProcsDown")
+                        new_hist_view[index_cat, index_variation_down, :] += h.view() * (1 - normalization_factor)
 
-                    h_dict[stage][histname][sample][dataset] = new_hist
+                    if dataset not in h_dict[stage][histname][sample]:
+                        h_dict[stage][histname][sample][dataset] = new_hist
+                    else:
+                        h_dict[stage][histname][sample][dataset] += new_hist
 
     variables = h_dict["postfit"].keys()
 
@@ -156,6 +174,7 @@ def make_plots(input_dir, overwrite_parameters, outputdir, inputfile,
             plot_dir=os.path.join(outputdir, stage),
             style_cfg=style_cfg,
             has_mcstat=False, # We set MC stat to False because we are taking the total uncertainty from the TotalProcs histogram for prefit and postfit
+            toplabel=f"138 fb$^{{-1}}$ (13 TeV)",
             only_cat=only_cat,
             only_year=only_year,
             workers=workers,
