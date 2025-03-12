@@ -2,3 +2,7 @@
 
 lepton_scale_factors:
   electron_sf:
+
+    apply_ele_scale_and_smearing:
+      '2022_preEE': False
+      '2022_postEE': False
