@@ -76,6 +76,3 @@ cfg = Configurator(
        }
    }
 )
-
-# Cmd to run:
-# ./run_recipe.sh jet_jec 2016preVFP_UL /eos/vbc/group/cms/alikaan.gueven/cat_datasets_recipes/2016preVFP_UL/TTTo2L2Nu_10k_nano.root /scratch-cbe/users/alikaan.gueven/pocketcoffea_outputs/TTTo2L2Nu_10k_nano.txt
