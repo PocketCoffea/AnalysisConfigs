@@ -2,7 +2,7 @@ from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
-from pocket_coffea.lib.weights.common.common import common_weights
+from pocket_coffea.lib.weights.common.common import common_weights, SF_L1prefiring
 from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_QCD_renorm_scale, SF_QCD_factor_scale
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
@@ -18,7 +18,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_ttlf_calib
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
 from configs.ttHbb.semileptonic.common.weights.custom_btag_calib_total import SF_btag_withcalib_complete_ttsplit
 from params.axis_settings import axis_settings
 
@@ -43,11 +43,30 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
-                                                  f"{localdir}/params/ttlf_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
                                                   f"{localdir}/params/ml_models_T3_CH_PSI_work.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
+
+samples = ["ttHTobb",
+           "TTbbSemiLeptonic",
+           "TTToSemiLeptonic",
+           "TTTo2L2Nu",
+           "SingleTop",
+           "WJetsToLNu_HT",
+           "DYJetsToLL",
+           "VV",
+           "TTV",
+           #"DATA_SingleEle",
+           #"DATA_SingleMuon"
+           ]
+samples_with_qcd_and_pdf = [s for s in samples if s not in ["SingleTop", "VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+samples_with_qcd_only = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"] if s not in samples_with_qcd_and_pdf]
+
+print("samples_with_qcd_and_pdf: ", samples_with_qcd_and_pdf)
+print("samples_with_qcd_only: ", samples_with_qcd_only)
+
+assert len(set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)) == 0, f"Samples with QCD only and QCD+PDF overlap: {set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)}"
 
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
@@ -62,22 +81,46 @@ with open(parameters["dctr"]["weight_cuts"]["inclusive"]["file"]) as f:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
+        "jsons": [f"{localdir}/datasets/datasets_Run2_skim_fixed.json",
                   ],
         "filter" : {
-            "samples": [
-                        "TTToSemiLeptonic",
-                        ],
+            "samples": samples,
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
                      "2017",
-                     "2018"
+                     #"2018"
                      ] #All the years
         },
         "subsamples": {
+            #'DATA_SingleEle'  : {
+            #    'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]
+            #},
+            #'DATA_SingleMuon' : {
+            #    'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
+            #                         get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
+            #},
+            'TTbbSemiLeptonic' : {
+                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][0])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][1])],
+                'TTbbSemiLeptonic_tt+B_4j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(4, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=4"][2])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][0])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][1])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][2])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][0])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][1])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][2])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][0])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][1])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][2])],
+            },
             'TTToSemiLeptonic' : {
-                'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                #'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
             },
         }
     },
@@ -105,37 +148,45 @@ cfg = Configurator(
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete_ttsplit],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_btag_withcalib_complete_ttsplit, SF_L1prefiring],
     weights= {
         "common": {
             "inclusive": [
                 "genWeight", "lumi","XS",
                 "pileup",
+                "sf_L1prefiring",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
+                "sf_btag_withcalib_complete_ttsplit",
                 "sf_jet_puId", "sf_top_pt",
-                "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
             "bycategory": {},
         },
-        "bysample": {},
+        "bysample": {
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
+        } | {
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
+        },
     },
     variations = {
         "weights": {
             "common": {
                 "inclusive": ["pileup",
+                              "sf_L1prefiring",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                              "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
+                              "sf_btag_withcalib_complete_ttsplit",
                               "sf_jet_puId", "sf_top_pt",
-                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
                 "bycategory": {}
             },
-            "bysample": {},
+            "bysample": {
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
+            } | {
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
+            },
         },
         "shape": {
             "common": {

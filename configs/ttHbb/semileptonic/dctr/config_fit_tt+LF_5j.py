@@ -91,11 +91,11 @@ cfg = Configurator(
     skim = [get_nPVgood(1),
             eventFlags,
             goldenJson,
-            get_nObj_min(4, 15., "Jet"),
+            get_nObj_min(5, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
-    preselections = [semileptonic_presel],
+    preselections = [semileptonic_presel_5j],
     categories = {
         "semilep": [passthrough],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
@@ -148,6 +148,7 @@ cfg = Configurator(
         **count_hist(name="nLeptons", coll="LeptonGood",bins=1, start=1, stop=2),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **met_hists(coll="MET", axis_settings=axis_settings),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -167,6 +168,12 @@ cfg = Configurator(
         ),
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=13, start=0.74, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p0025" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=100, start=0.75, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p005" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0.75, stop=1, label="tthbb SPANet transformed score")],
         ),
         "spanet_tthbb_transformed_binning0p00625" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=40, start=0.75, stop=1, label="tthbb SPANet transformed score")],
@@ -191,6 +198,9 @@ cfg = Configurator(
         ),
         "dctr_index" : HistConf(
             [Axis(coll="dctr_output", field="index", bins=12, start=1, stop=13, label="DCTR index")],
+        ),
+        "dctr_index_9bins" : HistConf(
+            [Axis(coll="dctr_output", field="index", bins=9, start=4, stop=13, label="DCTR index")],
         ),
     },
 )

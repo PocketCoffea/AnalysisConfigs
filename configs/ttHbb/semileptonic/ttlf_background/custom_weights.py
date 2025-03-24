@@ -1,4 +1,4 @@
-from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData
+from pocket_coffea.lib.weights.weights import WeightLambda, WeightWrapper, WeightData, WeightDataMultiVariation
 import numpy as np
 import awkward as ak
 import correctionlib
@@ -46,6 +46,26 @@ def sf_ttlf_calib(params, sample, year, njets, jetsHt):
     w = corr.evaluate(ak.to_numpy(njets), ak.to_numpy(jetsHt))
     return w
 
+def sf_ttlf_calib_with_ttcc_variations(params, sample, year, njets, jetsHt, variations):
+    '''Correction to tt+LF background computed by correcting tt+LF to data minus the other backgrounds in 2D:
+    njets-JetsHT bins. Each year has a different correction stored in the correctionlib format.'''
+    cset = correctionlib.CorrectionSet.from_file(
+        params.ttlf_calibration[year]["file"]
+    )
+    corr = cset[params.ttlf_calibration[year]["name"]]
+    output = {}
+    for variation in variations:
+        if variation == 'nominal':
+            output[variation] = [corr.evaluate(variation, ak.to_numpy(njets), ak.to_numpy(jetsHt))]
+        else:
+            nominal = np.ones(ak.num(njets, axis=0))
+            output[variation] = [
+                nominal,
+                corr.evaluate(f"{variation}Up", ak.to_numpy(njets), ak.to_numpy(jetsHt)),
+                corr.evaluate(f"{variation}Down", ak.to_numpy(njets), ak.to_numpy(jetsHt)),
+            ]
+    return output
+
 class SF_ttlf_calib(WeightWrapper):
     name = "sf_ttlf_calib"
     has_variations = False
@@ -65,7 +85,36 @@ class SF_ttlf_calib(WeightWrapper):
                             )
         return WeightData(
             name = self.name,
-            nominal = out, #out[0] only if has_variations = True
-            #up = out[1],
-            #down = out[2]
+            nominal = out["nominal"][0]
             )
+
+class SF_ttlf_calib_with_ttcc_variations(WeightWrapper):
+    name = "sf_ttlf_calib_with_ttcc_variations"
+    has_variations = True
+
+    def __init__(self, params, metadata):
+        super().__init__(params, metadata)
+        self.jet_coll = "JetGood"
+        self._variations = params.systematic_variations.weight_variations.ttlf_calibration[metadata["year"]]
+
+    def compute(self, events, size, shape_variation):
+        jetsHt = ak.sum(events[self.jet_coll].pt, axis=1)
+        if shape_variation == "nominal":
+            out = sf_ttlf_calib_with_ttcc_variations(
+                                self._params,
+                                sample=self._metadata["sample"],
+                                year=self._metadata["year"],
+                                # Assuming n*JetCollection* is defined
+                                njets=events[f"n{self.jet_coll}"],
+                                jetsHt=jetsHt,
+                                variations=["nominal"] + self._variations
+                                )
+            return WeightDataMultiVariation(
+                name = self.name,
+                nominal = out["nominal"][0],
+                variations = self._variations,
+                up = [out[var][1] for var in self._variations],
+                down = [out[var][2] for var in self._variations]
+                )
+        else:
+            raise NotImplementedError("Only nominal shape variation is implemented for ttlf calibration")

@@ -18,7 +18,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_ttlf_calib
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
 from configs.ttHbb.semileptonic.common.weights.custom_btag_calib_total import SF_btag_withcalib_complete_ttsplit
 from params.axis_settings import axis_settings
 
@@ -43,11 +43,30 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/lepton_scale_factors.yaml",
                                                   f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/btagSF_calibration.yaml",
-                                                  f"{localdir}/params/ttlf_calibration.yaml",
                                                   f"{localdir}/params/plotting_style_dctr.yaml",
                                                   f"{localdir}/params/ml_models_T3_CH_PSI_work.yaml",
                                                   f"{localdir}/params/quantile_transformer.yaml",
                                                   update=True)
+
+samples = ["ttHTobb",
+           "TTbbSemiLeptonic",
+           "TTToSemiLeptonic",
+           "TTTo2L2Nu",
+           "SingleTop",
+           "WJetsToLNu_HT",
+           "DYJetsToLL",
+           "VV",
+           "TTV",
+           "DATA_SingleEle",
+           "DATA_SingleMuon"
+           ]
+samples_with_qcd_and_pdf = [s for s in samples if s not in ["SingleTop", "VV", "DATA_SingleEle", "DATA_SingleMuon"]]
+samples_with_qcd_only = [s for s in samples if s not in ["VV", "DATA_SingleEle", "DATA_SingleMuon"] if s not in samples_with_qcd_and_pdf]
+
+print("samples_with_qcd_and_pdf: ", samples_with_qcd_and_pdf)
+print("samples_with_qcd_only: ", samples_with_qcd_only)
+
+assert len(set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)) == 0, f"Samples with QCD only and QCD+PDF overlap: {set(samples_with_qcd_and_pdf) & set(samples_with_qcd_only)}"
 
 with open(parameters["dctr"]["weight_cuts"]["by_njet"]["file"]) as f:
     w_cuts = json.load(f)
@@ -62,12 +81,10 @@ with open(parameters["dctr"]["weight_cuts"]["inclusive"]["file"]) as f:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/datasets_Run2_skim.json",
+        "jsons": [f"{localdir}/datasets/datasets_Run2_skim_fixed.json",
                   ],
         "filter" : {
-            "samples": [
-                        "TTToSemiLeptonic",
-                        ],
+            "samples": samples,
             "samples_exclude" : [],
             "year": ["2016_PreVFP",
                      "2016_PostVFP",
@@ -76,8 +93,31 @@ cfg = Configurator(
                      ] #All the years
         },
         "subsamples": {
+            'DATA_SingleEle'  : {
+                'DATA_SingleEle' : [get_HLTsel(primaryDatasets=["SingleEle"])]
+            },
+            'DATA_SingleMuon' : {
+                'DATA_SingleMuon' : [get_HLTsel(primaryDatasets=["SingleMuon"]),
+                                     get_HLTsel(primaryDatasets=["SingleEle"], invert=True)]
+            },
+            'TTbbSemiLeptonic' : {
+                'TTbbSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTbbSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTbbSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][0])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][1])],
+                'TTbbSemiLeptonic_tt+B_5j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(5, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=5"][2])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][0])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][1])],
+                'TTbbSemiLeptonic_tt+B_6j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_eq(6, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet=6"][2])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_L'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][0])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_M'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][1])],
+                'TTbbSemiLeptonic_tt+B_>=7j_DCTR_H'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56]), get_nObj_min(7, coll="JetGood"), get_w_dctr_interval(*w_cuts["njet>=7"][2])],
+            },
             'TTToSemiLeptonic' : {
-                'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                #'TTToSemiLeptonic_tt+LF'   : [get_genTtbarId_100_eq(0)],
+                'TTToSemiLeptonic_tt+C'    : [get_genTtbarId_100_eq([41, 42, 43, 44, 45, 46])],
+                'TTToSemiLeptonic_tt+B'    : [get_genTtbarId_100_eq([51, 52, 53, 54, 55, 56])],
             },
         }
     },
@@ -91,11 +131,11 @@ cfg = Configurator(
     skim = [get_nPVgood(1),
             eventFlags,
             goldenJson,
-            get_nObj_min(4, 15., "Jet"),
+            get_nObj_min(5, 15., "Jet"),
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
-    preselections = [semileptonic_presel],
+    preselections = [semileptonic_presel_5j],
     categories = {
         "semilep": [passthrough],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
@@ -105,7 +145,7 @@ cfg = Configurator(
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete_ttsplit],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_btag_withcalib_complete_ttsplit],
     weights= {
         "common": {
             "inclusive": [
@@ -113,14 +153,17 @@ cfg = Configurator(
                 "pileup",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
+                "sf_btag_withcalib_complete_ttsplit",
                 "sf_jet_puId", "sf_top_pt",
-                "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                 "sf_partonshower_isr", "sf_partonshower_fsr",
             ],
             "bycategory": {},
         },
-        "bysample": {},
+        "bysample": {
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
+        } | {
+            s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
+        },
     },
     variations = {
         "weights": {
@@ -128,14 +171,17 @@ cfg = Configurator(
                 "inclusive": ["pileup",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-                              "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
+                              "sf_btag_withcalib_complete_ttsplit",
                               "sf_jet_puId", "sf_top_pt",
-                              "sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight",
                               "sf_partonshower_isr", "sf_partonshower_fsr",
                               ],
                 "bycategory": {}
             },
-            "bysample": {},
+            "bysample": {
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale", "sf_lhe_pdf_weight"] } for s in samples_with_qcd_and_pdf
+            } | {
+                s : { "inclusive": ["sf_qcd_renorm_scale", "sf_qcd_factor_scale"] } for s in samples_with_qcd_only
+            },
         },
         "shape": {
             "common": {
@@ -148,6 +194,7 @@ cfg = Configurator(
         **count_hist(name="nLeptons", coll="LeptonGood",bins=1, start=1, stop=2),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **met_hists(coll="MET", axis_settings=axis_settings),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -167,6 +214,12 @@ cfg = Configurator(
         ),
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=13, start=0.74, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p0025" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=100, start=0.75, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p005" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0.75, stop=1, label="tthbb SPANet transformed score")],
         ),
         "spanet_tthbb_transformed_binning0p00625" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=40, start=0.75, stop=1, label="tthbb SPANet transformed score")],
@@ -191,6 +244,9 @@ cfg = Configurator(
         ),
         "dctr_index" : HistConf(
             [Axis(coll="dctr_output", field="index", bins=12, start=1, stop=13, label="DCTR index")],
+        ),
+        "dctr_index_9bins" : HistConf(
+            [Axis(coll="dctr_output", field="index", bins=9, start=4, stop=13, label="DCTR index")],
         ),
     },
 )

@@ -6,6 +6,18 @@ plotting_style:
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+LF: "$t\\bar{t}$+LF (4FS)"
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+C: "$t\\bar{t}$+C (4FS)"
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: "$t\\bar{t}$+B (4FS)"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_L: "$t\\bar{t}$+B (4FS) 4j L"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_M: "$t\\bar{t}$+B (4FS) 4j M"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_H: "$t\\bar{t}$+B (4FS) 4j H"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_L: "$t\\bar{t}$+B (4FS) 5j L"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_M: "$t\\bar{t}$+B (4FS) 5j M"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_H: "$t\\bar{t}$+B (4FS) 5j H"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_L: "$t\\bar{t}$+B (4FS) 6j L"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_M: "$t\\bar{t}$+B (4FS) 6j M"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_H: "$t\\bar{t}$+B (4FS) 6j H"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_L: "$t\\bar{t}$+B (4FS) >=7j L"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M: "$t\\bar{t}$+B (4FS) >=7j M"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H: "$t\\bar{t}$+B (4FS) >=7j H"
     TTTo2L2Nu : "$t\\bar{t}$ dilepton"
     SingleTop : "Single t"
     ttHTobb: "$t\\bar{t}H$"
@@ -22,12 +34,46 @@ plotting_style:
     TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B: CMS_dark_orange
     TTToSemiLeptonic__TTToSemiLeptonic_tt+C: CMS_orange
     TTToSemiLeptonic__TTToSemiLeptonic_tt+LF: CMS_blue
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_L: "#b84f00"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_M: "#bd5100"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_H: "#c25300"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_L: "#c65500"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_M: "#cb5700"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_H: "#cf5900"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_L: "#d45b00"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_M: "#d95d00"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_H: "#dd5f00"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_L: "#e26100"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M: "#e76300"
+    TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H: "#eb6400"
     TTTo2L2Nu: CMS_brown
     SingleTop: CMS_gray
     "V+jets": CMS_purple
     TTV: CMS_light_blue
     VV: CMS_beige
 
+  only_samples:
+    - DATA_SingleEle
+    - DATA_SingleMuon
+    - ttHTobb
+    - TTToSemiLeptonic__TTToSemiLeptonic_tt+LF
+    - TTToSemiLeptonic__TTToSemiLeptonic_tt+C
+    - TTTo2L2Nu
+    - SingleTop
+    - TTV
+    - VV
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_4j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_5j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_6j_DCTR_H
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_L
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M
+    - TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H
 
   exclude_samples:
     - ttHTobb_ttToSemiLep

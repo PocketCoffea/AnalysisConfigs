@@ -28,7 +28,8 @@ samples_to_rescale = [
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_M',
     'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B_>=7j_DCTR_H',
     'TTToSemiLeptonic__TTToSemiLeptonic_tt+LF',
-    'TTToSemiLeptonic__TTToSemiLeptonic_tt+C'
+    'TTToSemiLeptonic__TTToSemiLeptonic_tt+C',
+    'TTbbSemiLeptonic__TTbbSemiLeptonic_tt+B'
 ]
 
 nuisances = [
@@ -45,14 +46,15 @@ nuisances = [
     'sf_mu_id',
     'sf_mu_iso',
     'sf_mu_trigger',
-    'sf_btag_withcalib_complete_cferr1',
-    'sf_btag_withcalib_complete_cferr2',
-    'sf_btag_withcalib_complete_hf',
-    'sf_btag_withcalib_complete_hfstats1',
-    'sf_btag_withcalib_complete_hfstats2',
-    'sf_btag_withcalib_complete_lf',
-    'sf_btag_withcalib_complete_lfstats1',
-    'sf_btag_withcalib_complete_lfstats2',
+    'sf_btag_withcalib_complete_ttsplit_cferr1',
+    'sf_btag_withcalib_complete_ttsplit_cferr2',
+    'sf_btag_withcalib_complete_ttsplit_hf',
+    'sf_btag_withcalib_complete_ttsplit_hfstats1',
+    'sf_btag_withcalib_complete_ttsplit_hfstats2',
+    'sf_btag_withcalib_complete_ttsplit_lf',
+    'sf_btag_withcalib_complete_ttsplit_lfstats1',
+    'sf_btag_withcalib_complete_ttsplit_lfstats2',
+    'sf_ttlf_calib_with_ttcc_variations_norm_ttcc',
     'sf_lhe_pdf_weight',
     'sf_partonshower_fsr',
     'sf_partonshower_isr',
@@ -60,8 +62,7 @@ nuisances = [
     'sf_qcd_renorm_scale'
 ]
 
-#categories_analysis = ["CR", "CR_ttlf", "CR_ttcc", "SR"]
-categories_analysis = ["CR", "CR_ttlf", "SR"]
+categories_analysis = ["CR", "CR_ttlf_0p60", "CR_ttcc", "SR"]
 df = load(args.input)
 years = list(df["datasets_metadata"]["by_datataking_period"].keys())
 
@@ -69,7 +70,6 @@ years = list(df["datasets_metadata"]["by_datataking_period"].keys())
 # In this case, we take the number of jets, but the choice is arbitrary
 histo = df["variables"]["nJets"]
 
-year = "2018"
 rescaling_factor = defaultdict(dict)
 for year in years:
     rescaling_factor[year] = defaultdict(dict)

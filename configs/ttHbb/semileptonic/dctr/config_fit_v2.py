@@ -18,7 +18,7 @@ import configs.ttHbb.semileptonic.common.cuts.custom_cut_functions as custom_cut
 import configs.ttHbb.semileptonic.common.cuts.custom_cuts as custom_cuts
 from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import *
 from configs.ttHbb.semileptonic.common.cuts.custom_cuts import *
-from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight
+from configs.ttHbb.semileptonic.common.weights.custom_weights import SF_top_pt, SF_LHE_pdf_weight, SF_L1prefiring
 from configs.ttHbb.semileptonic.common.weights.custom_btag_calib_total import SF_btag_withcalib_complete_ttsplit
 from params.axis_settings import axis_settings
 
@@ -145,15 +145,22 @@ cfg = Configurator(
         "CR_ttlf_0p60": [get_ttlf_min(0.6)],
         "CR_ttcc": [get_ttlf_max(ttlf_wp), get_CR(0, tthbb_L), get_ttcc_min(ttcc_wp)],
         "CR": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M)],
-        "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
+        "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)],
+        "semilep_5j": [get_nObj_min(5, coll="JetGood")],
+        "CR_ttlf_5j": [get_ttlf_min(ttlf_wp), get_nObj_min(5, coll="JetGood")],
+        "CR_ttlf_5j_0p60": [get_ttlf_min(0.6), get_nObj_min(5, coll="JetGood")],
+        "CR_ttcc_5j": [get_ttlf_max(ttlf_wp), get_CR(0, tthbb_L), get_ttcc_min(ttcc_wp), get_nObj_min(5, coll="JetGood")],
+        "CR_5j": [get_ttlf_max(ttlf_wp), get_CR(tthbb_L, tthbb_M), get_nObj_min(5, coll="JetGood")],
+        "SR_5j": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M), get_nObj_min(5, coll="JetGood")],
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_btag_withcalib_complete_ttsplit],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_btag_withcalib_complete_ttsplit, SF_L1prefiring],
     weights= {
         "common": {
             "inclusive": [
                 "genWeight", "lumi","XS",
                 "pileup",
+                "sf_L1prefiring_no2018",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag_withcalib_complete_ttsplit",
@@ -172,6 +179,7 @@ cfg = Configurator(
         "weights": {
             "common": {
                 "inclusive": ["pileup",
+                              "sf_L1prefiring_no2018",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag_withcalib_complete_ttsplit",
@@ -197,6 +205,7 @@ cfg = Configurator(
         **count_hist(name="nLeptons", coll="LeptonGood",bins=1, start=1, stop=2),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **jet_hists(coll="JetGood", pos=2, axis_settings=axis_settings, fields=["pt"]),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -213,6 +222,76 @@ cfg = Configurator(
           [Axis(coll="events", field="JetGood_Ht", type="variable",
                 bins=[0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1250,1500,2000,2500], start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
+        ),
+        "bjets_Ht" : HistConf(
+          [Axis(coll="events", field="BJetGood_Ht", bins=100, start=0, stop=2500,
+                label="B-Jets $H_T$ [GeV]")]
+        ),
+        "bjets_Ht_coarsebins" : HistConf(
+            [Axis(coll="events", field="BJetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500,2000,2500], start=0, stop=2500,
+                    label="B-Jets $H_T$ [GeV]")]
+        ),
+        "bjets_Ht_coarsebins2" : HistConf(
+            [Axis(coll="events", field="BJetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500], start=0, stop=1500,
+                label="B-Jets $H_T$ [GeV]")]
+        ),
+        "bjets_Ht_finerbins" : HistConf(
+            [Axis(coll="events", field="BJetGood_Ht", type="variable",
+                bins=[0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1250,1500,2000,2500], start=0, stop=2500,
+                label="B-Jets $H_T$ [GeV]")]
+        ),
+        "lightjets_Ht" : HistConf(
+          [Axis(coll="events", field="LightJetGood_Ht", bins=100, start=0, stop=2500,
+                label="Light-Jets $H_T$ [GeV]")]
+        ),
+        "lightjets_Ht_coarsebins" : HistConf(
+            [Axis(coll="events", field="LightJetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500,2000,2500], start=0, stop=2500,
+                    label="Light-Jets $H_T$ [GeV]")]
+        ),
+        "lightjets_Ht_coarsebins2" : HistConf(
+            [Axis(coll="events", field="LightJetGood_Ht", type="variable", bins=[0,100,200,300,400,500,600,700,800,900,1000,1250,1500], start=0, stop=1500,
+                label="Light-Jets $H_T$ [GeV]")]
+        ),
+        "lightjets_Ht_finerbins" : HistConf(
+            [Axis(coll="events", field="LightJetGood_Ht", type="variable",
+                bins=[0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1250,1500,2000,2500], start=0, stop=2500,
+                label="Light-Jets $H_T$ [GeV]")]
+        ),
+        "deltaRbb_min" : HistConf(
+            [Axis(coll="events", field="deltaRbb_min", bins=50, start=0, stop=5,
+                  label="$\Delta R_{bb}$")]
+        ),
+        "deltaEtabb_min" : HistConf(
+            [Axis(coll="events", field="deltaEtabb_min", bins=50, start=0, stop=5,
+                  label="$\Delta \eta_{bb}$")]
+        ),
+        "deltaPhibb_min" : HistConf(
+            [Axis(coll="events", field="deltaPhibb_min", bins=50, start=0, stop=5,
+                  label="$\Delta \phi_{bb}$")]
+        ),
+        "mbb_closest" : HistConf(
+            [Axis(coll="events", field="mbb_closest", bins=50, start=0, stop=500,
+                    label="$m_{bb}(min \Delta R(bb))$ [GeV]")]
+        ),
+        "mbb_min" : HistConf(
+            [Axis(coll="events", field="mbb_min", bins=50, start=0, stop=500,
+                    label="$m_{bb}^{min}$ [GeV]")]
+        ),
+        "mbb_max" : HistConf(
+            [Axis(coll="events", field="mbb_max", bins=50, start=0, stop=500,
+                    label="$m_{bb}^{max}$ [GeV]")]
+        ),
+        "deltaRbb_avg" : HistConf(
+            [Axis(coll="events", field="deltaRbb_avg", bins=50, start=0, stop=5,
+                  label="$\Delta R_{bb}^{avg}$")]
+        ),
+        "ptbb_closest" : HistConf(
+            [Axis(coll="events", field="ptbb_closest", bins=axis_settings["jet_pt"]["bins"], start=axis_settings["jet_pt"]["start"], stop=axis_settings["jet_pt"]["stop"],
+                    label="$p_{T,bb}(min \Delta R(bb))$ [GeV]")]
+        ),
+        "htbb_closest" : HistConf(
+            [Axis(coll="events", field="htbb_closest", bins=25, start=0, stop=2500,
+                    label="$H_{T,bb}(min \Delta R(bb))$ [GeV]")]
         ),
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=13, start=0.74, stop=1, label="tthbb SPANet transformed score")],

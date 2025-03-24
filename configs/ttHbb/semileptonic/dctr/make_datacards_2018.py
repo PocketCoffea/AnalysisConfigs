@@ -1,13 +1,14 @@
 import os
 import argparse
 from coffea.util import load
-from pocket_coffea.utils.datacard import Datacard, combine_datacards
+from pocket_coffea.utils.datacard import Datacard, combine_datacards, create_scripts
 from pocket_coffea.utils.processes import Process
 from pocket_coffea.utils.systematics import SystematicUncertainty
 
 parser = argparse.ArgumentParser(description="Make datacards")
 parser.add_argument("-i", "--input", help="Coffea input file with histograms", required=True)
 parser.add_argument("-o", "--output", help="Output directory for datacards", default="datacards", required=False)
+parser.add_argument("--channel_masks", help="Create datacards with channel masks", action="store_true")
 args = parser.parse_args()
 
 df = load(args.input)
@@ -20,11 +21,11 @@ processes = [
     Process(name="tthbb", samples=["ttHTobb"], years=years, is_signal=True),
     Process(name="ttlf", samples=["TTToSemiLeptonic__TTToSemiLeptonic_tt+LF"], years=years, is_signal=False),
     Process(name="ttcc", samples=["TTToSemiLeptonic__TTToSemiLeptonic_tt+C"], years=years, is_signal=False),
-    Process(name="tt_dilepton", samples=["TTTo2L2Nu"], years=years, is_signal=False),
-    Process(name="singletop", samples=["SingleTop"], years=years, is_signal=False),
-    Process(name="vjets", samples=["WJetsToLNu_HT", "DYJetsToLL"], years=years, is_signal=False),
-    Process(name="ttv", samples=["TTV"], years=years, is_signal=False),
-    Process(name="diboson", samples=["VV"], years=years, is_signal=False),
+    Process(name="tt_dilepton", samples=["TTTo2L2Nu"], years=years, is_signal=False, has_rateParam=False),
+    Process(name="singletop", samples=["SingleTop"], years=years, is_signal=False, has_rateParam=False),
+    Process(name="vjets", samples=["WJetsToLNu_HT", "DYJetsToLL"], years=years, is_signal=False, has_rateParam=False),
+    Process(name="ttv", samples=["TTV"], years=years, is_signal=False, has_rateParam=False),
+    Process(name="diboson", samples=["VV"], years=years, is_signal=False, has_rateParam=False),
 ]
 
 samples_ttbb = [
@@ -59,9 +60,11 @@ common_systematics = [
     "sf_ele_trigger_era", "sf_ele_trigger_ht",
     "sf_ele_trigger_pileup", "sf_ele_trigger_stat",
     "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
-    "sf_btag_withcalib_complete_cferr1", "sf_btag_withcalib_complete_cferr2",
-    "sf_btag_withcalib_complete_hf", "sf_btag_withcalib_complete_hfstats1", "sf_btag_withcalib_complete_hfstats2",
-    "sf_btag_withcalib_complete_lf", "sf_btag_withcalib_complete_lfstats1", "sf_btag_withcalib_complete_lfstats2",
+    "sf_btag_withcalib_complete_ttsplit_cferr1", "sf_btag_withcalib_complete_ttsplit_cferr2",
+    "sf_btag_withcalib_complete_ttsplit_hf",
+    "sf_btag_withcalib_complete_ttsplit_hfstats1", "sf_btag_withcalib_complete_ttsplit_hfstats2",
+    "sf_btag_withcalib_complete_ttsplit_lf",
+    "sf_btag_withcalib_complete_ttsplit_lfstats1", "sf_btag_withcalib_complete_ttsplit_lfstats2",
     "sf_jet_puId",
     "JES_Total_AK4PFchs", "JER_AK4PFchs"
 ]
@@ -110,8 +113,9 @@ print("Systematic shape uncertainties: ", [s.name for s in systematics if s.typ 
 
 histograms_dict = {
     "CR" : df["variables"]["dctr_index"],
-    "CR_ttlf" : df["variables"]["nLeptons"],
-    "SR" : df["variables"]["spanet_tthbb_transformed_binning0p025"],
+    "CR_ttlf_0p60" : df["variables"]["nLeptons"],
+    "CR_ttcc" : df["variables"]["nLeptons"],
+    "SR" : df["variables"]["spanet_tthbb_transformed_binning0p0125"],
 }
 
 datacards = {}
@@ -133,22 +137,33 @@ for cat, histograms in histograms_dict.items():
     print(f"Datacard saved in {os.path.abspath(os.path.join(args.output, f'datacard_{cat}_{label}.txt'))}")
 
 # Combine datacards, produce scripts with SR channel masked
+datacard_name = f"datacard_combined_{label}.txt"
+workspace_name = f"workspace_{label}.root"
 combine_datacards(
     datacards,
     directory=args.output,
     path=f"combine_datacards_{label}.sh",
-    card_name=f"datacard_combined_{label}.txt",
-    workspace_name=f"workspace_{label}.root",
-    channel_masks=["SR_2018"]
+    card_name=datacard_name,
+    workspace_name=workspace_name,
+    channel_masks=False
 )
 
-# Combine datacards CR + CR_ttlf
-#categories_cr = ["CR", "CR_ttlf"]
-#combine_datacards(
-#    {key : datacard  for key, datacard in datacards.items() if datacard.category in categories_cr},
-#    directory=args.output,
-#    path=f"combine_datacards_CR_CR_ttlf_{label}.sh",
-#    card_name=f"datacard_combined_CR_CR_ttlf_{label}.txt",
-#    workspace_name=f"workspace_CR_CR_ttlf_{label}.root",
-#    suffix=f"CR_CR_ttlf"
-#)
+create_scripts(
+    datacards,
+    directory=args.output,
+    card_name=datacard_name,
+    workspace_name=workspace_name,
+    channel_masks=None
+)
+
+if args.channel_masks:
+    datacard_name_mask = f"datacard_combined_{label}_mask.txt"
+    workspace_name_mask = f"workspace_{label}_mask.root"
+    combine_datacards(
+        datacards,
+        directory=args.output,
+        path=f"combine_datacards_{label}_mask.sh",
+        card_name=datacard_name_mask,
+        workspace_name=workspace_name_mask,
+        channel_masks=True
+    )

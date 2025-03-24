@@ -2,7 +2,7 @@ from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTsel, get_nBtagMin, get_nPVgood, goldenJson, eventFlags
-from pocket_coffea.lib.weights.common.common import common_weights
+from pocket_coffea.lib.weights.common.common import common_weights, SF_L1prefiring
 from pocket_coffea.lib.weights.common.weights_run2_UL import SF_ele_trigger, SF_QCD_renorm_scale, SF_QCD_factor_scale
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
@@ -69,10 +69,10 @@ cfg = Configurator(
                         "TTToSemiLeptonic",
                         ],
             "samples_exclude" : [],
-            "year": ["2016_PreVFP",
-                     "2016_PostVFP",
+            "year": [#"2016_PreVFP",
+                     #"2016_PostVFP",
                      "2017",
-                     "2018"
+                     #"2018"
                      ] #All the years
         },
         "subsamples": {
@@ -95,7 +95,7 @@ cfg = Configurator(
             get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
-    preselections = [semileptonic_presel],
+    preselections = [semileptonic_presel_5j],
     categories = {
         "semilep": [passthrough],
         "CR_ttlf": [get_ttlf_min(ttlf_wp)],
@@ -105,12 +105,13 @@ cfg = Configurator(
         "SR": [get_ttlf_max(ttlf_wp), get_SR(tthbb_M)]
     },
 
-    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete_ttsplit],
+    weights_classes = common_weights + [SF_ele_trigger, SF_top_pt, SF_QCD_renorm_scale, SF_QCD_factor_scale, SF_LHE_pdf_weight, SF_ttlf_calib, SF_btag_withcalib_complete_ttsplit, SF_L1prefiring],
     weights= {
         "common": {
             "inclusive": [
                 "genWeight", "lumi","XS",
                 "pileup",
+                "sf_L1prefiring",
                 "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                 "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                 "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
@@ -126,6 +127,7 @@ cfg = Configurator(
         "weights": {
             "common": {
                 "inclusive": ["pileup",
+                              "sf_L1prefiring",
                               "sf_ele_reco", "sf_ele_id", "sf_ele_trigger",
                               "sf_mu_id", "sf_mu_iso", "sf_mu_trigger",
                               "sf_btag_withcalib_complete_ttsplit", "sf_ttlf_calib",
@@ -148,6 +150,7 @@ cfg = Configurator(
         **count_hist(name="nLeptons", coll="LeptonGood",bins=1, start=1, stop=2),
         **count_hist(name="nJets", coll="JetGood",bins=10, start=4, stop=14),
         **count_hist(name="nBJets", coll="BJetGood",bins=10, start=0, stop=10),
+        **met_hists(coll="MET", axis_settings=axis_settings),
         "jets_Ht" : HistConf(
           [Axis(coll="events", field="JetGood_Ht", bins=25, start=0, stop=2500,
                 label="Jets $H_T$ [GeV]")]
@@ -167,6 +170,12 @@ cfg = Configurator(
         ),
         "spanet_tthbb_transformed" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=13, start=0.74, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p0025" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=100, start=0.75, stop=1, label="tthbb SPANet transformed score")],
+        ),
+        "spanet_tthbb_transformed_binning0p005" : HistConf(
+            [Axis(coll="spanet_output", field="tthbb_transformed", bins=50, start=0.75, stop=1, label="tthbb SPANet transformed score")],
         ),
         "spanet_tthbb_transformed_binning0p00625" : HistConf(
             [Axis(coll="spanet_output", field="tthbb_transformed", bins=40, start=0.75, stop=1, label="tthbb SPANet transformed score")],
@@ -191,6 +200,9 @@ cfg = Configurator(
         ),
         "dctr_index" : HistConf(
             [Axis(coll="dctr_output", field="index", bins=12, start=1, stop=13, label="DCTR index")],
+        ),
+        "dctr_index_9bins" : HistConf(
+            [Axis(coll="dctr_output", field="index", bins=9, start=4, stop=13, label="DCTR index")],
         ),
     },
 )

@@ -1,4 +1,4 @@
-scaleout: 500
+scaleout: 300
 chunksize: 200000
 mem-per-worker: "6GB"
 disk-per-worker: "20GB"
