@@ -136,12 +136,12 @@ for dataset, pq_dataset in zip(datasets, pq_datasets):
                         "pdgId": cs["AntiTopGen_pdgId"]},
                         with_name='Momentum4D')
 
-    # isr = ak.zip({"pt": cs["ISR_pt"],
-    #                 "eta": cs["ISR_eta"],
-    #                     "phi": cs["ISR_phi"],
-    #                     "mass": cs["ISR_mass"],
-    #                     "pdgId": cs["ISR_pdgId"]},
-    #                     with_name='Momentum4D')
+    isr = ak.zip({"pt": cs["ISR_pt"],
+                    "eta": cs["ISR_eta"],
+                        "phi": cs["ISR_phi"],
+                        "mass": cs["ISR_mass"],
+                        "pdgId": cs["ISR_pdgId"]},
+                        with_name='Momentum4D')
 
     jets_matched = ak.mask(jets_matched, jets_matched.pt==-999, None)
     partons_matched = ak.mask(partons_matched, partons_matched.pt==-999, None)
@@ -163,7 +163,7 @@ for dataset, pq_dataset in zip(datasets, pq_datasets):
             "higgs": higgs,
             "top": top,
             "antitop": antitop,
-          #  "isr": isr,
+            "isr": isr,
             "weight": cs["weight"] / sumgenweight[dataset]
             }, depth_limit=1)
 

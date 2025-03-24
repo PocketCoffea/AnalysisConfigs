@@ -5,7 +5,7 @@
         "files": [
             {
                 "das_names": [
-		    "/ttHbb_p1j_tbarqqtlnu_madspin_EFTcenter_v1/dvalsecc-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-NANOAODSIM-00000000000000000000000000000000/USER"
+		    "/ttHbb_p1j_tbarqqtlnu_madspin_EFTcenter_v2/dvalsecc-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-NANOAODSIM-00000000000000000000000000000000/USER"
 		    
                 ],
                 "metadata": {
@@ -17,11 +17,12 @@
 		"dbs_instance" : "prod/phys03"
             },
 	    {
-		"das_names": [		    "/ttHbb_p1j_tbarlnutqq_madspin_EFTcenter_v1/dvalsecc-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-NANOAODSIM-00000000000000000000000000000000/USER"],
+		"das_names": ["/ttHbb_p1j_tbarlnutqq_madspin_EFTcenter_v1_ext1/dvalsecc-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-NANOAODSIM-00000000000000000000000000000000/USER"],
 		"metadata": {
 		    "year": "2018",
 		    "isMC": true,
-		    "xsec": 0.075,
+		    "xsec": 0.
+			075,
 		    "part": "tbarlnutqq"
 		},
 		"dbs_instance" : "prod/phys03"

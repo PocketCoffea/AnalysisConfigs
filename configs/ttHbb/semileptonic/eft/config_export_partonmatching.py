@@ -44,7 +44,7 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [
-            #f"{localdir}/datasets/signal_ttHTobb_forTraining.json",
+            f"{localdir}/datasets/signal_ttHTobb_forTraining.json",
             f"{localdir}/datasets/datasets_skim_Run2.json",
             f"{localdir}/datasets/signal_ttHTobb_EFT.json",
         
