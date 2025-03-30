@@ -4,11 +4,11 @@ from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 from pocket_coffea.parameters.histograms import *
 import workflow
-from workflow import DoNothing
+from workflow import JETJEC
 
 # Register custom modules in cloudpickle to propagate them to dask workers
 import cloudpickle
-# cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(workflow)
 
 import os
 localdir = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +23,7 @@ default_parameters = defaults.get_default_parameters()
 #                                                   update=True)
 
 
+
 cfg = Configurator(
     parameters = default_parameters,
     datasets = {
@@ -34,7 +35,7 @@ cfg = Configurator(
         }
     },
 
-    workflow = DoNothing,
+    workflow = JETJEC,
     
     skim = [], 
     preselections = [passthrough],
@@ -71,7 +72,7 @@ cfg = Configurator(
    columns= {
        "common":{
            "inclusive": [ColOut(collection="events", columns=["event", "run", "luminosityBlock"]),
-                         ColOut(collection="Jet", columns=["pt", "mass"]),]
+                         ColOut(collection="JetsCorrected", columns=["pt", "mass"]),]
        }
    }
 )
