@@ -29,8 +29,8 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [
-                  f"{localdir}/datasets/signal_ttHTobb_local.json",
-                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep_local.json",
+                  f"{localdir}/datasets/signal_ttHTobb.json",
+                  f"{localdir}/datasets/signal_ttHTobb_ttToSemiLep.json",
                   ],
         "filter" : {
             "samples": [
@@ -50,12 +50,12 @@ cfg = Configurator(
     workflow = ttHbbBaseProcessor,
     workflow_options = {},
     
-    save_skimmed_files = "root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/skim/4j2b/",
+    save_skimmed_files = "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim/",
     skim = [get_nPVgood(1),
             eventFlags,
             goldenJson,
             get_nObj_min(4, 15., "Jet"),
-            get_nBtagMin(2, 15., coll="Jet", wp="M"),
+            get_nBtagMin(3, 15., coll="Jet", wp="M"),
             get_HLTsel(primaryDatasets=["SingleEle", "SingleMuon"])],
     
     preselections = [passthrough],
