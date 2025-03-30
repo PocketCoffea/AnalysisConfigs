@@ -16,15 +16,17 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 # Loading default parameters
 from pocket_coffea.parameters import defaults
 default_parameters = defaults.get_default_parameters()
-# defaults.register_configuration_dir("config_dir", localdir+"/params")
-# 
-# parameters = defaults.merge_parameters_from_files(default_parameters,
-#                                                   f"{localdir}/params/object_preselection.yaml",
-#                                                   update=True)
+default_parameters.jets_calibration.collection = {}
+defaults.register_configuration_dir("config_dir", localdir+"/params")
 
+parameters = defaults.merge_parameters_from_files(default_parameters,
+                                                  f"{localdir}/params/jet_calibrations.yaml",
+                                                  update=True)
+
+print(parameters['jets_calibration']['apply_jec_nominal'])
 
 cfg = Configurator(
-    parameters = default_parameters,
+    parameters = parameters,
     datasets = {
         "jsons": [f"{localdir}/datasets.json",
                     ],
