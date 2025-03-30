@@ -1,0 +1,37 @@
+# overwrite the default config
+
+jets_calibration:
+  apply_jec_nominal:
+    '2016_PreVFP': True
+    '2016_PostVFP': True
+    '2017': True
+    '2018': True
+    '2022_preEE': True
+    '2022_postEE': True
+    '2023_preBPix': True
+    '2023_postBPix': True
+
+  collection:  # this is needed to know which collection is corrected with which jet factory
+    2016_PreVFP:
+      AK4PFchs: "Jet"
+
+    2016_PostVFP:
+      AK4PFchs: "Jet"
+
+    "2017":
+      AK4PFchs: "Jet"
+
+    "2018":
+      AK4PFchs: "Jet"
+
+    2022_preEE:
+      AK4PFPuppi: "Jet"
+
+    2022_postEE:
+      AK4PFPuppi: "Jet"
+
+    2023_preBPix:
+      AK4PFPuppi: "Jet"
+
+    2023_postBPix:
+      AK4PFPuppi: "Jet"
