@@ -11,11 +11,7 @@ class DoNothing(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
         super().__init__(cfg)
 
-
     def apply_object_preselection(self, variation):
-        print(type(self.events))
-        print(self.events[0].fields)
-        print(self.events[0]['Jet'].fields)
         pass
 
     def count_objects(self, variation):

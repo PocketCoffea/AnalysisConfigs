@@ -17,13 +17,14 @@ localdir = os.path.dirname(os.path.abspath(__file__))
 from pocket_coffea.parameters import defaults
 default_parameters = defaults.get_default_parameters()
 default_parameters.jets_calibration.collection = {}
+default_parameters.jets_calibration.jet_types.MC = {}
+default_parameters.default_jets_calibration.factory_configuration_MC.AK4PFPuppi.JES_noJER = {}
 defaults.register_configuration_dir("config_dir", localdir+"/params")
 
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/jet_calibrations.yaml",
                                                   update=True)
 
-print(parameters['jets_calibration']['apply_jec_nominal'])
 
 cfg = Configurator(
     parameters = parameters,
