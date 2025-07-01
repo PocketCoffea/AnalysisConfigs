@@ -63,7 +63,7 @@ cfg = Configurator(
     workflow = ttHbbEFTProcessor,
     workflow_options = {"parton_jet_max_dR": 0.3,
                         "parton_jet_max_dR_postfsr": 1.0,
-                        "dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/ntuples/EFT_export/"},
+                        "dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/ntuples/EFT_export/v2/"},
     
     skim = [
         get_nPVgood(1),
@@ -107,10 +107,14 @@ cfg = Configurator(
         "common": {
             "bycategory": {
                     "baseline": [
-                        ColOut("PartonInitial", ["pt", "eta", "phi", "mass", "pdgId", "provenance"], flatten=False),
-                        ColOut("PartonLastCopy",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
-                        ColOut("PartonInitialMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
-                        ColOut("PartonLastCopyMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",], flatten=False),
+                        ColOut("PartonInitial", ["pt", "eta", "phi", "mass", "pdgId", "provenance"],
+                               fill_none=True, fill_value=-1., flatten=False),
+                        ColOut("PartonLastCopy",["pt", "eta", "phi","mass", "pdgId", "provenance",],
+                               fill_none=True, fill_value=-1., flatten=False),
+                        ColOut("PartonInitialMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",],
+                               fill_none=True, fill_value=-1., flatten=False),
+                        ColOut("PartonLastCopyMatched",["pt", "eta", "phi","mass", "pdgId", "provenance",],
+                               fill_none=True, fill_value=-1., flatten=False),
                         ColOut(
                             "JetGood",
                             ["pt", "eta", "phi", "hadronFlavour", "btagDeepFlavB"], flatten=False
@@ -149,7 +153,11 @@ cfg = Configurator(
                     ]
                 }
         },
-        "bysample":{}
+        "bysample":{
+             "ttHTobb_EFT": {
+                "inclusive" : [ ColOut("events", ["EFT_struct"], flatten=False, store_size=False)]
+            },
+        }
     },
 )
 

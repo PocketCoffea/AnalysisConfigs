@@ -150,7 +150,7 @@ for dataset, pq_dataset in zip(datasets, pq_datasets):
 
     # Filling with -1 the not matched provenance
     jets = ak.with_field(jets, ak.fill_none(jets_matched.prov, -1), "prov")
-    
+
     dfout = ak.zip({
             "jets": jets,
             "partons_matched": partons_matched,
@@ -164,7 +164,9 @@ for dataset, pq_dataset in zip(datasets, pq_datasets):
             "top": top,
             "antitop": antitop,
             "isr": isr,
-            "weight": cs["weight"] / sumgenweight[dataset]
+            "weight": cs["weight"] / sumgenweight[dataset],
+            # matrix of weights to be used to morph the event weight for different Wilson coefficients
+            "EFT_struct": cs["events_EFT_struct"]
             }, depth_limit=1)
 
     ak.to_parquet(dfout, f"{args.output}/{dataset}_{args.name}.parquet")
