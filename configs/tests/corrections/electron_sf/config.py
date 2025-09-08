@@ -53,7 +53,7 @@ cfg = Configurator(
         "bysample": {
         }
     },
-
+    calibrators = [],
     variations = {
         "weights": {
             "common": {
