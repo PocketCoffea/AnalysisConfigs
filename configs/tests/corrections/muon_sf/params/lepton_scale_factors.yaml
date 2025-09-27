@@ -24,3 +24,6 @@ lepton_scale_factors:
           
       '2023_postBPix':
           id: NUM_TightID_DEN_TrackerMuons
+
+      '2024':
+          id: NUM_TightID_DEN_TrackerMuons
