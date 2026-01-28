@@ -13,4 +13,4 @@ death-timeout: "3600"
 worker-image: "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-el9-latest"
 local-virtualenv: true
 spanet_model: "/eos/user/m/mmarcheg/ttHbb/models/spanet_v2/multiple_binary_classifiers_btag_LMH/spanet_output/version_epoch62/spanet.onnx"
-dctr_model: "/eos/user/m/mmarcheg/ttHbb/dctr/training/spanet_v2/tthbb_0p40To0p75/features_8/binary_classifier_full_Run2_batch8092_lr5e-3/lightning_logs/version_0/model.onnx"
+dctr_model: "/eos/user/m/mmarcheg/ttHbb/dctr/training/spanet_v2_bugfix/tthbb_0p40To0p75/features_8/binary_classifier_full_Run2_batch8092_lr5e-3/lightning_logs/version_0/model.onnx"

@@ -1,0 +1,3117 @@
+{
+  "ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2018": {
+    "metadata": {
+      "das_names": "['/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "3.36",
+      "part": "s-channel_4f_leptonDecays",
+      "nevents": "199970",
+      "size": "323816409",
+      "isSkim": "True",
+      "skim_efficiency": "0.010325829305268475",
+      "skim_rescale_genweights": "93.77271"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2018/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2018_1.root"
+    ]
+  },
+  "ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2017": {
+    "metadata": {
+      "das_names": "['/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "3.36",
+      "part": "s-channel_4f_leptonDecays",
+      "nevents": "131792",
+      "size": "218317902",
+      "isSkim": "True",
+      "skim_efficiency": "0.009676358296622613",
+      "skim_rescale_genweights": "99.824036"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2017/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2017_1.root"
+    ]
+  },
+  "ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2017": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "136.02",
+      "part": "t-channel_top_4f_InclusiveDecays",
+      "nevents": "323541",
+      "size": "559788500",
+      "isSkim": "True",
+      "skim_efficiency": "0.0024906353202004575",
+      "skim_rescale_genweights": "427.23212"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2017/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2017_1.root"
+    ]
+  },
+  "ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "136.02",
+      "part": "t-channel_top_4f_InclusiveDecays",
+      "nevents": "482960",
+      "size": "815783466",
+      "isSkim": "True",
+      "skim_efficiency": "0.002708146420240445",
+      "skim_rescale_genweights": "392.8306"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2018_2.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PreVFP_EraF": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "F",
+      "nevents": "87837",
+      "size": "71554438",
+      "isSkim": "True",
+      "skim_efficiency": "0.0015285208607154093"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PreVFP_EraF/DATA_SingleMuon_2016_PreVFP_EraF_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PreVFP_EraE": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "E",
+      "nevents": "128995",
+      "size": "103901467",
+      "isSkim": "True",
+      "skim_efficiency": "0.0014177655636631197"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PreVFP_EraE/DATA_SingleMuon_2016_PreVFP_EraE_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PostVFP_EraF": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "F",
+      "nevents": "12739",
+      "size": "9997344",
+      "isSkim": "True",
+      "skim_efficiency": "0.0015875735821474926"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PostVFP_EraF/DATA_SingleMuon_2016_PostVFP_EraF_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PostVFP_EraG": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "G",
+      "nevents": "234334",
+      "size": "186941413",
+      "isSkim": "True",
+      "skim_efficiency": "0.0015630931517243937"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PostVFP_EraG/DATA_SingleMuon_2016_PostVFP_EraG_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PostVFP_EraH": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "H",
+      "nevents": "281214",
+      "size": "226318513",
+      "isSkim": "True",
+      "skim_efficiency": "0.001615845864344978"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PostVFP_EraH/DATA_SingleMuon_2016_PostVFP_EraH_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2017_EraB": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "B",
+      "nevents": "159532",
+      "size": "119467980",
+      "isSkim": "True",
+      "skim_efficiency": "0.001170445257971837"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraB/DATA_SingleMuon_2017_EraB_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2017_EraC": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "C",
+      "nevents": "292209",
+      "size": "234694986",
+      "isSkim": "True",
+      "skim_efficiency": "0.0017639851400963109"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraC/DATA_SingleMuon_2017_EraC_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2017_EraD": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "D",
+      "nevents": "138290",
+      "size": "111107931",
+      "isSkim": "True",
+      "skim_efficiency": "0.001965416961453155"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraD/DATA_SingleMuon_2017_EraD_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2017_EraE": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "E",
+      "nevents": "305983",
+      "size": "265690322",
+      "isSkim": "True",
+      "skim_efficiency": "0.001978951145997316"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraE/DATA_SingleMuon_2017_EraE_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2017_EraF": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "F",
+      "nevents": "568699",
+      "size": "514862178",
+      "isSkim": "True",
+      "skim_efficiency": "0.0023486276465883634"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraF/DATA_SingleMuon_2017_EraF_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2017_EraF/DATA_SingleMuon_2017_EraF_2.root"
+    ]
+  },
+  "ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2017": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "80.95",
+      "part": "t-channel_antitop_4f_InclusiveDecays",
+      "nevents": "186914",
+      "size": "323748858",
+      "isSkim": "True",
+      "skim_efficiency": "0.0026781195821930564",
+      "skim_rescale_genweights": "398.5366"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2017/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2017_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2018_EraA": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "A",
+      "nevents": "618533",
+      "size": "542156283",
+      "isSkim": "True",
+      "skim_efficiency": "0.0025600659169593195"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraA/DATA_SingleMuon_2018_EraA_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraA/DATA_SingleMuon_2018_EraA_2.root"
+    ]
+  },
+  "DATA_SingleMuon_2018_EraB": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "B",
+      "nevents": "297616",
+      "size": "258606833",
+      "isSkim": "True",
+      "skim_efficiency": "0.002481828898154645"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraB/DATA_SingleMuon_2018_EraB_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2018_EraC": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "C",
+      "nevents": "297704",
+      "size": "267555820",
+      "isSkim": "True",
+      "skim_efficiency": "0.0027067442732647932"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraC/DATA_SingleMuon_2018_EraC_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2018_EraD": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "D",
+      "nevents": "1263690",
+      "size": "1104917101",
+      "isSkim": "True",
+      "skim_efficiency": "0.0024589719224203145"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraD/DATA_SingleMuon_2018_EraD_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraD/DATA_SingleMuon_2018_EraD_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraD/DATA_SingleMuon_2018_EraD_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2018_EraD/DATA_SingleMuon_2018_EraD_4.root"
+    ]
+  },
+  "ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2018": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "80.95",
+      "part": "t-channel_antitop_4f_InclusiveDecays",
+      "nevents": "278152",
+      "size": "471582055",
+      "isSkim": "True",
+      "skim_efficiency": "0.002908718249030086",
+      "skim_rescale_genweights": "366.88528"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2018/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2018_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PreVFP_EraB": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD', '/SingleElectron/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "B",
+      "nevents": "107434",
+      "size": "91523664",
+      "isSkim": "True",
+      "skim_efficiency": "0.0004334406012147206"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PreVFP_EraB/DATA_SingleEle_2016_PreVFP_EraB_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PreVFP_EraC": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "C",
+      "nevents": "51585",
+      "size": "46334178",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005303832761254197"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PreVFP_EraC/DATA_SingleEle_2016_PreVFP_EraC_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PreVFP_EraD": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "D",
+      "nevents": "76467",
+      "size": "66665663",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005160840457517446"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PreVFP_EraD/DATA_SingleEle_2016_PreVFP_EraD_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PreVFP_EraE": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "E",
+      "nevents": "72025",
+      "size": "65663882",
+      "isSkim": "True",
+      "skim_efficiency": "0.0006141838514356075"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PreVFP_EraE/DATA_SingleEle_2016_PreVFP_EraE_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PreVFP_EraF": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "F",
+      "nevents": "41197",
+      "size": "37443299",
+      "isSkim": "True",
+      "skim_efficiency": "0.0006673164729056424"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PreVFP_EraF/DATA_SingleEle_2016_PreVFP_EraF_1.root"
+    ]
+  },
+  "ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2017": {
+    "metadata": {
+      "das_names": "['/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_top_5f_NoFullyHadronicDecays",
+      "nevents": "133338",
+      "size": "274448430",
+      "isSkim": "True",
+      "skim_efficiency": "0.015673541585877287",
+      "skim_rescale_genweights": "63.80041"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2017/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2017_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PostVFP_EraF": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "F",
+      "nevents": "6454",
+      "size": "5674570",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007285899650561299"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PostVFP_EraF/DATA_SingleEle_2016_PostVFP_EraF_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PostVFP_EraG": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "G",
+      "nevents": "113662",
+      "size": "102029772",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007411299936544714"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PostVFP_EraG/DATA_SingleEle_2016_PostVFP_EraG_1.root"
+    ]
+  },
+  "DATA_SingleEle_2016_PostVFP_EraH": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2016_PostVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "H",
+      "nevents": "134285",
+      "size": "124259057",
+      "isSkim": "True",
+      "skim_efficiency": "0.0010407923560693689"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2016_PostVFP_EraH/DATA_SingleEle_2016_PostVFP_EraH_1.root"
+    ]
+  },
+  "ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2017": {
+    "metadata": {
+      "das_names": "['/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_antitop_5f_NoFullyHadronicDecays",
+      "nevents": "132135",
+      "size": "271473389",
+      "isSkim": "True",
+      "skim_efficiency": "0.015666947039826188",
+      "skim_rescale_genweights": "63.827255"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2017/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2017_1.root"
+    ]
+  },
+  "ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2018": {
+    "metadata": {
+      "das_names": "['/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_top_5f_NoFullyHadronicDecays",
+      "nevents": "189638",
+      "size": "381215256",
+      "isSkim": "True",
+      "skim_efficiency": "0.016826154813968944",
+      "skim_rescale_genweights": "59.4319"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2018/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2018_1.root"
+    ]
+  },
+  "DATA_SingleEle_2017_EraB": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "B",
+      "nevents": "62745",
+      "size": "52512996",
+      "isSkim": "True",
+      "skim_efficiency": "0.001036465172242853"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2017_EraB/DATA_SingleEle_2017_EraB_1.root"
+    ]
+  },
+  "DATA_SingleEle_2017_EraC": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "C",
+      "nevents": "113871",
+      "size": "104647743",
+      "isSkim": "True",
+      "skim_efficiency": "0.0008333779280897551"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2017_EraC/DATA_SingleEle_2017_EraC_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-70To100_70To100_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "1292.0",
+      "part": "70To100",
+      "nevents": "4042",
+      "size": "5396394",
+      "isSkim": "True",
+      "skim_efficiency": "9.0675559840822e-05",
+      "skim_rescale_genweights": "11028.33"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-70To100_70To100_2017/WJetsToLNu_HT-70To100_70To100_2017_1.root"
+    ]
+  },
+  "ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2018": {
+    "metadata": {
+      "das_names": "['/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_antitop_5f_NoFullyHadronicDecays",
+      "nevents": "185987",
+      "size": "374168373",
+      "isSkim": "True",
+      "skim_efficiency": "0.016985703613458733",
+      "skim_rescale_genweights": "58.872654"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2018/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2018_1.root"
+    ]
+  },
+  "DATA_SingleEle_2017_EraD": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "D",
+      "nevents": "49580",
+      "size": "45187662",
+      "isSkim": "True",
+      "skim_efficiency": "0.0009624785371459934"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2017_EraD/DATA_SingleEle_2017_EraD_1.root"
+    ]
+  },
+  "DATA_SingleEle_2017_EraE": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "E",
+      "nevents": "126802",
+      "size": "123338032",
+      "isSkim": "True",
+      "skim_efficiency": "0.001241671057246155"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2017_EraE/DATA_SingleEle_2017_EraE_1.root"
+    ]
+  },
+  "DATA_SingleEle_2017_EraF": {
+    "metadata": {
+      "das_names": "['/SingleElectron/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2017",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "F",
+      "nevents": "165659",
+      "size": "168483448",
+      "isSkim": "True",
+      "skim_efficiency": "0.0012895040161333604"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2017_EraF/DATA_SingleEle_2017_EraF_1.root"
+    ]
+  },
+  "DATA_SingleEle_2018_EraA": {
+    "metadata": {
+      "das_names": "['/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "A",
+      "nevents": "307483",
+      "size": "308178727",
+      "isSkim": "True",
+      "skim_efficiency": "0.0009069940990002245"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraA/DATA_SingleEle_2018_EraA_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraA/DATA_SingleEle_2018_EraA_2.root"
+    ]
+  },
+  "WJetsToLNu_HT-70To100_70To100_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "1292.0",
+      "part": "70To100",
+      "nevents": "6907",
+      "size": "9030401",
+      "isSkim": "True",
+      "skim_efficiency": "0.00010430343247238429",
+      "skim_rescale_genweights": "9587.412"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-70To100_70To100_2018/WJetsToLNu_HT-70To100_70To100_2018_1.root"
+    ]
+  },
+  "DATA_SingleEle_2018_EraB": {
+    "metadata": {
+      "das_names": "['/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "B",
+      "nevents": "119918",
+      "size": "120993531",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007795872314509769"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraB/DATA_SingleEle_2018_EraB_1.root"
+    ]
+  },
+  "DATA_SingleEle_2018_EraC": {
+    "metadata": {
+      "das_names": "['/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "C",
+      "nevents": "122759",
+      "size": "128424150",
+      "isSkim": "True",
+      "skim_efficiency": "0.0008304183221051419"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraC/DATA_SingleEle_2018_EraC_1.root"
+    ]
+  },
+  "DATA_SingleEle_2018_EraD": {
+    "metadata": {
+      "das_names": "['/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD']",
+      "sample": "DATA_SingleEle",
+      "year": "2018",
+      "isMC": "False",
+      "primaryDataset": "SingleEle",
+      "era": "D",
+      "nevents": "520406",
+      "size": "536328298",
+      "isSkim": "True",
+      "skim_efficiency": "0.000691546843460395"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraD/DATA_SingleEle_2018_EraD_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraD/DATA_SingleEle_2018_EraD_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraD/DATA_SingleEle_2018_EraD_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleEle_2018_EraD/DATA_SingleEle_2018_EraD_4.root"
+    ]
+  },
+  "WJetsToLNu_HT-100To200_100To200_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "1345.0",
+      "part": "100To200",
+      "nevents": "8668",
+      "size": "12917197",
+      "isSkim": "True",
+      "skim_efficiency": "0.00018277484947221758",
+      "skim_rescale_genweights": "5471.2124"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-100To200_100To200_2017/WJetsToLNu_HT-100To200_100To200_2017_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-100To200_100To200_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "1345.0",
+      "part": "100To200",
+      "nevents": "10768",
+      "size": "15655266",
+      "isSkim": "True",
+      "skim_efficiency": "0.0002094576224416258",
+      "skim_rescale_genweights": "4774.2354"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-100To200_100To200_2018/WJetsToLNu_HT-100To200_100To200_2018_1.root"
+    ]
+  },
+  "ttHTobb_2018": {
+    "metadata": {
+      "das_names": "['/ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM']",
+      "sample": "ttHTobb",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.2953",
+      "nevents": "1604748",
+      "size": "4629230109",
+      "isSkim": "True",
+      "skim_efficiency": "0.1659855192387257",
+      "skim_rescale_genweights": "6.0349927"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2018/ttHTobb_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2018/ttHTobb_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2018/ttHTobb_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2018/ttHTobb_2018_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2018/ttHTobb_2018_5.root"
+    ]
+  },
+  "ttHTobb_2017": {
+    "metadata": {
+      "das_names": "['/ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM']",
+      "sample": "ttHTobb",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.2953",
+      "nevents": "1272064",
+      "size": "3724484628",
+      "isSkim": "True",
+      "skim_efficiency": "0.162564089456869",
+      "skim_rescale_genweights": "6.159322"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2017/ttHTobb_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2017/ttHTobb_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2017/ttHTobb_2017_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2017/ttHTobb_2017_4.root"
+    ]
+  },
+  "ttHTobb_ttToSemiLep_2017": {
+    "metadata": {
+      "das_names": "['/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "ttHTobb_ttToSemiLep",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.1298",
+      "nevents": "2644241",
+      "size": "7657786532",
+      "isSkim": "True",
+      "skim_efficiency": "0.26463580864691755",
+      "skim_rescale_genweights": "3.7785766"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2017/ttHTobb_ttToSemiLep_2017_9.root"
+    ]
+  },
+  "ttHTobb_ttToSemiLep_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "ttHTobb_ttToSemiLep",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.1298",
+      "nevents": "1192522",
+      "size": "3338546566",
+      "isSkim": "True",
+      "skim_efficiency": "0.2385452866621339",
+      "skim_rescale_genweights": "4.191952"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PostVFP/ttHTobb_ttToSemiLep_2016_PostVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PostVFP/ttHTobb_ttToSemiLep_2016_PostVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PostVFP/ttHTobb_ttToSemiLep_2016_PostVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PostVFP/ttHTobb_ttToSemiLep_2016_PostVFP_4.root"
+    ]
+  },
+  "ttHTobb_ttToSemiLep_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "ttHTobb_ttToSemiLep",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.1298",
+      "nevents": "1126113",
+      "size": "3159158120",
+      "isSkim": "True",
+      "skim_efficiency": "0.22548623851006597",
+      "skim_rescale_genweights": "4.434673"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PreVFP/ttHTobb_ttToSemiLep_2016_PreVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PreVFP/ttHTobb_ttToSemiLep_2016_PreVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PreVFP/ttHTobb_ttToSemiLep_2016_PreVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2016_PreVFP/ttHTobb_ttToSemiLep_2016_PreVFP_4.root"
+    ]
+  },
+  "ttHTobb_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "ttHTobb",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.2953",
+      "nevents": "724210",
+      "size": "2051517510",
+      "isSkim": "True",
+      "skim_efficiency": "0.14669029775167106",
+      "skim_rescale_genweights": "6.8261046"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2016_PostVFP/ttHTobb_2016_PostVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2016_PostVFP/ttHTobb_2016_PostVFP_2.root"
+    ]
+  },
+  "ttHTobb_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "ttHTobb",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.2953",
+      "nevents": "640602",
+      "size": "1819177948",
+      "isSkim": "True",
+      "skim_efficiency": "0.13859844223279966",
+      "skim_rescale_genweights": "7.2289443"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2016_PreVFP/ttHTobb_2016_PreVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_2016_PreVFP/ttHTobb_2016_PreVFP_2.root"
+    ]
+  },
+  "TTToSemiLeptonic_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "TTToSemiLeptonic",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "366.2852",
+      "nevents": "3435546",
+      "size": "7352369533",
+      "isSkim": "True",
+      "skim_efficiency": "0.02599181406890708",
+      "skim_rescale_genweights": "38.419807"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PreVFP/TTToSemiLeptonic_2016_PreVFP_9.root"
+    ]
+  },
+  "ttHTobb_ttToSemiLep_2018": {
+    "metadata": {
+      "das_names": "['/ttHTobb_ttToSemiLep_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "ttHTobb_ttToSemiLep",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.1298",
+      "nevents": "2698769",
+      "size": "7693091139",
+      "isSkim": "True",
+      "skim_efficiency": "0.27033647200240407",
+      "skim_rescale_genweights": "3.6987848"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ttHTobb_ttToSemiLep_2018/ttHTobb_ttToSemiLep_2018_9.root"
+    ]
+  },
+  "TTToSemiLeptonic_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "TTToSemiLeptonic",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "366.2852",
+      "nevents": "4266172",
+      "size": "9088342375",
+      "isSkim": "True",
+      "skim_efficiency": "0.029478393057033484",
+      "skim_rescale_genweights": "33.87813"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_10.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2016_PostVFP/TTToSemiLeptonic_2016_PostVFP_11.root"
+    ]
+  },
+  "WJetsToLNu_HT-200To400_200To400_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "359.7",
+      "part": "200To400",
+      "nevents": "20676",
+      "size": "37888951",
+      "isSkim": "True",
+      "skim_efficiency": "0.0004890026552446848",
+      "skim_rescale_genweights": "2044.9785"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-200To400_200To400_2017/WJetsToLNu_HT-200To400_200To400_2017_1.root"
+    ]
+  },
+  "TTToSemiLeptonic_2017": {
+    "metadata": {
+      "das_names": "['/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTToSemiLeptonic",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "366.2852",
+      "nevents": "12009458",
+      "size": "26595270580",
+      "isSkim": "True",
+      "skim_efficiency": "0.03470420052477662",
+      "skim_rescale_genweights": "28.780163"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_10.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_11.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_12.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_13.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_14.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_15.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_16.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_17.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_18.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_19.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_20.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_21.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_22.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_23.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_24.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_25.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_26.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_27.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_28.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_29.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_30.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2017/TTToSemiLeptonic_2017_31.root"
+    ]
+  },
+  "TTToSemiLeptonic_2018": {
+    "metadata": {
+      "das_names": "['/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTToSemiLeptonic",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "366.2852",
+      "nevents": "17651277",
+      "size": "38191660868",
+      "isSkim": "True",
+      "skim_efficiency": "0.037050756914241575",
+      "skim_rescale_genweights": "26.959955"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_10.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_11.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_12.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_13.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_14.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_15.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_16.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_17.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_18.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_19.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_20.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_21.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_22.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_23.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_24.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_25.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_26.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_27.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_28.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_29.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_30.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_31.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_32.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_33.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_34.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_35.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_36.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_37.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_38.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_39.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_40.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_41.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_42.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_43.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_44.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_45.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTToSemiLeptonic_2018/TTToSemiLeptonic_2018_46.root"
+    ]
+  },
+  "WJetsToLNu_HT-200To400_200To400_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "359.7",
+      "part": "200To400",
+      "nevents": "31737",
+      "size": "56663133",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005450692231215283",
+      "skim_rescale_genweights": "1834.6294"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-200To400_200To400_2018/WJetsToLNu_HT-200To400_200To400_2018_1.root"
+    ]
+  },
+  "TTTo2L2Nu_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "TTTo2L2Nu",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "88.5148",
+      "nevents": "1312883",
+      "size": "2759433388",
+      "isSkim": "True",
+      "skim_efficiency": "0.035005545927209704",
+      "skim_rescale_genweights": "28.523092"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PreVFP/TTTo2L2Nu_2016_PreVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PreVFP/TTTo2L2Nu_2016_PreVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PreVFP/TTTo2L2Nu_2016_PreVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PreVFP/TTTo2L2Nu_2016_PreVFP_4.root"
+    ]
+  },
+  "TTTo2L2Nu_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "TTTo2L2Nu",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "88.5148",
+      "nevents": "1737755",
+      "size": "3638469640",
+      "isSkim": "True",
+      "skim_efficiency": "0.039906191154181786",
+      "skim_rescale_genweights": "25.013655"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2016_PostVFP/TTTo2L2Nu_2016_PostVFP_5.root"
+    ]
+  },
+  "TTTo2L2Nu_2017": {
+    "metadata": {
+      "das_names": "['/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTTo2L2Nu",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "88.5148",
+      "nevents": "5061745",
+      "size": "11023758386",
+      "isSkim": "True",
+      "skim_efficiency": "0.047428366627937486",
+      "skim_rescale_genweights": "21.057787"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_10.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_11.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_12.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2017/TTTo2L2Nu_2017_13.root"
+    ]
+  },
+  "TTTo2L2Nu_2018": {
+    "metadata": {
+      "das_names": "['/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTTo2L2Nu",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "88.5148",
+      "nevents": "7303897",
+      "size": "15563830101",
+      "isSkim": "True",
+      "skim_efficiency": "0.05036475658529858",
+      "skim_rescale_genweights": "19.827665"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_10.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_11.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_12.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_13.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_14.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_15.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_16.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_17.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_18.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTTo2L2Nu_2018/TTTo2L2Nu_2018_19.root"
+    ]
+  },
+  "WJetsToLNu_HT-400To600_400To600_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "48.91",
+      "part": "400To600",
+      "nevents": "8537",
+      "size": "19022979",
+      "isSkim": "True",
+      "skim_efficiency": "0.001146825039662656",
+      "skim_rescale_genweights": "871.9726"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-400To600_400To600_2018/WJetsToLNu_HT-400To600_400To600_2018_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-400To600_400To600_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "48.91",
+      "part": "400To600",
+      "nevents": "5789",
+      "size": "13193896",
+      "isSkim": "True",
+      "skim_efficiency": "0.001058613620292173",
+      "skim_rescale_genweights": "944.6317"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-400To600_400To600_2017/WJetsToLNu_HT-400To600_400To600_2017_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-800To1200_800To1200_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "5.501",
+      "part": "800To1200",
+      "nevents": "17314",
+      "size": "44653024",
+      "isSkim": "True",
+      "skim_efficiency": "0.002369772358687233",
+      "skim_rescale_genweights": "421.98145"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-800To1200_800To1200_2018/WJetsToLNu_HT-800To1200_800To1200_2018_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-800To1200_800To1200_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v3/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "5.501",
+      "part": "800To1200",
+      "nevents": "11140",
+      "size": "29224659",
+      "isSkim": "True",
+      "skim_efficiency": "0.00218925758423483",
+      "skim_rescale_genweights": "456.77585"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-800To1200_800To1200_2017/WJetsToLNu_HT-800To1200_800To1200_2017_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-600To800_600To800_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "12.05",
+      "part": "600To800",
+      "nevents": "13182",
+      "size": "32133499",
+      "isSkim": "True",
+      "skim_efficiency": "0.0017077861549094965",
+      "skim_rescale_genweights": "585.5534"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-600To800_600To800_2018/WJetsToLNu_HT-600To800_600To800_2018_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-600To800_600To800_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "12.05",
+      "part": "600To800",
+      "nevents": "8621",
+      "size": "21291232",
+      "isSkim": "True",
+      "skim_efficiency": "0.0015546504443945122",
+      "skim_rescale_genweights": "643.2314"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-600To800_600To800_2017/WJetsToLNu_HT-600To800_600To800_2017_1.root"
+    ]
+  },
+  "ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "3.36",
+      "part": "s-channel_4f_leptonDecays",
+      "nevents": "33789",
+      "size": "53840799",
+      "isSkim": "True",
+      "skim_efficiency": "0.006123414280536426",
+      "skim_rescale_genweights": "156.28224"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PreVFP/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-2500ToInf_2500ToInf_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.02646",
+      "part": "2500ToInf",
+      "nevents": "13851",
+      "size": "43496326",
+      "isSkim": "True",
+      "skim_efficiency": "0.00660310976865518",
+      "skim_rescale_genweights": "151.4438"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2018/WJetsToLNu_HT-2500ToInf_2500ToInf_2018_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-2500ToInf_2500ToInf_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.02646",
+      "part": "2500ToInf",
+      "nevents": "7115",
+      "size": "22282138",
+      "isSkim": "True",
+      "skim_efficiency": "0.006000679767799416",
+      "skim_rescale_genweights": "166.64778"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2017/WJetsToLNu_HT-2500ToInf_2500ToInf_2017_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-1200To2500_1200To2500_2018": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "1.152",
+      "part": "1200To2500",
+      "nevents": "24050",
+      "size": "66388615",
+      "isSkim": "True",
+      "skim_efficiency": "0.003710550522269629",
+      "skim_rescale_genweights": "269.5018"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2018/WJetsToLNu_HT-1200To2500_1200To2500_2018_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-1200To2500_1200To2500_2017": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "1.152",
+      "part": "1200To2500",
+      "nevents": "16305",
+      "size": "45760610",
+      "isSkim": "True",
+      "skim_efficiency": "0.003431101668771693",
+      "skim_rescale_genweights": "291.45157"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2017/WJetsToLNu_HT-1200To2500_1200To2500_2017_1.root"
+    ]
+  },
+  "ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "136.02",
+      "part": "t-channel_top_4f_InclusiveDecays",
+      "nevents": "91700",
+      "size": "152997253",
+      "isSkim": "True",
+      "skim_efficiency": "0.0016386411965475956",
+      "skim_rescale_genweights": "651.8825"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PreVFP/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PreVFP_1.root"
+    ]
+  },
+  "ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "3.36",
+      "part": "s-channel_4f_leptonDecays",
+      "nevents": "38818",
+      "size": "61579836",
+      "isSkim": "True",
+      "skim_efficiency": "0.007095229391336136",
+      "skim_rescale_genweights": "135.91466"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PostVFP/ST_s-channel_4f_leptonDecays_s-channel_4f_leptonDecays_2016_PostVFP_1.root"
+    ]
+  },
+  "ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "136.02",
+      "part": "t-channel_top_4f_InclusiveDecays",
+      "nevents": "121238",
+      "size": "200987262",
+      "isSkim": "True",
+      "skim_efficiency": "0.0019221854042141646",
+      "skim_rescale_genweights": "555.3916"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PostVFP/ST_t-channel_top_4f_InclusiveDecays_t-channel_top_4f_InclusiveDecays_2016_PostVFP_1.root"
+    ]
+  },
+  "ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "80.95",
+      "part": "t-channel_antitop_4f_InclusiveDecays",
+      "nevents": "56186",
+      "size": "94105736",
+      "isSkim": "True",
+      "skim_efficiency": "0.0018110495100567303",
+      "skim_rescale_genweights": "593.8336"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PreVFP/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PreVFP_1.root"
+    ]
+  },
+  "ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "80.95",
+      "part": "t-channel_antitop_4f_InclusiveDecays",
+      "nevents": "63698",
+      "size": "105831379",
+      "isSkim": "True",
+      "skim_efficiency": "0.002081021921657029",
+      "skim_rescale_genweights": "517.00214"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PostVFP/ST_t-channel_antitop_4f_InclusiveDecays_t-channel_antitop_4f_InclusiveDecays_2016_PostVFP_1.root"
+    ]
+  },
+  "ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_antitop_5f_NoFullyHadronicDecays",
+      "nevents": "47767",
+      "size": "94721947",
+      "isSkim": "True",
+      "skim_efficiency": "0.01307069894459175",
+      "skim_rescale_genweights": "76.509605"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PostVFP/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PostVFP_1.root"
+    ]
+  },
+  "ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_antitop_5f_NoFullyHadronicDecays",
+      "nevents": "36189",
+      "size": "72271910",
+      "isSkim": "True",
+      "skim_efficiency": "0.011392781643861061",
+      "skim_rescale_genweights": "87.77556"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PreVFP/ST_tW_antitop_5f_NoFullyHadronicDecays_tW_antitop_5f_NoFullyHadronicDecays_2016_PreVFP_1.root"
+    ]
+  },
+  "ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_top_5f_NoFullyHadronicDecays",
+      "nevents": "43842",
+      "size": "87050632",
+      "isSkim": "True",
+      "skim_efficiency": "0.01301577170000371",
+      "skim_rescale_genweights": "76.833725"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PostVFP/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PostVFP_1.root"
+    ]
+  },
+  "ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "SingleTop",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "35.85",
+      "part": "tW_top_5f_NoFullyHadronicDecays",
+      "nevents": "37412",
+      "size": "74380018",
+      "isSkim": "True",
+      "skim_efficiency": "0.01135529990381443",
+      "skim_rescale_genweights": "88.05956"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PreVFP/ST_tW_top_5f_NoFullyHadronicDecays_tW_top_5f_NoFullyHadronicDecays_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-70To100_70To100_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "1292.0",
+      "part": "70To100",
+      "nevents": "1185",
+      "size": "1499905",
+      "isSkim": "True",
+      "skim_efficiency": "6.095700648320202e-05",
+      "skim_rescale_genweights": "16405.004"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-70To100_70To100_2016_PostVFP/WJetsToLNu_HT-70To100_70To100_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-70To100_70To100_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "1292.0",
+      "part": "70To100",
+      "nevents": "885",
+      "size": "1133165",
+      "isSkim": "True",
+      "skim_efficiency": "5.2268620548418906e-05",
+      "skim_rescale_genweights": "19131.938"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-70To100_70To100_2016_PreVFP/WJetsToLNu_HT-70To100_70To100_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-100To200_100To200_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "1345.0",
+      "part": "100To200",
+      "nevents": "2501",
+      "size": "3583968",
+      "isSkim": "True",
+      "skim_efficiency": "0.00011507035118771835",
+      "skim_rescale_genweights": "8690.337"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-100To200_100To200_2016_PreVFP/WJetsToLNu_HT-100To200_100To200_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-100To200_100To200_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "1345.0",
+      "part": "100To200",
+      "nevents": "2558",
+      "size": "3633735",
+      "isSkim": "True",
+      "skim_efficiency": "0.00012949303628164037",
+      "skim_rescale_genweights": "7722.423"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-100To200_100To200_2016_PostVFP/WJetsToLNu_HT-100To200_100To200_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-200To400_200To400_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "359.7",
+      "part": "200To400",
+      "nevents": "5961",
+      "size": "10593786",
+      "isSkim": "True",
+      "skim_efficiency": "0.000333560052700362",
+      "skim_rescale_genweights": "2997.9607"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-200To400_200To400_2016_PreVFP/WJetsToLNu_HT-200To400_200To400_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-200To400_200To400_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "359.7",
+      "part": "200To400",
+      "nevents": "5869",
+      "size": "10399234",
+      "isSkim": "True",
+      "skim_efficiency": "0.000389510726344922",
+      "skim_rescale_genweights": "2567.3235"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-200To400_200To400_2016_PostVFP/WJetsToLNu_HT-200To400_200To400_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-800To1200_800To1200_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "5.501",
+      "part": "800To1200",
+      "nevents": "4882",
+      "size": "12558867",
+      "isSkim": "True",
+      "skim_efficiency": "0.00194464261316629",
+      "skim_rescale_genweights": "514.2333"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-800To1200_800To1200_2016_PreVFP/WJetsToLNu_HT-800To1200_800To1200_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-800To1200_800To1200_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "5.501",
+      "part": "800To1200",
+      "nevents": "4246",
+      "size": "11005832",
+      "isSkim": "True",
+      "skim_efficiency": "0.001991344265247431",
+      "skim_rescale_genweights": "502.17334"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-800To1200_800To1200_2016_PostVFP/WJetsToLNu_HT-800To1200_800To1200_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-600To800_600To800_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "12.05",
+      "part": "600To800",
+      "nevents": "2868",
+      "size": "6884061",
+      "isSkim": "True",
+      "skim_efficiency": "0.0012234816328445949",
+      "skim_rescale_genweights": "817.3396"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-600To800_600To800_2016_PreVFP/WJetsToLNu_HT-600To800_600To800_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-600To800_600To800_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "12.05",
+      "part": "600To800",
+      "nevents": "3120",
+      "size": "7478667",
+      "isSkim": "True",
+      "skim_efficiency": "0.001385553912924154",
+      "skim_rescale_genweights": "721.73303"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-600To800_600To800_2016_PostVFP/WJetsToLNu_HT-600To800_600To800_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-400To600_400To600_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "48.91",
+      "part": "400To600",
+      "nevents": "1872",
+      "size": "4124162",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007586632289063659",
+      "skim_rescale_genweights": "1318.1079"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-400To600_400To600_2016_PreVFP/WJetsToLNu_HT-400To600_400To600_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-400To600_400To600_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "48.91",
+      "part": "400To600",
+      "nevents": "1847",
+      "size": "4046305",
+      "isSkim": "True",
+      "skim_efficiency": "0.000873075935862244",
+      "skim_rescale_genweights": "1145.3757"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-400To600_400To600_2016_PostVFP/WJetsToLNu_HT-400To600_400To600_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-1200To2500_1200To2500_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "1.152",
+      "part": "1200To2500",
+      "nevents": "7512",
+      "size": "20704981",
+      "isSkim": "True",
+      "skim_efficiency": "0.0035434380122407105",
+      "skim_rescale_genweights": "282.2118"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2016_PreVFP/WJetsToLNu_HT-1200To2500_1200To2500_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-1200To2500_1200To2500_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "1.152",
+      "part": "1200To2500",
+      "nevents": "6851",
+      "size": "18568411",
+      "isSkim": "True",
+      "skim_efficiency": "0.003277110785095484",
+      "skim_rescale_genweights": "305.14685"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-1200To2500_1200To2500_2016_PostVFP/WJetsToLNu_HT-1200To2500_1200To2500_2016_PostVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.02646",
+      "part": "2500ToInf",
+      "nevents": "6048",
+      "size": "18754792",
+      "isSkim": "True",
+      "skim_efficiency": "0.007479141135399907",
+      "skim_rescale_genweights": "133.70518"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PreVFP/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PreVFP_1.root"
+    ]
+  },
+  "WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "WJetsToLNu_HT",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.02646",
+      "part": "2500ToInf",
+      "nevents": "4214",
+      "size": "12972677",
+      "isSkim": "True",
+      "skim_efficiency": "0.005939276744363043",
+      "skim_rescale_genweights": "168.37067"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PostVFP/WJetsToLNu_HT-2500ToInf_2500ToInf_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-70to100_70to100_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "199.3161",
+      "part": "70to100",
+      "nevents": "6605",
+      "size": "10275984",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005411291764235138",
+      "skim_rescale_genweights": "1847.9875"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2017/DYJetsToLL_M-50_HT-70to100_70to100_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-70to100_70to100_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "199.3161",
+      "part": "70to100",
+      "nevents": "2394",
+      "size": "3597699",
+      "isSkim": "True",
+      "skim_efficiency": "0.0003560257885212765",
+      "skim_rescale_genweights": "2808.7854"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2016_PreVFP/DYJetsToLL_M-50_HT-70to100_70to100_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-70to100_70to100_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "199.3161",
+      "part": "70to100",
+      "nevents": "2486",
+      "size": "3716481",
+      "isSkim": "True",
+      "skim_efficiency": "0.0004217913066198839",
+      "skim_rescale_genweights": "2370.8408"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2016_PostVFP/DYJetsToLL_M-50_HT-70to100_70to100_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-100to200_100to200_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "167.59380000000002",
+      "part": "100to200",
+      "nevents": "6826",
+      "size": "11432200",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007132675070809512",
+      "skim_rescale_genweights": "1401.9985"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2016_PreVFP/DYJetsToLL_M-50_HT-100to200_100to200_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-70to100_70to100_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "199.3161",
+      "part": "70to100",
+      "nevents": "10141",
+      "size": "15398063",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005963738985004675",
+      "skim_rescale_genweights": "1676.8003"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-70to100_70to100_2018/DYJetsToLL_M-50_HT-70to100_70to100_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-100to200_100to200_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "167.59380000000002",
+      "part": "100to200",
+      "nevents": "19839",
+      "size": "34323463",
+      "isSkim": "True",
+      "skim_efficiency": "0.0010638364046008095",
+      "skim_rescale_genweights": "939.99414"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2017/DYJetsToLL_M-50_HT-100to200_100to200_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-100to200_100to200_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "167.59380000000002",
+      "part": "100to200",
+      "nevents": "7073",
+      "size": "11778332",
+      "isSkim": "True",
+      "skim_efficiency": "0.0008504932030887105",
+      "skim_rescale_genweights": "1175.7883"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2016_PostVFP/DYJetsToLL_M-50_HT-100to200_100to200_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-100to200_100to200_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "167.59380000000002",
+      "part": "100to200",
+      "nevents": "30492",
+      "size": "51384324",
+      "isSkim": "True",
+      "skim_efficiency": "0.0011637133921840838",
+      "skim_rescale_genweights": "859.3181"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-100to200_100to200_2018/DYJetsToLL_M-50_HT-100to200_100to200_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-200to400_200to400_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "46.605630000000005",
+      "part": "200to400",
+      "nevents": "9263",
+      "size": "18846736",
+      "isSkim": "True",
+      "skim_efficiency": "0.0015800073380023406",
+      "skim_rescale_genweights": "632.90845"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2016_PreVFP/DYJetsToLL_M-50_HT-200to400_200to400_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-200to400_200to400_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "46.605630000000005",
+      "part": "200to400",
+      "nevents": "43227",
+      "size": "88432411",
+      "isSkim": "True",
+      "skim_efficiency": "0.002342200937400539",
+      "skim_rescale_genweights": "426.94885"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2018/DYJetsToLL_M-50_HT-200to400_200to400_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-200to400_200to400_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "46.605630000000005",
+      "part": "200to400",
+      "nevents": "26780",
+      "size": "56301541",
+      "isSkim": "True",
+      "skim_efficiency": "0.0021507101720479797",
+      "skim_rescale_genweights": "464.9627"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2017/DYJetsToLL_M-50_HT-200to400_200to400_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-200to400_200to400_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "46.605630000000005",
+      "part": "200to400",
+      "nevents": "10483",
+      "size": "21257078",
+      "isSkim": "True",
+      "skim_efficiency": "0.001854157093428788",
+      "skim_rescale_genweights": "539.3286"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-200to400_200to400_2016_PostVFP/DYJetsToLL_M-50_HT-200to400_200to400_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-400to600_400to600_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "6.455886",
+      "part": "400to600",
+      "nevents": "18468",
+      "size": "46769300",
+      "isSkim": "True",
+      "skim_efficiency": "0.003430002904767459",
+      "skim_rescale_genweights": "291.54495"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2017/DYJetsToLL_M-50_HT-400to600_400to600_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-400to600_400to600_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "6.455886",
+      "part": "400to600",
+      "nevents": "7658",
+      "size": "18928232",
+      "isSkim": "True",
+      "skim_efficiency": "0.003073754041878193",
+      "skim_rescale_genweights": "325.33508"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2016_PostVFP/DYJetsToLL_M-50_HT-400to600_400to600_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-400to600_400to600_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "6.455886",
+      "part": "400to600",
+      "nevents": "7332",
+      "size": "18117831",
+      "isSkim": "True",
+      "skim_efficiency": "0.002698671864763119",
+      "skim_rescale_genweights": "370.55264"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2016_PreVFP/DYJetsToLL_M-50_HT-400to600_400to600_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-600to800_600to800_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "1.554279",
+      "part": "600to800",
+      "nevents": "22350",
+      "size": "61214946",
+      "isSkim": "True",
+      "skim_efficiency": "0.004366337898679862",
+      "skim_rescale_genweights": "229.02487"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2017/DYJetsToLL_M-50_HT-600to800_600to800_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-600to800_600to800_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "1.554279",
+      "part": "600to800",
+      "nevents": "9177",
+      "size": "24291188",
+      "isSkim": "True",
+      "skim_efficiency": "0.00399025502934318",
+      "skim_rescale_genweights": "250.61055"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2016_PostVFP/DYJetsToLL_M-50_HT-600to800_600to800_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-600to800_600to800_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "1.554279",
+      "part": "600to800",
+      "nevents": "9729",
+      "size": "25936848",
+      "isSkim": "True",
+      "skim_efficiency": "0.003627990229895773",
+      "skim_rescale_genweights": "275.6347"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2016_PreVFP/DYJetsToLL_M-50_HT-600to800_600to800_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-400to600_400to600_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "6.455886",
+      "part": "400to600",
+      "nevents": "32335",
+      "size": "80452877",
+      "isSkim": "True",
+      "skim_efficiency": "0.0037242620208086446",
+      "skim_rescale_genweights": "268.50958"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-400to600_400to600_2018/DYJetsToLL_M-50_HT-400to600_400to600_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-800to1200_800to1200_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.7167648",
+      "part": "800to1200",
+      "nevents": "37463",
+      "size": "106953794",
+      "isSkim": "True",
+      "skim_efficiency": "0.005715459139951781",
+      "skim_rescale_genweights": "174.96407"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2018/DYJetsToLL_M-50_HT-800to1200_800to1200_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-800to1200_800to1200_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.7167648",
+      "part": "800to1200",
+      "nevents": "22984",
+      "size": "66354197",
+      "isSkim": "True",
+      "skim_efficiency": "0.00528712025852233",
+      "skim_rescale_genweights": "189.13889"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2017/DYJetsToLL_M-50_HT-800to1200_800to1200_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.7167648",
+      "part": "800to1200",
+      "nevents": "12130",
+      "size": "34330914",
+      "isSkim": "True",
+      "skim_efficiency": "0.005066884546879334",
+      "skim_rescale_genweights": "197.35994"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PostVFP/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.7167648",
+      "part": "800to1200",
+      "nevents": "11526",
+      "size": "32741196",
+      "isSkim": "True",
+      "skim_efficiency": "0.004780408537048166",
+      "skim_rescale_genweights": "209.18715"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PreVFP/DYJetsToLL_M-50_HT-800to1200_800to1200_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-600to800_600to800_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "1.554279",
+      "part": "600to800",
+      "nevents": "33094",
+      "size": "89310077",
+      "isSkim": "True",
+      "skim_efficiency": "0.004703544116370008",
+      "skim_rescale_genweights": "212.60564"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-600to800_600to800_2018/DYJetsToLL_M-50_HT-600to800_600to800_2018_1.root"
+    ]
+  },
+  "WW_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "118.7",
+      "nevents": "1063",
+      "size": "1262741",
+      "isSkim": "True",
+      "skim_efficiency": "6.702818588813923e-05",
+      "skim_rescale_genweights": "14919.22"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WW_2016_PreVFP/WW_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-2500toInf_2500toInf_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.004053405",
+      "part": "2500toInf",
+      "nevents": "23796",
+      "size": "80055711",
+      "isSkim": "True",
+      "skim_efficiency": "0.012029099136943984",
+      "skim_rescale_genweights": "83.131744"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2018/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-2500toInf_2500toInf_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.004053405",
+      "part": "2500toInf",
+      "nevents": "15841",
+      "size": "53706577",
+      "isSkim": "True",
+      "skim_efficiency": "0.010703038484588666",
+      "skim_rescale_genweights": "93.43141"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2017/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.004053405",
+      "part": "2500toInf",
+      "nevents": "7795",
+      "size": "26247121",
+      "isSkim": "True",
+      "skim_efficiency": "0.011186677592632723",
+      "skim_rescale_genweights": "89.392044"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PostVFP/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.004053405",
+      "part": "2500toInf",
+      "nevents": "9586",
+      "size": "31956308",
+      "isSkim": "True",
+      "skim_efficiency": "0.013287977333089365",
+      "skim_rescale_genweights": "75.256"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PreVFP/DYJetsToLL_M-50_HT-2500toInf_2500toInf_2016_PreVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-1200to2500_1200to2500_2018": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.1721418",
+      "part": "1200to2500",
+      "nevents": "45530",
+      "size": "138205256",
+      "isSkim": "True",
+      "skim_efficiency": "0.00763073350404858",
+      "skim_rescale_genweights": "131.049"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2018/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2018_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-1200to2500_1200to2500_2017": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.1721418",
+      "part": "1200to2500",
+      "nevents": "33711",
+      "size": "103351210",
+      "isSkim": "True",
+      "skim_efficiency": "0.00713319012360726",
+      "skim_rescale_genweights": "140.18973"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2017/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2017_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.1721418",
+      "part": "1200to2500",
+      "nevents": "13889",
+      "size": "41645428",
+      "isSkim": "True",
+      "skim_efficiency": "0.007047188101419839",
+      "skim_rescale_genweights": "141.90057"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PostVFP/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PostVFP_1.root"
+    ]
+  },
+  "DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "DYJetsToLL",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.1721418",
+      "part": "1200to2500",
+      "nevents": "16177",
+      "size": "49226044",
+      "isSkim": "True",
+      "skim_efficiency": "0.007387891475587122",
+      "skim_rescale_genweights": "135.35661"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PreVFP/DYJetsToLL_M-50_HT-1200to2500_1200to2500_2016_PreVFP_1.root"
+    ]
+  },
+  "WW_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "118.7",
+      "nevents": "1163",
+      "size": "1370400",
+      "isSkim": "True",
+      "skim_efficiency": "7.35098919158081e-05",
+      "skim_rescale_genweights": "13603.73"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WW_2016_PostVFP/WW_2016_PostVFP_1.root"
+    ]
+  },
+  "WW_2017": {
+    "metadata": {
+      "das_names": "['/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "118.7",
+      "nevents": "1683",
+      "size": "2091160",
+      "isSkim": "True",
+      "skim_efficiency": "0.00010764999360368427",
+      "skim_rescale_genweights": "9289.434"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WW_2017/WW_2017_1.root"
+    ]
+  },
+  "WZ_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "65.5443",
+      "nevents": "2149",
+      "size": "2579561",
+      "isSkim": "True",
+      "skim_efficiency": "0.00027085959163095536",
+      "skim_rescale_genweights": "3691.9497"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WZ_2016_PreVFP/WZ_2016_PreVFP_1.root"
+    ]
+  },
+  "WW_2018": {
+    "metadata": {
+      "das_names": "['/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "118.7",
+      "nevents": "1863",
+      "size": "2255531",
+      "isSkim": "True",
+      "skim_efficiency": "0.00011882135340264048",
+      "skim_rescale_genweights": "8414.219"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WW_2018/WW_2018_1.root"
+    ]
+  },
+  "WZ_2018": {
+    "metadata": {
+      "das_names": "['/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "65.5443",
+      "nevents": "3593",
+      "size": "4396767",
+      "isSkim": "True",
+      "skim_efficiency": "0.0004525188916876574",
+      "skim_rescale_genweights": "2209.8525"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WZ_2018/WZ_2018_1.root"
+    ]
+  },
+  "WZ_2017": {
+    "metadata": {
+      "das_names": "['/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "65.5443",
+      "nevents": "3253",
+      "size": "4098689",
+      "isSkim": "True",
+      "skim_efficiency": "0.00041234630498162",
+      "skim_rescale_genweights": "2425.146"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WZ_2017/WZ_2017_1.root"
+    ]
+  },
+  "WZ_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "65.5443",
+      "nevents": "2255",
+      "size": "2679212",
+      "isSkim": "True",
+      "skim_efficiency": "0.0002973364978902954",
+      "skim_rescale_genweights": "3363.1929"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/WZ_2016_PostVFP/WZ_2016_PostVFP_1.root"
+    ]
+  },
+  "TTWJetsToLNu_2017": {
+    "metadata": {
+      "das_names": "['/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.1792",
+      "nevents": "441397",
+      "size": "1218132089",
+      "isSkim": "True",
+      "skim_efficiency": "0.06181674976412422",
+      "skim_rescale_genweights": "17.023035"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2017/TTWJetsToLNu_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2017/TTWJetsToLNu_2017_2.root"
+    ]
+  },
+  "TTWJetsToLNu_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.1792",
+      "nevents": "181280",
+      "size": "484541459",
+      "isSkim": "True",
+      "skim_efficiency": "0.054558976092225375",
+      "skim_rescale_genweights": "19.408344"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2016_PostVFP/TTWJetsToLNu_2016_PostVFP_1.root"
+    ]
+  },
+  "TTWJetsToLNu_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.1792",
+      "nevents": "137876",
+      "size": "371944105",
+      "isSkim": "True",
+      "skim_efficiency": "0.04837476018923823",
+      "skim_rescale_genweights": "21.965414"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2016_PreVFP/TTWJetsToLNu_2016_PreVFP_1.root"
+    ]
+  },
+  "ZZ_2018": {
+    "metadata": {
+      "das_names": "['/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "15.8274",
+      "nevents": "2678",
+      "size": "3264740",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007595008508224617",
+      "skim_rescale_genweights": "1316.6542"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ZZ_2018/ZZ_2018_1.root"
+    ]
+  },
+  "ZZ_2017": {
+    "metadata": {
+      "das_names": "['/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "15.8274",
+      "nevents": "1918",
+      "size": "2399357",
+      "isSkim": "True",
+      "skim_efficiency": "0.0007087952697708795",
+      "skim_rescale_genweights": "1410.8446"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ZZ_2017/ZZ_2017_1.root"
+    ]
+  },
+  "ZZ_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "15.8274",
+      "nevents": "654",
+      "size": "797557",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005682015638575152",
+      "skim_rescale_genweights": "1759.9388"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ZZ_2016_PostVFP/ZZ_2016_PostVFP_1.root"
+    ]
+  },
+  "ZZ_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/ZZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "VV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "15.8274",
+      "nevents": "643",
+      "size": "776474",
+      "isSkim": "True",
+      "skim_efficiency": "0.0005015600624024961",
+      "skim_rescale_genweights": "1993.7792"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/ZZ_2016_PreVFP/ZZ_2016_PreVFP_1.root"
+    ]
+  },
+  "TTZToLLNuNu_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.2589",
+      "nevents": "228434",
+      "size": "579263550",
+      "isSkim": "True",
+      "skim_efficiency": "0.03943957182320442",
+      "skim_rescale_genweights": "26.762972"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2016_PreVFP/TTZToLLNuNu_2016_PreVFP_1.root"
+    ]
+  },
+  "TTWJetsToQQ_2018": {
+    "metadata": {
+      "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.3708",
+      "nevents": "30559",
+      "size": "83732216",
+      "isSkim": "True",
+      "skim_efficiency": "0.03149831113639854",
+      "skim_rescale_genweights": "32.94979"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToQQ_2018/TTWJetsToQQ_2018_1.root"
+    ]
+  },
+  "TTWJetsToQQ_2017": {
+    "metadata": {
+      "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.3708",
+      "nevents": "19417",
+      "size": "54874698",
+      "isSkim": "True",
+      "skim_efficiency": "0.029643460179720253",
+      "skim_rescale_genweights": "35.31786"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToQQ_2017/TTWJetsToQQ_2017_1.root"
+    ]
+  },
+  "TTWJetsToQQ_2016_PostVFP": {
+      "metadata": {
+          "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+          "sample": "TTV",
+          "year": "2016_PostVFP",
+          "isMC": "True",
+          "xsec": "0.3708",
+          "nevents": "308983",
+          "size": "855112149"
+      },
+      "files": [
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/7E1A1B78-4AF1-DC4D-B858-C3B77B3F4973.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/FCB0375C-F946-E449-9968-066F0DB6D01E.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/4CDBCD92-8F43-0D4E-8E05-24C092F8ED1B.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/5A02A93F-8B31-0E43-87C3-99D9E62463DF.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/5C30C7AF-CAAB-3345-A103-DECA5B0899C5.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/B4C46087-7964-5642-8799-1F5025E36B7C.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/D652623A-509D-F649-8CFC-9D6764724AD2.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/F3271C93-7887-0B4A-BC51-37DC71921459.root"
+      ]
+  },
+  "TTWJetsToQQ_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.3708",
+      "nevents": "6608",
+      "size": "18345111",
+      "isSkim": "True",
+      "skim_efficiency": "0.024339216784041016",
+      "skim_rescale_genweights": "42.89395"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToQQ_2016_PreVFP/TTWJetsToQQ_2016_PreVFP_1.root"
+    ]
+  },
+  "TTWJetsToLNu_2018": {
+    "metadata": {
+      "das_names": "['/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.1792",
+      "nevents": "689298",
+      "size": "1869244916",
+      "isSkim": "True",
+      "skim_efficiency": "0.06596153110047846",
+      "skim_rescale_genweights": "15.8856945"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2018/TTWJetsToLNu_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTWJetsToLNu_2018/TTWJetsToLNu_2018_2.root"
+    ]
+  },
+  "TTZToLLNuNu_2018": {
+    "metadata": {
+      "das_names": "['/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.2589",
+      "nevents": "1046667",
+      "size": "2688905157",
+      "isSkim": "True",
+      "skim_efficiency": "0.053379589963280294",
+      "skim_rescale_genweights": "19.663153"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2018/TTZToLLNuNu_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2018/TTZToLLNuNu_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2018/TTZToLLNuNu_2018_3.root"
+    ]
+  },
+  "TTZToLLNuNu_2017": {
+    "metadata": {
+      "das_names": "['/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.2589",
+      "nevents": "703288",
+      "size": "1841523737",
+      "isSkim": "True",
+      "skim_efficiency": "0.050106013109147904",
+      "skim_rescale_genweights": "20.94155"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2017/TTZToLLNuNu_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2017/TTZToLLNuNu_2017_2.root"
+    ]
+  },
+  "TTZToLLNuNu_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.2589",
+      "nevents": "268676",
+      "size": "683085216",
+      "isSkim": "True",
+      "skim_efficiency": "0.044652817018447734",
+      "skim_rescale_genweights": "23.460735"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToLLNuNu_2016_PostVFP/TTZToLLNuNu_2016_PostVFP_1.root"
+    ]
+  },
+  "TTZToQQ_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTZToQQ_TuneCP5_13TeV_amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "0.6012",
+      "nevents": "1559179",
+      "size": "4244710572",
+      "isSkim": "True",
+      "skim_efficiency": "0.04824525181517005",
+      "skim_rescale_genweights": "21.242897"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PreVFP/TTZToQQ_2016_PreVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PreVFP/TTZToQQ_2016_PreVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PreVFP/TTZToQQ_2016_PreVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PreVFP/TTZToQQ_2016_PreVFP_4.root"
+    ]
+  },
+  "TTZToQQ_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTZToQQ_TuneCP5_13TeV_amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "0.6012",
+      "nevents": "1447496",
+      "size": "3926427830",
+      "isSkim": "True",
+      "skim_efficiency": "0.052503378905545815",
+      "skim_rescale_genweights": "19.469141"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PostVFP/TTZToQQ_2016_PostVFP_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PostVFP/TTZToQQ_2016_PostVFP_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PostVFP/TTZToQQ_2016_PostVFP_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2016_PostVFP/TTZToQQ_2016_PostVFP_4.root"
+    ]
+  },
+  "TTZToQQ_2017": {
+    "metadata": {
+      "das_names": "['/TTZToQQ_TuneCP5_13TeV_amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v3/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "0.6012",
+      "nevents": "3539075",
+      "size": "9907476513",
+      "isSkim": "True",
+      "skim_efficiency": "0.05904692015105213",
+      "skim_rescale_genweights": "17.308413"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2017/TTZToQQ_2017_9.root"
+    ]
+  },
+  "TTZToQQ_2018": {
+    "metadata": {
+      "das_names": "['/TTZToQQ_TuneCP5_13TeV_amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v3/NANOAODSIM']",
+      "sample": "TTV",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "0.6012",
+      "nevents": "3631759",
+      "size": "10027155920",
+      "isSkim": "True",
+      "skim_efficiency": "0.06141373483851386",
+      "skim_rescale_genweights": "16.623878"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_4.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_5.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_6.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_7.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_8.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_9.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTZToQQ_2018/TTZToQQ_2018_10.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PreVFP_EraB": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD', '/SingleMuon/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "B",
+      "nevents": "168572",
+      "size": "129344417",
+      "isSkim": "True",
+      "skim_efficiency": "0.0010474541688314904"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PreVFP_EraB/DATA_SingleMuon_2016_PreVFP_EraB_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PreVFP_EraC": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "C",
+      "nevents": "82323",
+      "size": "65997848",
+      "isSkim": "True",
+      "skim_efficiency": "0.0012206613786316244"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PreVFP_EraC/DATA_SingleMuon_2016_PreVFP_EraC_1.root"
+    ]
+  },
+  "DATA_SingleMuon_2016_PreVFP_EraD": {
+    "metadata": {
+      "das_names": "['/SingleMuon/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD']",
+      "sample": "DATA_SingleMuon",
+      "year": "2016_PreVFP",
+      "isMC": "False",
+      "primaryDataset": "SingleMuon",
+      "era": "D",
+      "nevents": "122416",
+      "size": "95556709",
+      "isSkim": "True",
+      "skim_efficiency": "0.0012489135158404994"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/DATA_SingleMuon_2016_PreVFP_EraD/DATA_SingleMuon_2016_PreVFP_EraD_1.root"
+    ]
+  },
+
+    "TTbbSemiLeptonic_4f_2016_PreVFP": {
+    "metadata": {
+      "das_names": "['/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM']",
+      "sample": "TTbbSemiLeptonic",
+      "year": "2016_PreVFP",
+      "isMC": "True",
+      "xsec": "19.2",
+      "nevents": "288116",
+      "size": "719051857",
+      "isSkim": "True",
+      "skim_efficiency": "0.09630224591373256",
+      "skim_rescale_genweights": "10.12204"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2016_PreVFP/TTbbSemiLeptonic_4f_2016_PreVFP_1.root"
+    ]
+  },
+  "TTbbSemiLeptonic_4f_2016_PostVFP": {
+    "metadata": {
+      "das_names": "['/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+      "sample": "TTbbSemiLeptonic",
+      "year": "2016_PostVFP",
+      "isMC": "True",
+      "xsec": "19.2",
+      "nevents": "337507",
+      "size": "840439827",
+      "isSkim": "True",
+      "skim_efficiency": "0.10471444110950949",
+      "skim_rescale_genweights": "9.306948"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2016_PostVFP/TTbbSemiLeptonic_4f_2016_PostVFP_1.root"
+    ]
+  },
+  "TTbbSemiLeptonic_4f_2018": {
+    "metadata": {
+      "das_names": "['/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+      "sample": "TTbbSemiLeptonic",
+      "year": "2018",
+      "isMC": "True",
+      "xsec": "19.2",
+      "nevents": "1341169",
+      "size": "3391205639",
+      "isSkim": "True",
+      "skim_efficiency": "0.12922345334633561",
+      "skim_rescale_genweights": "7.542384"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2018/TTbbSemiLeptonic_4f_2018_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2018/TTbbSemiLeptonic_4f_2018_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2018/TTbbSemiLeptonic_4f_2018_3.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2018/TTbbSemiLeptonic_4f_2018_4.root"
+    ]
+  },
+  "TTbbSemiLeptonic_4f_2017": {
+    "metadata": {
+      "das_names": "['/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM']",
+      "sample": "TTbbSemiLeptonic",
+      "year": "2017",
+      "isMC": "True",
+      "xsec": "19.2",
+      "nevents": "890884",
+      "size": "2296214847",
+      "isSkim": "True",
+      "skim_efficiency": "0.12172390598521006",
+      "skim_rescale_genweights": "8.011134"
+    },
+    "files": [
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2017/TTbbSemiLeptonic_4f_2017_1.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2017/TTbbSemiLeptonic_4f_2017_2.root",
+      "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/ttHbb/Run2_semileptonic_skim_hadd/TTbbSemiLeptonic_4f_2017/TTbbSemiLeptonic_4f_2017_3.root"
+    ]
+  }
+}

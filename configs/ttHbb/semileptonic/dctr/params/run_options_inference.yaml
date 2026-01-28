@@ -11,8 +11,10 @@ custom-setup-commands: null
 conda-env: false
 local-virtualenv: false
 spanet_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/models/spanet_v2/multiple_binary_classifiers_btag_LMH/spanet_output/version_epoch62/spanet.onnx"
-dctr_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/spanet_v2/tthbb_0p40To0p75/features_8/binary_classifier_full_Run2_batch8092_lr5e-3/lightning_logs/version_0/model.onnx"
+dctr_model: "/pnfs/psi.ch/cms/trivcat/store/user/mmarcheg/ttHbb/dctr/models/spanet_v2_bugfix/tthbb_0p40To0p75/features_8/binary_classifier_full_Run2_batch8092_lr5e-3/lightning_logs/version_0/model.onnx"
 group-samples:
+  ttHTobb:
+    - "ttHTobb"
   WJets:
     - "WJetsToLNu_HT"
   ZJets:

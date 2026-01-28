@@ -1,0 +1,24 @@
+{
+  "TTWJetsToQQ_2016_PostVFP": {
+      "metadata": {
+          "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM']",
+          "sample": "TTV",
+          "year": "2016_PostVFP",
+          "isMC": "True",
+          "xsec": "0.3708",
+          "nevents": "308983",
+          "size": "855112149"
+      },
+      "files": [
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/7E1A1B78-4AF1-DC4D-B858-C3B77B3F4973.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/FCB0375C-F946-E449-9968-066F0DB6D01E.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/4CDBCD92-8F43-0D4E-8E05-24C092F8ED1B.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/5A02A93F-8B31-0E43-87C3-99D9E62463DF.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/5C30C7AF-CAAB-3345-A103-DECA5B0899C5.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/B4C46087-7964-5642-8799-1F5025E36B7C.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/D652623A-509D-F649-8CFC-9D6764724AD2.root",
+          "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL16NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/F3271C93-7887-0B4A-BC51-37DC71921459.root"
+      ]
+  }
+}
+

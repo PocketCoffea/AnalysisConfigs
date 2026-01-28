@@ -24,7 +24,7 @@ class ttHbbPartonMatchingProcessor(ttHbbBaseProcessor):
         super().apply_object_preselection(variation=variation)
 
         # MET xy correction
-        met_pt_corr, met_phi_corr = met_xy_correction(self.params, self.events, self._year, self._era)
+        met_pt_corr, met_phi_corr = met_xy_correction(self.params, self.events, "MET", self._year, self._era)
 
         # Overwrite the MET collection with the corrected MET
         self.events["MET"] = ak.with_field(
