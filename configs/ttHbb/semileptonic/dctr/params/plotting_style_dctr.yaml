@@ -69,8 +69,9 @@ plotting_style:
     linewidth: 1
 
   blind_hists:
-    categories: [semilep, SR, 4jSR, 5jSR, '>=6jSR']
+    categories: [semilep, ttlf0p30, SR, 4jSR, 5jSR, '>=6jSR']
     histograms:
       spanet_tthbb_transformed: [0.75, 1.0]
       spanet_tthbb: [0.75, 1.0]
       spanet_ttlf: [0.0, 0.3]
+      dctr_index: [1, 13]

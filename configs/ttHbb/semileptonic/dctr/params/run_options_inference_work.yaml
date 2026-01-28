@@ -1,0 +1,24 @@
+scaleout: 150
+chunksize: 50000
+mem-per-worker: "10GB"
+disk-per-worker: "10GB"
+cores-per-worker: 1
+adaptive: false
+queue: "standard"
+walltime: "12:00:00"
+performance-report: false
+custom-setup-commands: null
+conda-env: false
+local-virtualenv: false
+spanet_model: "/work/mmarcheg/AnalysisConfigs/configs/ttHbb/semileptonic/dctr/params/spanet/spanet.onnx"
+dctr_model: "/work/mmarcheg/AnalysisConfigs/configs/ttHbb/semileptonic/dctr/params/dctr/model.onnx"
+group-samples:
+  ttHTobb:
+    - "ttHTobb"
+  WJets:
+    - "WJetsToLNu_HT"
+  ZJets:
+    - "DYJetsToLL"
+  VV_TTV:
+    - "VV"
+    - "TTV"

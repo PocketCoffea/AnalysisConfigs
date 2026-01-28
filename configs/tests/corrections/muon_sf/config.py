@@ -46,7 +46,7 @@ cfg = Configurator(
 
     weights = {
         "common": {
-            "inclusive": ["sf_mu_iso"],
+            "inclusive": ["sf_mu_id"],
             "bycategory" : {
             }
         },

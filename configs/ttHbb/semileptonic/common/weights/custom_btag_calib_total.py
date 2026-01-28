@@ -1,7 +1,7 @@
 import numpy as np
 import awkward as ak
 import correctionlib
-from custom_cut_functions import eq_genTtbarId_100
+from configs.ttHbb.semileptonic.common.cuts.custom_cut_functions import eq_genTtbarId_100
 from collections import defaultdict
 from pocket_coffea.lib.weights import WeightWrapper, WeightLambda, WeightData, WeightDataMultiVariation
 

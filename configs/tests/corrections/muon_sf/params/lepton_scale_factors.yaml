@@ -2,25 +2,28 @@ lepton_scale_factors:
   muon_sf:
     sf_name:
       '2016_PreVFP':
-          iso: NUM_TightRelIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2016_PostVFP':
-          iso: NUM_TightRelIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2017':
-          iso: NUM_TightRelIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2018':
-          iso: NUM_TightRelIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2022_preEE':
-          iso: NUM_TightPFIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2022_postEE':
-          iso: NUM_TightPFIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
 
       '2023_preBPix':
-          iso: NUM_TightPFIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
           
       '2023_postBPix':
-          iso: NUM_TightPFIso_DEN_MediumID
+          id: NUM_TightID_DEN_TrackerMuons
+
+      '2024':
+          id: NUM_TightID_DEN_TrackerMuons

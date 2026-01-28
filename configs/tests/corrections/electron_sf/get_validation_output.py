@@ -21,6 +21,6 @@ event = df["columns"][args.sample][f"{args.sample}_{args.year}"]["inclusive"]["e
 with open(args.output, "w") as f:
     f.write("run,lumi,event,weight\n")
     for i in range(len(weight)):
-        f.write(f"{run[i]},{lumi[i]},{event[i]},{weight[i]}\n")
+        f.write(f"{run[i]},{lumi[i]},{event[i]},{weight[i]:.6f}\n")
 
 print(f"Output written to {args.output}")
